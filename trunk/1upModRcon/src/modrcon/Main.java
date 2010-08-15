@@ -4,7 +4,7 @@ import javax.swing.*;
 
 /**
  *
- * @author Pyrite
+ * @author Pyrite[1up]
  */
 public class Main {
 
