@@ -1,63 +1,48 @@
 package modrcon;
 
-import java.awt.BorderLayout;
+import java.awt.Color;
+import java.awt.GradientPaint;
+import java.awt.Graphics;
+import java.awt.Graphics2D;
+
 import javax.swing.JPanel;
-import javax.swing.JFrame;
 
-public class GradientPanel extends JFrame {
+/**
+* GradientPanel is a class with a gradient background, put your non-opaque objects over it and enjoy.
+* @author Mohammad Abou-Basha
+*
+*/
+public class GradientPanel extends JPanel
+{
 
-    private static final long serialVersionUID = 1L;
-    private JPanel jContentPane = null;
-    private GradientPanel gradientPanel = null;
+private Color startColor;
 
-    /**
-    * This is the default constructor
-    */
-    public GradientPanel() {
-        super();
-        initialize();
-    }
+private Color endColor;
 
-    /**
-    * This method initializes this
-    *
-    * @return void
-    */
-    private void initialize() {
-        this.setSize( 300 , 200 );
-        this.setContentPane( getJContentPane() );
-        this.setTitle( "JFrame" );
-    }
+public GradientPanel()
+{
+this( Color.GRAY , Color.WHITE );
+}
 
-    /**
-    * This method initializes jContentPane
-    *
-    * @return javax.swing.JPanel
-    */
-    private JPanel getJContentPane() {
-        if( jContentPane == null ) {
-            jContentPane = new JPanel();
-            jContentPane.setLayout( new BorderLayout() );
-            jContentPane.add(getGradientPanel(), BorderLayout.CENTER);
-        }
-        return jContentPane;
-    }
+public GradientPanel( Color startColor , Color endColor )
+{
+super();
+this.startColor = startColor;
+this.endColor = endColor;
+}
 
-    /**
-    * This method initializes gradientPanel
-    *
-    * @return gradient.GradientPanel
-    */
-    private GradientPanel getGradientPanel() {
-        if( gradientPanel == null )
-        {
-        gradientPanel = new GradientPanel();
-        }
-        return gradientPanel;
-    }
-
-    public static void main(String args[]) {
-        new GradientPanel();
-    }
-
+@Override
+protected void paintComponent( Graphics g )
+{
+super.paintComponent( g );
+int panelHeight = getHeight();
+int panelWidth = getWidth();
+GradientPaint gradientPaint = new GradientPaint( 0 , 0 , startColor , panelWidth , panelHeight , endColor );
+if( g instanceof Graphics2D )
+{
+Graphics2D graphics2D = (Graphics2D)g;
+graphics2D.setPaint( gradientPaint );
+graphics2D.fillRect( 0 , 0 , panelWidth , panelHeight );
+}
+}
 }
