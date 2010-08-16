@@ -55,12 +55,10 @@ public class ManageCommandsUI extends javax.swing.JFrame {
 
         tableCommands.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {},
-                {},
-                {}
+
             },
             new String [] {
-
+                "Command", "Description", "Example"
             }
         ));
         scrollTable.setViewportView(tableCommands);
