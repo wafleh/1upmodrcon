@@ -44,6 +44,7 @@ public class ManageCommandsUI extends javax.swing.JFrame {
         logoPanel = new GradientPanel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setResizable(false);
 
         btnSave.setText("Save");
 
