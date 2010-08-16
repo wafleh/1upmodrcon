@@ -5,6 +5,7 @@ import javax.swing.*;
 /**
  *
  * @author Zhalix[1up]
+ * @author Pyrite[1up]
  */
 public class Main {
 
