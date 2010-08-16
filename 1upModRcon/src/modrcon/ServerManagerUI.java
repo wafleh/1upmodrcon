@@ -12,7 +12,7 @@ import java.awt.event.*;
  *
  * @author Pyrite[1up]
  */
-public class ServerManager extends JFrame implements ActionListener {
+public class ServerManagerUI extends JFrame implements ActionListener {
 
     protected JPanel logoPanel           = new JPanel();
     protected JPanel serverListPanel     = new JPanel();
@@ -35,7 +35,7 @@ public class ServerManager extends JFrame implements ActionListener {
     protected JButton btnSave  = new JButton("Save");
     protected JButton btnClose = new JButton("Close");
 
-    public ServerManager() {
+    public ServerManagerUI() {
         // Sets Some of the JFrame Options
         this.setTitle("1up ModRcon - Manage Servers");
         this.setDefaultCloseOperation(EXIT_ON_CLOSE);

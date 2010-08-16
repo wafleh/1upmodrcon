@@ -15,10 +15,10 @@ package modrcon;
  *
  * @author Pyrite
  */
-public class ServerAdmin extends javax.swing.JFrame {
+public class MainUI extends javax.swing.JFrame {
 
     /** Creates new form NewJFrame */
-    public ServerAdmin() {
+    public MainUI() {
         initComponents();
     }
 
@@ -306,7 +306,7 @@ public class ServerAdmin extends javax.swing.JFrame {
 
     private void jMenuItem4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem4ActionPerformed
         // TODO add your handling code here:
-        new ServerManager();
+        new ServerManagerUI();
     }//GEN-LAST:event_jMenuItem4ActionPerformed
 
     private void jMenuItem1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem1ActionPerformed
@@ -325,7 +325,7 @@ public class ServerAdmin extends javax.swing.JFrame {
     public static void main(String args[]) {
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new ServerAdmin().setVisible(true);
+                new MainUI().setVisible(true);
             }
         });
     }

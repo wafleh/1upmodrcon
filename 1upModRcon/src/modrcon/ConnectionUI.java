@@ -17,7 +17,7 @@ import java.awt.event.*;
  *
  * @author Pyrite[1up]
  */
-public class UI extends JFrame implements ActionListener {
+public class ConnectionUI extends JFrame implements ActionListener {
 
     protected JPanel logoPanel           = new JPanel();
     protected JPanel connectionInfoPanel = new JPanel();
@@ -40,7 +40,7 @@ public class UI extends JFrame implements ActionListener {
     protected JButton btnClose       = new JButton("Close");
 
 
-    public UI () {
+    public ConnectionUI () {
         // Sets Some of the JFrame Options
         this.setTitle("1up ModRcon - Connect");
         this.setDefaultCloseOperation(EXIT_ON_CLOSE);
@@ -113,7 +113,7 @@ public class UI extends JFrame implements ActionListener {
      * @param args the command line arguments
      */
     public static void main(String[] args) {
-        new UI();
+        new ConnectionUI();
     }
 
     public void actionPerformed(ActionEvent event) {
