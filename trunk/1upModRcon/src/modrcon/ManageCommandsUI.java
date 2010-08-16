@@ -44,6 +44,7 @@ public class ManageCommandsUI extends javax.swing.JFrame {
         logoPanel = new GradientPanel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setTitle("1up ModRcon - Manage Commands List");
         setResizable(false);
 
         btnSave.setText("Save");
