@@ -3,7 +3,8 @@ package modrcon;
 import javax.swing.*;
 
 /**
- *
+ * The Main Class of 1up ModRcon.
+ * 
  * @author Zhalix[1up]
  * @author Pyrite[1up]
  */
@@ -23,7 +24,7 @@ public class Main {
         }
         // TODO code application logic here
         //new UI();
-        new ServerAdmin().setVisible(true);
+        new MainUI().setVisible(true);
     }
 
 }

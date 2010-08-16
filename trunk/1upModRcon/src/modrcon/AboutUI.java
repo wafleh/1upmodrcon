@@ -4,7 +4,7 @@
  */
 
 /*
- * About.java
+ * AboutUI.java
  *
  * Created on Aug 15, 2010, 3:21:50 PM
  */
@@ -15,10 +15,10 @@ package modrcon;
  *
  * @author Jacob
  */
-public class About extends javax.swing.JFrame {
+public class AboutUI extends javax.swing.JFrame {
 
-    /** Creates new form About */
-    public About() {
+    /** Creates new form AboutUI */
+    public AboutUI() {
         initComponents();
     }
 
@@ -217,7 +217,7 @@ public class About extends javax.swing.JFrame {
     public static void main(String args[]) {
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new About().setVisible(true);
+                new AboutUI().setVisible(true);
 
             }
         });
