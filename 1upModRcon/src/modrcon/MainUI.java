@@ -39,7 +39,7 @@ public class MainUI extends javax.swing.JFrame {
         jLabel5 = new javax.swing.JLabel();
         jPanel2 = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTextArea1 = new javax.swing.JTextArea();
+        consoleTextArea = new javax.swing.JTextArea();
         jPanel3 = new javax.swing.JPanel();
         jScrollPane2 = new javax.swing.JScrollPane();
         jTable1 = new javax.swing.JTable();
@@ -50,9 +50,9 @@ public class MainUI extends javax.swing.JFrame {
         jComboBox1 = new javax.swing.JComboBox();
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu1 = new javax.swing.JMenu();
-        jMenuItem13 = new javax.swing.JMenuItem();
+        saveConsoleMenuItem = new javax.swing.JMenuItem();
         jSeparator4 = new javax.swing.JPopupMenu.Separator();
-        jMenuItem14 = new javax.swing.JMenuItem();
+        exitMenuItem = new javax.swing.JMenuItem();
         jMenu2 = new javax.swing.JMenu();
         jMenuItem9 = new javax.swing.JMenuItem();
         jMenuItem10 = new javax.swing.JMenuItem();
@@ -121,11 +121,11 @@ public class MainUI extends javax.swing.JFrame {
 
         jPanel2.setBorder(javax.swing.BorderFactory.createTitledBorder("Console"));
 
-        jTextArea1.setBackground(new java.awt.Color(0, 0, 0));
-        jTextArea1.setColumns(20);
-        jTextArea1.setForeground(new java.awt.Color(255, 255, 0));
-        jTextArea1.setRows(5);
-        jScrollPane1.setViewportView(jTextArea1);
+        consoleTextArea.setBackground(new java.awt.Color(0, 0, 0));
+        consoleTextArea.setColumns(20);
+        consoleTextArea.setForeground(new java.awt.Color(255, 255, 0));
+        consoleTextArea.setRows(5);
+        jScrollPane1.setViewportView(consoleTextArea);
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
@@ -228,22 +228,22 @@ public class MainUI extends javax.swing.JFrame {
 
         jMenu1.setText("File");
 
-        jMenuItem13.setText("Save Console As...");
-        jMenuItem13.addActionListener(new java.awt.event.ActionListener() {
+        saveConsoleMenuItem.setText("Save Console As...");
+        saveConsoleMenuItem.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMenuItem13ActionPerformed(evt);
+                saveConsoleMenuItemActionPerformed(evt);
             }
         });
-        jMenu1.add(jMenuItem13);
+        jMenu1.add(saveConsoleMenuItem);
         jMenu1.add(jSeparator4);
 
-        jMenuItem14.setText("Exit");
-        jMenuItem14.addActionListener(new java.awt.event.ActionListener() {
+        exitMenuItem.setText("Exit");
+        exitMenuItem.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMenuItem14ActionPerformed(evt);
+                exitMenuItemActionPerformed(evt);
             }
         });
-        jMenu1.add(jMenuItem14);
+        jMenu1.add(exitMenuItem);
 
         jMenuBar1.add(jMenu1);
 
@@ -310,6 +310,11 @@ public class MainUI extends javax.swing.JFrame {
 
         jMenuItem8.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_O, java.awt.event.InputEvent.ALT_MASK | java.awt.event.InputEvent.CTRL_MASK));
         jMenuItem8.setText("Settings");
+        jMenuItem8.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem8ActionPerformed(evt);
+            }
+        });
         jMenu3.add(jMenuItem8);
 
         jMenuBar1.add(jMenu3);
@@ -422,17 +427,26 @@ public class MainUI extends javax.swing.JFrame {
         new GearCalculatorUI().setVisible(true);
     }//GEN-LAST:event_jMenuItem7ActionPerformed
 
-    private void jMenuItem14ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem14ActionPerformed
+    private void exitMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_exitMenuItemActionPerformed
         // TODO add your handling code here:
         this.dispose();
-    }//GEN-LAST:event_jMenuItem14ActionPerformed
+    }//GEN-LAST:event_exitMenuItemActionPerformed
 
-    private void jMenuItem13ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem13ActionPerformed
+    private void saveConsoleMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_saveConsoleMenuItemActionPerformed
         // TODO add your handling code here:
         javax.swing.JFileChooser file = new javax.swing.JFileChooser();
-        file.showSaveDialog(file);
-        javax.swing.JOptionPane.showMessageDialog(this, file.getSelectedFile().toString());
-    }//GEN-LAST:event_jMenuItem13ActionPerformed
+        int choice = file.showSaveDialog(file);
+        if (choice == 0) {
+            String path = file.getSelectedFile().getAbsolutePath();
+            String contents = consoleTextArea.getText();
+            javax.swing.JOptionPane.showMessageDialog(this, contents);
+        }
+    }//GEN-LAST:event_saveConsoleMenuItemActionPerformed
+
+    private void jMenuItem8ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem8ActionPerformed
+        // TODO add your handling code here:
+        new SettingManagerUI().setVisible(true);
+    }//GEN-LAST:event_jMenuItem8ActionPerformed
 
     /**
     * @param args the command line arguments
@@ -446,6 +460,8 @@ public class MainUI extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JTextArea consoleTextArea;
+    private javax.swing.JMenuItem exitMenuItem;
     private javax.swing.JButton jButton1;
     private javax.swing.JComboBox jComboBox1;
     private javax.swing.JLabel jLabel1;
@@ -463,8 +479,6 @@ public class MainUI extends javax.swing.JFrame {
     private javax.swing.JMenuItem jMenuItem10;
     private javax.swing.JMenuItem jMenuItem11;
     private javax.swing.JMenuItem jMenuItem12;
-    private javax.swing.JMenuItem jMenuItem13;
-    private javax.swing.JMenuItem jMenuItem14;
     private javax.swing.JMenuItem jMenuItem2;
     private javax.swing.JMenuItem jMenuItem3;
     private javax.swing.JMenuItem jMenuItem4;
@@ -485,8 +499,8 @@ public class MainUI extends javax.swing.JFrame {
     private javax.swing.JPopupMenu.Separator jSeparator4;
     private javax.swing.JPopupMenu.Separator jSeparator5;
     private javax.swing.JTable jTable1;
-    private javax.swing.JTextArea jTextArea1;
     private javax.swing.JPanel logoPanel;
+    private javax.swing.JMenuItem saveConsoleMenuItem;
     // End of variables declaration//GEN-END:variables
 
 }
