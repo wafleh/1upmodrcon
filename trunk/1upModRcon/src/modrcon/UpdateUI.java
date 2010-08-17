@@ -43,7 +43,7 @@ public class UpdateUI extends javax.swing.JFrame {
         btnUpdate = new javax.swing.JButton();
         btnClose = new javax.swing.JButton();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("1up ModRcon - Update");
         setResizable(false);
 
@@ -72,11 +72,11 @@ public class UpdateUI extends javax.swing.JFrame {
         jTextArea1.setText("No updates available. Please check again later.");
         jScrollPane1.setViewportView(jTextArea1);
 
-        jLabel3.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
+        jLabel3.setFont(new java.awt.Font("Tahoma", 1, 11));
         jLabel3.setForeground(new java.awt.Color(0, 0, 255));
         jLabel3.setText("1.5.1.0");
 
-        jLabel4.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
+        jLabel4.setFont(new java.awt.Font("Tahoma", 1, 11));
         jLabel4.setForeground(new java.awt.Color(0, 204, 51));
         jLabel4.setText("1.5.1.0");
 
