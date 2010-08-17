@@ -4,7 +4,7 @@
  */
 
 /*
- * ManageCommandsUI.java
+ * CommandManagerUI.java
  *
  * Created on Aug 15, 2010, 7:08:04 PM
  */
@@ -15,10 +15,10 @@ package modrcon;
  *
  * @author Jacob
  */
-public class ManageCommandsUI extends javax.swing.JFrame {
+public class CommandManagerUI extends javax.swing.JFrame {
 
-    /** Creates new form ManageCommandsUI */
-    public ManageCommandsUI() {
+    /** Creates new form CommandManagerUI */
+    public CommandManagerUI() {
         initComponents();
     }
 
@@ -43,7 +43,7 @@ public class ManageCommandsUI extends javax.swing.JFrame {
         lblKeyAssignments = new javax.swing.JLabel();
         logoPanel = new GradientPanel();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("1up ModRcon - Manage Commands List");
         setResizable(false);
 
@@ -162,7 +162,7 @@ public class ManageCommandsUI extends javax.swing.JFrame {
     public static void main(String args[]) {
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new ManageCommandsUI().setVisible(true);
+                new CommandManagerUI().setVisible(true);
             }
         });
     }
