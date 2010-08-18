@@ -1,10 +1,7 @@
 package modrcon;
 
-import java.awt.Color;
-import java.awt.GradientPaint;
-import java.awt.Graphics;
-import java.awt.Graphics2D;
-import javax.swing.JPanel;
+import java.awt.*;
+import javax.swing.*;
 
 /**
  * GradientPanel is a class with a gradient background.
