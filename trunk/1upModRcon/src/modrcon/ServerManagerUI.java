@@ -151,6 +151,23 @@ public class ServerManagerUI extends javax.swing.JFrame {
         });
     }
 
+    public static void writeFile() {
+        /*
+      XmlWriter xmlwriter = new XmlWriter(writer);
+
+      xmlwriter.writeEntity("person");
+
+      xmlwriter.writeAttribute("name", person.getName());
+
+      xmlwriter.writeAttribute("age", person.getAge());
+
+      xmlwriter.endEntity();
+
+      xmlwriter.close();
+         * 
+         */
+    }
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
