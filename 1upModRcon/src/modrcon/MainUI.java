@@ -82,7 +82,7 @@ public class MainUI extends JFrame {
         jMenuItem1 = new javax.swing.JMenuItem();
         jMenuItem2 = new javax.swing.JMenuItem();
         jSeparator5 = new javax.swing.JPopupMenu.Separator();
-        jMenuItem3 = new javax.swing.JMenuItem();
+        aboutMenuItem = new javax.swing.JMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("1up ModRcon - Main (Moderator Mode)");
@@ -237,6 +237,7 @@ public class MainUI extends JFrame {
 
         jMenu1.setText("File");
 
+        saveConsoleMenuItem.setIcon(new javax.swing.ImageIcon(getClass().getResource("/modrcon/resources/save.png"))); // NOI18N
         saveConsoleMenuItem.setText("Save Console As...");
         saveConsoleMenuItem.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -246,6 +247,7 @@ public class MainUI extends JFrame {
         jMenu1.add(saveConsoleMenuItem);
         jMenu1.add(jSeparator4);
 
+        exitMenuItem.setIcon(new javax.swing.ImageIcon(getClass().getResource("/modrcon/resources/del.png"))); // NOI18N
         exitMenuItem.setText("Exit");
         exitMenuItem.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -259,19 +261,23 @@ public class MainUI extends JFrame {
         jMenu2.setText("Edit");
 
         jMenuItem9.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_C, java.awt.event.InputEvent.CTRL_MASK));
+        jMenuItem9.setIcon(new javax.swing.ImageIcon(getClass().getResource("/modrcon/resources/copy.png"))); // NOI18N
         jMenuItem9.setText("Copy");
         jMenu2.add(jMenuItem9);
 
         jMenuItem10.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_DELETE, 0));
+        jMenuItem10.setIcon(new javax.swing.ImageIcon(getClass().getResource("/modrcon/resources/files_remove.png"))); // NOI18N
         jMenuItem10.setText("Clear");
         jMenu2.add(jMenuItem10);
 
         jMenuItem11.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_F, java.awt.event.InputEvent.CTRL_MASK));
+        jMenuItem11.setIcon(new javax.swing.ImageIcon(getClass().getResource("/modrcon/resources/find.png"))); // NOI18N
         jMenuItem11.setText("Find");
         jMenu2.add(jMenuItem11);
         jMenu2.add(jSeparator3);
 
         jMenuItem12.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_A, java.awt.event.InputEvent.CTRL_MASK));
+        jMenuItem12.setIcon(new javax.swing.ImageIcon(getClass().getResource("/modrcon/resources/files_add.png"))); // NOI18N
         jMenuItem12.setText("Select All");
         jMenu2.add(jMenuItem12);
 
@@ -280,6 +286,7 @@ public class MainUI extends JFrame {
         jMenu3.setText("Tools");
 
         jMenuItem4.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_S, java.awt.event.InputEvent.ALT_MASK | java.awt.event.InputEvent.CTRL_MASK));
+        jMenuItem4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/modrcon/resources/objects.png"))); // NOI18N
         jMenuItem4.setText("Manage Servers");
         jMenuItem4.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -289,6 +296,7 @@ public class MainUI extends JFrame {
         jMenu3.add(jMenuItem4);
 
         jMenuItem5.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_C, java.awt.event.InputEvent.ALT_MASK | java.awt.event.InputEvent.CTRL_MASK));
+        jMenuItem5.setIcon(new javax.swing.ImageIcon(getClass().getResource("/modrcon/resources/objects.png"))); // NOI18N
         jMenuItem5.setText("Manage Commands");
         jMenuItem5.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -299,6 +307,7 @@ public class MainUI extends JFrame {
         jMenu3.add(jSeparator1);
 
         jMenuItem6.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_V, java.awt.event.InputEvent.ALT_MASK | java.awt.event.InputEvent.CTRL_MASK));
+        jMenuItem6.setIcon(new javax.swing.ImageIcon(getClass().getResource("/modrcon/resources/calculator.png"))); // NOI18N
         jMenuItem6.setText("Vote Calculator");
         jMenuItem6.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -308,6 +317,7 @@ public class MainUI extends JFrame {
         jMenu3.add(jMenuItem6);
 
         jMenuItem7.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_G, java.awt.event.InputEvent.ALT_MASK | java.awt.event.InputEvent.CTRL_MASK));
+        jMenuItem7.setIcon(new javax.swing.ImageIcon(getClass().getResource("/modrcon/resources/calculator.png"))); // NOI18N
         jMenuItem7.setText("Gear Calculator");
         jMenuItem7.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -318,6 +328,7 @@ public class MainUI extends JFrame {
         jMenu3.add(jSeparator2);
 
         jMenuItem8.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_O, java.awt.event.InputEvent.ALT_MASK | java.awt.event.InputEvent.CTRL_MASK));
+        jMenuItem8.setIcon(new javax.swing.ImageIcon(getClass().getResource("/modrcon/resources/app_options.png"))); // NOI18N
         jMenuItem8.setText("Settings");
         jMenuItem8.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -331,6 +342,7 @@ public class MainUI extends JFrame {
         jMenu4.setText("Help");
 
         jMenuItem1.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_F1, 0));
+        jMenuItem1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/modrcon/resources/help.png"))); // NOI18N
         jMenuItem1.setText("1up Rcon Help");
         jMenuItem1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -340,6 +352,7 @@ public class MainUI extends JFrame {
         jMenu4.add(jMenuItem1);
 
         jMenuItem2.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_U, java.awt.event.InputEvent.CTRL_MASK));
+        jMenuItem2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/modrcon/resources/web.png"))); // NOI18N
         jMenuItem2.setText("Check for update");
         jMenuItem2.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -349,13 +362,14 @@ public class MainUI extends JFrame {
         jMenu4.add(jMenuItem2);
         jMenu4.add(jSeparator5);
 
-        jMenuItem3.setText("About");
-        jMenuItem3.addActionListener(new java.awt.event.ActionListener() {
+        aboutMenuItem.setIcon(new javax.swing.ImageIcon(getClass().getResource("/modrcon/resources/about.png"))); // NOI18N
+        aboutMenuItem.setText("About");
+        aboutMenuItem.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMenuItem3ActionPerformed(evt);
+                aboutMenuItemActionPerformed(evt);
             }
         });
-        jMenu4.add(jMenuItem3);
+        jMenu4.add(aboutMenuItem);
 
         jMenuBar1.add(jMenu4);
 
@@ -416,10 +430,10 @@ public class MainUI extends JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_jButton1ActionPerformed
 
-    private void jMenuItem3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem3ActionPerformed
+    private void aboutMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_aboutMenuItemActionPerformed
         // TODO add your handling code here:
         new AboutUI().setVisible(true);
-    }//GEN-LAST:event_jMenuItem3ActionPerformed
+    }//GEN-LAST:event_aboutMenuItemActionPerformed
 
     private void jMenuItem5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem5ActionPerformed
         // TODO add your handling code here:
@@ -469,6 +483,7 @@ public class MainUI extends JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JMenuItem aboutMenuItem;
     private javax.swing.JTextArea consoleTextArea;
     private javax.swing.JMenuItem exitMenuItem;
     private javax.swing.JButton jButton1;
@@ -489,7 +504,6 @@ public class MainUI extends JFrame {
     private javax.swing.JMenuItem jMenuItem11;
     private javax.swing.JMenuItem jMenuItem12;
     private javax.swing.JMenuItem jMenuItem2;
-    private javax.swing.JMenuItem jMenuItem3;
     private javax.swing.JMenuItem jMenuItem4;
     private javax.swing.JMenuItem jMenuItem5;
     private javax.swing.JMenuItem jMenuItem6;
