@@ -10,7 +10,7 @@
  */
 
 package modrcon;
-
+import java.awt.*;
 /**
  *
  * @author Jacob
@@ -117,6 +117,7 @@ public class VoteCalculatorUI extends javax.swing.JFrame {
             }
         });
         tableVote.setAutoResizeMode(javax.swing.JTable.AUTO_RESIZE_LAST_COLUMN);
+        tableVote.getTableHeader().setResizingAllowed(false);
         scrollVote.setViewportView(tableVote);
 
         lblSetAllowVote.setText("set g_AllowVote");
@@ -203,6 +204,7 @@ public class VoteCalculatorUI extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
+        tableVote.getTableHeader().setPreferredSize(new Dimension(tableVote.getTableHeader().getWidth(),20));
         tableVote.getColumnModel().getColumn(0).setPreferredWidth(20);
         tableVote.getColumnModel().getColumn(1).setPreferredWidth(200);
         tableVote.getColumnModel().getColumn(2).setPreferredWidth(100);
