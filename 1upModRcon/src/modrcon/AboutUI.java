@@ -15,7 +15,7 @@ package modrcon;
  *
  * @author Jacob
  */
-public class AboutUI extends javax.swing.JFrame {
+public class AboutUI extends javax.swing.JDialog {
 
     /** Creates new form AboutUI */
     public AboutUI() {
@@ -54,9 +54,12 @@ public class AboutUI extends javax.swing.JFrame {
         lblTMSSoftwareURL = new javax.swing.JLabel();
         btnOk = new javax.swing.JButton();
         lblLogo = new javax.swing.JLabel();
+        logoPanel = new GradientPanel();
+        jLabel1 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("1up ModRcon - About");
+        setModal(true);
         setResizable(false);
 
         lblAppName.setFont(new java.awt.Font("Arial", 1, 11));
@@ -144,15 +147,13 @@ public class AboutUI extends javax.swing.JFrame {
             .addGroup(ThirdPartyPanelLayout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(ThirdPartyPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(ThirdPartyPanelLayout.createSequentialGroup()
-                        .addComponent(lblTMSSoftware)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(lblTMSSoftwareURL))
-                    .addGroup(ThirdPartyPanelLayout.createSequentialGroup()
-                        .addComponent(lblProjectJedi)
-                        .addGap(18, 18, 18)
-                        .addComponent(lblProjectJediURL)))
-                .addContainerGap(224, Short.MAX_VALUE))
+                    .addComponent(lblTMSSoftware)
+                    .addComponent(lblProjectJedi))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(ThirdPartyPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(lblProjectJediURL)
+                    .addComponent(lblTMSSoftwareURL))
+                .addContainerGap(223, Short.MAX_VALUE))
         );
         ThirdPartyPanelLayout.setVerticalGroup(
             ThirdPartyPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -180,28 +181,56 @@ public class AboutUI extends javax.swing.JFrame {
         jtpAbout.addTab("Third Parties", ThirdPartyPanel);
 
         btnOk.setText("Ok");
+        btnOk.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnOkActionPerformed(evt);
+            }
+        });
 
         lblLogo.setBackground(new java.awt.Color(255, 102, 0));
+
+        jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/modrcon/resources/1upModRconLogo.png"))); // NOI18N
+
+        javax.swing.GroupLayout logoPanelLayout = new javax.swing.GroupLayout(logoPanel);
+        logoPanel.setLayout(logoPanelLayout);
+        logoPanelLayout.setHorizontalGroup(
+            logoPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(logoPanelLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jLabel1)
+                .addContainerGap(180, Short.MAX_VALUE))
+        );
+        logoPanelLayout.setVerticalGroup(
+            logoPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(logoPanelLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jLabel1)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(lblLogo)
-                    .addGroup(layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(jtpAbout, javax.swing.GroupLayout.PREFERRED_SIZE, 360, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(151, 151, 151)
-                        .addComponent(btnOk, javax.swing.GroupLayout.PREFERRED_SIZE, 89, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(12, Short.MAX_VALUE))
+                .addComponent(lblLogo)
+                .addContainerGap(380, Short.MAX_VALUE))
+            .addComponent(logoPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jtpAbout, javax.swing.GroupLayout.PREFERRED_SIZE, 360, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
+            .addGroup(layout.createSequentialGroup()
+                .addGap(145, 145, 145)
+                .addComponent(btnOk, javax.swing.GroupLayout.PREFERRED_SIZE, 89, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(146, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addComponent(lblLogo)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(lblLogo)
+                    .addComponent(logoPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jtpAbout, javax.swing.GroupLayout.PREFERRED_SIZE, 181, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -211,6 +240,11 @@ public class AboutUI extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void btnOkActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnOkActionPerformed
+        // TODO add your handling code here:
+        this.dispose();
+    }//GEN-LAST:event_btnOkActionPerformed
 
     /**
     * @param args the command line arguments
@@ -228,6 +262,7 @@ public class AboutUI extends javax.swing.JFrame {
     private javax.swing.JPanel AboutPanel;
     private javax.swing.JPanel ThirdPartyPanel;
     private javax.swing.JButton btnOk;
+    private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel15;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
@@ -247,6 +282,7 @@ public class AboutUI extends javax.swing.JFrame {
     private javax.swing.JLabel lblVersionAtt;
     private javax.swing.JLabel lblWebsite;
     private javax.swing.JLabel lblWebsiteAtt;
+    private javax.swing.JPanel logoPanel;
     // End of variables declaration//GEN-END:variables
 
 }
