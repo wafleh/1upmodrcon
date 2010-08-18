@@ -36,16 +36,20 @@ public class VoteCalculatorUI extends javax.swing.JFrame {
         scrollVote = new javax.swing.JScrollPane();
         tableVote = new javax.swing.JTable();
         lblSetAllowVote = new javax.swing.JLabel();
-        scrollList = new javax.swing.JScrollPane();
-        listGear = new javax.swing.JList();
         lblSelectAll = new javax.swing.JLabel();
         lblUnselectAll = new javax.swing.JLabel();
+        spinnerVote = new javax.swing.JSpinner();
         btnSend = new javax.swing.JButton();
         btnClose = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("1up ModRcon - Allow Vote Calculator");
         setResizable(false);
+        addWindowListener(new java.awt.event.WindowAdapter() {
+            public void windowOpened(java.awt.event.WindowEvent evt) {
+                formWindowOpened(evt);
+            }
+        });
 
         javax.swing.GroupLayout logoPanelLayout = new javax.swing.GroupLayout(logoPanel);
         logoPanel.setLayout(logoPanelLayout);
@@ -112,20 +116,16 @@ public class VoteCalculatorUI extends javax.swing.JFrame {
                 return canEdit [columnIndex];
             }
         });
+        tableVote.setAutoResizeMode(javax.swing.JTable.AUTO_RESIZE_LAST_COLUMN);
         scrollVote.setViewportView(tableVote);
 
         lblSetAllowVote.setText("set g_AllowVote");
 
-        listGear.setModel(new javax.swing.AbstractListModel() {
-            String[] strings = { "Item 1", "Item 2", "Item 3", "Item 4", "Item 5" };
-            public int getSize() { return strings.length; }
-            public Object getElementAt(int i) { return strings[i]; }
-        });
-        scrollList.setViewportView(listGear);
-
         lblSelectAll.setText("All");
 
         lblUnselectAll.setText("None");
+
+        spinnerVote.setModel(new javax.swing.SpinnerNumberModel(0, 0, 1073741823, 1));
 
         javax.swing.GroupLayout votePanelLayout = new javax.swing.GroupLayout(votePanel);
         votePanel.setLayout(votePanelLayout);
@@ -140,7 +140,7 @@ public class VoteCalculatorUI extends javax.swing.JFrame {
                         .addGap(20, 20, 20)
                         .addComponent(lblSetAllowVote)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(scrollList, javax.swing.GroupLayout.PREFERRED_SIZE, 54, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(spinnerVote, javax.swing.GroupLayout.PREFERRED_SIZE, 88, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(lblSelectAll)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
@@ -159,7 +159,7 @@ public class VoteCalculatorUI extends javax.swing.JFrame {
                     .addGroup(votePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                         .addComponent(lblSelectAll)
                         .addComponent(lblUnselectAll))
-                    .addComponent(scrollList, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 18, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(spinnerVote, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(40, 40, 40))
         );
 
@@ -202,6 +202,12 @@ public class VoteCalculatorUI extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
+        tableVote.getColumnModel().getColumn(0).setPreferredWidth(20);
+        tableVote.getColumnModel().getColumn(1).setPreferredWidth(200);
+        tableVote.getColumnModel().getColumn(2).setPreferredWidth(100);
+    }//GEN-LAST:event_formWindowOpened
+
     /**
     * @param args the command line arguments
     */
@@ -219,10 +225,9 @@ public class VoteCalculatorUI extends javax.swing.JFrame {
     private javax.swing.JLabel lblSelectAll;
     private javax.swing.JLabel lblSetAllowVote;
     private javax.swing.JLabel lblUnselectAll;
-    private javax.swing.JList listGear;
     private javax.swing.JPanel logoPanel;
-    private javax.swing.JScrollPane scrollList;
     private javax.swing.JScrollPane scrollVote;
+    private javax.swing.JSpinner spinnerVote;
     private javax.swing.JTable tableVote;
     private javax.swing.JPanel votePanel;
     // End of variables declaration//GEN-END:variables
