@@ -10,7 +10,7 @@
  */
 
 package modrcon;
-
+import java.awt.*;
 /**
  *
  * @author Jacob
@@ -94,6 +94,7 @@ public class GearCalculatorUI extends javax.swing.JFrame {
             }
         });
         tableGear.setAutoResizeMode(javax.swing.JTable.AUTO_RESIZE_LAST_COLUMN);
+        tableGear.getTableHeader().setResizingAllowed(false);
         scrollGear.setViewportView(tableGear);
 
         lblSetGear.setText("Set g_Gear");
@@ -175,6 +176,7 @@ public class GearCalculatorUI extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
+        tableGear.getTableHeader().setPreferredSize(new Dimension(tableGear.getTableHeader().getWidth(),20));
         tableGear.getColumnModel().getColumn(0).setPreferredWidth(20);
         tableGear.getColumnModel().getColumn(1).setPreferredWidth(200);
         tableGear.getColumnModel().getColumn(2).setPreferredWidth(100);
