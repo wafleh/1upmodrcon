@@ -11,15 +11,31 @@
 
 package modrcon;
 
+import java.awt.Color;
+import java.awt.event.*;
+import java.awt.*;
+import java.awt.image.*;
+import java.io.*;
+import java.util.*;
+import java.text.*;
+import javax.swing.*;
+
 /**
  *
  * @author Jacob
  */
-public class SettingManagerUI extends javax.swing.JFrame {
+public class SettingManagerUI extends JDialog {
+
+    protected MainUI parent;
 
     /** Creates new form SettingUI */
-    public SettingManagerUI() {
+    public SettingManagerUI(MainUI owner) {
+        this.parent = owner;
         initComponents();
+
+        PropertyManager pm = new PropertyManager();
+        this.bgColorPanel.setBackground(Color.decode(pm.getConsoleBGColor()));
+        this.fgColorPanel.setBackground(Color.decode(pm.getConsoleFGColor()));
     }
 
     /** This method is called from within the constructor to
@@ -31,6 +47,7 @@ public class SettingManagerUI extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        jColorChooser1 = new javax.swing.JColorChooser();
         logoPanel = new GradientPanel();
         settingPanel = new javax.swing.JPanel();
         txtPath = new javax.swing.JTextField();
@@ -39,16 +56,17 @@ public class SettingManagerUI extends javax.swing.JFrame {
         lblTimeout = new javax.swing.JLabel();
         chkStatusConnect = new javax.swing.JCheckBox();
         jSeparator1 = new javax.swing.JSeparator();
-        bgcolorPanel = new javax.swing.JPanel();
-        fontcolorPanel = new javax.swing.JPanel();
+        fgColorPanel = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
         listTimeout = new javax.swing.JList();
         lblBGColor = new javax.swing.JLabel();
         lblFontColor = new javax.swing.JLabel();
+        bgColorPanel = new javax.swing.JPanel();
         btnSave = new javax.swing.JButton();
         btnClose = new javax.swing.JButton();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        setModal(true);
 
         javax.swing.GroupLayout logoPanelLayout = new javax.swing.GroupLayout(logoPanel);
         logoPanel.setLayout(logoPanelLayout);
@@ -71,30 +89,22 @@ public class SettingManagerUI extends javax.swing.JFrame {
 
         chkStatusConnect.setText("Send status command on connect");
 
-        bgcolorPanel.setBackground(new java.awt.Color(0, 0, 0));
+        fgColorPanel.setBackground(new java.awt.Color(255, 255, 255));
+        fgColorPanel.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                fgColorPanelMouseClicked(evt);
+            }
+        });
 
-        javax.swing.GroupLayout bgcolorPanelLayout = new javax.swing.GroupLayout(bgcolorPanel);
-        bgcolorPanel.setLayout(bgcolorPanelLayout);
-        bgcolorPanelLayout.setHorizontalGroup(
-            bgcolorPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 15, Short.MAX_VALUE)
-        );
-        bgcolorPanelLayout.setVerticalGroup(
-            bgcolorPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 15, Short.MAX_VALUE)
-        );
-
-        fontcolorPanel.setBackground(new java.awt.Color(255, 255, 255));
-
-        javax.swing.GroupLayout fontcolorPanelLayout = new javax.swing.GroupLayout(fontcolorPanel);
-        fontcolorPanel.setLayout(fontcolorPanelLayout);
-        fontcolorPanelLayout.setHorizontalGroup(
-            fontcolorPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+        javax.swing.GroupLayout fgColorPanelLayout = new javax.swing.GroupLayout(fgColorPanel);
+        fgColorPanel.setLayout(fgColorPanelLayout);
+        fgColorPanelLayout.setHorizontalGroup(
+            fgColorPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGap(0, 14, Short.MAX_VALUE)
         );
-        fontcolorPanelLayout.setVerticalGroup(
-            fontcolorPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 14, Short.MAX_VALUE)
+        fgColorPanelLayout.setVerticalGroup(
+            fgColorPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 15, Short.MAX_VALUE)
         );
 
         listTimeout.setModel(new javax.swing.AbstractListModel() {
@@ -107,6 +117,24 @@ public class SettingManagerUI extends javax.swing.JFrame {
         lblBGColor.setText("Console BG Color");
 
         lblFontColor.setText("Console Font Color");
+
+        bgColorPanel.setBackground(new java.awt.Color(0, 0, 0));
+        bgColorPanel.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                bgColorPanelMouseClicked(evt);
+            }
+        });
+
+        javax.swing.GroupLayout bgColorPanelLayout = new javax.swing.GroupLayout(bgColorPanel);
+        bgColorPanel.setLayout(bgColorPanelLayout);
+        bgColorPanelLayout.setHorizontalGroup(
+            bgColorPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 14, Short.MAX_VALUE)
+        );
+        bgColorPanelLayout.setVerticalGroup(
+            bgColorPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 15, Short.MAX_VALUE)
+        );
 
         javax.swing.GroupLayout settingPanelLayout = new javax.swing.GroupLayout(settingPanel);
         settingPanel.setLayout(settingPanelLayout);
@@ -130,11 +158,11 @@ public class SettingManagerUI extends javax.swing.JFrame {
                             .addComponent(jSeparator1, javax.swing.GroupLayout.DEFAULT_SIZE, 324, Short.MAX_VALUE))
                         .addContainerGap())
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, settingPanelLayout.createSequentialGroup()
-                        .addComponent(bgcolorPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(bgColorPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(lblBGColor)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(fontcolorPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(10, 10, 10)
+                        .addComponent(fgColorPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(lblFontColor)
                         .addGap(60, 60, 60))
@@ -158,13 +186,19 @@ public class SettingManagerUI extends javax.swing.JFrame {
                 .addComponent(chkStatusConnect)
                 .addGap(9, 9, 9)
                 .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 11, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(settingPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(lblBGColor)
-                    .addComponent(bgcolorPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(fontcolorPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(lblFontColor))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addGroup(settingPanelLayout.createSequentialGroup()
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(bgColorPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addGroup(settingPanelLayout.createSequentialGroup()
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(fgColorPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addGroup(settingPanelLayout.createSequentialGroup()
+                        .addGap(7, 7, 7)
+                        .addGroup(settingPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                            .addComponent(lblBGColor, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(lblFontColor, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+                .addContainerGap())
         );
 
         btnSave.setText("Save");
@@ -176,6 +210,11 @@ public class SettingManagerUI extends javax.swing.JFrame {
         });
 
         btnClose.setText("Close");
+        btnClose.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnCloseActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -187,11 +226,11 @@ public class SettingManagerUI extends javax.swing.JFrame {
                 .addComponent(settingPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
             .addGroup(layout.createSequentialGroup()
-                .addGap(125, 125, 125)
+                .addGap(85, 85, 85)
                 .addComponent(btnSave, javax.swing.GroupLayout.PREFERRED_SIZE, 71, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(btnClose, javax.swing.GroupLayout.PREFERRED_SIZE, 71, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(103, Short.MAX_VALUE))
+                .addContainerGap(143, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -203,7 +242,7 @@ public class SettingManagerUI extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnSave, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnClose))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(17, Short.MAX_VALUE))
         );
 
         pack();
@@ -211,29 +250,50 @@ public class SettingManagerUI extends javax.swing.JFrame {
 
     private void btnSaveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSaveActionPerformed
         // TODO add your handling code here:
-        PropertyManager pm = new PropertyManager(this);
+        PropertyManager pm = new PropertyManager();
         pm.setGamePath(txtPath.getText());
+
+        // Console Colors
+        String bg = "#" + Integer.toHexString(bgColorPanel.getBackground().getRGB() & 0x00ffffff).toUpperCase();
+        String fg = "#" + Integer.toHexString(fgColorPanel.getBackground().getRGB() & 0x00ffffff).toUpperCase();
+        pm.setConsoleBGColor(bg);
+        pm.setConsoleFGColor(fg);
+
         pm.savePropertyFile();
+
+        // Apply any Settings Immediately
+        this.parent.setConsoleBackground(bgColorPanel.getBackground());
+        this.parent.setConsoleForeground(fgColorPanel.getBackground());
+        this.dispose();
     }//GEN-LAST:event_btnSaveActionPerformed
 
-    /**
-    * @param args the command line arguments
-    */
-    public static void main(String args[]) {
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new SettingManagerUI().setVisible(true);
-            }
-        });
-    }
+    private void btnCloseActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCloseActionPerformed
+        // TODO add your handling code here:
+        this.dispose();
+    }//GEN-LAST:event_btnCloseActionPerformed
+
+    private void bgColorPanelMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_bgColorPanelMouseClicked
+        // TODO add your handling code here:
+        JColorChooser mycolor = new JColorChooser();
+        Color chosenColor = mycolor.showDialog(mycolor, "Select a Background Color for the Console", bgColorPanel.getBackground());
+        bgColorPanel.setBackground(chosenColor);
+    }//GEN-LAST:event_bgColorPanelMouseClicked
+
+    private void fgColorPanelMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_fgColorPanelMouseClicked
+        // TODO add your handling code here:
+        JColorChooser mycolor = new JColorChooser();
+        Color chosenColor = mycolor.showDialog(mycolor, "Select a Font Color for the Console", fgColorPanel.getBackground());
+        fgColorPanel.setBackground(chosenColor);
+    }//GEN-LAST:event_fgColorPanelMouseClicked
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JPanel bgcolorPanel;
+    private javax.swing.JPanel bgColorPanel;
     private javax.swing.JButton btnBrowse;
     private javax.swing.JButton btnClose;
     private javax.swing.JButton btnSave;
     private javax.swing.JCheckBox chkStatusConnect;
-    private javax.swing.JPanel fontcolorPanel;
+    private javax.swing.JPanel fgColorPanel;
+    private javax.swing.JColorChooser jColorChooser1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JSeparator jSeparator1;
     private javax.swing.JLabel lblBGColor;

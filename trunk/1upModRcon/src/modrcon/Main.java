@@ -1,5 +1,6 @@
 package modrcon;
 
+import java.awt.Color;
 import javax.swing.*;
 
 /**
@@ -22,9 +23,16 @@ public class Main {
             System.out.println("Error: Was Unable to Set the OS's Native Widget Theme");
             System.out.println(e.getMessage());
         }
-        // TODO code application logic here
-        //new UI();
-        new MainUI().setVisible(true);
+
+        // Load Settings
+        PropertyManager pm = new PropertyManager();
+
+        // Start Main UI
+        MainUI mui = new MainUI();
+        mui.setConsoleBackground(Color.decode(pm.getConsoleBGColor()));
+        mui.setConsoleForeground(Color.decode(pm.getConsoleFGColor()));
+        mui.setVisible(true);
+
     }
 
 }
