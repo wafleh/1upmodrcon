@@ -16,8 +16,14 @@ public class PropertyManager {
     /** The parent JFrame */
     private JFrame parent;
 
+    /** Default Constructor */
     public PropertyManager(JFrame parent) {
         this.parent = parent;
+        this.loadPropertyFile();
+    }
+
+    public PropertyManager() {
+        this.parent = null;
         this.loadPropertyFile();
     }
 
@@ -35,6 +41,48 @@ public class PropertyManager {
 
     public void setGamePath(String path) {
         propFile.setProperty("gamepath", path);
+    }
+
+    public String getReceiveTimeout() {
+        return propFile.getProperty("receivetimeout");
+    }
+
+    public void setReceiveTimeout(String timeout) {
+        propFile.setProperty("receivetimeout", timeout);
+    }
+
+    public boolean getStatusOnConnect() {
+        if (propFile.getProperty("statusonconnect").equals("true")) {
+            return true;
+        }
+        else {
+            return false;
+        }
+    }
+
+    public void setStatusOnConnect(boolean status) {
+        if (status) {
+            propFile.setProperty("statusonconnect", "true");
+        }
+        else {
+            propFile.setProperty("statusonconnect", "false");
+        }
+    }
+
+    public String getConsoleBGColor() {
+        return propFile.getProperty("consolebgcolor");
+    }
+
+    public void setConsoleBGColor(String color) {
+        propFile.setProperty("consolebgcolor", color);
+    }
+
+    public String getConsoleFGColor() {
+        return propFile.getProperty("consolefgcolor");
+    }
+
+    public void setConsoleFGColor(String color) {
+        propFile.setProperty("consolefgcolor", color);
     }
 
     /**

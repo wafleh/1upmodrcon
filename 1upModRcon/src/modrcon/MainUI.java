@@ -11,11 +11,22 @@
 
 package modrcon;
 
+import javax.swing.*;
+import java.awt.Color;
+
 /**
  *
  * @author Pyrite
  */
-public class MainUI extends javax.swing.JFrame {
+public class MainUI extends JFrame {
+
+    public void setConsoleBackground(Color color) {
+        consoleTextArea.setBackground(color);
+    }
+
+    public void setConsoleForeground(Color color) {
+        consoleTextArea.setForeground(color);
+    }
 
     /** Creates new form NewJFrame */
     public MainUI() {
@@ -121,9 +132,7 @@ public class MainUI extends javax.swing.JFrame {
 
         jPanel2.setBorder(javax.swing.BorderFactory.createTitledBorder("Console"));
 
-        consoleTextArea.setBackground(new java.awt.Color(0, 0, 0));
         consoleTextArea.setColumns(20);
-        consoleTextArea.setForeground(new java.awt.Color(255, 255, 0));
         consoleTextArea.setRows(5);
         jScrollPane1.setViewportView(consoleTextArea);
 
@@ -445,7 +454,7 @@ public class MainUI extends javax.swing.JFrame {
 
     private void jMenuItem8ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem8ActionPerformed
         // TODO add your handling code here:
-        new SettingManagerUI().setVisible(true);
+        new SettingManagerUI(this).setVisible(true);
     }//GEN-LAST:event_jMenuItem8ActionPerformed
 
     /**
