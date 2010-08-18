@@ -1,6 +1,6 @@
 <?xml version="1.1" encoding="UTF-8" ?>
 
-<Form version="1.3" maxVersion="1.7" type="org.netbeans.modules.form.forminfo.JFrameFormInfo">
+<Form version="1.5" maxVersion="1.7" type="org.netbeans.modules.form.forminfo.JFrameFormInfo">
   <Properties>
     <Property name="defaultCloseOperation" type="int" value="3"/>
     <Property name="title" type="java.lang.String" value="1up ModRcon - Gear Calculator"/>
@@ -9,6 +9,9 @@
   <SyntheticProperties>
     <SyntheticProperty name="formSizePolicy" type="int" value="1"/>
   </SyntheticProperties>
+  <Events>
+    <EventHandler event="windowOpened" listener="java.awt.event.WindowListener" parameters="java.awt.event.WindowEvent" handler="formWindowOpened"/>
+  </Events>
   <AuxValues>
     <AuxValue name="FormSettings_autoResourcing" type="java.lang.Integer" value="0"/>
     <AuxValue name="FormSettings_autoSetComponentName" type="java.lang.Boolean" value="false"/>
@@ -98,8 +101,8 @@
                           <EmptySpace min="10" pref="10" max="10" attributes="0"/>
                           <Component id="lblSetGear" min="-2" max="-2" attributes="0"/>
                           <EmptySpace max="-2" attributes="0"/>
-                          <Component id="scrollList" min="-2" pref="54" max="-2" attributes="0"/>
-                          <EmptySpace min="-2" pref="161" max="-2" attributes="0"/>
+                          <Component id="spinnerGear" min="-2" pref="53" max="-2" attributes="0"/>
+                          <EmptySpace min="-2" pref="162" max="-2" attributes="0"/>
                           <Component id="lblSelectAll" min="-2" max="-2" attributes="0"/>
                           <EmptySpace max="-2" attributes="0"/>
                           <Component id="lblUnselectAll" min="-2" max="-2" attributes="0"/>
@@ -118,10 +121,10 @@
                   <EmptySpace max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="1" attributes="0">
                       <Component id="lblSetGear" min="-2" max="-2" attributes="0"/>
-                      <Component id="scrollList" min="-2" pref="19" max="-2" attributes="0"/>
                       <Group type="103" alignment="1" groupAlignment="3" attributes="0">
                           <Component id="lblUnselectAll" alignment="3" min="-2" max="-2" attributes="0"/>
                           <Component id="lblSelectAll" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="spinnerGear" alignment="3" min="-2" max="-2" attributes="0"/>
                       </Group>
                   </Group>
                   <EmptySpace max="32767" attributes="0"/>
@@ -141,7 +144,14 @@
               <Properties>
                 <Property name="model" type="javax.swing.table.TableModel" editor="org.netbeans.modules.form.editors2.TableModelEditor">
                   <Table columnCount="3" rowCount="6">
-                    <Column editable="true" title="" type="java.lang.Boolean"/>
+                    <Column editable="true" title="" type="java.lang.Boolean">
+                      <Data value="true"/>
+                      <Data value="true"/>
+                      <Data value="true"/>
+                      <Data value="true"/>
+                      <Data value="true"/>
+                      <Data value="true"/>
+                    </Column>
                     <Column editable="false" title="Gear" type="java.lang.Object">
                       <Data value="Grenades"/>
                       <Data value="Snipers"/>
@@ -160,28 +170,7 @@
                     </Column>
                   </Table>
                 </Property>
-              </Properties>
-            </Component>
-          </SubComponents>
-        </Container>
-        <Container class="javax.swing.JScrollPane" name="scrollList">
-          <AuxValues>
-            <AuxValue name="autoScrollPane" type="java.lang.Boolean" value="true"/>
-          </AuxValues>
-
-          <Layout class="org.netbeans.modules.form.compat2.layouts.support.JScrollPaneSupportLayout"/>
-          <SubComponents>
-            <Component class="javax.swing.JList" name="listGear">
-              <Properties>
-                <Property name="model" type="javax.swing.ListModel" editor="org.netbeans.modules.form.editors2.ListModelEditor">
-                  <StringArray count="5">
-                    <StringItem index="0" value="Item 1"/>
-                    <StringItem index="1" value="Item 2"/>
-                    <StringItem index="2" value="Item 3"/>
-                    <StringItem index="3" value="Item 4"/>
-                    <StringItem index="4" value="Item 5"/>
-                  </StringArray>
-                </Property>
+                <Property name="autoResizeMode" type="int" value="3"/>
               </Properties>
             </Component>
           </SubComponents>
@@ -199,6 +188,13 @@
         <Component class="javax.swing.JLabel" name="lblUnselectAll">
           <Properties>
             <Property name="text" type="java.lang.String" value="None"/>
+          </Properties>
+        </Component>
+        <Component class="javax.swing.JSpinner" name="spinnerGear">
+          <Properties>
+            <Property name="model" type="javax.swing.SpinnerModel" editor="org.netbeans.modules.form.editors2.SpinnerModelEditor">
+              <SpinnerModel initial="0" maximum="63" minimum="0" numberType="java.lang.Integer" stepSize="1" type="number"/>
+            </Property>
           </Properties>
         </Component>
       </SubComponents>

@@ -16,7 +16,6 @@ package modrcon;
  * @author Jacob
  */
 public class GearCalculatorUI extends javax.swing.JFrame {
-
     /** Creates new form GearCalculatorUI */
     public GearCalculatorUI() {
         initComponents();
@@ -35,17 +34,21 @@ public class GearCalculatorUI extends javax.swing.JFrame {
         gearPanel = new javax.swing.JPanel();
         scrollGear = new javax.swing.JScrollPane();
         tableGear = new javax.swing.JTable();
-        scrollList = new javax.swing.JScrollPane();
-        listGear = new javax.swing.JList();
         lblSetGear = new javax.swing.JLabel();
         lblSelectAll = new javax.swing.JLabel();
         lblUnselectAll = new javax.swing.JLabel();
+        spinnerGear = new javax.swing.JSpinner();
         btnSend = new javax.swing.JButton();
         btnClose = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("1up ModRcon - Gear Calculator");
         setResizable(false);
+        addWindowListener(new java.awt.event.WindowAdapter() {
+            public void windowOpened(java.awt.event.WindowEvent evt) {
+                formWindowOpened(evt);
+            }
+        });
 
         logoPanel.setPreferredSize(new java.awt.Dimension(100, 66));
 
@@ -64,12 +67,12 @@ public class GearCalculatorUI extends javax.swing.JFrame {
 
         tableGear.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, "Grenades", "1"},
-                {null, "Snipers", "2"},
-                {null, "Spas", "4"},
-                {null, "Pistols", "8"},
-                {null, "Automatic Guns", "16"},
-                {null, "Negev", "32"}
+                {new Boolean(true), "Grenades", "1"},
+                {new Boolean(true), "Snipers", "2"},
+                {new Boolean(true), "Spas", "4"},
+                {new Boolean(true), "Pistols", "8"},
+                {new Boolean(true), "Automatic Guns", "16"},
+                {new Boolean(true), "Negev", "32"}
             },
             new String [] {
                 "", "Gear", "Value"
@@ -90,20 +93,16 @@ public class GearCalculatorUI extends javax.swing.JFrame {
                 return canEdit [columnIndex];
             }
         });
+        tableGear.setAutoResizeMode(javax.swing.JTable.AUTO_RESIZE_LAST_COLUMN);
         scrollGear.setViewportView(tableGear);
-
-        listGear.setModel(new javax.swing.AbstractListModel() {
-            String[] strings = { "Item 1", "Item 2", "Item 3", "Item 4", "Item 5" };
-            public int getSize() { return strings.length; }
-            public Object getElementAt(int i) { return strings[i]; }
-        });
-        scrollList.setViewportView(listGear);
 
         lblSetGear.setText("Set g_Gear");
 
         lblSelectAll.setText("All");
 
         lblUnselectAll.setText("None");
+
+        spinnerGear.setModel(new javax.swing.SpinnerNumberModel(0, 0, 63, 1));
 
         javax.swing.GroupLayout gearPanelLayout = new javax.swing.GroupLayout(gearPanel);
         gearPanel.setLayout(gearPanelLayout);
@@ -116,8 +115,8 @@ public class GearCalculatorUI extends javax.swing.JFrame {
                         .addGap(10, 10, 10)
                         .addComponent(lblSetGear)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(scrollList, javax.swing.GroupLayout.PREFERRED_SIZE, 54, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(161, 161, 161)
+                        .addComponent(spinnerGear, javax.swing.GroupLayout.PREFERRED_SIZE, 53, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(162, 162, 162)
                         .addComponent(lblSelectAll)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(lblUnselectAll))
@@ -132,10 +131,10 @@ public class GearCalculatorUI extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(gearPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(lblSetGear)
-                    .addComponent(scrollList, javax.swing.GroupLayout.PREFERRED_SIZE, 19, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(gearPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                         .addComponent(lblUnselectAll)
-                        .addComponent(lblSelectAll)))
+                        .addComponent(lblSelectAll)
+                        .addComponent(spinnerGear, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
@@ -175,6 +174,12 @@ public class GearCalculatorUI extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
+        tableGear.getColumnModel().getColumn(0).setPreferredWidth(20);
+        tableGear.getColumnModel().getColumn(1).setPreferredWidth(200);
+        tableGear.getColumnModel().getColumn(2).setPreferredWidth(100);
+    }//GEN-LAST:event_formWindowOpened
+
     /**
     * @param args the command line arguments
     */
@@ -193,10 +198,9 @@ public class GearCalculatorUI extends javax.swing.JFrame {
     private javax.swing.JLabel lblSelectAll;
     private javax.swing.JLabel lblSetGear;
     private javax.swing.JLabel lblUnselectAll;
-    private javax.swing.JList listGear;
     private javax.swing.JPanel logoPanel;
     private javax.swing.JScrollPane scrollGear;
-    private javax.swing.JScrollPane scrollList;
+    private javax.swing.JSpinner spinnerGear;
     private javax.swing.JTable tableGear;
     // End of variables declaration//GEN-END:variables
 
