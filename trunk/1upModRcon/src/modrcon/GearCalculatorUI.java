@@ -41,7 +41,7 @@ public class GearCalculatorUI extends javax.swing.JFrame {
         btnSend = new javax.swing.JButton();
         btnClose = new javax.swing.JButton();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("1up ModRcon - Gear Calculator");
         setResizable(false);
         addWindowListener(new java.awt.event.WindowAdapter() {
