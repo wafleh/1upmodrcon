@@ -16,7 +16,9 @@ public class GradientPanel extends JPanel {
 
     /* Default Constructor */
     public GradientPanel() {
-        this( Color.RED , Color.BLACK );
+        // Top Color   : #860703
+        // Bottom Color: #DA542F
+        this( new Color(0x860703) , new Color(0xDA542F) );
     }
 
     /**
@@ -35,7 +37,7 @@ public class GradientPanel extends JPanel {
         super.paintComponent( g );
         int panelHeight = getHeight();
         int panelWidth = getWidth();
-        GradientPaint gradientPaint = new GradientPaint( 0 , 0 , startColor , panelWidth , panelHeight , endColor );
+        GradientPaint gradientPaint = new GradientPaint( panelWidth / 2 , 0 , startColor , panelWidth / 2 , panelHeight , endColor );
         if( g instanceof Graphics2D ) {
             Graphics2D graphics2D = (Graphics2D)g;
             graphics2D.setPaint( gradientPaint );
