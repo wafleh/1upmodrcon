@@ -12,6 +12,7 @@
 package modrcon;
 
 import javax.swing.table.*;
+import javax.swing.*;
 import java.io.*;
 import java.util.*;
 
@@ -19,10 +20,13 @@ import java.util.*;
  *
  * @author Pyrite
  */
-public class ServerManagerUI extends javax.swing.JFrame {
+public class ServerManagerUI extends JFrame {
+
+    protected MainUI parent;
 
     /** Creates new form ServerManagerUI */
-    public ServerManagerUI() {
+    public ServerManagerUI(MainUI owner) {
+        this.parent = owner;
         initComponents();
         this.readFile();
     }
@@ -237,12 +241,13 @@ public class ServerManagerUI extends javax.swing.JFrame {
 
         //System.out.print(contents);
         this.writeFile(contents);
+        this.parent.refreshServerCombo();
+        this.dispose();
     }//GEN-LAST:event_btnSaveActionPerformed
 
     private void btnAddServerMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnAddServerMouseClicked
         // TODO add your handling code here:
         DefaultTableModel tm = (DefaultTableModel)this.serversTable.getModel();
-        Server server = new Server();
         tm.addRow(new Server().toArray());
 
     }//GEN-LAST:event_btnAddServerMouseClicked
@@ -259,17 +264,6 @@ public class ServerManagerUI extends javax.swing.JFrame {
     private void btnEditServerMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnEditServerMouseClicked
         // TODO add your handling code here:
     }//GEN-LAST:event_btnEditServerMouseClicked
-
-    /**
-    * @param args the command line arguments
-    */
-    public static void main(String args[]) {
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new ServerManagerUI().setVisible(true);
-            }
-        });
-    }
 
     private void writeFile(String contents) {
         try {

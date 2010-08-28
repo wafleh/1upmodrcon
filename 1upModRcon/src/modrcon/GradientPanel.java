@@ -31,6 +31,17 @@ public class GradientPanel extends JPanel {
         super();
         this.startColor = startColor;
         this.endColor = endColor;
+
+        ImageIcon logo = new ImageIcon();
+        try {
+            logo = new ImageIcon(getClass().getResource("/modrcon/resources/1upModRconLogo.png"));
+        }
+        catch (Exception e) {
+            System.out.println("Error: "+e.getMessage());
+        }
+        JLabel logoLabel = new JLabel(logo);
+        this.add(logoLabel);
+
     }
 
     @Override protected void paintComponent( Graphics g ) {

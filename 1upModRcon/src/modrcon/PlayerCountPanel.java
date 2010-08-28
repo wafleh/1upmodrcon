@@ -1,7 +1,7 @@
 package modrcon;
 
-import javax.swing.*;
 import java.awt.*;
+import javax.swing.*;
 
 /**
  *
@@ -9,22 +9,20 @@ import java.awt.*;
  */
 public class PlayerCountPanel extends JPanel {
 
-    protected JLabel players;
-    protected JLabel numPlayers;
-    protected JLabel slash;
-    protected JLabel maxPlayers;
-    protected JProgressBar progressbar;
+    private JLabel players;
+    private JLabel numPlayers;
+    private JLabel slash;
+    private JLabel maxPlayers;
+    private JProgressBar progressbar;
 
     public PlayerCountPanel() {
         super();
 
-        this.setLayout(new FlowLayout());
+        this.setLayout(new FlowLayout(FlowLayout.LEFT));
         this.setBorder(BorderFactory.createTitledBorder(""));
-        Dimension dm = new Dimension();
-        dm.setSize(278, 30);
-        this.setPreferredSize(dm);
 
         this.players = new JLabel("Players: ");
+        this.players.setFont(new Font("Tahoma", Font.BOLD, 11));
         this.slash = new JLabel(" / ");
         this.progressbar = new JProgressBar();
         this.numPlayers = new JLabel("28");
@@ -41,4 +39,13 @@ public class PlayerCountPanel extends JPanel {
         this.add(maxPlayers);
         this.add(progressbar);
     }
+
+    public void setMaxPlayers(String max) {
+        this.maxPlayers.setText(max);
+    }
+
+    public void setNumPlayers(String num) {
+        this.numPlayers.setText(num);
+    }
+    
 }

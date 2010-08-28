@@ -29,6 +29,30 @@ public class Server {
         this.modpass = modpass;
         this.rconpass = rconpass;
     }
+
+    public String getName() {
+        return this.name;
+    }
+
+    public String getIP() {
+        return this.ip;
+    }
+
+    public String getPortAsString() {
+        return this.port;
+    }
+
+    public int getPortAsInteger() {
+        return Integer.parseInt(this.port);
+    }
+
+    public String getModPass() {
+        return this.modpass;
+    }
+
+    public String getRconPass() {
+        return this.rconpass;
+    }
     
     public String[] toArray() {
         String[] server = {this.name, this.ip, this.port, this.modpass, this.rconpass };
@@ -36,7 +60,7 @@ public class Server {
     }
     
     @Override public String toString() {
-        return "Name: "+name+", IP: "+ip+", Port: "+port+", ModPass: "+modpass+", RconPass: "+rconpass;
+        return this.name;
     }
 
 }
