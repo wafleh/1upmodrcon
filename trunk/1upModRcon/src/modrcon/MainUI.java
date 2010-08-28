@@ -2,7 +2,8 @@ package modrcon;
 
 import javax.swing.*;
 import java.awt.Color;
-import bowser.BowserQuery;
+import java.util.*;
+import java.awt.datatransfer.*;
 
 /**
  *
@@ -18,9 +19,48 @@ public class MainUI extends JFrame {
         consoleTextArea.setForeground(color);
     }
 
+    public void refreshServerCombo() {
+        // Load Server List
+        ServerParser sp = new ServerParser();
+        List servers = sp.getServers();
+        for (int i=0; i < servers.size(); i++) {
+            this.comboServerList.addItem(servers.get(i));
+        }
+    }
+
+    public void refreshServerInfo() {
+        Server server = (Server)this.comboServerList.getSelectedItem();
+        try {
+            BowserQuery q = new BowserQuery(server.getIP(), server.getPortAsInteger());
+            q.setPassword(server.getModPass());
+            Map map = q.getServerInfo();
+            this.sinfoServerName.setText((String)map.get("hostname"));
+            this.sinfoServerIP.setText(server.getIP());
+            this.sinfoServerPort.setText(server.getPortAsString());
+            this.sinfoGameType.setText(ServerInfo.getGameTypeString(Integer.parseInt((String)map.get("gametype"))));
+            this.sinfoMap.setText((String)map.get("mapname"));
+            /*
+            Iterator iterator = map.keySet().iterator();
+            while (iterator.hasNext()) {
+               String key = iterator.next().toString();
+               String value = map.get(key).toString();
+               System.out.println(key + " " + value);
+            }
+            */
+        }
+        catch (Exception e) {
+            System.out.println("Exception Caught: "+e.getMessage());
+            e.printStackTrace();
+        }
+    }
+
     /** Creates new form NewJFrame */
     public MainUI() {
         initComponents();
+        refreshServerCombo();
+
+        // Populate Live Server Info
+        
     }
 
     /** This method is called from within the constructor to
@@ -38,20 +78,32 @@ public class MainUI extends JFrame {
         jLabel3 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
+        sinfoServerName = new javax.swing.JLabel();
+        sinfoMap = new javax.swing.JLabel();
+        sinfoServerIP = new javax.swing.JLabel();
+        sinfoServerPort = new javax.swing.JLabel();
+        sinfoGameType = new javax.swing.JLabel();
+        jLabel8 = new javax.swing.JLabel();
         jPanel2 = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
         consoleTextArea = new javax.swing.JTextArea();
-        jPanel3 = new javax.swing.JPanel();
-        jScrollPane2 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
-        jPanel4 = new javax.swing.JPanel();
+        rawCheckBox = new javax.swing.JCheckBox();
         jLabel7 = new javax.swing.JLabel();
-        jButton2 = new javax.swing.JButton();
+        jPanel3 = new javax.swing.JPanel();
+        jspLivePlayerInfo = new javax.swing.JScrollPane();
+        jTable1 = new javax.swing.JTable();
+        playerCountPanel1 = new modrcon.PlayerCountPanel();
+        jPanel4 = new javax.swing.JPanel();
+        btnBstatus = new javax.swing.JButton();
+        commandTextBox = new javax.swing.JTextField();
+        btnSend = new javax.swing.JButton();
+        btnGetStatus = new javax.swing.JButton();
         logoPanel = new GradientPanel();
-        jButton1 = new javax.swing.JButton();
+        btnConnect = new javax.swing.JButton();
         jLabel6 = new javax.swing.JLabel();
-        jComboBox1 = new javax.swing.JComboBox();
+        comboServerList = new javax.swing.JComboBox();
         labelLogo = new javax.swing.JLabel();
+        versionPanel1 = new modrcon.VersionPanel();
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu1 = new javax.swing.JMenu();
         saveConsoleMenuItem = new javax.swing.JMenuItem();
@@ -79,19 +131,38 @@ public class MainUI extends JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("1up ModRcon - Main (Moderator Mode)");
-        setResizable(false);
 
         jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder("Server Info"));
+        jPanel1.setMaximumSize(new java.awt.Dimension(251, 162));
 
+        jLabel1.setFont(new java.awt.Font("Tahoma", 1, 11));
         jLabel1.setText("Server Name:");
 
+        jLabel2.setFont(new java.awt.Font("Tahoma", 1, 11));
         jLabel2.setText("Server IP:");
 
+        jLabel3.setFont(new java.awt.Font("Tahoma", 1, 11));
         jLabel3.setText("Server Port:");
 
-        jLabel4.setText("Ping:");
+        jLabel4.setFont(new java.awt.Font("Tahoma", 1, 11));
+        jLabel4.setText("Game Type:");
 
+        jLabel5.setFont(new java.awt.Font("Tahoma", 1, 11));
         jLabel5.setText("Map:");
+
+        sinfoServerName.setText("N/A");
+
+        sinfoMap.setText("N/A");
+
+        sinfoServerIP.setText("N/A");
+
+        sinfoServerPort.setText("N/A");
+
+        sinfoGameType.setText("N/A");
+
+        jLabel8.setFont(new java.awt.Font("Tahoma", 1, 11));
+        jLabel8.setForeground(new java.awt.Color(255, 102, 0));
+        jLabel8.setText("<html><u>Join Server</u></html>");
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -105,44 +176,90 @@ public class MainUI extends JFrame {
                     .addComponent(jLabel3)
                     .addComponent(jLabel2)
                     .addComponent(jLabel1))
-                .addContainerGap(163, Short.MAX_VALUE))
+                .addGap(18, 18, 18)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(sinfoServerName)
+                    .addComponent(sinfoMap)
+                    .addComponent(sinfoServerIP)
+                    .addComponent(sinfoServerPort)
+                    .addComponent(sinfoGameType))
+                .addContainerGap(176, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                .addContainerGap(224, Short.MAX_VALUE)
+                .addComponent(jLabel8, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jLabel1)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel1)
+                    .addComponent(sinfoServerName))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jLabel2)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel2)
+                    .addComponent(sinfoServerIP))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jLabel3)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel3)
+                    .addComponent(sinfoServerPort))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jLabel4)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel4)
+                    .addComponent(sinfoGameType))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jLabel5)
-                .addContainerGap(30, Short.MAX_VALUE))
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel5)
+                    .addComponent(sinfoMap))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jLabel8, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
         );
 
         jPanel2.setBorder(javax.swing.BorderFactory.createTitledBorder("Console"));
 
         consoleTextArea.setColumns(20);
+        consoleTextArea.setFont(new java.awt.Font("Monospaced", 0, 12));
         consoleTextArea.setRows(5);
         jScrollPane1.setViewportView(consoleTextArea);
+
+        rawCheckBox.setText("Raw Output");
+        rawCheckBox.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                rawCheckBoxActionPerformed(evt);
+            }
+        });
+
+        jLabel7.setIcon(new javax.swing.ImageIcon(getClass().getResource("/modrcon/resources/files_remove.png"))); // NOI18N
+        jLabel7.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jLabel7MouseClicked(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
+            .addGroup(jPanel2Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 605, Short.MAX_VALUE)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 553, Short.MAX_VALUE)
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addComponent(jLabel7)
+                        .addGap(128, 128, 128)
+                        .addComponent(rawCheckBox)))
                 .addContainerGap())
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel2Layout.createSequentialGroup()
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 471, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(28, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 487, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel7)
+                    .addComponent(rawCheckBox)))
         );
 
         jPanel3.setBorder(javax.swing.BorderFactory.createTitledBorder("Live Player Info"));
@@ -158,7 +275,7 @@ public class MainUI extends JFrame {
                 "Score", "Ping", "Name"
             }
         ));
-        jScrollPane2.setViewportView(jTable1);
+        jspLivePlayerInfo.setViewportView(jTable1);
 
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
@@ -166,25 +283,40 @@ public class MainUI extends JFrame {
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel3Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 219, Short.MAX_VALUE)
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(playerCountPanel1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 278, Short.MAX_VALUE)
+                    .addComponent(jspLivePlayerInfo, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 278, Short.MAX_VALUE))
                 .addContainerGap())
         );
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel3Layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 387, Short.MAX_VALUE)
-                .addContainerGap())
+                .addComponent(jspLivePlayerInfo, javax.swing.GroupLayout.PREFERRED_SIZE, 185, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(playerCountPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(46, Short.MAX_VALUE))
         );
 
         jPanel4.setBorder(javax.swing.BorderFactory.createTitledBorder("Mod Control Panel"));
 
-        jLabel7.setText("/mod");
-
-        jButton2.setText("jButton2");
-        jButton2.addActionListener(new java.awt.event.ActionListener() {
+        btnBstatus.setText("bstatus");
+        btnBstatus.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton2ActionPerformed(evt);
+                btnBstatusActionPerformed(evt);
+            }
+        });
+
+        btnSend.setText("Send");
+        btnSend.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnSendActionPerformed(evt);
+            }
+        });
+
+        btnGetStatus.setText("getstatus");
+        btnGetStatus.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnGetStatusActionPerformed(evt);
             }
         });
 
@@ -194,25 +326,33 @@ public class MainUI extends JFrame {
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel4Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jLabel7)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jButton2)
-                .addContainerGap(508, Short.MAX_VALUE))
+                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel4Layout.createSequentialGroup()
+                        .addComponent(commandTextBox, javax.swing.GroupLayout.PREFERRED_SIZE, 485, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(btnSend))
+                    .addGroup(jPanel4Layout.createSequentialGroup()
+                        .addComponent(btnBstatus)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(btnGetStatus)))
+                .addContainerGap(15, Short.MAX_VALUE))
         );
         jPanel4Layout.setVerticalGroup(
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel4Layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addGroup(jPanel4Layout.createSequentialGroup()
                 .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel7)
-                    .addComponent(jButton2))
-                .addContainerGap())
+                    .addComponent(commandTextBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnSend))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(btnBstatus)
+                    .addComponent(btnGetStatus)))
         );
 
-        jButton1.setText("Connect");
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
+        btnConnect.setText("Connect");
+        btnConnect.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
+                btnConnectActionPerformed(evt);
             }
         });
 
@@ -220,8 +360,17 @@ public class MainUI extends JFrame {
         jLabel6.setForeground(new java.awt.Color(255, 255, 255));
         jLabel6.setText("Server Name:");
 
-        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
-        jComboBox1.setOpaque(false);
+        comboServerList.setOpaque(false);
+        comboServerList.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                comboServerListItemStateChanged(evt);
+            }
+        });
+        comboServerList.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                comboServerListActionPerformed(evt);
+            }
+        });
 
         labelLogo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/modrcon/resources/1upModRconLogo.png"))); // NOI18N
 
@@ -232,12 +381,12 @@ public class MainUI extends JFrame {
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, logoPanelLayout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(labelLogo)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 463, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 498, Short.MAX_VALUE)
                 .addComponent(jLabel6)
                 .addGap(18, 18, 18)
-                .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(comboServerList, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
-                .addComponent(jButton1)
+                .addComponent(btnConnect)
                 .addContainerGap())
         );
         logoPanelLayout.setVerticalGroup(
@@ -246,8 +395,8 @@ public class MainUI extends JFrame {
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(logoPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, logoPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(jButton1)
-                        .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(btnConnect)
+                        .addComponent(comboServerList, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addComponent(jLabel6))
                     .addComponent(labelLogo, javax.swing.GroupLayout.Alignment.TRAILING)))
         );
@@ -280,22 +429,42 @@ public class MainUI extends JFrame {
         jMenuItem9.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_C, java.awt.event.InputEvent.CTRL_MASK));
         jMenuItem9.setIcon(new javax.swing.ImageIcon(getClass().getResource("/modrcon/resources/copy.png"))); // NOI18N
         jMenuItem9.setText("Copy");
+        jMenuItem9.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem9ActionPerformed(evt);
+            }
+        });
         jMenu2.add(jMenuItem9);
 
         jMenuItem10.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_DELETE, 0));
         jMenuItem10.setIcon(new javax.swing.ImageIcon(getClass().getResource("/modrcon/resources/files_remove.png"))); // NOI18N
         jMenuItem10.setText("Clear");
+        jMenuItem10.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem10ActionPerformed(evt);
+            }
+        });
         jMenu2.add(jMenuItem10);
 
         jMenuItem11.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_F, java.awt.event.InputEvent.CTRL_MASK));
         jMenuItem11.setIcon(new javax.swing.ImageIcon(getClass().getResource("/modrcon/resources/find.png"))); // NOI18N
         jMenuItem11.setText("Find");
+        jMenuItem11.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem11ActionPerformed(evt);
+            }
+        });
         jMenu2.add(jMenuItem11);
         jMenu2.add(jSeparator3);
 
         jMenuItem12.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_A, java.awt.event.InputEvent.CTRL_MASK));
         jMenuItem12.setIcon(new javax.swing.ImageIcon(getClass().getResource("/modrcon/resources/files_add.png"))); // NOI18N
         jMenuItem12.setText("Select All");
+        jMenuItem12.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem12ActionPerformed(evt);
+            }
+        });
         jMenu2.add(jMenuItem12);
 
         jMenuBar1.add(jMenu2);
@@ -403,26 +572,28 @@ public class MainUI extends JFrame {
                     .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jPanel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(jPanel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
             .addComponent(logoPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(versionPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 921, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+            .addGroup(layout.createSequentialGroup()
                 .addComponent(logoPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(28, 28, 28)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
-                .addGap(26, 26, 26))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 25, Short.MAX_VALUE)
+                .addComponent(versionPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
 
         pack();
@@ -430,7 +601,7 @@ public class MainUI extends JFrame {
 
     private void jMenuItem4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem4ActionPerformed
         // TODO add your handling code here:
-        new ServerManagerUI().setVisible(true);
+        new ServerManagerUI(this).setVisible(true);
     }//GEN-LAST:event_jMenuItem4ActionPerformed
 
     private void jMenuItem1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem1ActionPerformed
@@ -443,9 +614,10 @@ public class MainUI extends JFrame {
         new UpdateUI().setVisible(true);
     }//GEN-LAST:event_jMenuItem2ActionPerformed
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+    private void btnConnectActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnConnectActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jButton1ActionPerformed
+        this.refreshServerInfo();
+    }//GEN-LAST:event_btnConnectActionPerformed
 
     private void aboutMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_aboutMenuItemActionPerformed
         // TODO add your handling code here:
@@ -488,18 +660,102 @@ public class MainUI extends JFrame {
         new SettingManagerUI(this).setVisible(true);
     }//GEN-LAST:event_jMenuItem8ActionPerformed
 
-    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+    private void btnBstatusActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBstatusActionPerformed
         // TODO add your handling code here:
         try {
-            BowserQuery q = new BowserQuery("208.43.15.85", 27960);
-            q.setPassword(bowser.BowserConfig.modPassword);
-            q.mod("status");
+            Server server = (Server)this.comboServerList.getSelectedItem();
+            BowserQuery q = new BowserQuery(server.ip, 27960);
+            q.setPassword(server.modpass);
+            if (this.rawCheckBox.isSelected()) {
+                q.setRawOutput(true);
+            } else {
+                q.setRawOutput(false);
+            }
+            q.mod("bstatus");
             this.consoleTextArea.append(q.getResponse());
         }
         catch (Exception e) {
             System.out.print(e.getMessage());
         }
-    }//GEN-LAST:event_jButton2ActionPerformed
+    }//GEN-LAST:event_btnBstatusActionPerformed
+
+    private void rawCheckBoxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rawCheckBoxActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_rawCheckBoxActionPerformed
+
+    private void comboServerListActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_comboServerListActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_comboServerListActionPerformed
+
+    private void comboServerListItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_comboServerListItemStateChanged
+        // TODO add your handling code here:
+    }//GEN-LAST:event_comboServerListItemStateChanged
+
+    private void btnSendActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSendActionPerformed
+        // TODO add your handling code here:
+        String cmd = this.commandTextBox.getText().trim();
+        try {
+            Server server = (Server)this.comboServerList.getSelectedItem();
+            BowserQuery q = new BowserQuery(server.getIP(), 27960);
+            q.setPassword(server.getModPass());
+            if (this.rawCheckBox.isSelected()) {
+                q.setRawOutput(true);
+            } else {
+                q.setRawOutput(false);
+            }
+            q.mod(cmd);
+            this.consoleTextArea.append(q.getResponse());
+        }
+        catch (Exception e) {
+            System.out.print(e.getMessage());
+        }
+    }//GEN-LAST:event_btnSendActionPerformed
+
+    private void btnGetStatusActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGetStatusActionPerformed
+        // TODO add your handling code here:
+        try {
+            Server server = (Server)this.comboServerList.getSelectedItem();
+            BowserQuery q = new BowserQuery(server.getIP(), 27960);
+            if (this.rawCheckBox.isSelected()) {
+                q.setRawOutput(true);
+            } else {
+                q.setRawOutput(false);
+            }
+            this.consoleTextArea.append(q.getstatus());
+        }
+        catch (Exception e) {
+            System.out.print(e.getMessage());
+        }
+    }//GEN-LAST:event_btnGetStatusActionPerformed
+
+    private void jLabel7MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel7MouseClicked
+        // TODO add your handling code here:
+        this.consoleTextArea.setText("");
+    }//GEN-LAST:event_jLabel7MouseClicked
+
+    private void jMenuItem10ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem10ActionPerformed
+        // TODO add your handling code here:
+        this.consoleTextArea.setText("");
+    }//GEN-LAST:event_jMenuItem10ActionPerformed
+
+    private void jMenuItem9ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem9ActionPerformed
+        // TODO add your handling code here:
+        String selection = this.consoleTextArea.getSelectedText();
+        StringSelection data = new StringSelection(selection);
+        Clipboard clipboard = java.awt.Toolkit.getDefaultToolkit().getSystemClipboard();
+        clipboard.setContents(data, data);
+
+    }//GEN-LAST:event_jMenuItem9ActionPerformed
+
+    private void jMenuItem12ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem12ActionPerformed
+        this.consoleTextArea.selectAll();
+        // TODO: Add code to show selected text as highlighted
+    }//GEN-LAST:event_jMenuItem12ActionPerformed
+
+    private void jMenuItem11ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem11ActionPerformed
+        // TODO add your handling code here:
+        JOptionPane.showMessageDialog(this, "Coming Soon...");
+    }//GEN-LAST:event_jMenuItem11ActionPerformed
 
     /**
     * @param args the command line arguments
@@ -514,11 +770,14 @@ public class MainUI extends JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JMenuItem aboutMenuItem;
+    private javax.swing.JButton btnBstatus;
+    private javax.swing.JButton btnConnect;
+    private javax.swing.JButton btnGetStatus;
+    private javax.swing.JButton btnSend;
+    private javax.swing.JComboBox comboServerList;
+    private javax.swing.JTextField commandTextBox;
     private javax.swing.JTextArea consoleTextArea;
     private javax.swing.JMenuItem exitMenuItem;
-    private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
-    private javax.swing.JComboBox jComboBox1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
@@ -526,6 +785,7 @@ public class MainUI extends JFrame {
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
+    private javax.swing.JLabel jLabel8;
     private javax.swing.JMenu jMenu1;
     private javax.swing.JMenu jMenu2;
     private javax.swing.JMenu jMenu3;
@@ -547,16 +807,24 @@ public class MainUI extends JFrame {
     private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel4;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JPopupMenu.Separator jSeparator1;
     private javax.swing.JPopupMenu.Separator jSeparator2;
     private javax.swing.JPopupMenu.Separator jSeparator3;
     private javax.swing.JPopupMenu.Separator jSeparator4;
     private javax.swing.JPopupMenu.Separator jSeparator5;
     private javax.swing.JTable jTable1;
+    private javax.swing.JScrollPane jspLivePlayerInfo;
     private javax.swing.JLabel labelLogo;
     private javax.swing.JPanel logoPanel;
+    private modrcon.PlayerCountPanel playerCountPanel1;
+    private javax.swing.JCheckBox rawCheckBox;
     private javax.swing.JMenuItem saveConsoleMenuItem;
+    private javax.swing.JLabel sinfoGameType;
+    private javax.swing.JLabel sinfoMap;
+    private javax.swing.JLabel sinfoServerIP;
+    private javax.swing.JLabel sinfoServerName;
+    private javax.swing.JLabel sinfoServerPort;
+    private modrcon.VersionPanel versionPanel1;
     // End of variables declaration//GEN-END:variables
 
 }

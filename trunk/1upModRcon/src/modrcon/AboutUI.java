@@ -54,32 +54,31 @@ public class AboutUI extends javax.swing.JDialog {
         lblTMSSoftwareURL = new javax.swing.JLabel();
         btnOk = new javax.swing.JButton();
         lblLogo = new javax.swing.JLabel();
-        logoPanel = new GradientPanel();
-        jLabel1 = new javax.swing.JLabel();
+        gradientPanel1 = new modrcon.GradientPanel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("1up ModRcon - About");
         setModal(true);
         setResizable(false);
 
-        lblAppName.setFont(new java.awt.Font("Arial", 1, 11));
+        lblAppName.setFont(new java.awt.Font("Arial", 1, 11)); // NOI18N
         lblAppName.setLabelFor(lblAppName);
         lblAppName.setText("Application Name:");
         AboutPanel.add(lblAppName);
 
-        lblVersion.setFont(new java.awt.Font("Arial", 1, 11));
+        lblVersion.setFont(new java.awt.Font("Arial", 1, 11)); // NOI18N
         lblVersion.setText("Version:");
         AboutPanel.add(lblVersion);
 
-        lblWebsite.setFont(new java.awt.Font("Arial", 1, 11));
+        lblWebsite.setFont(new java.awt.Font("Arial", 1, 11)); // NOI18N
         lblWebsite.setText("Website:");
         AboutPanel.add(lblWebsite);
 
-        lblBetaTesters.setFont(new java.awt.Font("Arial", 1, 11));
+        lblBetaTesters.setFont(new java.awt.Font("Arial", 1, 11)); // NOI18N
         lblBetaTesters.setText("Beta Testers:");
         AboutPanel.add(lblBetaTesters);
 
-        lblAppNameAtt.setFont(new java.awt.Font("Arial", 0, 11));
+        lblAppNameAtt.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
         lblAppNameAtt.setLabelFor(lblVersion);
         lblAppNameAtt.setText("1up ModRcon");
         AboutPanel.add(lblAppNameAtt);
@@ -189,25 +188,6 @@ public class AboutUI extends javax.swing.JDialog {
 
         lblLogo.setBackground(new java.awt.Color(255, 102, 0));
 
-        jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/modrcon/resources/1upModRconLogo.png"))); // NOI18N
-
-        javax.swing.GroupLayout logoPanelLayout = new javax.swing.GroupLayout(logoPanel);
-        logoPanel.setLayout(logoPanelLayout);
-        logoPanelLayout.setHorizontalGroup(
-            logoPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(logoPanelLayout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jLabel1)
-                .addContainerGap(180, Short.MAX_VALUE))
-        );
-        logoPanelLayout.setVerticalGroup(
-            logoPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(logoPanelLayout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jLabel1)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-        );
-
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -215,24 +195,24 @@ public class AboutUI extends javax.swing.JDialog {
             .addGroup(layout.createSequentialGroup()
                 .addComponent(lblLogo)
                 .addContainerGap(380, Short.MAX_VALUE))
-            .addComponent(logoPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jtpAbout, javax.swing.GroupLayout.PREFERRED_SIZE, 360, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap())
             .addGroup(layout.createSequentialGroup()
                 .addGap(145, 145, 145)
                 .addComponent(btnOk, javax.swing.GroupLayout.PREFERRED_SIZE, 89, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(146, Short.MAX_VALUE))
+            .addComponent(gradientPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 380, Short.MAX_VALUE)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jtpAbout, javax.swing.GroupLayout.PREFERRED_SIZE, 360, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(lblLogo)
-                    .addComponent(logoPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(gradientPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 53, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jtpAbout, javax.swing.GroupLayout.PREFERRED_SIZE, 181, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jtpAbout, javax.swing.GroupLayout.PREFERRED_SIZE, 193, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(btnOk)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
@@ -262,7 +242,7 @@ public class AboutUI extends javax.swing.JDialog {
     private javax.swing.JPanel AboutPanel;
     private javax.swing.JPanel ThirdPartyPanel;
     private javax.swing.JButton btnOk;
-    private javax.swing.JLabel jLabel1;
+    private modrcon.GradientPanel gradientPanel1;
     private javax.swing.JLabel jLabel15;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
@@ -282,7 +262,6 @@ public class AboutUI extends javax.swing.JDialog {
     private javax.swing.JLabel lblVersionAtt;
     private javax.swing.JLabel lblWebsite;
     private javax.swing.JLabel lblWebsiteAtt;
-    private javax.swing.JPanel logoPanel;
     // End of variables declaration//GEN-END:variables
 
 }

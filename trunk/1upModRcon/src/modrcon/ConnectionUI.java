@@ -19,7 +19,7 @@ import java.awt.event.*;
  */
 public class ConnectionUI extends JFrame implements ActionListener {
 
-    protected JPanel logoPanel           = new JPanel();
+    protected GradientPanel logoPanel           = new GradientPanel();
     protected JPanel connectionInfoPanel = new JPanel();
     protected JPanel buttonPanel         = new JPanel();
 
@@ -45,22 +45,24 @@ public class ConnectionUI extends JFrame implements ActionListener {
         this.setTitle("1up ModRcon - Connect");
         this.setDefaultCloseOperation(EXIT_ON_CLOSE);
         this.setSize(700,500);
-        this.setResizable(false);
+        this.setResizable(true);
 
         // Setup the Content Pane
         Container contentPane = this.getContentPane();
         contentPane.setLayout(new BorderLayout());
 
-
+        /*
         ImageIcon logo = new ImageIcon();
         try {
             logo = new ImageIcon(getClass().getClassLoader().getResource("logo.png"));
         }
         catch (Exception e) {}
         JLabel logoLabel = new JLabel(logo);
+         *
+         */
 
         //logoPanel.setBackground(Color.red);
-        logoPanel.add(logoLabel);
+        //logoPanel.add(logoLabel);
 
         String[] labels = {"Server Name: ", "Server IP: ", "Server Port: ", "Mod Password: ", "Rcon Password: "};
         int numPairs = labels.length;
@@ -96,7 +98,7 @@ public class ConnectionUI extends JFrame implements ActionListener {
         // Add various JPanels to Content Pane
         contentPane.add(logoPanel, BorderLayout.NORTH);
         contentPane.add(connectionInfoPanel, BorderLayout.CENTER);
-        contentPane.add(buttonPanel, BorderLayout.SOUTH);
+        contentPane.add(new PlayerCountPanel(), BorderLayout.SOUTH);
 
         // Make the Widgets Snug
         this.pack();
