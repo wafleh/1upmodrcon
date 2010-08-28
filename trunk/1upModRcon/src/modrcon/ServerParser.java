@@ -12,18 +12,23 @@ import org.w3c.dom.Element;
 import org.w3c.dom.NodeList;
 import org.xml.sax.SAXException;
 import org.w3c.dom.DOMException;
+import java.io.*;
 
 
 public class ServerParser {
 
-	//No generics
 	List myEmpls;
 	Document dom;
 
 
-	public ServerParser(){
+	public ServerParser() {
 		//create a list to hold the server objects
 		myEmpls = new ArrayList();
+
+                if (!this.writeDefaultXmlFile()) {
+                    System.out.println("Failed to Create Servers.xml File");
+                    System.exit(0);
+                }
 	}
 
 	public void runExample() {
@@ -63,6 +68,44 @@ public class ServerParser {
 		}
 	}
 
+        /**
+         * Creates a default servers.xml file with default values.
+         *
+         * @param file The file to attempt to create.
+         * @return True on Success, otherwise False.
+         */
+        private boolean writeDefaultXmlFile() {
+            Writer writer = null;
+            File file = new File("servers.xml");
+            if (!file.exists()) {
+                try {
+                    String text = "<servers>\n</servers>\n";
+                    writer = new BufferedWriter(new FileWriter(file));
+                    writer.write(text);
+                    return true;
+                }
+                catch (FileNotFoundException e) {
+                    System.out.println(e.getMessage());
+                    return false;
+                }
+                catch (IOException e) {
+                    System.out.println(e.getMessage());
+                    return false;
+                }
+                finally {
+                    try {
+                        if (writer != null) {
+                            writer.close();
+                        }
+                    }
+                    catch (IOException e) {
+                        System.out.println(e.getMessage());
+                    }
+                }
+            } else {
+                return true;
+            }
+        }
 
 	private void parseDocument(){
 		//get the root elememt
