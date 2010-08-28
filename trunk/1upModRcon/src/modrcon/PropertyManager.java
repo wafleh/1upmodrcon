@@ -2,6 +2,7 @@ package modrcon;
 
 import java.util.*;
 import javax.swing.*;
+import java.io.*;
 
 /**
  * A class to read/write properties for 1up ModRcon.
@@ -86,14 +87,59 @@ public class PropertyManager {
     }
 
     /**
+     * Creates a default 1upmodrcon.properties file with default values.
+     *
+     * @param file The file to attempt to create.
+     * @return True on Success, otherwise False.
+     */
+    private boolean writeDefaultPropertiesFile(File file) {
+        Writer writer = null;
+        try {
+            String text = "#Property File for 1up ModRcon\n#Fri Aug 27 23:18:57 CDT 2010\nversion=1.0\ngamepath=\nconsolebgcolor=\\#0\nconsolefgcolor=\\#FEFF00\n";
+            writer = new BufferedWriter(new FileWriter(file));
+            writer.write(text);
+            return true;
+        }
+        catch (FileNotFoundException e) {
+            System.out.println(e.getMessage());
+            return false;
+        }
+        catch (IOException e) {
+            System.out.println(e.getMessage());
+            return false;
+        }
+        finally {
+            try {
+                if (writer != null) {
+                    writer.close();
+                }
+            }
+            catch (IOException e) {
+                System.out.println(e.getMessage());
+            }
+        }
+    }
+
+    /**
      * Loads the 1up ModRcon properties file.
      *
      * The filename is 1upmodrcon.properties
      */
     private void loadPropertyFile() {
         try {
-            propFile = new Properties();
-            propFile.load(new java.io.FileInputStream(new java.io.File("1upmodrcon.properties")));
+            File pfile = new File("1upmodrcon.properties");
+            if (!pfile.exists()) {
+                if (!writeDefaultPropertiesFile(pfile)) {
+                    JOptionPane.showMessageDialog(parent, "Error attempting to create properties file.", "Error", JOptionPane.ERROR_MESSAGE);
+                    System.exit(0);
+                } else {
+                    propFile = new Properties();
+                    propFile.load(new FileInputStream(pfile));
+                }
+            } else {
+                propFile = new Properties();
+                propFile.load(new FileInputStream(pfile));
+            }
         }
         catch (Exception e) {
             JOptionPane.showMessageDialog(parent, "Error loading property file!\nShutting down program.", "Error", JOptionPane.ERROR_MESSAGE);
