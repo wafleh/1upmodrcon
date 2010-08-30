@@ -28,10 +28,12 @@ public class Main {
         PropertyManager pm = new PropertyManager();
 
         // Start Main UI
-        MainUI mui = new MainUI();
-        mui.setConsoleBackground(Color.decode(pm.getConsoleBGColor()));
-        mui.setConsoleForeground(Color.decode(pm.getConsoleFGColor()));
+        MainWindow mui = new MainWindow();
+        //mui.setConsoleBackground(Color.decode(pm.getConsoleBGColor()));
+        //mui.setConsoleForeground(Color.decode(pm.getConsoleFGColor()));
         mui.setVisible(true);
+
+        mui.controlPanel.printSize();
 
     }
 
