@@ -55,12 +55,24 @@ public class BowserQuery {
         this.rawOutput = flag;
     }
 
+    public boolean getRawOutput() {
+        return this.rawOutput;
+    }
+
     public void setPassword(String password) {
         this.password = password;
     }
 
+    public void rcon(String command) {
+        this.send("rcon "+this.password+" "+command);
+    }
+
     public void mod(String command) {
         this.send("mod "+this.password+" "+command);
+    }
+
+    public void ref(String command) {
+        this.send("ref "+this.password+" "+command);
     }
 
     public void say(String message) {

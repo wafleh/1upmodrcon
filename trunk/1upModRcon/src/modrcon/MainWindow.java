@@ -25,6 +25,9 @@ public class MainWindow extends JFrame {
     private GradientPanel logoPanel;
     private JPanel contentPanel;
     private VersionPanel versionPanel;
+
+    public ConsolePanel consolePanel;
+    public ControlPanel controlPanel;
     
     private JTextArea consoleTextArea;
     private JComboBox comboServerList;
@@ -47,11 +50,30 @@ public class MainWindow extends JFrame {
         Container cp = this.getContentPane();
         cp.setLayout(new BorderLayout());
 
+        JMenuBar menubar = new JMenuBar();
+        
+
         this.logoPanel = new GradientPanel();
         this.contentPanel = new JPanel();
         this.versionPanel = new VersionPanel();
+        this.consolePanel = new ConsolePanel();
+        this.controlPanel = new ControlPanel(2);
 
-        this.contentPanel.add(new LivePlayerInfoPanel());
+        this.contentPanel.setLayout(new BorderLayout());
+
+        JPanel left = new JPanel();
+        left.setLayout(new BorderLayout());
+        JPanel right = new JPanel();
+        right.setLayout(new BorderLayout());
+
+        left.add(new ServerInfoPanel(), BorderLayout.NORTH);
+        left.add(new LivePlayerInfoPanel(), BorderLayout.SOUTH);
+        right.add(this.consolePanel, BorderLayout.CENTER);
+        right.add(this.controlPanel, BorderLayout.SOUTH);
+
+
+        this.contentPanel.add(left, BorderLayout.WEST);
+        this.contentPanel.add(right, BorderLayout.EAST);
 
         cp.add(logoPanel, BorderLayout.NORTH);
         cp.add(contentPanel, BorderLayout.CENTER);
@@ -71,7 +93,7 @@ public class MainWindow extends JFrame {
         // Populate Live Server Info
 
         // Make the Widgets Snug
-        //this.pack();
+        this.pack();
 
         // Center the Window (Whatever Its Size) on the Screen
         Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
