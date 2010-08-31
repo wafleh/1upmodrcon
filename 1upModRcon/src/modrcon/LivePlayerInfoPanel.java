@@ -24,7 +24,8 @@ public class LivePlayerInfoPanel extends JPanel {
     public LivePlayerInfoPanel() {
         super();
 
-        this.setLayout(new BorderLayout());
+        //this.setLayout(new BorderLayout());
+        this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
         this.setBorder(BorderFactory.createTitledBorder("Live Player Info"));
 
 
@@ -35,13 +36,15 @@ public class LivePlayerInfoPanel extends JPanel {
 
 
         jspLivePlayerInfo = new JScrollPane(playerTable);
-        playerTable.setFillsViewportHeight(true); // Makes table white bg fill entire table
+        //playerTable.setFillsViewportHeight(true); // Makes table white bg fill entire table
 
 
         this.pcp = new PlayerCountPanel();
         
-        this.add(jspLivePlayerInfo, BorderLayout.NORTH);
-        this.add(pcp, BorderLayout.SOUTH);
+        //this.add(jspLivePlayerInfo, BorderLayout.NORTH);
+        //this.add(pcp, BorderLayout.SOUTH);
+        this.add(jspLivePlayerInfo);
+        this.add(pcp);
     }
 
     public void updateTable(ArrayList data) {

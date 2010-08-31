@@ -20,10 +20,11 @@ public class MainWindow extends JFrame {
 
     private String frameTitle;
     
-    private LogoPanel logoPanel;
+    public LogoPanel logoPanel;
     private JPanel contentPanel;
     private VersionPanel versionPanel;
 
+    public ServerInfoPanel serverInfoPanel;
     public ConsolePanel consolePanel;
     public ControlPanel controlPanel;
     
@@ -50,20 +51,21 @@ public class MainWindow extends JFrame {
 
         // Setup the Content Pane
         Container cp = this.getContentPane();
-        cp.setLayout(new BorderLayout());       
+        cp.setLayout(new BorderLayout());
 
         this.logoPanel = new LogoPanel(LogoPanel.LOGO_LEFT);
         this.contentPanel = new JPanel();
         this.versionPanel = new VersionPanel();
         this.consolePanel = new ConsolePanel(this);
         this.controlPanel = new ControlPanel(this, 2);
+        this.serverInfoPanel = new ServerInfoPanel();
 
         this.comboServerList = new JComboBox();
         this.btnConnect = new JButton("Connect");
         this.logoPanel.add(this.comboServerList);
         
-
-
+        // so the question is what layout to make the contentPanel.
+        //this.contentPanel.setLayout(new BoxLayout(this.contentPanel, BoxLayout.LINE_AXIS));
         this.contentPanel.setLayout(new BorderLayout());
 
         JPanel left = new JPanel();
@@ -71,14 +73,14 @@ public class MainWindow extends JFrame {
         JPanel right = new JPanel();
         right.setLayout(new BorderLayout());
 
-        left.add(new ServerInfoPanel(), BorderLayout.NORTH);
+        left.add(this.serverInfoPanel, BorderLayout.NORTH);
         left.add(new LivePlayerInfoPanel(), BorderLayout.SOUTH);
         right.add(this.consolePanel, BorderLayout.CENTER);
         right.add(this.controlPanel, BorderLayout.SOUTH);
 
 
         this.contentPanel.add(left, BorderLayout.WEST);
-        this.contentPanel.add(right, BorderLayout.EAST);
+        this.contentPanel.add(right, BorderLayout.CENTER);
 
         cp.add(logoPanel, BorderLayout.NORTH);
         cp.add(contentPanel, BorderLayout.CENTER);
@@ -94,6 +96,7 @@ public class MainWindow extends JFrame {
 
         //initComponents();
         refreshServerCombo();
+        refreshServerInfo();
 
         // Populate Live Server Info
 
@@ -235,11 +238,11 @@ public class MainWindow extends JFrame {
             BowserQuery q = new BowserQuery(server.getIP(), server.getPortAsInteger());
             q.setPassword(server.getModPass());
             Map map = q.getServerInfo();
-            this.sinfoServerName.setText((String)map.get("hostname"));
-            this.sinfoServerIP.setText(server.getIP());
-            this.sinfoServerPort.setText(server.getPortAsString());
-            this.sinfoGameType.setText(ServerInfo.getGameTypeString(Integer.parseInt((String)map.get("gametype"))));
-            this.sinfoMap.setText((String)map.get("mapname"));
+            this.serverInfoPanel.setServerName((String)map.get("hostname"));
+            this.serverInfoPanel.setServerIP(server.getIP());
+            this.serverInfoPanel.setServerPort(server.getPortAsString());
+            this.serverInfoPanel.setGameType(ServerInfo.getGameTypeString(Integer.parseInt((String)map.get("gametype"))));
+            this.serverInfoPanel.setMap((String)map.get("mapname"));
             /*
             Iterator iterator = map.keySet().iterator();
             while (iterator.hasNext()) {

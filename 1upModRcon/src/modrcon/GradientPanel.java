@@ -16,6 +16,9 @@ public class GradientPanel extends JPanel {
     /** Ending Gradient Color. */
     private Color endColor;
 
+    public static final int DIRECTION_TOPDOWN = 0;
+    public static final int DIRECTION_LEFTRIGHT = 0;
+
     /**
      * Constructor supplying a color.
      *
