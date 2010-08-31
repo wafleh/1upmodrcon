@@ -42,23 +42,5 @@ public class LogoPanel extends GradientPanel {
 
         this.add(logoLabel);
     }
-
-    public void doit(JComboBox jcb) {
-        this.removeAll();
-        this.setLayout(new BorderLayout());
-        ImageIcon logo = new ImageIcon();
-        try {
-            logo = new ImageIcon(getClass().getResource("/modrcon/resources/1upModRconLogo.png"));
-        }
-        catch (Exception e) {
-            System.out.println("Error Setting Logo in LogoPanel: "+e.getMessage());
-        }
-        JLabel logoLabel = new JLabel(logo);
-
-        this.add(logoLabel, BorderLayout.WEST);
-        this.add(jcb, BorderLayout.EAST);
-        this.updateUI();
-
-    }
-
+    
 }
