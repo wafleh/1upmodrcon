@@ -32,7 +32,7 @@ public class MainUI extends JFrame {
         Server server = (Server)this.comboServerList.getSelectedItem();
         try {
             BowserQuery q = new BowserQuery(server.getIP(), server.getPortAsInteger());
-            q.setPassword(server.getModPass());
+            q.setPassword(server.getPassword());
             Map map = q.getServerInfo();
             this.sinfoServerName.setText((String)map.get("hostname"));
             this.sinfoServerIP.setText(server.getIP());
@@ -594,7 +594,7 @@ public class MainUI extends JFrame {
 
     private void jMenuItem4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem4ActionPerformed
         // TODO add your handling code here:
-        new ServerManagerUI(this).setVisible(true);
+        //new ServerManager(this);
     }//GEN-LAST:event_jMenuItem4ActionPerformed
 
     private void jMenuItem1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem1ActionPerformed
@@ -658,7 +658,7 @@ public class MainUI extends JFrame {
         try {
             Server server = (Server)this.comboServerList.getSelectedItem();
             BowserQuery q = new BowserQuery(server.ip, 27960);
-            q.setPassword(server.modpass);
+            q.setPassword(server.getPassword());
             if (this.rawCheckBox.isSelected()) {
                 q.setRawOutput(true);
             } else {
@@ -690,7 +690,7 @@ public class MainUI extends JFrame {
         try {
             Server server = (Server)this.comboServerList.getSelectedItem();
             BowserQuery q = new BowserQuery(server.getIP(), 27960);
-            q.setPassword(server.getModPass());
+            q.setPassword(server.getPassword());
             if (this.rawCheckBox.isSelected()) {
                 q.setRawOutput(true);
             } else {

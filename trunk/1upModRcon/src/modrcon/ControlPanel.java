@@ -106,8 +106,7 @@ public class ControlPanel extends JPanel implements ActionListener {
             try {
                 Server server = (Server)this.parent.comboServerList.getSelectedItem();
                 BowserQuery q = new BowserQuery(server.getIP(), server.getPortAsInteger());
-                q.setPassword(server.getModPass());
-                q.setRawOutput(true);
+                q.setPassword(server.getPassword());
                 q.mod("status");
                 this.parent.consolePanel.appendToConsole(q.getResponse());
             }
@@ -121,8 +120,7 @@ public class ControlPanel extends JPanel implements ActionListener {
             try {
                 Server server = (Server)this.parent.comboServerList.getSelectedItem();
                 BowserQuery q = new BowserQuery(server.getIP(), server.getPortAsInteger());
-                q.setPassword(server.getModPass());
-                q.setRawOutput(true);
+                q.setPassword(server.getPassword());
                 q.mod("dumpuser "+input);
                 this.parent.consolePanel.appendToConsole(q.getResponse());
             }
@@ -135,7 +133,7 @@ public class ControlPanel extends JPanel implements ActionListener {
             try {
                 Server server = (Server)this.parent.comboServerList.getSelectedItem();
                 BowserQuery q = new BowserQuery(server.getIP(), 27960);
-                q.setPassword(server.getModPass());
+                q.setPassword(server.getPassword());
                 q.mod(cmd);
                 this.parent.consolePanel.appendToConsole(q.getResponse());
             }
