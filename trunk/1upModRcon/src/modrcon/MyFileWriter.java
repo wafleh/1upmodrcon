@@ -9,6 +9,6 @@ package modrcon;
  *
  * @author pyrite
  */
-public class FileWriter {
+public class MyFileWriter {
 
 }
