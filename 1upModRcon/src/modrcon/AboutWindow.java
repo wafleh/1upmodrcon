@@ -12,7 +12,7 @@ import java.awt.*;
  *
  * @author Pyrite
  */
-public class AboutWindow extends JFrame {
+public class AboutWindow extends JDialog {
 
     public AboutWindow() {
         super();

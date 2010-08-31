@@ -2,7 +2,7 @@ package modrcon;
 
 /**
  * A server class is a representation of Q3 based game server
- * consisting of a name, ip, port, mod password and/or rcon password.
+ * consisting of a name, ip, port, login method, and password.
  * 
  * @author Pyrite[1up]
  */
@@ -11,23 +11,23 @@ public class Server {
     public String name;
     public String ip;
     public String port;
-    public String modpass;
-    public String rconpass;
+    public String loginType;
+    public String password;
 
     public Server() {
         this.name = "";
         this.ip = "";
         this.port = "27960";
-        this.modpass = "";
-        this.rconpass = "";
+        this.loginType = "";
+        this.password = "";
     }
 
-    public Server(String name, String ip, String port, String modpass, String rconpass) {
+    public Server(String name, String ip, String port, String loginType, String password) {
         this.name = name;
         this.ip = ip;
         this.port = port;
-        this.modpass = modpass;
-        this.rconpass = rconpass;
+        this.loginType = loginType;
+        this.password = password;
     }
 
     public String getName() {
@@ -46,16 +46,16 @@ public class Server {
         return Integer.parseInt(this.port);
     }
 
-    public String getModPass() {
-        return this.modpass;
+    public String getLoginType() {
+        return this.loginType;
     }
 
-    public String getRconPass() {
-        return this.rconpass;
+    public String getPassword() {
+        return this.password;
     }
     
     public String[] toArray() {
-        String[] server = {this.name, this.ip, this.port, this.modpass, this.rconpass };
+        String[] server = {this.name, this.ip, this.port, this.loginType, this.password };
         return server;
     }
     

@@ -140,8 +140,8 @@ public class ServerParser {
 		String name = getTextValue(empEl,"name");
 		String ip = getTextValue(empEl,"ip");
 		String port = getTextValue(empEl,"port");
-                String modpass = getTextValue(empEl, "modpass");
-                String rconpass = getTextValue(empEl, "rconpass");
+                String modpass = getTextValue(empEl, "logintype");
+                String rconpass = getTextValue(empEl, "password");
 
 		//Create a new Employee with the value read from the xml nodes
 		Server e = new Server(name,ip,port,modpass,rconpass);

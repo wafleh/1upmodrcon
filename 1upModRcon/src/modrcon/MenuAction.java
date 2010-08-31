@@ -52,6 +52,10 @@ public class MenuAction extends AbstractAction {
             this.parent.consolePanel.clearConsole();
         }
 
+        else if (selection.equals("Manage Servers")) {
+            new ServerManager(this.parent);
+        }
+
         else if (selection.equals("Settings")) {
             new SettingManagerUI(this.parent).setVisible(true);
         }

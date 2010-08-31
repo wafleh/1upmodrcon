@@ -236,7 +236,7 @@ public class MainWindow extends JFrame {
         Server server = (Server)this.comboServerList.getSelectedItem();
         try {
             BowserQuery q = new BowserQuery(server.getIP(), server.getPortAsInteger());
-            q.setPassword(server.getModPass());
+            q.setPassword(server.getPassword()); // may not be needed.
             Map map = q.getServerInfo();
             this.serverInfoPanel.setServerName((String)map.get("hostname"));
             this.serverInfoPanel.setServerIP(server.getIP());
