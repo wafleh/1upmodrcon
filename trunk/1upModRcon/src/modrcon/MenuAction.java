@@ -2,6 +2,8 @@ package modrcon;
 
 import javax.swing.*;
 import java.awt.event.*;
+import java.util.*;
+import java.awt.datatransfer.*;
 
 /**
  * Handles the menu bar actions for the MainWindow singleton.
@@ -40,6 +42,16 @@ public class MenuAction extends AbstractAction {
             }
         }
 
+        else if (selection.equals("Copy")) {
+            String selectedText = this.parent.consolePanel.getSelectedText(); //this.consoleTextArea.getSelectedText();
+            StringSelection data = new StringSelection(selectedText);
+            Clipboard clipboard = java.awt.Toolkit.getDefaultToolkit().getSystemClipboard();
+            clipboard.setContents(data, data);
+        }
+        else if (selection.equals("Clear")) {
+            this.parent.consolePanel.clearConsole();
+        }
+
         else if (selection.equals("Settings")) {
             new SettingManagerUI(this.parent).setVisible(true);
         }
@@ -50,7 +62,8 @@ public class MenuAction extends AbstractAction {
         }
 
         else if (selection.equals("About")) {
-            new AboutWindow();
+            //new AboutWindow();
+            this.parent.logoPanel.doit(this.parent.comboServerList);
         }
         
         else {

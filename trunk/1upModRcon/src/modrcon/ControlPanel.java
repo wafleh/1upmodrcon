@@ -43,7 +43,7 @@ public class ControlPanel extends JPanel implements ActionListener {
         this.parent = owner;
 
         this.type = type;
-        this.labelType = new JLabel("/"+this.getType().toLowerCase());
+        this.labelType = new JLabel(" /"+this.getType().toLowerCase()+" ");
         this.labelType.setFont(new Font("Arial", Font.BOLD, 11));
 
         this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
@@ -54,6 +54,7 @@ public class ControlPanel extends JPanel implements ActionListener {
 
         this.top.setLayout(new BoxLayout(top, BoxLayout.X_AXIS));      
 
+        btnSend.addActionListener(this);
         btnStatus.addActionListener(this);
         btnDumpUser.addActionListener(this);
 
@@ -123,6 +124,19 @@ public class ControlPanel extends JPanel implements ActionListener {
                 q.setPassword(server.getModPass());
                 q.setRawOutput(true);
                 q.mod("dumpuser "+input);
+                this.parent.consolePanel.appendToConsole(q.getResponse());
+            }
+            catch (Exception e) {
+                System.out.print(e.getMessage());
+            }
+        }
+        else if (pressedButton == btnSend) {
+            String cmd = ((String)this.comboCommandBox.getSelectedItem()).trim();
+            try {
+                Server server = (Server)this.parent.comboServerList.getSelectedItem();
+                BowserQuery q = new BowserQuery(server.getIP(), 27960);
+                q.setPassword(server.getModPass());
+                q.mod(cmd);
                 this.parent.consolePanel.appendToConsole(q.getResponse());
             }
             catch (Exception e) {
