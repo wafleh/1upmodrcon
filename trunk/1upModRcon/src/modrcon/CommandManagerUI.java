@@ -41,7 +41,7 @@ public class CommandManagerUI extends javax.swing.JFrame {
         lblEdit = new javax.swing.JLabel();
         lblAdd = new javax.swing.JLabel();
         lblKeyAssignments = new javax.swing.JLabel();
-        logoPanel = new GradientPanel();
+        logoPanel = new LogoPanel(1);
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("1up ModRcon - Manage Commands List");

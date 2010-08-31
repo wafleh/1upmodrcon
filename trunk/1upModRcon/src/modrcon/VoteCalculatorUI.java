@@ -31,7 +31,7 @@ public class VoteCalculatorUI extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        logoPanel = new GradientPanel();
+        logoPanel = new LogoPanel(1);
         votePanel = new javax.swing.JPanel();
         scrollVote = new javax.swing.JScrollPane();
         tableVote = new javax.swing.JTable();

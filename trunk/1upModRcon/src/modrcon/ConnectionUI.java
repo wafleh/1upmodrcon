@@ -19,7 +19,7 @@ import java.awt.event.*;
  */
 public class ConnectionUI extends JFrame implements ActionListener {
 
-    protected GradientPanel logoPanel           = new GradientPanel();
+    protected LogoPanel logoPanel           = new LogoPanel(1);
     protected JPanel connectionInfoPanel = new JPanel();
     protected JPanel buttonPanel         = new JPanel();
 

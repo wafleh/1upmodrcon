@@ -26,16 +26,28 @@ import javax.swing.*;
  */
 public class SettingManagerUI extends JDialog {
 
-    protected MainUI parent;
+    protected MainWindow parent;
 
     /** Creates new form SettingUI */
-    public SettingManagerUI(MainUI owner) {
+    public SettingManagerUI(MainWindow owner) {
+        super();
         this.parent = owner;
         initComponents();
 
         PropertyManager pm = new PropertyManager();
         this.bgColorPanel.setBackground(Color.decode(pm.getConsoleBGColor()));
         this.fgColorPanel.setBackground(Color.decode(pm.getConsoleFGColor()));
+
+        // Set the location of the About Window centered relative to the MainMenu
+        // --CENTER--
+        Point aboutBoxLocation = new Point();
+
+        double aboutBoxX = owner.getLocation().getX() + ((owner.getWidth() / 2) - (this.getWidth() / 2));
+        double aboutBoxY = owner.getLocation().getY() + ((owner.getHeight() / 2) - (this.getHeight() / 2));
+
+        aboutBoxLocation.setLocation(aboutBoxX, aboutBoxY);
+        this.setLocation(aboutBoxLocation);
+        // --END CENTER--
     }
 
     /** This method is called from within the constructor to
@@ -48,7 +60,7 @@ public class SettingManagerUI extends JDialog {
     private void initComponents() {
 
         jColorChooser1 = new javax.swing.JColorChooser();
-        logoPanel = new GradientPanel();
+        logoPanel = new LogoPanel(1);
         settingPanel = new javax.swing.JPanel();
         txtPath = new javax.swing.JTextField();
         btnBrowse = new javax.swing.JButton();

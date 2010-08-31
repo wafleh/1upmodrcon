@@ -1,8 +1,3 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
-
 package modrcon;
 
 import javax.swing.*;
@@ -17,22 +12,23 @@ import java.text.*;
 import java.awt.event.*;
 
 /**
+ * The main application window.
  *
- * @author Pyrite
+ * @author Pyrite[1up]
  */
 public class MainWindow extends JFrame {
 
     private String frameTitle;
     
-    private GradientPanel logoPanel;
+    private LogoPanel logoPanel;
     private JPanel contentPanel;
     private VersionPanel versionPanel;
 
     public ConsolePanel consolePanel;
     public ControlPanel controlPanel;
     
-    private JTextArea consoleTextArea;
-    private JComboBox comboServerList;
+    public JComboBox comboServerList;
+    private JButton btnConnect;
     
     private JLabel sinfoServerName;
     private JLabel sinfoServerIP;
@@ -56,11 +52,17 @@ public class MainWindow extends JFrame {
         Container cp = this.getContentPane();
         cp.setLayout(new BorderLayout());       
 
-        this.logoPanel = new GradientPanel();
+        this.logoPanel = new LogoPanel(LogoPanel.LOGO_LEFT);
         this.contentPanel = new JPanel();
         this.versionPanel = new VersionPanel();
-        this.consolePanel = new ConsolePanel();
-        this.controlPanel = new ControlPanel(2);
+        this.consolePanel = new ConsolePanel(this);
+        this.controlPanel = new ControlPanel(this, 2);
+
+        this.comboServerList = new JComboBox();
+        this.btnConnect = new JButton("Connect");
+        this.logoPanel.add(this.comboServerList);
+        
+
 
         this.contentPanel.setLayout(new BorderLayout());
 
@@ -91,7 +93,7 @@ public class MainWindow extends JFrame {
          */
 
         //initComponents();
-        //refreshServerCombo();
+        refreshServerCombo();
 
         // Populate Live Server Info
 
@@ -211,11 +213,11 @@ public class MainWindow extends JFrame {
     }
 
     public void setConsoleBackground(Color color) {
-        consoleTextArea.setBackground(color);
+        this.consolePanel.setConsoleBackground(color);
     }
 
     public void setConsoleForeground(Color color) {
-        consoleTextArea.setForeground(color);
+        this.consolePanel.setConsoleForeground(color);
     }
 
     public void refreshServerCombo() {

@@ -61,7 +61,7 @@
   <SubComponents>
     <Container class="javax.swing.JPanel" name="logoPanel">
       <AuxValues>
-        <AuxValue name="JavaCodeGenerator_CreateCodeCustom" type="java.lang.String" value="new GradientPanel()"/>
+        <AuxValue name="JavaCodeGenerator_CreateCodeCustom" type="java.lang.String" value="new LogoPanel(1)"/>
       </AuxValues>
 
       <Layout>
