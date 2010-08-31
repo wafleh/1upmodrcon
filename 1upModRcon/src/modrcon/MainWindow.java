@@ -21,6 +21,8 @@ import java.awt.event.*;
  * @author Pyrite
  */
 public class MainWindow extends JFrame {
+
+    private String frameTitle;
     
     private GradientPanel logoPanel;
     private JPanel contentPanel;
@@ -41,17 +43,18 @@ public class MainWindow extends JFrame {
     /** Creates new form NewJFrame */
     public MainWindow() {
         // Sets Some of the JFrame Options
-        this.setTitle("1up ModRcon - Main (Moderator Mode)");
+        this.frameTitle = "1up ModRcon - Main (Moderator Mode)";
+        this.setTitle(this.frameTitle);
+        ImageIcon topLeftIcon = new ImageIcon(getClass().getResource("/modrcon/resources/1up8bit_green.png"));
+        this.setIconImage(topLeftIcon.getImage());
+        this.setJMenuBar(this.getModRconMenuBar());
         this.setDefaultCloseOperation(EXIT_ON_CLOSE);
-        this.setSize(700,500);
+        //this.setSize(700,500);
         this.setResizable(true);
 
         // Setup the Content Pane
         Container cp = this.getContentPane();
-        cp.setLayout(new BorderLayout());
-
-        JMenuBar menubar = new JMenuBar();
-        
+        cp.setLayout(new BorderLayout());       
 
         this.logoPanel = new GradientPanel();
         this.contentPanel = new JPanel();
@@ -101,6 +104,106 @@ public class MainWindow extends JFrame {
 
         // Bring the Window into Focus
         this.setVisible(true);
+    }
+
+    private JMenuBar getModRconMenuBar() {
+        JMenuBar jmb = new JMenuBar();
+
+        JMenu fileMenu  = new JMenu("File");
+        fileMenu.setMnemonic('F');
+        JMenu editMenu  = new JMenu("Edit");
+        editMenu.setMnemonic('E');
+        JMenu toolsMenu = new JMenu("Tools");
+        toolsMenu.setMnemonic('T');
+        JMenu helpMenu  = new JMenu("Help");
+        helpMenu.setMnemonic('H');
+
+        // Define Menu Items
+        
+        JMenuItem jmiSave = new JMenuItem(new MenuAction("Save Console As...", this));
+        jmiSave.setIcon(new ImageIcon(getClass().getResource("/modrcon/resources/save.png")));
+        jmiSave.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_S, InputEvent.CTRL_DOWN_MASK));
+
+        JMenuItem jmiExit = new JMenuItem(new MenuAction("Exit", this));
+        jmiExit.setIcon(new ImageIcon(getClass().getResource("/modrcon/resources/del.png")));
+
+        JMenuItem jmiCopy = new JMenuItem(new MenuAction("Copy", this));
+        jmiCopy.setIcon(new ImageIcon(getClass().getResource("/modrcon/resources/copy.png")));
+        jmiCopy.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_C, InputEvent.CTRL_DOWN_MASK));
+
+        JMenuItem jmiClear = new JMenuItem(new MenuAction("Clear", this));
+        jmiClear.setIcon(new ImageIcon(getClass().getResource("/modrcon/resources/files_remove.png")));
+        jmiClear.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_DELETE, 0));
+
+        JMenuItem jmiFind = new JMenuItem(new MenuAction("Find", this));
+        jmiFind.setIcon(new ImageIcon(getClass().getResource("/modrcon/resources/find.png")));
+        jmiFind.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_F, InputEvent.CTRL_DOWN_MASK));
+
+        JMenuItem jmiSelectAll = new JMenuItem(new MenuAction("Select All", this));
+        jmiSelectAll.setIcon(new ImageIcon(getClass().getResource("/modrcon/resources/files_add.png")));
+        jmiSelectAll.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_A, InputEvent.CTRL_DOWN_MASK));
+
+        JMenuItem jmiManageServers = new JMenuItem(new MenuAction("Manage Servers", this));
+        jmiManageServers.setIcon(new ImageIcon(getClass().getResource("/modrcon/resources/objects.png")));
+        jmiManageServers.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_S, InputEvent.ALT_DOWN_MASK | InputEvent.CTRL_DOWN_MASK));
+
+        JMenuItem jmiManageCommands = new JMenuItem(new MenuAction("Manage Commands", this));
+        jmiManageCommands.setIcon(new ImageIcon(getClass().getResource("/modrcon/resources/objects.png")));
+        jmiManageCommands.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_C, InputEvent.ALT_DOWN_MASK | InputEvent.CTRL_DOWN_MASK));
+
+        JMenuItem jmiVoteCalc = new JMenuItem(new MenuAction("Vote Calculator", this));
+        jmiVoteCalc.setIcon(new ImageIcon(getClass().getResource("/modrcon/resources/calculator.png")));
+        jmiVoteCalc.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_V, InputEvent.ALT_DOWN_MASK | InputEvent.CTRL_DOWN_MASK));
+
+        JMenuItem jmiGearCalc = new JMenuItem(new MenuAction("Gear Calculator", this));
+        jmiGearCalc.setIcon(new ImageIcon(getClass().getResource("/modrcon/resources/calculator.png")));
+        jmiGearCalc.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_G, InputEvent.ALT_DOWN_MASK | InputEvent.CTRL_DOWN_MASK));
+
+        JMenuItem jmiSettings = new JMenuItem(new MenuAction("Settings", this));
+        jmiSettings.setIcon(new ImageIcon(getClass().getResource("/modrcon/resources/app_options.png")));
+        jmiSettings.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_O, InputEvent.ALT_DOWN_MASK | InputEvent.CTRL_DOWN_MASK));
+
+        JMenuItem jmiHelp = new JMenuItem(new MenuAction("1up ModRcon Help", this));
+        jmiHelp.setIcon(new ImageIcon(getClass().getResource("/modrcon/resources/help.png")));
+        jmiHelp.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_F1, 0));
+
+        JMenuItem jmiUpdate = new JMenuItem(new MenuAction("Check for update", this));
+        jmiUpdate.setIcon(new ImageIcon(getClass().getResource("/modrcon/resources/web.png")));
+        jmiUpdate.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_U, InputEvent.CTRL_DOWN_MASK));
+
+        JMenuItem jmiAbout = new JMenuItem(new MenuAction("About", this));
+        jmiAbout.setIcon(new ImageIcon(getClass().getResource("/modrcon/resources/about.png")));
+
+        // Add Menu Items to Menus
+
+        fileMenu.add(jmiSave);
+        fileMenu.addSeparator();
+        fileMenu.add(jmiExit);
+        editMenu.add(jmiCopy);
+        editMenu.add(jmiClear);
+        editMenu.add(jmiFind);
+        editMenu.addSeparator();
+        editMenu.add(jmiSelectAll);
+        toolsMenu.add(jmiManageServers);
+        toolsMenu.add(jmiManageCommands);
+        toolsMenu.addSeparator();
+        toolsMenu.add(jmiVoteCalc);
+        toolsMenu.add(jmiGearCalc);
+        toolsMenu.addSeparator();
+        toolsMenu.add(jmiSettings);
+        helpMenu.add(jmiHelp);
+        helpMenu.add(jmiUpdate);
+        helpMenu.addSeparator();
+        helpMenu.add(jmiAbout);
+
+        // Add Menus to MenuBar
+
+        jmb.add(fileMenu);
+        jmb.add(editMenu);
+        jmb.add(toolsMenu);
+        jmb.add(helpMenu);
+        
+        return jmb;
     }
 
     public static void main(String[] args) {

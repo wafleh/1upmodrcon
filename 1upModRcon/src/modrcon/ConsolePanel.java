@@ -63,4 +63,8 @@ public class ConsolePanel extends JPanel {
         this.add(bottom);
     }
 
+    public String getConsoleText() {
+        return this.taConsole.getText();
+    }
+
 }

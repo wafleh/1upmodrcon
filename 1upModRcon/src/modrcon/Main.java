@@ -15,6 +15,7 @@ public class Main {
      * @param args the command line arguments
      */
     public static void main(String[] args) {
+        
         try {
             // Set the OS's Native Look and Feel
             UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
@@ -23,7 +24,7 @@ public class Main {
             System.out.println("Error: Was Unable to Set the OS's Native Widget Theme");
             System.out.println(e.getMessage());
         }
-
+        
         // Load Settings
         PropertyManager pm = new PropertyManager();
 
