@@ -15,7 +15,7 @@ import java.util.*;
  *
  * @author  Brandon Tanner
  * @author  Gerald Kaszuba <http://misc.slowchop.com/misc/wiki/q3query>
- * @license http://opensource.org/licenses/gpl-license.php GNU Public License
+ * @author  http://opensource.org/licenses/gpl-license.php GNU Public License
  */
 public class BowserQuery {
 
@@ -114,27 +114,17 @@ public class BowserQuery {
         while (true) {
             try {
                 dpacket = new DatagramPacket(buffer, buffer.length);
-
                 // Decrease value speeds things up, increase slows things down.
-                this.ds.setSoTimeout(100);
-                
+                this.ds.setSoTimeout(100);                
                 this.ds.receive(dpacket);
-                //String s = new String(dpacket.getData(), 0, 0, dpacket.getLength());
-                //System.out.println(dpacket.getAddress() + " at port " + dpacket.getPort() + " says " + s);
-
-                //this.bb = dpacket.getData();
-                //System.out.print(stripPrintCommands(new String(dpacket.getData(), 0, 0, dpacket.getLength())));
                 String packet = new String(dpacket.getData(), 0, dpacket.getLength());
                 this.output += packet;
-                //System.out.print(stripPrintCommands(new String(dpacket.getData(), 0, dpacket.getLength())));
             }
             catch (IOException e) {
-                //System.out.print(e.getMessage());
-                //System.err.println(e.getMessage());
-                //System.out.println(stripPrintCommands(this.output));
                 if (this.rawOutput) {
                     return this.output;
                 } else {
+                    //todo: replace blank player name with "UnknownPlayer"
                     String purdy = this.output;
                     purdy = stripPrintCommands(purdy);
                     purdy = stripColors(purdy);
@@ -142,36 +132,6 @@ public class BowserQuery {
                 }
             }
         } // end while
-
-
-        /*
-        String response;
-        while (true) {
-            try {
-                byte[] buff = new byte[3048]; // 65507
-                //this.ds.setTrafficClass(IPTOS_RELIABILITY);
-                //System.out.println(this.ds.getTrafficClass());
-                //this.ds.setSoTimeout(5000); // test
-                //System.out.println(ds.getReceiveBufferSize());
-                //ds.setReceiveBufferSize(16000);
-                this.dp = new DatagramPacket(buff, buff.length);
-                //this.dp.setLength(3048);
-                this.ds.receive(this.dp);
-                //Thread.sleep(1000);
-                response = new String(buff);
-            }
-            catch (SocketTimeoutException e) {
-                response = new String();
-                System.out.println("Error: "+e.getMessage());
-            }
-            catch (Exception exp) {
-                response = new String();
-                System.out.println("Error: "+exp.getMessage());
-            }
-        }
-         *
-         */
-        //return stripPrintCommands(new String(buffer));
     }
 
     /**
@@ -192,6 +152,16 @@ public class BowserQuery {
         return m.replaceAll("");
     }
 
+    /**
+     * TBD.
+     * The status command returns blank players names for UnknownPlayer.
+     * @param input
+     * @return
+     */
+    public String fixBlankPlayerNames(String input) {
+        return input;
+    }
+
     public String getstatus() {
         this.send("getstatus");
         String resp = this.getResponse();
@@ -206,7 +176,7 @@ public class BowserQuery {
      * Gets the output of the getinfo command,
      * and parses it into a useful data structure.
      *
-     * @return
+     * @return The output in a HashMap
      */
     public Map getServerInfo() {
         this.send("getinfo");

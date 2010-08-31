@@ -30,12 +30,10 @@ public class Main {
 
         // Start Main UI
         MainWindow mui = new MainWindow();
-        //mui.setConsoleBackground(Color.decode(pm.getConsoleBGColor()));
-        //mui.setConsoleForeground(Color.decode(pm.getConsoleFGColor()));
+        mui.setConsoleBackground(Color.decode(pm.getConsoleBGColor()));
+        mui.setConsoleForeground(Color.decode(pm.getConsoleFGColor()));
         mui.setVisible(true);
-
-        mui.controlPanel.printSize();
-
+        
     }
 
 }

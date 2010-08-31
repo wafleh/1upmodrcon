@@ -1,21 +1,20 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
-
 package modrcon;
 
 import javax.swing.*;
 import java.awt.*;
 import java.util.*;
+import java.awt.event.*;
 
 /**
  * The Control Panel portion of the main 1up ModRcon window.
  *
  * @author Pyrite[1up]
  */
-public class ControlPanel extends JPanel {
-    
+public class ControlPanel extends JPanel implements ActionListener {
+
+    /** A reference to the Main Window */
+    private MainWindow parent;
+
     public static int TYPE_RCON = 3;
     public static int TYPE_MOD = 2;
     public static int TYPE_REF = 1;
@@ -39,8 +38,9 @@ public class ControlPanel extends JPanel {
     /** The type of currently logged in user (Rcon, Mod, Ref). */
     private int type;
 
-    public ControlPanel(int type) {
+    public ControlPanel(MainWindow owner, int type) {
         super();
+        this.parent = owner;
 
         this.type = type;
         this.labelType = new JLabel("/"+this.getType().toLowerCase());
@@ -53,7 +53,9 @@ public class ControlPanel extends JPanel {
         this.comboCommandBox.setEditable(true);
 
         this.top.setLayout(new BoxLayout(top, BoxLayout.X_AXIS));      
-        
+
+        btnStatus.addActionListener(this);
+        btnDumpUser.addActionListener(this);
 
         this.top.add(labelType);
         this.top.add(comboCommandBox);
@@ -94,6 +96,42 @@ public class ControlPanel extends JPanel {
 
     public void setType(int type) {
         this.type = type;
+    }
+
+    public void actionPerformed(ActionEvent event) {
+        AbstractButton pressedButton = (AbstractButton)event.getSource();
+
+        if (pressedButton == btnStatus) {
+            try {
+                Server server = (Server)this.parent.comboServerList.getSelectedItem();
+                BowserQuery q = new BowserQuery(server.getIP(), server.getPortAsInteger());
+                q.setPassword(server.getModPass());
+                q.setRawOutput(true);
+                q.mod("status");
+                this.parent.consolePanel.appendToConsole(q.getResponse());
+            }
+            catch (Exception e) {
+                System.out.print(e.getMessage());
+            }
+        }
+        else if (pressedButton == btnDumpUser) {
+            String input = JOptionPane.showInputDialog(this.parent, "Enter the player number for the player\nyou want more info about.", "Dump User", JOptionPane.PLAIN_MESSAGE);
+            input = (input != null && input.length() > 0) ? input.trim() : "";
+            try {
+                Server server = (Server)this.parent.comboServerList.getSelectedItem();
+                BowserQuery q = new BowserQuery(server.getIP(), server.getPortAsInteger());
+                q.setPassword(server.getModPass());
+                q.setRawOutput(true);
+                q.mod("dumpuser "+input);
+                this.parent.consolePanel.appendToConsole(q.getResponse());
+            }
+            catch (Exception e) {
+                System.out.print(e.getMessage());
+            }
+        }
+        else {
+            throw new UnsupportedOperationException("Not supported yet.");
+        }
     }
 
 }

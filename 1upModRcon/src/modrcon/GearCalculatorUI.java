@@ -30,7 +30,7 @@ public class GearCalculatorUI extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        logoPanel = new GradientPanel();
+        logoPanel = new LogoPanel(1);
         gearPanel = new javax.swing.JPanel();
         scrollGear = new javax.swing.JScrollPane();
         tableGear = new javax.swing.JTable();

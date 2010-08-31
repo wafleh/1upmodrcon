@@ -40,13 +40,17 @@ public class MenuAction extends AbstractAction {
             }
         }
 
+        else if (selection.equals("Settings")) {
+            new SettingManagerUI(this.parent).setVisible(true);
+        }
+
         else if (selection.equals("Exit")) {
             //parent.savePropertyFile();
             System.exit(0);
         }
 
         else if (selection.equals("About")) {
-            new AboutUI().setVisible(true);
+            new AboutWindow();
         }
         
         else {
