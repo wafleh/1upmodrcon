@@ -211,10 +211,6 @@ public class MainWindow extends JFrame {
         return jmb;
     }
 
-    public static void main(String[] args) {
-        new MainWindow();
-    }
-
     public void setConsoleBackground(Color color) {
         this.consolePanel.setConsoleBackground(color);
     }

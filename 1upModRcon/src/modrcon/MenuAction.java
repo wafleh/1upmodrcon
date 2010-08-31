@@ -62,8 +62,7 @@ public class MenuAction extends AbstractAction {
         }
 
         else if (selection.equals("About")) {
-            //new AboutWindow();
-            this.parent.logoPanel.doit(this.parent.comboServerList);
+            new AboutWindow(this.parent);
         }
         
         else {

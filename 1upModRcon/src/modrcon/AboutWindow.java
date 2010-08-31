@@ -1,8 +1,3 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
-
 package modrcon;
 
 import javax.swing.*;
@@ -14,8 +9,11 @@ import java.awt.*;
  */
 public class AboutWindow extends JDialog {
 
-    public AboutWindow() {
+    private MainWindow parent;
+
+    public AboutWindow(MainWindow owner) {
         super();
+        this.parent = owner;
         this.setTitle("1up ModRcon - About");
         this.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
 
@@ -26,6 +24,18 @@ public class AboutWindow extends JDialog {
         cp.add(new LogoPanel(1), BorderLayout.NORTH);
 
         this.pack();
+
+        // Set the location of the About Window centered relative to the MainMenu
+        // --CENTER--
+        Point aboutBoxLocation = new Point();
+
+        double aboutBoxX = owner.getLocation().getX() + ((owner.getWidth() / 2) - (this.getWidth() / 2));
+        double aboutBoxY = owner.getLocation().getY() + ((owner.getHeight() / 2) - (this.getHeight() / 2));
+
+        aboutBoxLocation.setLocation(aboutBoxX, aboutBoxY);
+        this.setLocation(aboutBoxLocation);
+        // --END CENTER--
+
         this.setVisible(true);
     }
 
