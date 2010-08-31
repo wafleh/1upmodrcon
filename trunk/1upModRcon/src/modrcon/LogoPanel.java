@@ -27,9 +27,7 @@ public class LogoPanel extends GradientPanel {
      * @param direction The direction value.
      */
     public LogoPanel(int direction) {
-        // Top Color   : RGB (131, 4, 1),   Hex: 830401
-        // Bottom Color: RGB (221, 87, 49), Hex: DD5731
-        super( new Color(0x830401) , new Color(0xDD5731) );
+        super(GradientPanel.HEADER_COLOR_START, GradientPanel.HEADER_COLOR_END);
 
         this.setLayout(new FlowLayout(direction));
 

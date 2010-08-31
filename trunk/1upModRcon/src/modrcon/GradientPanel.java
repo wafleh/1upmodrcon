@@ -19,6 +19,15 @@ public class GradientPanel extends JPanel {
     public static final int DIRECTION_TOPDOWN = 0;
     public static final int DIRECTION_LEFTRIGHT = 0;
 
+    public static final Color HEADER_COLOR_START = new Color(0x830401);
+    public static final Color HEADER_COLOR_END = new Color(0xDD5731);
+    public static final Color WIZARD_COLOR_START = new Color(0x000080);
+    public static final Color WIZARD_COLOR_END = new Color(0x2179DA);
+    public static final Color WARNING_COLOR_START = new Color(0xE80000);
+    public static final Color WARNING_COLOR_END = new Color(0x000000);
+    
+    public static final Color SELECTED_GRID_CELL_BG_COLOR = new Color(0xE2F5FE);
+
     /**
      * Constructor supplying a color.
      *
