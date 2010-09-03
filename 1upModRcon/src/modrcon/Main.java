@@ -25,13 +25,18 @@ public class Main {
         }
         
         // Load Settings
-        PropertyManager pm = new PropertyManager();
+        final PropertyManager pm = new PropertyManager();
 
-        // Start Main UI
-        MainWindow mui = new MainWindow();
-        mui.setConsoleBackground(Color.decode(pm.getConsoleBGColor()));
-        mui.setConsoleForeground(Color.decode(pm.getConsoleFGColor()));
-        mui.setVisible(true);
+        //Schedule a job for the event-dispatching thread:
+        //creating and showing this application's GUI.
+        javax.swing.SwingUtilities.invokeLater(new Runnable() {
+            public void run() {
+                MainWindow mui = new MainWindow();
+                mui.setConsoleBackground(Color.decode(pm.getConsoleBGColor()));
+                mui.setConsoleForeground(Color.decode(pm.getConsoleFGColor()));
+                mui.setVisible(true);
+            }
+        });
         
     }
 

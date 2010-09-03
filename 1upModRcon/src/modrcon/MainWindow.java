@@ -16,7 +16,7 @@ import java.awt.event.*;
  *
  * @author Pyrite[1up]
  */
-public class MainWindow extends JFrame {
+public class MainWindow extends JFrame implements ItemListener {
 
     private String frameTitle;
     
@@ -27,6 +27,7 @@ public class MainWindow extends JFrame {
     public ServerInfoPanel serverInfoPanel;
     public ConsolePanel consolePanel;
     public ControlPanel controlPanel;
+    public LivePlayerInfoPanel livePlayerInfoPanel;
     
     public JComboBox comboServerList;
     private JButton btnConnect;
@@ -59,8 +60,10 @@ public class MainWindow extends JFrame {
         this.consolePanel = new ConsolePanel(this);
         this.controlPanel = new ControlPanel(this, 2);
         this.serverInfoPanel = new ServerInfoPanel();
+        this.livePlayerInfoPanel = new LivePlayerInfoPanel(this);
 
         this.comboServerList = new JComboBox();
+        this.comboServerList.addItemListener(this);
         this.btnConnect = new JButton("Connect");
         this.logoPanel.add(this.comboServerList);
         
@@ -74,7 +77,7 @@ public class MainWindow extends JFrame {
         right.setLayout(new BorderLayout());
 
         left.add(this.serverInfoPanel, BorderLayout.NORTH);
-        left.add(new LivePlayerInfoPanel(), BorderLayout.SOUTH);
+        left.add(this.livePlayerInfoPanel, BorderLayout.SOUTH);
         right.add(this.consolePanel, BorderLayout.CENTER);
         right.add(this.controlPanel, BorderLayout.SOUTH);
 
@@ -97,6 +100,7 @@ public class MainWindow extends JFrame {
         //initComponents();
         refreshServerCombo();
         refreshServerInfo();
+        this.livePlayerInfoPanel.fireItUp();
 
         // Populate Live Server Info
 
@@ -239,18 +243,18 @@ public class MainWindow extends JFrame {
             this.serverInfoPanel.setServerPort(server.getPortAsString());
             this.serverInfoPanel.setGameType(ServerInfo.getGameTypeString(Integer.parseInt((String)map.get("gametype"))));
             this.serverInfoPanel.setMap((String)map.get("mapname"));
-            /*
-            Iterator iterator = map.keySet().iterator();
-            while (iterator.hasNext()) {
-               String key = iterator.next().toString();
-               String value = map.get(key).toString();
-               System.out.println(key + " " + value);
-            }
-            */
         }
         catch (Exception e) {
             System.out.println("Exception Caught: "+e.getMessage());
             e.printStackTrace();
+        }
+    }
+
+    public void itemStateChanged(ItemEvent e) {
+        Object source = e.getItemSelectable();
+        if (source == this.comboServerList) {
+            this.livePlayerInfoPanel.fireItUp();
+            this.refreshServerInfo();
         }
     }
 

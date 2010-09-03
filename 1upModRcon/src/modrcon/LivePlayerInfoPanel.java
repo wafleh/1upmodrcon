@@ -16,24 +16,30 @@ import java.util.*;
  */
 public class LivePlayerInfoPanel extends JPanel {
 
+    private MainWindow parent;
+
     private JScrollPane jspLivePlayerInfo;
     private JTable playerTable;
     private PlayerCountPanel pcp;
-    private MyTableModel mtm;
+    private MyTableModel mytmodel;
 
-    public LivePlayerInfoPanel() {
+    private DefaultTableModel dtm;
+
+    public LivePlayerInfoPanel(MainWindow owner) {
         super();
+        this.parent = owner;
 
         //this.setLayout(new BorderLayout());
         this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
         this.setBorder(BorderFactory.createTitledBorder("Live Player Info"));
 
-
-
         playerTable = new JTable();
-        mtm = new MyTableModel();
-        playerTable.setModel(mtm);
-
+        mytmodel = new MyTableModel();
+        dtm = new DefaultTableModel();
+        dtm.addColumn("Score");
+        dtm.addColumn("Ping");
+        dtm.addColumn("Name");
+        playerTable.setModel(dtm);
 
         jspLivePlayerInfo = new JScrollPane(playerTable);
         //playerTable.setFillsViewportHeight(true); // Makes table white bg fill entire table
@@ -45,10 +51,33 @@ public class LivePlayerInfoPanel extends JPanel {
         //this.add(pcp, BorderLayout.SOUTH);
         this.add(jspLivePlayerInfo);
         this.add(pcp);
+
     }
 
-    public void updateTable(ArrayList data) {
-        this.mtm.setData(data);
+    public void fireItUp() {
+        String foo = "";
+        try {
+            Server server = (Server)this.parent.comboServerList.getSelectedItem();
+            BowserQuery q = new BowserQuery(server.getIP(), server.getPortAsInteger());
+            foo = q.getstatus();
+        }
+        catch (Exception e) {
+            e.printStackTrace();
+            System.out.print("Error: "+e.getMessage());
+        }
+        this.playerTable.setModel(getPlayerDTM(foo));
+        ColumnResizer.adjustColumnPreferredWidths(this.playerTable);
+    }
+
+    public DefaultTableModel getPlayerDTM(String input) {
+        this.dtm.getDataVector().removeAllElements();
+        String[] lines = input.split("\\n");
+        for (int i=1; i<lines.length; i++) {
+            String[] lineSplit = lines[i].split(" ");
+            this.dtm.addRow(lineSplit);
+        }
+        this.pcp.setNumPlayers(lines.length - 1);
+        return this.dtm;
     }
 
     class MyTableModel extends AbstractTableModel {
@@ -104,8 +133,13 @@ public class LivePlayerInfoPanel extends JPanel {
             fireTableCellUpdated(row, col);
         }
 
-        public void setData(ArrayList data) {
+        public void setData(String input) {
             // set the data
+            String[] lines = input.split("\\n");
+            for (int i=1; i<lines.length; i++) {
+                String[] lineSplit = lines[i].split(" ");
+                //this.data.
+            }
             fireTableDataChanged();
         }
 

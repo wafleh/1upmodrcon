@@ -24,8 +24,8 @@ public class ControlPanel extends JPanel implements ActionListener {
 
     private JLabel labelType;
     private JComboBox comboCommandBox;
+    
     private JButton btnSend = new JButton("Send");
-
     private JButton btnStatus = new JButton("Status");
     private JButton btnDumpUser = new JButton("Dumpuser");
     private JButton btnSlap = new JButton("Slap");
@@ -57,6 +57,11 @@ public class ControlPanel extends JPanel implements ActionListener {
         btnSend.addActionListener(this);
         btnStatus.addActionListener(this);
         btnDumpUser.addActionListener(this);
+        btnSlap.addActionListener(this);
+        btnKick.addActionListener(this);
+        btnMute.addActionListener(this);
+        btnToggleMute.addActionListener(this);
+        btnForceTeam.addActionListener(this);
 
         this.top.add(labelType);
         this.top.add(comboCommandBox);
@@ -102,7 +107,23 @@ public class ControlPanel extends JPanel implements ActionListener {
     public void actionPerformed(ActionEvent event) {
         AbstractButton pressedButton = (AbstractButton)event.getSource();
 
-        if (pressedButton == btnStatus) {
+        if (pressedButton == btnSend) {
+            if (this.comboCommandBox.getSelectedItem() != null) {
+                String cmd = ((String)this.comboCommandBox.getSelectedItem()).trim();
+                try {
+                    Server server = (Server)this.parent.comboServerList.getSelectedItem();
+                    BowserQuery q = new BowserQuery(server.getIP(), 27960);
+                    q.setPassword(server.getPassword());
+                    q.mod(cmd);
+                    this.parent.consolePanel.appendToConsole(q.getResponse());
+                }
+                catch (Exception e) {
+                    System.out.print(e.getMessage());
+                }
+            }
+        }
+
+        else if (pressedButton == btnStatus) {
             try {
                 Server server = (Server)this.parent.comboServerList.getSelectedItem();
                 BowserQuery q = new BowserQuery(server.getIP(), server.getPortAsInteger());
@@ -128,22 +149,38 @@ public class ControlPanel extends JPanel implements ActionListener {
                 System.out.print(e.getMessage());
             }
         }
-        else if (pressedButton == btnSend) {
-            String cmd = ((String)this.comboCommandBox.getSelectedItem()).trim();
+
+        else if (pressedButton == btnSlap) {
+            String input = JOptionPane.showInputDialog(this.parent, "Enter the player number for the player\nyou want to slap.", "Slap User", JOptionPane.PLAIN_MESSAGE);
+            input = (input != null && input.length() > 0) ? input.trim() : "";
             try {
                 Server server = (Server)this.parent.comboServerList.getSelectedItem();
-                BowserQuery q = new BowserQuery(server.getIP(), 27960);
+                BowserQuery q = new BowserQuery(server.getIP(), server.getPortAsInteger());
                 q.setPassword(server.getPassword());
-                q.mod(cmd);
+                q.mod("slap "+input);
                 this.parent.consolePanel.appendToConsole(q.getResponse());
             }
             catch (Exception e) {
                 System.out.print(e.getMessage());
             }
         }
-        else {
-            throw new UnsupportedOperationException("Not supported yet.");
+
+        else if (pressedButton == btnKick) {
+            JOptionPane.showMessageDialog(parent, "This feature will be coming in a later version!", btnKick.getText(), JOptionPane.INFORMATION_MESSAGE);
         }
+
+        else if (pressedButton == btnMute) {
+            JOptionPane.showMessageDialog(parent, "This feature will be coming in a later version!", btnMute.getText(), JOptionPane.INFORMATION_MESSAGE);
+        }
+
+        else if (pressedButton == btnToggleMute) {
+            JOptionPane.showMessageDialog(parent, "This feature will be coming in a later version!", btnToggleMute.getText(), JOptionPane.INFORMATION_MESSAGE);
+        }
+
+        else if (pressedButton == btnForceTeam) {
+            JOptionPane.showMessageDialog(parent, "This feature will be coming in a later version!", btnForceTeam.getText(), JOptionPane.INFORMATION_MESSAGE);
+        }
+
     }
 
 }

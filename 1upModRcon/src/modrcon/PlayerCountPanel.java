@@ -44,8 +44,9 @@ public class PlayerCountPanel extends JPanel {
         this.maxPlayers.setText(max);
     }
 
-    public void setNumPlayers(String num) {
-        this.numPlayers.setText(num);
+    public void setNumPlayers(int num) {
+        this.numPlayers.setText(String.valueOf(num));
+        this.progressbar.setValue(num);
     }
     
 }
