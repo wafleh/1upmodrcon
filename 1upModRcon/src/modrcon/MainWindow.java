@@ -55,6 +55,8 @@ public class MainWindow extends JFrame implements ItemListener {
         cp.setLayout(new BorderLayout());
 
         this.logoPanel = new LogoPanel();
+        // Width doesn't matter, BorderLayout overrides, this is used to force the panel to be a little taller
+        this.logoPanel.setPreferredSize(new Dimension(50, 60));
         this.contentPanel = new JPanel();
         this.versionPanel = new VersionPanel();
         this.consolePanel = new ConsolePanel(this);
@@ -66,8 +68,7 @@ public class MainWindow extends JFrame implements ItemListener {
         this.comboServerList.addItemListener(this);
         this.btnConnect = new JButton("Connect");
 
-        // This needs to be fixed.
-        this.logoPanel.add(new JPanel().add(this.comboServerList), BorderLayout.EAST);
+        this.logoPanel.add(this.getComboServerListPanel(), BorderLayout.EAST);
         
         // so the question is what layout to make the contentPanel.
         //this.contentPanel.setLayout(new BoxLayout(this.contentPanel, BoxLayout.LINE_AXIS));
@@ -79,10 +80,13 @@ public class MainWindow extends JFrame implements ItemListener {
         right.setLayout(new BorderLayout());
 
         left.add(this.serverInfoPanel, BorderLayout.NORTH);
-        left.add(this.livePlayerInfoPanel, BorderLayout.SOUTH);
+        left.add(this.livePlayerInfoPanel, BorderLayout.CENTER);
         right.add(this.consolePanel, BorderLayout.CENTER);
         right.add(this.controlPanel, BorderLayout.SOUTH);
 
+        
+        left.setPreferredSize(new Dimension(300, 601));
+        left.setMaximumSize(left.getPreferredSize());
 
         this.contentPanel.add(left, BorderLayout.WEST);
         this.contentPanel.add(right, BorderLayout.CENTER);
@@ -115,6 +119,24 @@ public class MainWindow extends JFrame implements ItemListener {
 
         // Bring the Window into Focus
         this.setVisible(true);
+    }
+
+    private JPanel getComboServerListPanel() {
+        JLabel connectedToLabel = new JLabel("Connected To:");
+        connectedToLabel.setOpaque(false);
+        connectedToLabel.setFont(new Font("Tahoma", Font.BOLD, 14));
+
+        JPanel comboListLabelPanel = new JPanel();
+        comboListLabelPanel.setOpaque(false);
+        comboListLabelPanel.add(connectedToLabel);
+        comboListLabelPanel.add(this.comboServerList);
+
+        JPanel comboServerListPanel = new JPanel();
+        comboServerListPanel.setLayout(new VerticalFlowLayout());
+        comboServerListPanel.setOpaque(false);
+        comboServerListPanel.add(comboListLabelPanel);
+
+        return comboServerListPanel;
     }
 
     private JMenuBar getModRconMenuBar() {
@@ -227,6 +249,7 @@ public class MainWindow extends JFrame implements ItemListener {
 
     public void refreshServerCombo() {
         // Load Server List
+        this.comboServerList.removeAllItems();
         ServerParser sp = new ServerParser();
         java.util.List servers = sp.getServers();
         for (int i=0; i < servers.size(); i++) {
