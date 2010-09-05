@@ -166,7 +166,18 @@ public class ControlPanel extends JPanel implements ActionListener {
         }
 
         else if (pressedButton == btnKick) {
-            JOptionPane.showMessageDialog(parent, "This feature will be coming in a later version!", btnKick.getText(), JOptionPane.INFORMATION_MESSAGE);
+            String input = JOptionPane.showInputDialog(this.parent, "Enter the player number for the player\nyou want to kick.", "Kick User", JOptionPane.PLAIN_MESSAGE);
+            input = (input != null && input.length() > 0) ? input.trim() : "";
+            try {
+                Server server = (Server)this.parent.comboServerList.getSelectedItem();
+                BowserQuery q = new BowserQuery(server.getIP(), server.getPortAsInteger());
+                q.setPassword(server.getPassword());
+                q.mod("kick "+input);
+                this.parent.consolePanel.appendToConsole(q.getResponse());
+            }
+            catch (Exception e) {
+                System.out.print(e.getMessage());
+            }
         }
 
         else if (pressedButton == btnMute) {

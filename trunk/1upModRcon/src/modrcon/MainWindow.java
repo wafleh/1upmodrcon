@@ -54,7 +54,7 @@ public class MainWindow extends JFrame implements ItemListener {
         Container cp = this.getContentPane();
         cp.setLayout(new BorderLayout());
 
-        this.logoPanel = new LogoPanel(LogoPanel.LOGO_LEFT);
+        this.logoPanel = new LogoPanel();
         this.contentPanel = new JPanel();
         this.versionPanel = new VersionPanel();
         this.consolePanel = new ConsolePanel(this);
@@ -65,7 +65,9 @@ public class MainWindow extends JFrame implements ItemListener {
         this.comboServerList = new JComboBox();
         this.comboServerList.addItemListener(this);
         this.btnConnect = new JButton("Connect");
-        this.logoPanel.add(this.comboServerList);
+
+        // This needs to be fixed.
+        this.logoPanel.add(new JPanel().add(this.comboServerList), BorderLayout.EAST);
         
         // so the question is what layout to make the contentPanel.
         //this.contentPanel.setLayout(new BoxLayout(this.contentPanel, BoxLayout.LINE_AXIS));
