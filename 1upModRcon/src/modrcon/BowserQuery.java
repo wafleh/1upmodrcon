@@ -40,6 +40,8 @@ public class BowserQuery {
     /** Enable/Disable Raw Server Output */
     private boolean rawOutput;
 
+    private String method;
+
     private byte[] bb = null;
     private String output;
 
@@ -49,6 +51,10 @@ public class BowserQuery {
         this.ds = new DatagramSocket();
         this.ds.setSoTimeout(2000);
         this.ia = InetAddress.getByName(address);
+    }
+
+    public void setMethod(String method) {
+        this.method = method.toLowerCase().trim();
     }
 
     public void setRawOutput(boolean flag) {
@@ -61,6 +67,22 @@ public class BowserQuery {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    public void sendCmd(String cmd) {
+        if (this.method.equals("ref")) {
+            this.ref(cmd);
+        }
+        else if (this.method.equals("mod")) {
+            this.mod(cmd);
+        }
+        else {
+            this.rcon(cmd);
+        }
+    }
+
+    public void forceTeam(String player, String team) {
+        this.sendCmd("forceteam "+player+" "+team);
     }
 
     public void rcon(String command) {

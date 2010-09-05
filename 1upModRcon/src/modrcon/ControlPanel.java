@@ -2,7 +2,6 @@ package modrcon;
 
 import javax.swing.*;
 import java.awt.*;
-import java.util.*;
 import java.awt.event.*;
 
 /**
@@ -182,15 +181,37 @@ public class ControlPanel extends JPanel implements ActionListener, KeyListener 
         }
 
         else if (pressedButton == btnMute) {
-            JOptionPane.showMessageDialog(parent, "This feature will be coming in a later version!", btnMute.getText(), JOptionPane.INFORMATION_MESSAGE);
+            String input = JOptionPane.showInputDialog(this.parent, "Enter the player number for the player\nyou want to mute.", "Mute User", JOptionPane.PLAIN_MESSAGE);
+            input = (input != null && input.length() > 0) ? input.trim() : "";
+            try {
+                Server server = (Server)this.parent.comboServerList.getSelectedItem();
+                BowserQuery q = new BowserQuery(server.getIP(), server.getPortAsInteger());
+                q.setPassword(server.getPassword());
+                q.mod("mute "+input);
+                this.parent.consolePanel.appendToConsole(q.getResponse());
+            }
+            catch (Exception e) {
+                System.out.print(e.getMessage());
+            }
         }
 
         else if (pressedButton == btnToggleMute) {
-            JOptionPane.showMessageDialog(parent, "This feature will be coming in a later version!", btnToggleMute.getText(), JOptionPane.INFORMATION_MESSAGE);
+            String input = JOptionPane.showInputDialog(this.parent, "Enter the player number for the player\nyou want to togglemute.", "Togglemute User", JOptionPane.PLAIN_MESSAGE);
+            input = (input != null && input.length() > 0) ? input.trim() : "";
+            try {
+                Server server = (Server)this.parent.comboServerList.getSelectedItem();
+                BowserQuery q = new BowserQuery(server.getIP(), server.getPortAsInteger());
+                q.setPassword(server.getPassword());
+                q.mod("togglemute "+input);
+                this.parent.consolePanel.appendToConsole(q.getResponse());
+            }
+            catch (Exception e) {
+                System.out.print(e.getMessage());
+            }
         }
 
         else if (pressedButton == btnForceTeam) {
-            JOptionPane.showMessageDialog(parent, "This feature will be coming in a later version!", btnForceTeam.getText(), JOptionPane.INFORMATION_MESSAGE);
+            new ForceTeamDialog(this.parent);
         }
 
     }

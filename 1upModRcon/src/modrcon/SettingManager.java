@@ -12,6 +12,15 @@ public class SettingManager extends JDialog implements ActionListener {
 
     private MainWindow parent;
 
+    private JTextField textGamePath;
+    private JSpinner timeoutSpinner;
+    private JCheckBox sendStatusCheck;
+
+    private JPanel bgColorPanel;
+    private JPanel fgColorPanel;
+
+
+
     private JButton btnSave;
     private JButton btnClose;
 
@@ -35,13 +44,11 @@ public class SettingManager extends JDialog implements ActionListener {
 
         this.pack();
 
-        // Set the location of the About Window centered relative to the MainMenu
+        // Set the location of the Settings Window centered relative to the MainWindow
         // --CENTER--
         Point aboutBoxLocation = new Point();
-
         double aboutBoxX = owner.getLocation().getX() + ((owner.getWidth() / 2) - (this.getWidth() / 2));
         double aboutBoxY = owner.getLocation().getY() + ((owner.getHeight() / 2) - (this.getHeight() / 2));
-
         aboutBoxLocation.setLocation(aboutBoxX, aboutBoxY);
         this.setLocation(aboutBoxLocation);
         // --END CENTER--
@@ -71,6 +78,13 @@ public class SettingManager extends JDialog implements ActionListener {
         bp.add(btnClose);
         return bp;
     }
+
+    private void fgColorPanelMouseClicked(java.awt.event.MouseEvent evt) {
+        JColorChooser mycolor = new JColorChooser();
+        Color chosenColor = mycolor.showDialog(mycolor, "Select a Font Color for the Console", fgColorPanel.getBackground());
+        fgColorPanel.setBackground(chosenColor);
+    }
+
 
     public void actionPerformed(ActionEvent e) {
         AbstractButton pressedButton = (AbstractButton)e.getSource();
