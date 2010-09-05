@@ -21,7 +21,8 @@ public class ConsolePanel extends JPanel implements MouseListener {
     /** Holds the buttons below the console. */
     private JPanel buttonPanel = new JPanel();
 
-    private JTextArea taConsole;
+    //private JTextArea taConsole;
+    private ConsoleTextPane taConsole;
     private JScrollPane jsp;
 
     private JLabel iconCopy;
@@ -38,7 +39,8 @@ public class ConsolePanel extends JPanel implements MouseListener {
         this.setLayout(new BorderLayout());
         this.setBorder(BorderFactory.createTitledBorder("Console"));
         
-        taConsole = new JTextArea();
+        //taConsole = new JTextArea();
+        taConsole = new ConsoleTextPane();
         taConsole.setFont(new Font("Monospaced", 0, 12));
         taConsole.setBackground(Color.BLACK);
         taConsole.setForeground(Color.YELLOW);
@@ -98,7 +100,19 @@ public class ConsolePanel extends JPanel implements MouseListener {
     }
 
     public void appendToConsole(String text) {
-        this.taConsole.append(text);
+        this.taConsole.append(text, "default");
+    }
+
+    public void appendCommand(String command) {
+        this.taConsole.appendCommand(command);
+    }
+
+    public void appendToConsole(String text, String styleName) {
+        this.taConsole.append(text, styleName);
+    }
+
+    public void appendWithColor(String playerName) {
+        this.taConsole.appendWithColors(playerName);
     }
 
     public void mouseClicked(MouseEvent e) {
