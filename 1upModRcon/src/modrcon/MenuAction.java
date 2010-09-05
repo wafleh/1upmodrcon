@@ -56,6 +56,10 @@ public class MenuAction extends AbstractAction {
             new ServerManager(this.parent);
         }
 
+        else if (selection.equals("Settings")) {
+            new SettingManager(this.parent);
+        }
+
         else if (selection.equals("Exit")) {
             //parent.savePropertyFile();
             System.exit(0);

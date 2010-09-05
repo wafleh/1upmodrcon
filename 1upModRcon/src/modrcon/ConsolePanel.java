@@ -9,6 +9,8 @@ import java.awt.datatransfer.*;
 /**
  * A JPanel that holds the console and console icons.
  *
+ * TODO: set console to courier new
+ *
  * @author Pyrite[1up]
  */
 public class ConsolePanel extends JPanel implements MouseListener {
