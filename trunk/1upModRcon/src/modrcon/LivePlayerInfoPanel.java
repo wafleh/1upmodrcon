@@ -81,7 +81,7 @@ public class LivePlayerInfoPanel extends JPanel {
         for (int i=1; i<lines.length; i++) {
             String[] lineSplit = lines[i].split(" ");
             // Just here to remove the quotes from player names.
-            lineSplit[2] = lineSplit[2].substring(1, lineSplit[2].length() - 1);
+            //lineSplit[2] = lineSplit[2].substring(1, lineSplit[2].length() - 1);
 
             this.dtm.addRow(lineSplit);
         }
