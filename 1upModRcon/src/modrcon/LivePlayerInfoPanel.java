@@ -81,12 +81,21 @@ public class LivePlayerInfoPanel extends JPanel {
         for (int i=1; i<lines.length; i++) {
             String[] lineSplit = lines[i].split(" ");
             // Just here to remove the quotes from player names.
-            //lineSplit[2] = lineSplit[2].substring(1, lineSplit[2].length() - 1);
+
+            // Just here to remove the quotes from player names.
+            String playerName = "";
+            for (int x = 2; x < lineSplit.length; x++)
+                playerName += lineSplit[x];
+            lineSplit[2] = stripPlayerNameQuotes(playerName);
 
             this.dtm.addRow(lineSplit);
         }
         this.pcp.setNumPlayers(lines.length - 1);
         return this.dtm;
+    }
+
+    private String stripPlayerNameQuotes(String playerName) {
+        return playerName.substring(1, playerName.length() - 1);
     }
 
     class MyTableModel extends AbstractTableModel {
