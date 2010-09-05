@@ -115,6 +115,7 @@ public class ControlPanel extends JPanel implements ActionListener, KeyListener 
                     BowserQuery q = new BowserQuery(server.getIP(), 27960);
                     q.setPassword(server.getPassword());
                     q.mod(cmd);
+                    this.parent.consolePanel.appendCommand(cmd);
                     this.parent.consolePanel.appendToConsole(q.getResponse());
                 }
                 catch (Exception e) {
@@ -129,7 +130,8 @@ public class ControlPanel extends JPanel implements ActionListener, KeyListener 
                 BowserQuery q = new BowserQuery(server.getIP(), server.getPortAsInteger());
                 q.setPassword(server.getPassword());
                 q.mod("status");
-                this.parent.consolePanel.appendToConsole(q.getResponse());
+                this.parent.consolePanel.appendCommand("status");
+                this.parent.consolePanel.appendWithColor(q.getResponse());
             }
             catch (Exception e) {
                 System.out.print(e.getMessage());
@@ -143,6 +145,7 @@ public class ControlPanel extends JPanel implements ActionListener, KeyListener 
                 BowserQuery q = new BowserQuery(server.getIP(), server.getPortAsInteger());
                 q.setPassword(server.getPassword());
                 q.mod("dumpuser "+input);
+                this.parent.consolePanel.appendCommand("dumpuser " + input);
                 this.parent.consolePanel.appendToConsole(q.getResponse());
             }
             catch (Exception e) {
@@ -158,6 +161,7 @@ public class ControlPanel extends JPanel implements ActionListener, KeyListener 
                 BowserQuery q = new BowserQuery(server.getIP(), server.getPortAsInteger());
                 q.setPassword(server.getPassword());
                 q.mod("slap "+input);
+                this.parent.consolePanel.appendCommand("slap " + input);
                 this.parent.consolePanel.appendToConsole(q.getResponse());
             }
             catch (Exception e) {
@@ -173,6 +177,7 @@ public class ControlPanel extends JPanel implements ActionListener, KeyListener 
                 BowserQuery q = new BowserQuery(server.getIP(), server.getPortAsInteger());
                 q.setPassword(server.getPassword());
                 q.mod("kick "+input);
+                this.parent.consolePanel.appendCommand("kick " + input);
                 this.parent.consolePanel.appendToConsole(q.getResponse());
             }
             catch (Exception e) {

@@ -159,7 +159,7 @@ public class BowserQuery {
                     //todo: replace blank player name with "UnknownPlayer"
                     String purdy = this.output;
                     purdy = stripPrintCommands(purdy);
-                    purdy = stripColors(purdy);
+                    //purdy = stripColors(purdy);
                     return purdy;
                 }
             }
