@@ -1,22 +1,10 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
-
 package modrcon;
 
-import java.awt.Color;
 import java.awt.event.*;
 import java.awt.*;
-import java.awt.image.*;
-
-import java.util.*;
-import java.text.*;
-import javax.swing.*;
 import javax.swing.table.*;
 import javax.swing.*;
 import java.io.*;
-
 
 /**
  *

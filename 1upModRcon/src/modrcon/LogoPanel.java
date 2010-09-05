@@ -18,6 +18,20 @@ public class LogoPanel extends GradientPanel {
     /** Right alignment of the 1up Logo. */
     public static final int LOGO_RIGHT = 2;
 
+    public LogoPanel() {
+        super(GradientPanel.HEADER_COLOR_START, GradientPanel.HEADER_COLOR_END);
+        this.setLayout(new BorderLayout());
+        ImageIcon logo = new ImageIcon();
+        try {
+            logo = new ImageIcon(getClass().getResource("/modrcon/resources/1upModRconLogo.png"));
+        }
+        catch (Exception e) {
+            System.out.println("Error Setting Logo in LogoPanel: "+e.getMessage());
+        }
+        JLabel logoLabel = new JLabel(logo);
+        this.add(logoLabel, BorderLayout.WEST);
+    }
+
     /**
      * Constructs a new <code>LogoPanel</code> with the specified
      * alignment of the 1up Logo and a default 5-unit horizontal and vertical gap.
