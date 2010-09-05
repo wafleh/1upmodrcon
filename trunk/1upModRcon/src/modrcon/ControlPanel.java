@@ -10,7 +10,7 @@ import java.awt.event.*;
  *
  * @author Pyrite[1up]
  */
-public class ControlPanel extends JPanel implements ActionListener {
+public class ControlPanel extends JPanel implements ActionListener, KeyListener {
 
     /** A reference to the Main Window */
     private MainWindow parent;
@@ -51,6 +51,7 @@ public class ControlPanel extends JPanel implements ActionListener {
 
         this.comboCommandBox = new JComboBox();
         this.comboCommandBox.setEditable(true);
+        this.comboCommandBox.getEditor().getEditorComponent().addKeyListener(this);
 
         this.top.setLayout(new BoxLayout(top, BoxLayout.X_AXIS));      
 
@@ -192,6 +193,19 @@ public class ControlPanel extends JPanel implements ActionListener {
             JOptionPane.showMessageDialog(parent, "This feature will be coming in a later version!", btnForceTeam.getText(), JOptionPane.INFORMATION_MESSAGE);
         }
 
+    }
+
+    public void keyTyped(KeyEvent e) {
+    }
+
+    public void keyPressed(KeyEvent e) {
+        
+    }
+
+    public void keyReleased(KeyEvent e) {
+        if (e.getKeyCode() == e.VK_ENTER) {
+            actionPerformed(new ActionEvent(btnSend, 1, ""));
+        }
     }
 
 }

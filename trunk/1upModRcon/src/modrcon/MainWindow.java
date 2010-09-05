@@ -76,6 +76,8 @@ public class MainWindow extends JFrame implements ItemListener {
 
         JPanel left = new JPanel();
         left.setLayout(new BorderLayout());
+        left.setPreferredSize(new Dimension(300, 601));
+        left.setMaximumSize(left.getPreferredSize());
         JPanel right = new JPanel();
         right.setLayout(new BorderLayout());
 
@@ -83,11 +85,7 @@ public class MainWindow extends JFrame implements ItemListener {
         left.add(this.livePlayerInfoPanel, BorderLayout.CENTER);
         right.add(this.consolePanel, BorderLayout.CENTER);
         right.add(this.controlPanel, BorderLayout.SOUTH);
-
-        
-        left.setPreferredSize(new Dimension(300, 601));
-        left.setMaximumSize(left.getPreferredSize());
-
+    
         this.contentPanel.add(left, BorderLayout.WEST);
         this.contentPanel.add(right, BorderLayout.CENTER);
 
@@ -124,6 +122,7 @@ public class MainWindow extends JFrame implements ItemListener {
     private JPanel getComboServerListPanel() {
         JLabel connectedToLabel = new JLabel("Connected To:");
         connectedToLabel.setOpaque(false);
+        connectedToLabel.setForeground(Color.WHITE);
         connectedToLabel.setFont(new Font("Tahoma", Font.BOLD, 14));
 
         JPanel comboListLabelPanel = new JPanel();
