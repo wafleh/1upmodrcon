@@ -27,6 +27,9 @@ public class Main {
         // Load Settings
         final PropertyManager pm = new PropertyManager();
 
+        // First see if servers.xml exists, if not, create it, and run ServerSetupWizard.
+        
+
         //Schedule a job for the event-dispatching thread:
         //creating and showing this application's GUI.
         javax.swing.SwingUtilities.invokeLater(new Runnable() {
