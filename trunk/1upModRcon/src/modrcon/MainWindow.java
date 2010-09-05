@@ -47,7 +47,7 @@ public class MainWindow extends JFrame implements ItemListener {
         this.setIconImage(topLeftIcon.getImage());
         this.setJMenuBar(this.getModRconMenuBar());
         this.setDefaultCloseOperation(EXIT_ON_CLOSE);
-        //this.setSize(700,500);
+        this.setSize(904,697);
         this.setResizable(true);
 
         // Setup the Content Pane
@@ -111,7 +111,7 @@ public class MainWindow extends JFrame implements ItemListener {
         // Populate Live Server Info
 
         // Make the Widgets Snug
-        this.pack();
+        //this.pack();
 
         // Center the Window (Whatever Its Size) on the Screen
         Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
