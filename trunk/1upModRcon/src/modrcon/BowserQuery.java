@@ -40,7 +40,11 @@ public class BowserQuery {
     /** Enable/Disable Raw Server Output */
     private boolean rawOutput;
 
+    /** The login method to the server (ref, mod, rcon). */
     private String method;
+
+    /** The last command sent. */
+    private String lastCommand;
 
     private byte[] bb = null;
     private String output;
@@ -53,6 +57,11 @@ public class BowserQuery {
         this.ia = InetAddress.getByName(address);
     }
 
+    /**
+     * Sets the login method type of the server.
+     *
+     * @param method ref, mod, or rcon.
+     */
     public void setMethod(String method) {
         this.method = method.toLowerCase().trim();
     }
@@ -70,6 +79,7 @@ public class BowserQuery {
     }
 
     public void sendCmd(String cmd) {
+        this.lastCommand = cmd;
         if (this.method.equals("ref")) {
             this.ref(cmd);
         }
