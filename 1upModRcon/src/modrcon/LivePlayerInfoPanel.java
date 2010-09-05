@@ -34,6 +34,8 @@ public class LivePlayerInfoPanel extends JPanel {
         this.setBorder(BorderFactory.createTitledBorder("Live Player Info"));
 
         playerTable = new JTable();
+        playerTable.setShowGrid(false);
+        playerTable.getColumnModel().setColumnMargin(0);
         mytmodel = new MyTableModel();
         dtm = new DefaultTableModel();
         dtm.addColumn("Score");
@@ -42,10 +44,14 @@ public class LivePlayerInfoPanel extends JPanel {
         playerTable.setModel(dtm);
 
         jspLivePlayerInfo = new JScrollPane(playerTable);
+        jspLivePlayerInfo.getViewport().setBackground(Color.WHITE);
+        //jspLivePlayerInfo.setBorder(BorderFactory.createMatteBorder(1, 1, 0, 1, Color.GRAY));
         //playerTable.setFillsViewportHeight(true); // Makes table white bg fill entire table
 
 
         this.pcp = new PlayerCountPanel();
+        pcp.setPreferredSize(new Dimension(300, 30));
+        //pcp.setBorder(BorderFactory.createMatteBorder(0, 1, 1, 1, Color.GRAY));
         
         //this.add(jspLivePlayerInfo, BorderLayout.NORTH);
         //this.add(pcp, BorderLayout.SOUTH);
@@ -74,6 +80,9 @@ public class LivePlayerInfoPanel extends JPanel {
         String[] lines = input.split("\\n");
         for (int i=1; i<lines.length; i++) {
             String[] lineSplit = lines[i].split(" ");
+            // Just here to remove the quotes from player names.
+            lineSplit[2] = lineSplit[2].substring(1, lineSplit[2].length() - 1);
+
             this.dtm.addRow(lineSplit);
         }
         this.pcp.setNumPlayers(lines.length - 1);
