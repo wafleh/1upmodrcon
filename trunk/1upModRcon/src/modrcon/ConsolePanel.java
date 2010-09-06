@@ -41,9 +41,10 @@ public class ConsolePanel extends JPanel implements MouseListener {
         
         //taConsole = new JTextArea();
         taConsole = new ConsoleTextPane();
-        taConsole.setFont(new Font("Monospaced", 0, 12));
-        taConsole.setBackground(Color.BLACK);
-        taConsole.setForeground(Color.YELLOW);
+        taConsole.setFont(new Font("Monospaced", Font.PLAIN, 12));
+        PropertyManager pm = new PropertyManager();
+        taConsole.setBackground(Color.decode(pm.getConsoleBGColor()));
+        taConsole.setForeground(Color.decode(pm.getConsoleFGColor()));
         jsp = new JScrollPane(taConsole);
 
         iconCopy = new JLabel();

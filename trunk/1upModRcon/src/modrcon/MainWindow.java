@@ -1,14 +1,8 @@
 package modrcon;
 
 import javax.swing.*;
-import java.awt.Color;
-import java.util.*;
-import java.awt.datatransfer.*;
 import java.awt.*;
-import java.awt.image.*;
-import java.io.*;
 import java.util.*;
-import java.text.*;
 import java.awt.event.*;
 
 /**
@@ -117,6 +111,11 @@ public class MainWindow extends JFrame implements ItemListener {
 
         // Bring the Window into Focus
         this.setVisible(true);
+
+        PropertyManager pm = new PropertyManager();
+        if (pm.getStatusOnConnect()) {
+            this.controlPanel.sendStatusCommand();
+        }
     }
 
     private JPanel getComboServerListPanel() {
