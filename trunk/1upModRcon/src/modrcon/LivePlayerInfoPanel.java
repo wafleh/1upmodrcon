@@ -36,6 +36,8 @@ public class LivePlayerInfoPanel extends JPanel {
         playerTable = new JTable();
         playerTable.setShowGrid(false);
         playerTable.getColumnModel().setColumnMargin(0);
+        playerTable.setSelectionMode(0);
+        playerTable.setAutoCreateRowSorter(true);
         mytmodel = new MyTableModel();
         dtm = new DefaultTableModel();
         dtm.addColumn("Score");
