@@ -24,60 +24,60 @@ public class DocumentStyler {
      * @return The modified StyledDocument, to which all printing is done.
      */
     public static StyledDocument styleDocument(StyledDocument documentToStyle,
-            Font consoleFont, Color defaultForeground, Color defaultBackground) {
+            Font consoleFont, Color defaultForeground) {
         Style parentStyle = StyleContext.getDefaultStyleContext()
                 .getStyle(StyleContext.DEFAULT_STYLE);
 
         // Default Style
         DocumentStyler.addNewStyle(documentToStyle, "default", consoleFont,
-                defaultForeground, defaultBackground);
+                defaultForeground);
         
         // Command Style
         DocumentStyler.addNewStyle(documentToStyle, "command", consoleFont,
-                defaultForeground, defaultBackground);
+                defaultForeground);
 
         // =====================================================================
         // QUAKE 3 Console Styles
         // =====================================================================
         // ^0 - BLACK
         DocumentStyler.addNewStyle(documentToStyle, "0", consoleFont,
-                Color.GRAY.darker(), defaultBackground);
+                Color.GRAY.darker());
 
         // ^1 - RED
         DocumentStyler.addNewStyle(documentToStyle, "1", consoleFont,
-                Color.RED, defaultBackground);
+                Color.RED);
 
         // ^2 - GREEN
         DocumentStyler.addNewStyle(documentToStyle, "2", consoleFont,
-                Color.GREEN, defaultBackground);
+                Color.GREEN);
 
         // ^3 - YELLOW
         DocumentStyler.addNewStyle(documentToStyle, "3", consoleFont,
-                Color.YELLOW, defaultBackground);
+                Color.YELLOW);
 
         // ^4 - Blue
         DocumentStyler.addNewStyle(documentToStyle, "4", consoleFont,
-                Color.BLUE, defaultBackground);
+                Color.BLUE);
 
         // ^5 - Cyan
         DocumentStyler.addNewStyle(documentToStyle, "5", consoleFont,
-                Color.CYAN, defaultBackground);
+                Color.CYAN);
 
         // ^6 - Pink
         DocumentStyler.addNewStyle(documentToStyle, "6", consoleFont,
-                Color.PINK, defaultBackground);
+                Color.PINK);
 
         // ^7 - White
         DocumentStyler.addNewStyle(documentToStyle, "7", consoleFont,
-                Color.WHITE, defaultBackground);
+                Color.WHITE);
 
         // ^8 - BLACK
         DocumentStyler.addNewStyle(documentToStyle, "8", consoleFont,
-                Color.GRAY.darker(), defaultBackground);
+                Color.GRAY.darker());
 
         // ^9 - RED
         DocumentStyler.addNewStyle(documentToStyle, "9", consoleFont,
-                Color.RED, defaultBackground);
+                Color.RED);
         
         return documentToStyle;
     }
@@ -90,10 +90,31 @@ public class DocumentStyler {
      * @param documentToUpdate The StyledDocument the new Style will be added to.
      * @param styleName The name you want to give the style, used to access it for updating or printing.
      * @param styleFont The Font you want to set for this style, to go with default pass the getFont() from the console.
-     * @param styleForeground The text color for the style.
      * @param styleBackground This can be set to the default background color (getBackground()) or you can change it to highlight the text.
      */
     public static void addNewStyle(StyledDocument documentToUpdate, 
+            String styleName, Font styleFont, Color styleForeground) {
+        Style parentStyle = StyleContext.getDefaultStyleContext()
+                .getStyle(StyleContext.DEFAULT_STYLE);
+
+        Style temp = documentToUpdate.addStyle(styleName, parentStyle);
+        setStyleFont(temp, styleFont);
+        StyleConstants.setForeground(temp, styleForeground);
+    }
+    /** Used at Runtime to add a new style to the StyledDocument for use.
+     * This method is used by styleDocument() and by at runtime to add styles
+     * to the StyledDocument. Unlike other styles, this style is added with a 
+     * background color which will "highlight" the text. <strong>Be warned that
+     * any styles added at runtime (i.e. those that are not built in to this 
+     * class) MUST be updated manually if any changes occur to font/background
+     * color on the Console.</strong>
+     * @param documentToUpdate The StyledDocument the new Style will be added to.
+     * @param styleName The name you want to give the style, used to access it for updating or printing.
+     * @param styleFont The Font you want to set for this style, to go with default pass the getFont() from the console.
+     * @param styleForeground The text color for the style.
+     * @param styleBackground This can be set to the default background color (getBackground()) or you can change it to highlight the text.
+     */
+    public static void addNewStyleWithHighlight(StyledDocument documentToUpdate,
             String styleName, Font styleFont, Color styleForeground,
             Color styleBackground) {
         Style parentStyle = StyleContext.getDefaultStyleContext()
@@ -113,10 +134,31 @@ public class DocumentStyler {
      * @param styleName The name of the Style that you wish to update.
      * @param newFont The Font you want the style to use, default would be getFont()
      * @param newForeground The Foreground color to update/change/set for this style.
-     * @param newBackground The Background color to update/change/set for this style.
      * @return Returns the StyledDocument after the changes have been made to the specified Style.
      */
     public static StyledDocument updateSpecificStyle(
+            StyledDocument documentToUpdate, String styleName, Font newFont,
+            Color newForeground) {
+        Style temp = documentToUpdate.getStyle(styleName);
+        setStyleFont(temp, newFont);
+        StyleConstants.setForeground(temp, newForeground);
+
+        return documentToUpdate;
+    }
+    /** Makes changes to a Style that is already in the StyledDocument.
+     * This method takes the give StyleName and changes the settings for that
+     * style based on the data passed. This method is used by updateStyles for
+     * all the default styles, and this method MUST be used at runtime for any
+     * special and/or added styles that need to be updated. *** This is used to
+     * update a style that has a background color ***
+     * @param documentToUpdate The StyledDocument the Style changes should apply to.
+     * @param styleName The name of the Style that you wish to update.
+     * @param newFont The Font you want the style to use, default would be getFont()
+     * @param newForeground The Foreground color to update/change/set for this style.
+     * @param newBackground The Background color to update/change/set for this style.
+     * @return Returns the StyledDocument after the changes have been made to the specified Style.
+     */
+    public static StyledDocument updateSpecificStyleWithHighlight(
             StyledDocument documentToUpdate, String styleName, Font newFont,
             Color newForeground, Color newBackground) {
         Style temp = documentToUpdate.getStyle(styleName);
@@ -138,10 +180,9 @@ public class DocumentStyler {
      */
     public static StyledDocument updateSpecificStyleColor(
             StyledDocument documentToUpdate, String styleName,
-            Color newForeground, Color newBackground) {
+            Color newForeground) {
         Style temp = documentToUpdate.getStyle(styleName);
         StyleConstants.setForeground(temp, newForeground);
-        StyleConstants.setBackground(temp, newBackground);
 
         return documentToUpdate;
     }
@@ -186,61 +227,10 @@ public class DocumentStyler {
      * @return The modified StyledDocument, to which all printing is done.
      */
     public static StyledDocument updateStyles(StyledDocument documentToUpdate,
-            Font consoleFont, Color defaultForeground, Color defaultBackground) {
-        if (documentToUpdate == null) {
-            System.out.println("It's this one");
-        }
-
+            Font consoleFont, Color defaultForeground) {
         // Default Style
         DocumentStyler.updateSpecificStyle(documentToUpdate, "default",
-                consoleFont, defaultForeground, defaultBackground);
-
-        // Command Style
-        DocumentStyler.updateSpecificStyle(documentToUpdate, "command",
-                consoleFont, Color.WHITE, defaultBackground);
-
-        // =====================================================================
-        // QUAKE 3 Console Styles
-        // =====================================================================
-        // ^0 - BLACK
-        DocumentStyler.updateSpecificStyle(documentToUpdate, "0", consoleFont,
-                Color.GRAY.darker(), defaultBackground);
-
-        // ^1 - RED
-        DocumentStyler.updateSpecificStyle(documentToUpdate, "1", consoleFont,
-                Color.RED, defaultBackground);
-
-        // ^2 - GREEN
-        DocumentStyler.updateSpecificStyle(documentToUpdate, "2", consoleFont,
-                Color.GREEN, defaultBackground);
-
-        // ^3 - YELLOW
-        DocumentStyler.updateSpecificStyle(documentToUpdate, "3", consoleFont,
-                Color.YELLOW, defaultBackground);
-
-        // ^4 - Blue
-        DocumentStyler.updateSpecificStyle(documentToUpdate, "4", consoleFont,
-                Color.BLUE, defaultBackground);
-
-        // ^5 - Cyan
-        DocumentStyler.updateSpecificStyle(documentToUpdate, "5", consoleFont,
-                Color.CYAN, defaultBackground);
-
-        // ^6 - Pink
-        DocumentStyler.updateSpecificStyle(documentToUpdate, "6", consoleFont,
-                Color.PINK, defaultBackground);
-
-        // ^7 - White
-        DocumentStyler.updateSpecificStyle(documentToUpdate, "7", consoleFont,
-                Color.WHITE, defaultBackground);
-
-        // ^8 - BLACK
-        DocumentStyler.updateSpecificStyle(documentToUpdate, "8", consoleFont,
-                Color.GRAY.darker(), defaultBackground);
-
-        // ^9 - RED
-        DocumentStyler.updateSpecificStyle(documentToUpdate, "9", consoleFont,
-                Color.RED, defaultBackground);
+                consoleFont, defaultForeground);
 
         return documentToUpdate;
     }

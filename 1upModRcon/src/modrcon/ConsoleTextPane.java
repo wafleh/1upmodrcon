@@ -31,7 +31,7 @@ public class ConsoleTextPane extends JTextPane {
     public ConsoleTextPane() {
         super();
         this.styledDoc = this.getStyledDocument();
-        this.styledDoc = DocumentStyler.styleDocument(styledDoc, this.getFont(), this.getForeground(), this.getBackground());
+        this.styledDoc = DocumentStyler.styleDocument(styledDoc, this.getFont(), this.getForeground());
     }
     /** Updates the styles that are in the StyledDocument (ONLY DEFAULT STYLES)
      * This method is called from setForeground, setBackground, and setFont so
@@ -42,7 +42,7 @@ public class ConsoleTextPane extends JTextPane {
      */
     private void updateStyles() {
         if (this.styledDoc != null) {
-            this.styledDoc = DocumentStyler.updateStyles(this.styledDoc, this.getFont(), this.getForeground(), this.getBackground());
+            this.styledDoc = DocumentStyler.updateStyles(this.styledDoc, this.getFont(), this.getForeground());
         }
     }
 
