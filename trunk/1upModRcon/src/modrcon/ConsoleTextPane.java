@@ -107,14 +107,12 @@ public class ConsoleTextPane extends JTextPane {
             if (stringToProcess.charAt(i) == '^' && this.isValidQuakeNumber(stringToProcess.charAt(i + 1))) {
                 append(temp, style);
                 style = stringToProcess.substring(i + 1, i + 2);
-                System.out.println(style);
                 temp = ""; // Clear temp for the next series of colored text
                 i++; // Jump past the color number
                 if ((i + 4) < stringToProcess.length()) {
                     String doubleTemp = stringToProcess.substring(i + 1, i + 4);
                     if (doubleTemp.equals("   "))
                         style = "default";
-                    System.out.println("|" + doubleTemp + "|");
                 }
             }
             else
