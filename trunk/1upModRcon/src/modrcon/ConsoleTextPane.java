@@ -72,7 +72,7 @@ public class ConsoleTextPane extends JTextPane {
      * @return true If the char is a Quake 3 Color number, false if not.
      */
     private boolean isValidQuakeNumber(char testChar) {
-        char[] validQuakeNumbers = {'0', '1', '2', '3', '4', '5', '6', '7', '8'};
+        char[] validQuakeNumbers = {'0', '1', '2', '3', '4', '5', '6', '7', '8', '9'};
 
         for (int i = 0; i < validQuakeNumbers.length; i++) {
             if (validQuakeNumbers[i] == testChar)
