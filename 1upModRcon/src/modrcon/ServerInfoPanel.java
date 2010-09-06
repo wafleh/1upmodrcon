@@ -1,14 +1,16 @@
 package modrcon;
 
+import java.awt.event.MouseEvent;
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.MouseListener;
 
 /**
  * The Server Info Panel.
  *
  * @author Pyrite[1up]
  */
-public class ServerInfoPanel extends JPanel {
+public class ServerInfoPanel extends JPanel implements MouseListener {
 
     private JLabel server;
     private JLabel ip;
@@ -18,8 +20,10 @@ public class ServerInfoPanel extends JPanel {
 
     public ServerInfoPanel() {
         super();
-        this.setLayout(new SpringLayout());
+        this.setLayout(new BorderLayout());
         this.setBorder(BorderFactory.createTitledBorder("Server Info"));
+
+        JPanel infoPanel = new JPanel(new SpringLayout());
 
         JLabel lblServerName = new JLabel("Server Name: ", JLabel.TRAILING);
         lblServerName.setFont(new Font("Tahoma", Font.BOLD, 11));
@@ -33,8 +37,12 @@ public class ServerInfoPanel extends JPanel {
         lblMap.setFont(new Font("Tahoma", Font.BOLD, 11));
 
         // Not sure where/how to place this atm.
+        JPanel joinPanel = new JPanel(new FlowLayout(FlowLayout.RIGHT));
         JLabel lblJoin = new JLabel("<html><u>Join Server</u></html>");
         lblJoin.setFont(new Font("Tahoma", Font.BOLD, 11));
+        lblJoin.setForeground(GradientPanel.HEADER_COLOR_END);
+        lblJoin.addMouseListener(this);
+        joinPanel.add(lblJoin);
 
         server   = new JLabel("N/A");
         ip       = new JLabel("N/A");
@@ -42,28 +50,31 @@ public class ServerInfoPanel extends JPanel {
         gametype = new JLabel("N/A");
         map      = new JLabel("N/A");
 
-        this.add(lblServerName);
+        infoPanel.add(lblServerName);
         lblServerName.setLabelFor(server);
-        this.add(server);
-        this.add(lblServerIP);
+        infoPanel.add(server);
+        infoPanel.add(lblServerIP);
         lblServerIP.setLabelFor(ip);
-        this.add(ip);
-        this.add(lblServerPort);
+        infoPanel.add(ip);
+        infoPanel.add(lblServerPort);
         lblServerPort.setLabelFor(port);
-        this.add(port);
-        this.add(lblGameType);
+        infoPanel.add(port);
+        infoPanel.add(lblGameType);
         lblGameType.setLabelFor(gametype);
-        this.add(gametype);
-        this.add(lblMap);
+        infoPanel.add(gametype);
+        infoPanel.add(lblMap);
         lblMap.setLabelFor(map);
-        this.add(map);
+        infoPanel.add(map);
 
         //Lay out the panel.
-        SpringUtilities.makeCompactGrid(this,
+        SpringUtilities.makeCompactGrid(infoPanel,
             5, 2, //rows, cols
             10, 6, //initX, initY
             10, 6  //xPad, yPad
         );
+
+        this.add(infoPanel, BorderLayout.CENTER);
+        this.add(joinPanel, BorderLayout.SOUTH);
 
 
     }
@@ -86,5 +97,32 @@ public class ServerInfoPanel extends JPanel {
 
     public void setMap(String map) {
         this.map.setText(map);
+    }
+
+    public void mouseClicked(MouseEvent e) {
+        PropertyManager pm = new PropertyManager();
+        String pathToUrbanTerror = pm.getGamePath();
+        try {
+            GameLauncher.Launch(pathToUrbanTerror, this.ip.getText());
+        }
+        catch (Exception event) {
+            System.out.println(event.getMessage());
+        }
+    }
+
+    public void mousePressed(MouseEvent e) {
+        setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
+    }
+
+    public void mouseReleased(MouseEvent e) {
+        setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
+    }
+
+    public void mouseEntered(MouseEvent e) {
+        setCursor(new Cursor(Cursor.HAND_CURSOR));
+    }
+
+    public void mouseExited(MouseEvent e) {
+        setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
     }
 }

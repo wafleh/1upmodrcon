@@ -4,6 +4,7 @@ import javax.swing.*;
 import java.awt.event.*;
 import java.util.*;
 import java.awt.datatransfer.*;
+import java.io.*;
 
 /**
  * Handles the menu bar actions for the MainWindow singleton.
@@ -38,7 +39,16 @@ public class MenuAction extends AbstractAction {
             if (choice == 0) {
                 String path = file.getSelectedFile().getAbsolutePath();
                 String contents = parent.consolePanel.getConsoleText();
-                JOptionPane.showMessageDialog(parent, contents);
+                try {
+                    FileWriter outFile = new FileWriter(path);
+                    PrintWriter out = new PrintWriter(outFile);
+                    out.print(contents);
+                    this.parent.consolePanel.appendToConsole("\nConsole log saved to: "+path+"\n");
+                    out.close();
+                }
+                catch (IOException e) {
+                    System.out.println(e.getMessage());
+                }
             }
         }
 
