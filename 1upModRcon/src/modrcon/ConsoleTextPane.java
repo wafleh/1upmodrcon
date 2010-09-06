@@ -170,7 +170,7 @@ public class ConsoleTextPane extends JTextPane {
         java.util.Date now = new java.util.Date();
         java.text.DateFormat dateFormat = new java.text.SimpleDateFormat("M/d/yyyy hh:mm:ss aa");
         String dateString = dateFormat.format(now);
-        AppendLine[] commandBulk = {new AppendLine("Command:"), 
+        AppendLine[] commandBulk = {new AppendLine("Command: "),
                 new AppendLine(command + " ", "command"), 
                 new AppendLine("- " + dateString + "\n")};
         append(commandBulk);

@@ -34,7 +34,7 @@ public class DocumentStyler {
         
         // Command Style
         DocumentStyler.addNewStyle(documentToStyle, "command", consoleFont,
-                defaultForeground);
+                Color.WHITE);
 
         // =====================================================================
         // QUAKE 3 Console Styles
@@ -231,6 +231,53 @@ public class DocumentStyler {
         // Default Style
         DocumentStyler.updateSpecificStyle(documentToUpdate, "default",
                 consoleFont, defaultForeground);
+
+        // Command Style
+        DocumentStyler.updateSpecificStyle(documentToUpdate, "command",
+                consoleFont, Color.WHITE);
+
+        // =====================================================================
+        // QUAKE 3 Console Styles
+        // =====================================================================
+        // ^0 - BLACK
+        DocumentStyler.updateSpecificStyle(documentToUpdate, "0", consoleFont,
+                Color.GRAY.darker());
+
+        // ^1 - RED
+        DocumentStyler.updateSpecificStyle(documentToUpdate, "1", consoleFont,
+                Color.RED);
+
+        // ^2 - GREEN
+        DocumentStyler.updateSpecificStyle(documentToUpdate, "2", consoleFont,
+                Color.GREEN);
+
+        // ^3 - YELLOW
+        DocumentStyler.updateSpecificStyle(documentToUpdate, "3", consoleFont,
+                Color.YELLOW);
+
+        // ^4 - Blue
+        DocumentStyler.updateSpecificStyle(documentToUpdate, "4", consoleFont,
+                Color.BLUE);
+
+        // ^5 - Cyan
+        DocumentStyler.updateSpecificStyle(documentToUpdate, "5", consoleFont,
+                Color.CYAN);
+
+        // ^6 - Pink
+        DocumentStyler.updateSpecificStyle(documentToUpdate, "6", consoleFont,
+                Color.PINK);
+
+        // ^7 - White
+        DocumentStyler.updateSpecificStyle(documentToUpdate, "7", consoleFont,
+                Color.WHITE);
+
+        // ^8 - BLACK
+        DocumentStyler.updateSpecificStyle(documentToUpdate, "8", consoleFont,
+                Color.GRAY.darker());
+
+        // ^9 - RED
+        DocumentStyler.updateSpecificStyle(documentToUpdate, "9", consoleFont,
+                Color.RED);
 
         return documentToUpdate;
     }

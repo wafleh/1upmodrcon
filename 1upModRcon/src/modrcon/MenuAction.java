@@ -63,7 +63,11 @@ public class MenuAction extends AbstractAction {
         else if (selection.equals("About")) {
             new AboutWindow(this.parent);
         }
-        
+
+        else if (selection.equals("Gear Calculator")) {
+        new GearCalculatorDialog(this.parent);
+        }
+       
         else {
             JOptionPane.showMessageDialog(parent, "This feature will be coming in a later version!", selection.toString(), JOptionPane.INFORMATION_MESSAGE);
         }
