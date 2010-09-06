@@ -21,7 +21,7 @@ public class LivePlayerInfoPanel extends JPanel {
     private JScrollPane jspLivePlayerInfo;
     private JTable playerTable;
     private PlayerCountPanel pcp;
-    private MyTableModel mytmodel;
+    //private MyTableModel mytmodel;
 
     private DefaultTableModel dtm;
 
@@ -32,14 +32,27 @@ public class LivePlayerInfoPanel extends JPanel {
         //this.setLayout(new BorderLayout());
         this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
         this.setBorder(BorderFactory.createTitledBorder("Live Player Info"));
-
-        playerTable = new JTable();
+        final PlayerNameCellRenderer renderer = new PlayerNameCellRenderer();
+        playerTable = new JTable() {
+            @Override
+            public TableCellRenderer getCellRenderer(int row, int column) {
+                if (column == 2) {
+                    return renderer;
+                }
+                else
+                    return super.getCellRenderer(row, column);
+            }
+        };
         playerTable.setShowGrid(false);
         playerTable.getColumnModel().setColumnMargin(0);
         playerTable.setSelectionMode(0);
         playerTable.setAutoCreateRowSorter(true);
-        mytmodel = new MyTableModel();
-        dtm = new DefaultTableModel();
+        //mytmodel = new MyTableModel();
+        dtm = new DefaultTableModel() {
+            public boolean isCellEditable(int row, int col) {
+                return false; // Disallow the editing of any cell.
+            }
+        };
         dtm.addColumn("Score");
         dtm.addColumn("Ping");
         dtm.addColumn("Name");
@@ -103,7 +116,100 @@ public class LivePlayerInfoPanel extends JPanel {
         return thisLine;
     }
 
-    class MyTableModel extends AbstractTableModel {
+    class PlayerNameCellRenderer extends JLabel implements TableCellRenderer {
+        private boolean isSelected = false;
+
+        public PlayerNameCellRenderer() { setOpaque(true); }
+
+        public Component getTableCellRendererComponent(JTable table, 
+                Object name, boolean isSelected, boolean hasFocus,
+                int row, int column) {
+            this.isSelected = isSelected;
+            String playerName = (String)name;
+            this.setText(playerName);
+            if (isSelected)
+                this.setBackground(table.getSelectionBackground());
+            else
+                this.setBackground(table.getBackground());
+            return this;
+        }
+
+        private boolean isValidQuakeNumber(char testChar) {
+            char[] validQuakeNumbers = {'0', '1', '2', '3', '4', '5', '6', '7', '8', '9'};
+
+            for (int i = 0; i < validQuakeNumbers.length; i++) {
+                if (validQuakeNumbers[i] == testChar)
+                    return true;
+            }
+
+            return false;
+        }
+
+        private Color getQuakeColor(char number) {
+            if (isSelected)
+                return Color.WHITE;
+
+            switch(number) {
+                case '9':
+                case '1':
+                    return Color.RED;
+                case '2':
+                    return Color.GREEN.darker();
+                case '3':
+                    return Color.YELLOW;
+                case '4':
+                    return Color.BLUE;
+                case '5':
+                    return Color.CYAN.darker();
+                case '6':
+                    return Color.PINK.darker();
+                case '7':
+                    return Color.GRAY;
+                case '0':
+                case '8':
+                default:
+                    return Color.BLACK;
+            }
+        }
+
+        private int paintPart(String portion, Color color, int location, Graphics g) {
+            java.awt.geom.Rectangle2D bounds = g.getFontMetrics().getStringBounds(portion, g);
+            g.setColor(color);
+            int yLoc = (int)(this.getHeight() / 2) + (int)(bounds.getHeight() / 2);
+
+            g.drawString(portion, location, yLoc - 2);
+
+            return location + (int)(bounds.getWidth());
+        }
+
+        private void paintBackground(Graphics g) {
+            g.setColor(this.getBackground());
+            g.fillRect(0, 0, this.getWidth(), this.getHeight());
+        }
+
+        public void paintComponent(Graphics g) {
+            paintBackground(g);
+            String playerName = this.getText();
+            String temp = "";
+            char color = '0';
+            int xLoc = 2;
+            
+            for (int i = 0; i < playerName.length(); i++) {
+                if (playerName.charAt(i) == '^' && this.isValidQuakeNumber(playerName.charAt(i + 1))) {
+                    xLoc = paintPart(temp, getQuakeColor(color), xLoc, g);
+                    color = playerName.charAt(i + 1);
+                    System.out.println(color);
+                    temp = ""; // Clear temp for the next series of colored text
+                    i++; // Jump past the color number
+                }
+                else
+                    temp = temp + playerName.charAt(i);
+            }
+            paintPart(temp, getQuakeColor(color), xLoc, g);
+        }
+    }
+
+    /*class MyTableModel extends AbstractTableModel {
         private String[] columnNames = {"Score", "Ping", "Name"};
         private Object[][] data = {
             {"10", "11", "Pyrite"}
@@ -134,22 +240,23 @@ public class LivePlayerInfoPanel extends JPanel {
         /*
         * Don't need to implement this method unless your table's
         * editable.
-        */
+        *
         @Override
         public boolean isCellEditable(int row, int col) {
             //Note that the data/cell address is constant,
             //no matter where the cell appears onscreen.
-            if (col < 2) {
-                return false;
-            } else {
-                return true;
-            }
+            return false;
+            //if (col < 2) {
+            //    return false;
+            //} else {
+            //    return true;
+            //}
         }
 
         /*
         * Don't need to implement this method unless your table's
         * data can change.
-        */
+        *
         @Override
         public void setValueAt(Object value, int row, int col) {
             data[row][col] = value;
@@ -166,7 +273,5 @@ public class LivePlayerInfoPanel extends JPanel {
             fireTableDataChanged();
         }
 
-    }
-
-
+    }*/
 }

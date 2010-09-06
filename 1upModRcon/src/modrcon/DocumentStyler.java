@@ -74,6 +74,10 @@ public class DocumentStyler {
         // ^8 - BLACK
         DocumentStyler.addNewStyle(documentToStyle, "8", consoleFont,
                 Color.GRAY.darker(), defaultBackground);
+
+        // ^9 - RED
+        DocumentStyler.addNewStyle(documentToStyle, "9", consoleFont,
+                Color.RED, defaultBackground);
         
         return documentToStyle;
     }
@@ -233,6 +237,10 @@ public class DocumentStyler {
         // ^8 - BLACK
         DocumentStyler.updateSpecificStyle(documentToUpdate, "8", consoleFont,
                 Color.GRAY.darker(), defaultBackground);
+
+        // ^9 - RED
+        DocumentStyler.updateSpecificStyle(documentToUpdate, "9", consoleFont,
+                Color.RED, defaultBackground);
 
         return documentToUpdate;
     }
