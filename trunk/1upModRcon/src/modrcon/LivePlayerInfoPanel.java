@@ -79,14 +79,8 @@ public class LivePlayerInfoPanel extends JPanel {
         this.dtm.getDataVector().removeAllElements();
         String[] lines = input.split("\\n");
         for (int i=1; i<lines.length; i++) {
-            String[] lineSplit = lines[i].split(" ");
-            // Just here to remove the quotes from player names.
-
-            // Just here to remove the quotes from player names.
-            String playerName = "";
-            for (int x = 2; x < lineSplit.length; x++)
-                playerName += lineSplit[x];
-            lineSplit[2] = stripPlayerNameQuotes(playerName);
+            //String[] lineSplit = lines[i].split(" ");
+            String[] lineSplit = this.breakLines(lines[i]);
 
             this.dtm.addRow(lineSplit);
         }
@@ -94,8 +88,17 @@ public class LivePlayerInfoPanel extends JPanel {
         return this.dtm;
     }
 
-    private String stripPlayerNameQuotes(String playerName) {
-        return playerName.substring(1, playerName.length() - 1);
+    private String[] breakLines(String line) {
+        String[] thisLine = new String[3];
+        
+        String scorePing = line.substring(0, line.indexOf('\"'));
+        String[] tempSplit = scorePing.split(" ");
+
+        thisLine[0] = tempSplit[0]; // Score
+        thisLine[1] = tempSplit[1]; // Ping
+        thisLine[2] = line.substring(line.indexOf('\"') + 1, line.lastIndexOf('\"'));
+
+        return thisLine;
     }
 
     class MyTableModel extends AbstractTableModel {
