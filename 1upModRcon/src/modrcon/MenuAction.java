@@ -34,22 +34,7 @@ public class MenuAction extends AbstractAction {
         String selection = (String)getValue(Action.NAME);
 
         if (selection.equals("Save Console As...")) {
-            JFileChooser file = new JFileChooser();
-            int choice = file.showSaveDialog(file);
-            if (choice == 0) {
-                String path = file.getSelectedFile().getAbsolutePath();
-                String contents = parent.consolePanel.getConsoleText();
-                try {
-                    FileWriter outFile = new FileWriter(path);
-                    PrintWriter out = new PrintWriter(outFile);
-                    out.print(contents);
-                    this.parent.consolePanel.appendToConsole("\nConsole log saved to: "+path+"\n");
-                    out.close();
-                }
-                catch (IOException e) {
-                    System.out.println(e.getMessage());
-                }
-            }
+            this.parent.consolePanel.saveConsole();
         }
 
         else if (selection.equals("Copy")) {

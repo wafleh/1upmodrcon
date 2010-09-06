@@ -5,6 +5,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.MouseListener;
 import java.awt.datatransfer.*;
+import java.io.*;
 
 /**
  * A JPanel that holds the console and console icons.
@@ -116,6 +117,26 @@ public class ConsolePanel extends JPanel implements MouseListener {
         this.taConsole.appendWithColors(playerName);
     }
 
+    public void saveConsole() {
+        JFileChooser file = new JFileChooser();
+        int choice = file.showSaveDialog(file);
+        if (choice == 0) {
+            String path = file.getSelectedFile().getAbsolutePath();
+            String contents = this.getConsoleText();
+            try {
+                FileWriter outFile = new FileWriter(path);
+                PrintWriter out = new PrintWriter(outFile);
+                out.print(contents);
+                this.appendToConsole("\nConsole log saved to: "+path+"\n");
+                out.close();
+                JOptionPane.showMessageDialog(this.parent, "File Saved.");
+            }
+            catch (IOException e) {
+                JOptionPane.showMessageDialog(this.parent, e.getMessage());
+            }
+        }
+    }
+
     public void mouseClicked(MouseEvent e) {
         if (e.getSource() == this.iconCopy) {
             StringSelection data = new StringSelection(this.getSelectedText());
@@ -129,7 +150,7 @@ public class ConsolePanel extends JPanel implements MouseListener {
             JOptionPane.showMessageDialog(parent, "This feature will be coming in a later version!", iconFind.getToolTipText(), JOptionPane.INFORMATION_MESSAGE);
         }
         else if (e.getSource() == this.iconSave) {
-            JOptionPane.showMessageDialog(parent, "This feature will be coming in a later version!", iconSave.getToolTipText(), JOptionPane.INFORMATION_MESSAGE);
+            this.saveConsole();
         }
         else if (e.getSource() == this.taConsole) {
             if (e.getButton() == MouseEvent.BUTTON3 && e.getClickCount() == 1) {
