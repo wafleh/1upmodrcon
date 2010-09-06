@@ -35,8 +35,6 @@ public class Main {
         javax.swing.SwingUtilities.invokeLater(new Runnable() {
             public void run() {
                 MainWindow mui = new MainWindow();
-                mui.setConsoleBackground(Color.decode(pm.getConsoleBGColor()));
-                mui.setConsoleForeground(Color.decode(pm.getConsoleFGColor()));
                 mui.setVisible(true);
             }
         });

@@ -85,6 +85,21 @@ public class ControlPanel extends JPanel implements ActionListener, KeyListener 
         System.out.println(this.comboCommandBox.getSize().toString());
     }
 
+    public void sendStatusCommand() {
+        try {
+            Server server = (Server)this.parent.comboServerList.getSelectedItem();
+            BowserQuery q = new BowserQuery(server.getIP(), server.getPortAsInteger());
+            q.setPassword(server.getPassword());
+            q.setMethod("mod");
+            q.sendCmd("status");
+            this.parent.consolePanel.appendCommand("status");
+            this.parent.consolePanel.appendWithColor(q.getResponse());
+        }
+        catch (Exception e) {
+            System.out.print(e.getMessage());
+        }
+    }
+
     private String getType() {
         if (this.type == 1) {
             return "Ref";
@@ -125,17 +140,7 @@ public class ControlPanel extends JPanel implements ActionListener, KeyListener 
         }
 
         else if (pressedButton == btnStatus) {
-            try {
-                Server server = (Server)this.parent.comboServerList.getSelectedItem();
-                BowserQuery q = new BowserQuery(server.getIP(), server.getPortAsInteger());
-                q.setPassword(server.getPassword());
-                q.mod("status");
-                this.parent.consolePanel.appendCommand("status");
-                this.parent.consolePanel.appendWithColor(q.getResponse());
-            }
-            catch (Exception e) {
-                System.out.print(e.getMessage());
-            }
+            this.sendStatusCommand();
         }
         else if (pressedButton == btnDumpUser) {
             String input = JOptionPane.showInputDialog(this.parent, "Enter the player number for the player\nyou want more info about.", "Dump User", JOptionPane.PLAIN_MESSAGE);
