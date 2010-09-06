@@ -111,7 +111,7 @@ public class LivePlayerInfoPanel extends JPanel {
 
         thisLine[0] = tempSplit[0]; // Score
         thisLine[1] = tempSplit[1]; // Ping
-        thisLine[2] = line.substring(line.indexOf('\"') + 1, line.lastIndexOf('\"'));
+        thisLine[2] = line.substring(line.indexOf('\"') + 1, line.lastIndexOf('\"')).trim();
 
         return thisLine;
     }
@@ -187,6 +187,7 @@ public class LivePlayerInfoPanel extends JPanel {
             g.fillRect(0, 0, this.getWidth(), this.getHeight());
         }
 
+        @Override
         public void paintComponent(Graphics g) {
             paintBackground(g);
             String playerName = this.getText();
