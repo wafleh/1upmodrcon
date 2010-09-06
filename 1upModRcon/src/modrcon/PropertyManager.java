@@ -48,6 +48,11 @@ public class PropertyManager {
         return propFile.getProperty("receivetimeout");
     }
 
+    public int getReceiveTimeoutNumber() {
+        int timeout = Integer.parseInt(propFile.getProperty("receivetimeout"));
+        return timeout;
+    }
+
     public void setReceiveTimeout(String timeout) {
         propFile.setProperty("receivetimeout", timeout);
     }
@@ -95,7 +100,7 @@ public class PropertyManager {
     private boolean writeDefaultPropertiesFile(File file) {
         Writer writer = null;
         try {
-            String text = "#Property File for 1up ModRcon\n#Fri Aug 27 23:18:57 CDT 2010\nversion=1.0\ngamepath=\nconsolebgcolor=\\#0\nconsolefgcolor=\\#FEFF00\n";
+            String text = "#Property File for 1up ModRcon\n#Fri Aug 27 23:18:57 CDT 2010\nversion=1.0\ngamepath=\nconsolebgcolor=\\#0\nconsolefgcolor=\\#FFFFFF\nreceivetimeout=100\nstatusonconnect=false\n";
             writer = new BufferedWriter(new FileWriter(file));
             writer.write(text);
             return true;

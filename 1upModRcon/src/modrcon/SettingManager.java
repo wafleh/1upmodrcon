@@ -8,7 +8,7 @@ import java.awt.event.*;
  *
  * @author Pyrite
  */
-public class SettingManager extends JDialog implements ActionListener {
+public class SettingManager extends JDialog implements ActionListener, MouseListener {
 
     private MainWindow parent;
 
@@ -16,8 +16,8 @@ public class SettingManager extends JDialog implements ActionListener {
     private JSpinner timeoutSpinner;
     private JCheckBox sendStatusCheck;
 
-    private JPanel bgColorPanel;
-    private JPanel fgColorPanel;
+    private JLabel bgColorLabel;
+    private JLabel fgColorLabel;
 
 
 
@@ -53,17 +53,66 @@ public class SettingManager extends JDialog implements ActionListener {
         this.setLocation(aboutBoxLocation);
         // --END CENTER--
 
+        this.getSettings();
         this.setVisible(true);
     }
 
     private JPanel getSettingsPanel() {
         JPanel sp = new JPanel();
+        sp.setLayout(new BoxLayout(sp, BoxLayout.Y_AXIS));
         sp.setBorder(BorderFactory.createTitledBorder("Program Settings"));
-        JLabel lblGamePath = new JLabel("Game Exe Path:");
-        JLabel lblTimeOut = new JLabel("Receive Timeout:");
+        JLabel lblGamePath = new JLabel("Game Exe Path:", JLabel.TRAILING);
+        JLabel lblTimeOut = new JLabel("Receive Timeout:", JLabel.TRAILING);
         JLabel lblSendStatus = new JLabel("Send status command on connect");
         JLabel lblBGColor = new JLabel("Console BG Color");
         JLabel lblFGColor = new JLabel("Console Font Color");
+        
+        this.textGamePath = new JTextField(25);
+        this.timeoutSpinner = new JSpinner();
+        this.timeoutSpinner.setValue(1500);
+
+        JPanel springPanel = new JPanel(new SpringLayout());
+        springPanel.add(lblGamePath);
+        lblGamePath.setLabelFor(textGamePath);
+        springPanel.add(textGamePath);
+        springPanel.add(lblTimeOut);
+        lblTimeOut.setLabelFor(timeoutSpinner);
+        springPanel.add(timeoutSpinner);
+
+        //Lay out the panel.
+        SpringUtilities.makeCompactGrid(springPanel,
+            2, 2, //rows, cols
+            10, 6, //initX, initY
+            10, 6  //xPad, yPad
+        );
+
+        JPanel checkPanel = new JPanel(new FlowLayout(FlowLayout.CENTER));
+        this.sendStatusCheck = new JCheckBox();
+        checkPanel.add(sendStatusCheck);
+        checkPanel.add(lblSendStatus);
+
+        JPanel colorPanel = new JPanel(new FlowLayout(FlowLayout.CENTER));
+        this.bgColorLabel = new JLabel();
+        this.bgColorLabel.setPreferredSize(new Dimension(16,16));
+        this.bgColorLabel.setBorder(BorderFactory.createLineBorder(Color.BLACK));
+        this.bgColorLabel.setOpaque(true);
+        this.bgColorLabel.setBackground(Color.BLACK);
+        this.bgColorLabel.addMouseListener(this);
+        this.fgColorLabel = new JLabel();
+        this.fgColorLabel.setPreferredSize(new Dimension(16,16));
+        this.fgColorLabel.setBorder(BorderFactory.createLineBorder(Color.BLACK));
+        this.fgColorLabel.setBackground(Color.WHITE);
+        this.fgColorLabel.setOpaque(true);
+        this.fgColorLabel.addMouseListener(this);
+        colorPanel.add(this.bgColorLabel);
+        colorPanel.add(lblBGColor);
+        colorPanel.add(this.fgColorLabel);
+        colorPanel.add(lblFGColor);
+
+        sp.add(springPanel);
+        sp.add(checkPanel);
+        sp.add(new JSeparator());
+        sp.add(colorPanel);
         
         return sp;
     }
@@ -79,20 +128,63 @@ public class SettingManager extends JDialog implements ActionListener {
         return bp;
     }
 
-    private void fgColorPanelMouseClicked(java.awt.event.MouseEvent evt) {
-        JColorChooser mycolor = new JColorChooser();
-        Color chosenColor = mycolor.showDialog(mycolor, "Select a Font Color for the Console", fgColorPanel.getBackground());
-        fgColorPanel.setBackground(chosenColor);
+    private void getSettings() {
+        PropertyManager pm = new PropertyManager();
+        this.textGamePath.setText(pm.getGamePath());
+        this.timeoutSpinner.setValue(pm.getReceiveTimeoutNumber());
+        this.sendStatusCheck.setSelected(pm.getStatusOnConnect());
+        this.bgColorLabel.setBackground(Color.decode(pm.getConsoleBGColor()));
+        this.fgColorLabel.setBackground(Color.decode(pm.getConsoleFGColor()));
     }
-
 
     public void actionPerformed(ActionEvent e) {
         AbstractButton pressedButton = (AbstractButton)e.getSource();
         if (pressedButton == btnSave) {
+            PropertyManager pm = new PropertyManager();
+            pm.setGamePath(this.textGamePath.getText());
+            pm.setReceiveTimeout(this.timeoutSpinner.getValue().toString());
+            pm.setStatusOnConnect(this.sendStatusCheck.isSelected());
+            // Console Colors
+            String bg = "#" + Integer.toHexString(bgColorLabel.getBackground().getRGB() & 0x00ffffff).toUpperCase();
+            String fg = "#" + Integer.toHexString(fgColorLabel.getBackground().getRGB() & 0x00ffffff).toUpperCase();
+            pm.setConsoleBGColor(bg);
+            pm.setConsoleFGColor(fg);
+            this.parent.consolePanel.setConsoleBackground(bgColorLabel.getBackground());
+            this.parent.consolePanel.setConsoleForeground(fgColorLabel.getBackground());
+            pm.savePropertyFile();
             this.dispose();
         }
         else if (pressedButton == btnClose) {
             this.dispose();
         }
+    }
+
+    public void mouseClicked(MouseEvent e) {
+        if (e.getSource() == bgColorLabel) {
+            JColorChooser mycolor = new JColorChooser();
+            Color chosenColor = mycolor.showDialog(mycolor, "Select a Background Color for the Console", bgColorLabel.getBackground());
+            bgColorLabel.setBackground(chosenColor);
+        }
+        else if (e.getSource() == fgColorLabel) {
+            JColorChooser mycolor = new JColorChooser();
+            Color chosenColor = mycolor.showDialog(mycolor, "Select a Font Color for the Console", fgColorLabel.getBackground());
+            fgColorLabel.setBackground(chosenColor);
+        }
+    }
+
+    public void mousePressed(MouseEvent e) {
+        setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
+    }
+
+    public void mouseReleased(MouseEvent e) {
+        setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
+    }
+
+    public void mouseEntered(MouseEvent e) {
+        setCursor(new Cursor(Cursor.HAND_CURSOR));
+    }
+
+    public void mouseExited(MouseEvent e) {
+        setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
     }
 }
