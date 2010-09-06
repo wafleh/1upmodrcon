@@ -1,5 +1,7 @@
 package modrcon;
 
+import java.io.*;
+
 /**
  * A static class to Launch a Game.
  *
@@ -15,8 +17,10 @@ public class GameLauncher {
      * @throws Exception
      */
     public static void Launch(String pathToExe, String serverIP) throws Exception {
-        String[] cmd = { pathToExe, "+connect "+serverIP };
-        Process p = Runtime.getRuntime().exec(cmd);
+        File game = new File(pathToExe);
+        ProcessBuilder processBuilder = new ProcessBuilder(pathToExe, "+connect", serverIP);
+        processBuilder.directory(new File(game.getParent()));
+        processBuilder.start();
     }
 
 }

@@ -61,7 +61,7 @@ public class MainWindow extends JFrame implements ItemListener {
         this.versionPanel = new VersionPanel();
         this.consolePanel = new ConsolePanel(this);
         this.controlPanel = new ControlPanel(this, 2);
-        this.serverInfoPanel = new ServerInfoPanel();
+        this.serverInfoPanel = new ServerInfoPanel(this);
         this.livePlayerInfoPanel = new LivePlayerInfoPanel(this);
 
         this.comboServerList = new JComboBox();
