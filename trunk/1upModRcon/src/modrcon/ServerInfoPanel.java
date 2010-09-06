@@ -12,14 +12,17 @@ import java.awt.event.MouseListener;
  */
 public class ServerInfoPanel extends JPanel implements MouseListener {
 
+    private MainWindow parent;
+
     private JLabel server;
     private JLabel ip;
     private JLabel port;
     private JLabel gametype;
     private JLabel map;
 
-    public ServerInfoPanel() {
+    public ServerInfoPanel(MainWindow owner) {
         super();
+        this.parent = owner;
         this.setLayout(new BorderLayout());
         this.setBorder(BorderFactory.createTitledBorder("Server Info"));
 
@@ -106,7 +109,7 @@ public class ServerInfoPanel extends JPanel implements MouseListener {
             GameLauncher.Launch(pathToUrbanTerror, this.ip.getText());
         }
         catch (Exception event) {
-            System.out.println(event.getMessage());
+            JOptionPane.showMessageDialog(this.parent, "<html>Error: Failed to launch Urban Terror.\nReports bugs at http://1upModRcon.googlecode.com");
         }
     }
 
