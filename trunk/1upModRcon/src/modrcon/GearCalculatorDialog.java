@@ -11,7 +11,7 @@ import java.awt.event.*;
  *
  * @author Brandon
  */
-public class GearCalculatorDialog extends JDialog {
+public class GearCalculatorDialog extends JDialog implements MouseListener, ActionListener, ItemListener {
     private JCheckBox grenadeBox;
     private JCheckBox sniperBox;
     private JCheckBox spasBox;
@@ -29,8 +29,15 @@ public class GearCalculatorDialog extends JDialog {
     private static final int AUTOMATIC_VALUE = 16;
     private static final int NEGEV_VALUE = 32;
 
+    private static final int DEFAULT_VALUE = 63;
+
+    private JLabel selectAllLabel;
+    private JLabel deselectAllLabel;
+
     private ImageIcon selectAllIcon;
     private ImageIcon deselectAllIcon;
+
+    private JSpinner gearSpinner;
 
     private MainWindow parent;
     
@@ -54,14 +61,30 @@ public class GearCalculatorDialog extends JDialog {
         this.deselectAllIcon = new ImageIcon(this.getClass().getResource("/modrcon/resources/remove.png"));
 
         this.grenadeBox = new JCheckBox("Grenades");
+        this.grenadeBox.addItemListener(this);
         this.sniperBox = new JCheckBox("Snipers");
+        this.sniperBox.addItemListener(this);
         this.spasBox = new JCheckBox("Spas");
+        this.spasBox.addItemListener(this);
         this.pistolBox = new JCheckBox("Pistols");
+        this.pistolBox.addItemListener(this);
         this.automaticBox = new JCheckBox("Automatic Guns");
+        this.automaticBox.addItemListener(this);
         this.negevBox = new JCheckBox("Negev");
+        this.negevBox.addItemListener(this);
 
         this.sendToServerButton = new JButton("Send to Server");
+        this.sendToServerButton.addActionListener(this);
         this.cancelButton = new JButton("Cancel");
+        this.cancelButton.addActionListener(this);
+
+        this.gearSpinner = new JSpinner();
+        this.gearSpinner.setValue(DEFAULT_VALUE);
+
+        this.selectAllLabel = new JLabel(this.selectAllIcon);
+        this.selectAllLabel.addMouseListener(this);
+        this.deselectAllLabel = new JLabel(this.deselectAllIcon);
+        this.deselectAllLabel.addMouseListener(this);
     }
 
     private void center() {
@@ -75,28 +98,50 @@ public class GearCalculatorDialog extends JDialog {
     private JPanel buildUI() {
         LogoPanel northPanel = new LogoPanel(LogoPanel.LOGO_CENTER);
 
+        JPanel infoTopPanel = new JPanel();
+        infoTopPanel.setLayout(new BoxLayout(infoTopPanel, BoxLayout.Y_AXIS));
+        infoTopPanel.add(this.getCheckBoxTitlePanel());
+        infoTopPanel.add(this.getCheckBoxPanel(grenadeBox, GRENADE_VALUE));
+        infoTopPanel.add(this.getCheckBoxPanel(sniperBox, SNIPER_VALUE));
+        infoTopPanel.add(this.getCheckBoxPanel(spasBox, SPAS_VALUE));
+        infoTopPanel.add(this.getCheckBoxPanel(pistolBox, PISTOL_VALUE));
+        infoTopPanel.add(this.getCheckBoxPanel(automaticBox, AUTOMATIC_VALUE));
+        infoTopPanel.add(this.getCheckBoxPanel(negevBox, NEGEV_VALUE));
+
+        JLabel gearLabel = new JLabel("Set g_Gear");
+        gearLabel.setPreferredSize(new Dimension(54, 25));
+        JPanel gearSpinnerPanel = new JPanel();
+        gearSpinnerPanel.setLayout(new FlowLayout(FlowLayout.LEFT));
+        gearSpinnerPanel.add(gearLabel);
+        gearSpinnerPanel.add(this.gearSpinner);
+
+        JPanel controlButtonPanel = new JPanel(new FlowLayout(FlowLayout.RIGHT));
+        controlButtonPanel.add(this.selectAllLabel);
+        controlButtonPanel.add(this.deselectAllLabel);
+
+        JPanel infoBottomPanel = new JPanel();
+        infoBottomPanel.setLayout(new BorderLayout());
+        infoBottomPanel.setPreferredSize(new Dimension(260, 30));
+        infoBottomPanel.add(gearSpinnerPanel, BorderLayout.WEST);
+        infoBottomPanel.add(controlButtonPanel, BorderLayout.EAST);
+
         JPanel infoPanel = new JPanel();
         infoPanel.setLayout(new BoxLayout(infoPanel, BoxLayout.Y_AXIS));
         infoPanel.setBorder(BorderFactory.createTitledBorder("Gear Calculator"));
-        infoPanel.add(this.getCheckBoxTitlePanel());
-        infoPanel.add(this.getCheckBoxPanel(grenadeBox, GRENADE_VALUE));
-        infoPanel.add(this.getCheckBoxPanel(sniperBox, SNIPER_VALUE));
-        infoPanel.add(this.getCheckBoxPanel(spasBox, SPAS_VALUE));
-        infoPanel.add(this.getCheckBoxPanel(pistolBox, PISTOL_VALUE));
-        infoPanel.add(this.getCheckBoxPanel(automaticBox, AUTOMATIC_VALUE));
-        infoPanel.add(this.getCheckBoxPanel(negevBox, NEGEV_VALUE));
+        infoPanel.add(infoTopPanel);
+        infoPanel.add(infoBottomPanel);
 
         JPanel buttonPanel = new JPanel();
         buttonPanel.add(this.sendToServerButton);
         buttonPanel.add(this.cancelButton);
 
-        JPanel infoWrapperPanel = new JPanel();
-        infoWrapperPanel.setLayout(new VerticalFlowLayout());
-        infoWrapperPanel.add(infoPanel);
-        infoWrapperPanel.add(buttonPanel);
+        JPanel wrapperPanel = new JPanel();
+        wrapperPanel.setLayout(new VerticalFlowLayout());
+        wrapperPanel.add(infoPanel);
+        wrapperPanel.add(buttonPanel);
 
         JPanel centerPanel = new JPanel();
-        centerPanel.add(infoWrapperPanel);
+        centerPanel.add(wrapperPanel);
 
         JPanel borderPanel = new JPanel();
         borderPanel.setLayout(new BorderLayout());
@@ -147,5 +192,86 @@ public class GearCalculatorDialog extends JDialog {
         returnPanel.setPreferredSize(new Dimension(260, 25));
 
         return returnPanel;
+    }
+
+    public void mouseClicked(MouseEvent e) {
+        JLabel sourceLabel = (JLabel)e.getSource();
+        if (sourceLabel == this.selectAllLabel) {
+            this.grenadeBox.setSelected(true);
+            this.sniperBox.setSelected(true);
+            this.spasBox.setSelected(true);
+            this.pistolBox.setSelected(true);
+            this.automaticBox.setSelected(true);
+            this.negevBox.setSelected(true);
+        }
+
+        if (sourceLabel == this.deselectAllLabel) {
+            this.grenadeBox.setSelected(false);
+            this.sniperBox.setSelected(false);
+            this.spasBox.setSelected(false);
+            this.pistolBox.setSelected(false);
+            this.automaticBox.setSelected(false);
+            this.negevBox.setSelected(false);
+        }
+    }
+    public void mousePressed(MouseEvent e) { }
+    public void mouseReleased(MouseEvent e) { }
+    public void mouseEntered(MouseEvent e) { }
+    public void mouseExited(MouseEvent e) { }
+
+    public void actionPerformed(ActionEvent e) {
+        JButton source = (JButton)e.getSource();
+
+        if (source == this.cancelButton)
+            this.dispose();
+    }
+
+    public void itemStateChanged(ItemEvent e) {
+        JCheckBox source = (JCheckBox)e.getSource();
+        int oldValue = (Integer)(this.gearSpinner.getValue());
+
+        if (source == this.grenadeBox) {
+            if (this.grenadeBox.isSelected())
+                oldValue -= GRENADE_VALUE;
+            else
+                oldValue += GRENADE_VALUE;
+        }
+
+        if (source == this.sniperBox) {
+            if (this.sniperBox.isSelected())
+                oldValue -= SNIPER_VALUE;
+            else
+                oldValue += SNIPER_VALUE;
+        }
+
+        if (source == this.spasBox) {
+            if (this.spasBox.isSelected())
+                oldValue -= SPAS_VALUE;
+            else
+                oldValue += SPAS_VALUE;
+        }
+
+        if (source == this.pistolBox) {
+            if (this.pistolBox.isSelected())
+                oldValue -= PISTOL_VALUE;
+            else
+                oldValue += PISTOL_VALUE;
+        }
+
+        if (source == this.automaticBox) {
+            if (this.automaticBox.isSelected())
+                oldValue -= AUTOMATIC_VALUE;
+            else
+                oldValue += AUTOMATIC_VALUE;
+        }
+
+        if (source == this.negevBox) {
+            if (this.negevBox.isSelected())
+                oldValue -= NEGEV_VALUE;
+            else
+                oldValue += NEGEV_VALUE;
+        }
+
+        this.gearSpinner.setValue(oldValue);
     }
 }
