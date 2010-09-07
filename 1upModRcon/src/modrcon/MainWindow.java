@@ -4,13 +4,14 @@ import javax.swing.*;
 import java.awt.*;
 import java.util.*;
 import java.awt.event.*;
+import javax.swing.Timer;
 
 /**
  * The main application window.
  *
  * @author Pyrite[1up]
  */
-public class MainWindow extends JFrame implements ItemListener {
+public class MainWindow extends JFrame implements ActionListener, ItemListener {
 
     private String frameTitle;
     
@@ -31,6 +32,9 @@ public class MainWindow extends JFrame implements ItemListener {
     private JLabel sinfoServerPort;
     private JLabel sinfoGameType;
     private JLabel sinfoMap;
+
+    /** Timer to control how often LivePlayerInfo Panel Updates. */
+    private final Timer timer;
 
     /** Creates new form NewJFrame */
     public MainWindow() {
@@ -98,7 +102,7 @@ public class MainWindow extends JFrame implements ItemListener {
         //initComponents();
         refreshServerCombo();
         refreshServerInfo();
-        this.livePlayerInfoPanel.fireItUp();
+        //this.livePlayerInfoPanel.fireItUp();
 
         // Populate Live Server Info
 
@@ -116,6 +120,11 @@ public class MainWindow extends JFrame implements ItemListener {
         if (pm.getStatusOnConnect()) {
             this.controlPanel.sendStatusCommand();
         }
+
+        // Update LivePlayerInfo at set Intervals
+        timer = new Timer(2500, this);
+        timer.setInitialDelay(1);
+        timer.start();
     }
 
     private JPanel getComboServerListPanel() {
@@ -278,6 +287,13 @@ public class MainWindow extends JFrame implements ItemListener {
         if (source == this.comboServerList) {
             this.livePlayerInfoPanel.fireItUp();
             this.refreshServerInfo();
+        }
+    }
+
+    public void actionPerformed(ActionEvent e) {
+        if (e.getSource() == this.timer) {
+            // Update LivePlayerInfo based on this.timer
+            this.livePlayerInfoPanel.fireItUp();
         }
     }
 
