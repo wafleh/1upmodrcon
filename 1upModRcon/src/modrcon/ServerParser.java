@@ -20,6 +20,37 @@ public class ServerParser {
 	List myEmpls;
 	Document dom;
 
+        /**
+         * This method wipes the servers.xml file and starts over fresh,
+         * adding a new single server to the servers.xml file. This method
+         * is primarily used by the ServerSetupWizard the first time the user
+         * runs the program to add a default server to the database.
+         *
+         * @param s The single server to add.
+         */
+        public static void newServer(Server s) {
+            String contents = "<servers>\r\n";
+            contents += "\t<server>\r\n";
+            contents += "\t\t<name>"+s.getName()+"</name>\r\n";
+            contents += "\t\t<ip>"+s.getIP()+"</ip>\r\n";
+            contents += "\t\t<port>"+s.getPortAsString()+"</port>\r\n";
+            contents += "\t\t<logintype>"+s.getLoginType()+"</logintype>\r\n";
+            contents += "\t\t<password>"+s.getPassword()+"</password>\r\n";
+            contents += "\t</server>\r\n";
+            contents += "</servers>\r\n";
+            try {
+                // Will put the file where the 1upmodrcon.properties file exists.
+                // Will also create the file if it does not exist!
+                FileOutputStream fos = new FileOutputStream("servers.xml");
+                OutputStreamWriter out = new OutputStreamWriter(fos, "UTF-8");
+                out.write(contents);
+                out.close();
+            }
+            catch (Exception e) {
+                System.out.println(e.getMessage());
+            }
+        }
+
 
 	public ServerParser() {
 		//create a list to hold the server objects

@@ -1,5 +1,7 @@
 package modrcon;
 
+import java.util.regex.Pattern;
+
 /**
  * A utility class for 1up ModRcon.
  *
@@ -25,5 +27,11 @@ public class ModRconUtil {
     public static String decryptString(String str) {
         return encryptString(str);
     }
+
+    public static boolean isIPAddress(String str) {
+        Pattern ipPattern = Pattern.compile("\\d{1,3}\\.\\d{1,3}\\.\\d{1,3}\\.\\d{1,3}");
+        return ipPattern.matcher(str).matches();
+    }
+
 
 }
