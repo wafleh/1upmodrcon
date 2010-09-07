@@ -32,17 +32,35 @@ public class LivePlayerInfoPanel extends JPanel {
         //this.setLayout(new BorderLayout());
         this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
         this.setBorder(BorderFactory.createTitledBorder("Live Player Info"));
-        final PlayerNameCellRenderer renderer = new PlayerNameCellRenderer();
+        final PlayerNameCellRenderer playerRenderer = new PlayerNameCellRenderer();
+        final CenterCellRenderer centerRenderer = new CenterCellRenderer();
         playerTable = new JTable() {
             @Override
             public TableCellRenderer getCellRenderer(int row, int column) {
                 if (column == 2) {
-                    return renderer;
+                    return playerRenderer;
                 }
                 else
-                    return super.getCellRenderer(row, column);
+                    return centerRenderer;
             }
         };
+        final JTableHeader header = playerTable.getTableHeader();
+        final Font boldFont = header.getFont().deriveFont(Font.BOLD);
+        final TableCellRenderer headerRenderer = header.getDefaultRenderer();
+        header.setDefaultRenderer( new TableCellRenderer() {
+            public Component getTableCellRendererComponent( JTable table, Object value, boolean isSelected, boolean hasFocus, int row, int column ) {
+                Component comp = headerRenderer.getTableCellRendererComponent( table, value, isSelected, hasFocus, row, column );
+                comp.setFont(boldFont);
+
+                if (column < 2)
+                    ((JLabel)comp).setHorizontalAlignment(SwingConstants.CENTER);
+                else
+                    ((JLabel)comp).setHorizontalAlignment(SwingConstants.LEADING);
+
+                return comp;
+            }
+        });
+
         playerTable.setShowGrid(false);
         playerTable.getColumnModel().setColumnMargin(0);
         playerTable.setSelectionMode(0);
@@ -116,6 +134,45 @@ public class LivePlayerInfoPanel extends JPanel {
         return thisLine;
     }
 
+    class HeaderCellRenderer extends JLabel implements TableCellRenderer {
+        public HeaderCellRenderer() {
+            this.setOpaque(true);
+        }
+
+        public Component getTableCellRendererComponent(JTable table,
+                Object value, boolean isSelected, boolean hasFocus,
+                int row, int column) {
+
+            String text = (String)value;
+            this.setText(text);
+            this.setFont(this.getFont().deriveFont(Font.BOLD));
+            if (column != 2)
+                this.setHorizontalAlignment(SwingConstants.CENTER);
+
+            return this;
+        }
+    }
+
+    class CenterCellRenderer extends JLabel implements TableCellRenderer {
+        public CenterCellRenderer() {
+            this.setOpaque(true);
+        }
+
+        public Component getTableCellRendererComponent(JTable table,
+                Object value, boolean isSelected, boolean hasFocus,
+                int row, int column) {
+            if (isSelected)
+                this.setBackground(table.getSelectionBackground());
+            else
+                this.setBackground(table.getBackground());
+
+            String text = (String)value;
+            this.setText(text);
+            this.setHorizontalAlignment(SwingConstants.CENTER);
+            return this;
+        }
+    }
+
     class PlayerNameCellRenderer extends JLabel implements TableCellRenderer {
         private boolean isSelected = false;
 
@@ -156,7 +213,7 @@ public class LivePlayerInfoPanel extends JPanel {
                 case '2':
                     return Color.GREEN.darker();
                 case '3':
-                    return Color.YELLOW;
+                    return Color.YELLOW.darker();
                 case '4':
                     return Color.BLUE;
                 case '5':
