@@ -36,15 +36,15 @@ public class FileChooserPanel extends JPanel implements MouseListener {
         folderLabel.addMouseListener(this);
         folderLabel.setToolTipText("Click here to browse for Urban Terror");
         jfc = new JFileChooser();
+        this.setBorder(this.gamePathText.getBorder());
         gamePathText.setBorder(null);
         folderLabel.setBorder(null);
-        this.setBorder(BorderFactory.createLineBorder(Color.lightGray));
         this.add(gamePathText);
         this.add(folderLabel);
     }
 
     public void mouseClicked(MouseEvent e) {
-        int choice = jfc.showOpenDialog(jfc);
+        int choice = jfc.showDialog(jfc, "Select");
         if (choice == JFileChooser.APPROVE_OPTION) {
             String path = jfc.getSelectedFile().getAbsolutePath();
             this.gamePathText.setText(path);
