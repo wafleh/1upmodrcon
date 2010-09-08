@@ -107,6 +107,7 @@ public class ServerSetupWizard extends JFrame implements ActionListener {
         serverIP = new JTextField(25);
         serverIP.setBackground(GradientPanel.SELECTED_GRID_CELL_BG_COLOR);
         serverPort = new JTextField(25);
+        serverPort.setText("27960");
         serverPort.setBackground(GradientPanel.SELECTED_GRID_CELL_BG_COLOR);
         serverMethod = this.getMethodCombo();
         serverMethod.setBackground(GradientPanel.SELECTED_GRID_CELL_BG_COLOR);
@@ -239,6 +240,17 @@ public class ServerSetupWizard extends JFrame implements ActionListener {
         return label;
     }
 
+    private void runMainWindow() {
+        //Schedule a job for the event-dispatching thread:
+        //creating and showing this application's GUI.
+        SwingUtilities.invokeLater(new Runnable() {
+            public void run() {
+                MainWindow mui = new MainWindow();
+                mui.setVisible(true);
+            }
+        });
+    }
+
     public void actionPerformed(ActionEvent e) {
         AbstractButton pressedButton = (AbstractButton)e.getSource();
         if (pressedButton == btnSaveNow) {
@@ -258,6 +270,7 @@ public class ServerSetupWizard extends JFrame implements ActionListener {
                 Server s = new Server(serverName.getText(), serverIP.getText(), serverPort.getText(), method, password);
                 ServerParser.newServer(s);
                 this.dispose();
+                this.runMainWindow();
             }
         }
         else {

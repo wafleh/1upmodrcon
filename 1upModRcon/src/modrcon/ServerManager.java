@@ -134,6 +134,7 @@ public class ServerManager extends JDialog implements ActionListener, MouseListe
             out.close();
         }
         catch (Exception e) {
+            System.out.println("Failed to Write File in ServerManager.writeFile");
             System.out.println(e.getMessage());
         }
     }
@@ -181,6 +182,7 @@ public class ServerManager extends JDialog implements ActionListener, MouseListe
 
                 String password = (String)tm.getValueAt(i, 4);
                 if (password == null) password = "";
+                password = ModRconUtil.encryptString(password);
                 contents += "\t\t<password>"+password+"</password>\r\n";
 
                 contents += "\t</server>\r\n";
@@ -196,14 +198,14 @@ public class ServerManager extends JDialog implements ActionListener, MouseListe
             this.dispose();
         }
         else {
-            throw new UnsupportedOperationException("Not supported yet.");
+            // Do nothing
         }
     }
 
     public void mouseClicked(MouseEvent e) {
         if (e.getSource() == iconAddRow) {
             DefaultTableModel tm = (DefaultTableModel)this.serverTable.getModel();
-            tm.addRow(new Server("foo", "192.168", "27960", "mod", "foo").toArray());
+            tm.addRow(new Server("", "", "27960", "mod", "").toArray());
         }
         else if (e.getSource() == iconDeleteRow) {
             DefaultTableModel tm = (DefaultTableModel)this.serverTable.getModel();

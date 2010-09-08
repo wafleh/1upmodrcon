@@ -105,11 +105,16 @@ public class ServerInfoPanel extends JPanel implements MouseListener {
     public void mouseClicked(MouseEvent e) {
         PropertyManager pm = new PropertyManager();
         String pathToUrbanTerror = pm.getGamePath();
-        try {
-            GameLauncher.Launch(pathToUrbanTerror, this.ip.getText());
+        if (pathToUrbanTerror.isEmpty()) {
+            new SettingManager(this.parent);
         }
-        catch (Exception event) {
-            JOptionPane.showMessageDialog(this.parent, "<html>Error: Failed to launch Urban Terror.\nReports bugs at http://1upModRcon.googlecode.com");
+        else {
+            try {
+                GameLauncher.Launch(pathToUrbanTerror, this.ip.getText());
+            }
+            catch (Exception event) {
+                JOptionPane.showMessageDialog(this.parent, "<html>Error: Failed to launch Urban Terror.\nReports bugs at http://1upModRcon.googlecode.com");
+            }
         }
     }
 

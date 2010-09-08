@@ -89,8 +89,8 @@ public class ControlPanel extends JPanel implements ActionListener, KeyListener 
         try {
             Server server = (Server)this.parent.comboServerList.getSelectedItem();
             BowserQuery q = new BowserQuery(server.getIP(), server.getPortAsInteger());
-            q.setPassword(server.getPassword());
-            q.setMethod("mod");
+            q.setPassword(server.getDecryptedPassword());
+            q.setMethod(server.getLoginType());
             q.sendCmd("status");
             this.parent.consolePanel.appendCommand("status");
             this.parent.consolePanel.appendWithColor(q.getResponse());
@@ -128,8 +128,9 @@ public class ControlPanel extends JPanel implements ActionListener, KeyListener 
                 try {
                     Server server = (Server)this.parent.comboServerList.getSelectedItem();
                     BowserQuery q = new BowserQuery(server.getIP(), 27960);
-                    q.setPassword(server.getPassword());
-                    q.mod(cmd);
+                    q.setPassword(server.getDecryptedPassword());
+                    q.setMethod(server.getLoginType());
+                    q.sendCmd(cmd);
                     this.parent.consolePanel.appendCommand(cmd);
                     this.parent.consolePanel.appendToConsole(q.getResponse());
                 }
@@ -148,7 +149,7 @@ public class ControlPanel extends JPanel implements ActionListener, KeyListener 
             try {
                 Server server = (Server)this.parent.comboServerList.getSelectedItem();
                 BowserQuery q = new BowserQuery(server.getIP(), server.getPortAsInteger());
-                q.setPassword(server.getPassword());
+                q.setPassword(server.getDecryptedPassword());
                 q.mod("dumpuser "+input);
                 this.parent.consolePanel.appendCommand("dumpuser " + input);
                 this.parent.consolePanel.appendToConsole(q.getResponse());
@@ -164,7 +165,7 @@ public class ControlPanel extends JPanel implements ActionListener, KeyListener 
             try {
                 Server server = (Server)this.parent.comboServerList.getSelectedItem();
                 BowserQuery q = new BowserQuery(server.getIP(), server.getPortAsInteger());
-                q.setPassword(server.getPassword());
+                q.setPassword(server.getDecryptedPassword());
                 q.mod("slap "+input);
                 this.parent.consolePanel.appendCommand("slap " + input);
                 this.parent.consolePanel.appendToConsole(q.getResponse());
@@ -180,7 +181,7 @@ public class ControlPanel extends JPanel implements ActionListener, KeyListener 
             try {
                 Server server = (Server)this.parent.comboServerList.getSelectedItem();
                 BowserQuery q = new BowserQuery(server.getIP(), server.getPortAsInteger());
-                q.setPassword(server.getPassword());
+                q.setPassword(server.getDecryptedPassword());
                 q.mod("kick "+input);
                 this.parent.consolePanel.appendCommand("kick " + input);
                 this.parent.consolePanel.appendToConsole(q.getResponse());
@@ -196,7 +197,7 @@ public class ControlPanel extends JPanel implements ActionListener, KeyListener 
             try {
                 Server server = (Server)this.parent.comboServerList.getSelectedItem();
                 BowserQuery q = new BowserQuery(server.getIP(), server.getPortAsInteger());
-                q.setPassword(server.getPassword());
+                q.setPassword(server.getDecryptedPassword());
                 q.mod("mute "+input);
                 this.parent.consolePanel.appendToConsole(q.getResponse());
             }
@@ -211,7 +212,7 @@ public class ControlPanel extends JPanel implements ActionListener, KeyListener 
             try {
                 Server server = (Server)this.parent.comboServerList.getSelectedItem();
                 BowserQuery q = new BowserQuery(server.getIP(), server.getPortAsInteger());
-                q.setPassword(server.getPassword());
+                q.setPassword(server.getDecryptedPassword());
                 q.mod("togglemute "+input);
                 this.parent.consolePanel.appendToConsole(q.getResponse());
             }

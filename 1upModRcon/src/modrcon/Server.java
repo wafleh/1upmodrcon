@@ -8,26 +8,48 @@ package modrcon;
  */
 public class Server {
 
-    public String name;
-    public String ip;
-    public String port;
-    public String loginType;
-    public String password;
+    /** The server name. */
+    private String name;
+    
+    /** The server IPv4 address. */
+    private String ip;
+
+    /** The server port (usually 27960). */
+    private String port;
+
+    /** The server login method (ref, mod, rcon). */
+    private String loginType;
+
+    /** The server password un-encrypted. */
+    private String decryptedPassword;
+
+    /** The server password encrypted. */
+    private String encryptedPassword;
 
     public Server() {
         this.name = "";
         this.ip = "";
         this.port = "27960";
         this.loginType = "";
-        this.password = "";
+        this.decryptedPassword = "";
     }
 
+    /**
+     * Constructs a server object given the following parameters:
+     *
+     * @param name The server name.
+     * @param ip The server IPv4 address.
+     * @param port The server port, usually just 27960.
+     * @param loginType The server login type which is either ref, mod, or rcon.
+     * @param password The server password un-encrypted.
+     */
     public Server(String name, String ip, String port, String loginType, String password) {
         this.name = name;
         this.ip = ip;
         this.port = port;
         this.loginType = loginType;
-        this.password = password;
+        this.decryptedPassword = password;
+        this.encryptedPassword = ModRconUtil.encryptString(password);
     }
 
     public String getName() {
@@ -50,12 +72,16 @@ public class Server {
         return this.loginType;
     }
 
-    public String getPassword() {
-        return this.password;
+    public String getEncryptedPassword() {
+        return this.encryptedPassword;
+    }
+
+    public String getDecryptedPassword() {
+        return this.decryptedPassword;
     }
     
     public String[] toArray() {
-        String[] server = {this.name, this.ip, this.port, this.loginType, this.password };
+        String[] server = {this.name, this.ip, this.port, this.loginType, this.decryptedPassword };
         return server;
     }
     

@@ -85,7 +85,7 @@ public class ForceTeamDialog extends JDialog implements ActionListener {
                 try {
                     Server server = (Server)this.parent.comboServerList.getSelectedItem();
                     BowserQuery q = new BowserQuery(server.getIP(), server.getPortAsInteger());
-                    q.setPassword(server.getPassword());
+                    q.setPassword(server.getDecryptedPassword());
                     q.setMethod(server.getLoginType());
                     q.forceTeam(player, team);
                     this.parent.consolePanel.appendToConsole(q.getResponse());
