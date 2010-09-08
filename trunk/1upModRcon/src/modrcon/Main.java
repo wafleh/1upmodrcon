@@ -1,7 +1,7 @@
 package modrcon;
 
-import java.awt.Color;
 import javax.swing.*;
+import java.io.File;
 
 /**
  * The Main Class of 1up ModRcon.
@@ -28,16 +28,20 @@ public class Main {
         final PropertyManager pm = new PropertyManager();
 
         // First see if servers.xml exists, if not, create it, and run ServerSetupWizard.
-        
-
-        //Schedule a job for the event-dispatching thread:
-        //creating and showing this application's GUI.
-        javax.swing.SwingUtilities.invokeLater(new Runnable() {
-            public void run() {
-                MainWindow mui = new MainWindow();
-                mui.setVisible(true);
-            }
-        });
+        File f = new File("servers.xml");
+        if (f.exists()) {
+            //Schedule a job for the event-dispatching thread:
+            //creating and showing this application's GUI.
+            SwingUtilities.invokeLater(new Runnable() {
+                public void run() {
+                    MainWindow mui = new MainWindow();
+                    mui.setVisible(true);
+                }
+            });
+        }
+        else {
+            new ServerSetupWizard();
+        }
         
     }
 

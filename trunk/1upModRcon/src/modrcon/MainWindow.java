@@ -256,7 +256,11 @@ public class MainWindow extends JFrame implements ActionListener, ItemListener {
 
     public void refreshServerCombo() {
         // Load Server List
-        this.comboServerList.removeAllItems();
+
+        // The removeAllItems causes a nullPointerException, just reset the model instead.
+        //this.comboServerList.removeAllItems();
+        this.comboServerList.setModel( new DefaultComboBoxModel() );
+
         ServerParser sp = new ServerParser();
         java.util.List servers = sp.getServers();
         for (int i=0; i < servers.size(); i++) {
@@ -268,7 +272,6 @@ public class MainWindow extends JFrame implements ActionListener, ItemListener {
         Server server = (Server)this.comboServerList.getSelectedItem();
         try {
             BowserQuery q = new BowserQuery(server.getIP(), server.getPortAsInteger());
-            q.setPassword(server.getPassword()); // may not be needed.
             Map map = q.getServerInfo();
             this.serverInfoPanel.setServerName((String)map.get("hostname"));
             this.serverInfoPanel.setServerIP(server.getIP());

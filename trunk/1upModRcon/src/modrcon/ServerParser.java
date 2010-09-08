@@ -1,6 +1,5 @@
 package modrcon;
 
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
@@ -11,14 +10,12 @@ import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.NodeList;
 import org.xml.sax.SAXException;
-import org.w3c.dom.DOMException;
 import java.io.*;
-
 
 public class ServerParser {
 
-	List myEmpls;
-	Document dom;
+	public List serverList;
+	public Document dom;
 
         /**
          * This method wipes the servers.xml file and starts over fresh,
@@ -35,7 +32,7 @@ public class ServerParser {
             contents += "\t\t<ip>"+s.getIP()+"</ip>\r\n";
             contents += "\t\t<port>"+s.getPortAsString()+"</port>\r\n";
             contents += "\t\t<logintype>"+s.getLoginType()+"</logintype>\r\n";
-            contents += "\t\t<password>"+s.getPassword()+"</password>\r\n";
+            contents += "\t\t<password>"+s.getEncryptedPassword()+"</password>\r\n";
             contents += "\t</server>\r\n";
             contents += "</servers>\r\n";
             try {
@@ -54,8 +51,7 @@ public class ServerParser {
 
 	public ServerParser() {
 		//create a list to hold the server objects
-		myEmpls = new ArrayList();
-
+		serverList = new ArrayList();
                 if (!this.writeDefaultXmlFile()) {
                     System.out.println("Failed to Create Servers.xml File");
                     System.exit(0);
@@ -151,35 +147,25 @@ public class ServerParser {
 				Element el = (Element)nl.item(i);
 
 				//get the Employee object
-				Server e = getEmployee(el);
+				Server s = getServer(el);
 
 				//add it to list
-				myEmpls.add(e);
+				serverList.add(s);
 			}
 		}
 	}
 
-
-	/**
-	 * I take an employee element and read the values in, create
-	 * an Employee object and return it
-	 * @param empEl
-	 * @return
-	 */
-	private Server getEmployee(Element empEl) {
-
-		String name = getTextValue(empEl,"name");
-		String ip = getTextValue(empEl,"ip");
-		String port = getTextValue(empEl,"port");
-                String modpass = getTextValue(empEl, "logintype");
-                String rconpass = getTextValue(empEl, "password");
-
-		//Create a new Employee with the value read from the xml nodes
-		Server e = new Server(name,ip,port,modpass,rconpass);
-
-		return e;
+	private Server getServer(Element e) {
+		String name = getTextValue(e,"name");
+		String ip = getTextValue(e,"ip");
+		String port = getTextValue(e,"port");
+                String method = getTextValue(e, "logintype");
+                String encryptedPassword = getTextValue(e, "password");
+                String decryptedPassword = ModRconUtil.decryptString(encryptedPassword);
+		//Create a new Server with the values read from the xml nodes
+		Server s = new Server(name,ip,port,method,decryptedPassword);
+		return s;
 	}
-
 
 	/**
 	 * I take a xml element and the tag name, look for the tag and get
@@ -218,9 +204,9 @@ public class ServerParser {
 	 */
 	private void printData(){
 
-		System.out.println("No of Employees '" + myEmpls.size() + "'.");
+		System.out.println("No of Employees '" + serverList.size() + "'.");
 
-		Iterator it = myEmpls.iterator();
+		Iterator it = serverList.iterator();
 		while(it.hasNext()) {
 			System.out.println(it.next().toString());
 		}
@@ -229,9 +215,8 @@ public class ServerParser {
         public List getServers() {
             parseXmlFile();
             parseDocument();
-            return myEmpls;
+            return serverList;
         }
-
 
 	public static void main(String[] args){
 		//create an instance
@@ -240,6 +225,39 @@ public class ServerParser {
 		//call run example
 		dpe.runExample();
 	}
+
+        public boolean createBlankDatabase() {
+            Writer writer = null;
+            File file = new File("servers.db");
+            if (!file.exists()) {
+                try {
+                    String text = "";
+                    writer = new BufferedWriter(new FileWriter(file));
+                    writer.write(text);
+                    return true;
+                }
+                catch (FileNotFoundException e) {
+                    System.out.println(e.getMessage());
+                    return false;
+                }
+                catch (IOException e) {
+                    System.out.println(e.getMessage());
+                    return false;
+                }
+                finally {
+                    try {
+                        if (writer != null) {
+                            writer.close();
+                        }
+                    }
+                    catch (IOException e) {
+                        System.out.println(e.getMessage());
+                    }
+                }
+            } else {
+                return true;
+            }
+        }
 
 }
 

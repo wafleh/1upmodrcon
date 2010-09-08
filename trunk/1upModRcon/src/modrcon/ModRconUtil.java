@@ -9,8 +9,9 @@ import java.util.regex.Pattern;
  */
 public class ModRconUtil {
     
-    private static final String key = "k9Xb7Vi3";
+    private static final String key = "EncryptionIsFun";
 
+    /*
     public static String encryptString(String str) {
         StringBuffer sb = new StringBuffer (str);
         int lenStr = str.length();
@@ -22,6 +23,17 @@ public class ModRconUtil {
             sb.setCharAt(i, (char)(str.charAt(i) ^ key.charAt(j)));
         }
         return sb.toString();
+    }
+
+    public static String decryptString(String str) {
+        return encryptString(str);
+    }
+    */
+
+    public static String encryptString(String str) {
+        StringBuffer buffer = new StringBuffer(str);
+        buffer = buffer.reverse();
+        return buffer.toString();
     }
 
     public static String decryptString(String str) {
