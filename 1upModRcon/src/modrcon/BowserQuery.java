@@ -46,16 +46,8 @@ public class BowserQuery {
     /** The last command sent. */
     private String lastCommand;
 
-    private byte[] bb = null;
+    /** Buffer used to store output from the server. */
     private String output;
-
-    public BowserQuery(String address, int port) throws Exception {
-        this.oob = (byte)0xff;
-        this.port = port;
-        this.ds = new DatagramSocket();
-        this.ds.setSoTimeout(2000);
-        this.ia = InetAddress.getByName(address);
-    }
 
     public BowserQuery(Server s) throws Exception {
         this.oob = (byte)0xff;
@@ -63,7 +55,7 @@ public class BowserQuery {
         this.method = s.getLoginType();
         this.password = s.getDecryptedPassword();
         this.ds = new DatagramSocket();
-        this.ds.setSoTimeout(2000);
+        this.ds.setSoTimeout(2000); // not sure if this has any effect here.
         this.ia = InetAddress.getByName(s.getIP());
     }
 
@@ -105,15 +97,15 @@ public class BowserQuery {
         this.sendCmd("forceteam "+player+" "+team);
     }
 
-    public void rcon(String command) {
+    private void rcon(String command) {
         this.send("rcon "+this.password+" "+command);
     }
 
-    public void mod(String command) {
+    private void mod(String command) {
         this.send("mod "+this.password+" "+command);
     }
 
-    public void ref(String command) {
+    private void ref(String command) {
         this.send("ref "+this.password+" "+command);
     }
 
