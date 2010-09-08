@@ -214,16 +214,32 @@ public class GearCalculatorDialog extends JDialog implements MouseListener, Acti
             this.negevBox.setSelected(false);
         }
     }
-    public void mousePressed(MouseEvent e) { }
-    public void mouseReleased(MouseEvent e) { }
-    public void mouseEntered(MouseEvent e) { }
-    public void mouseExited(MouseEvent e) { }
+    public void mousePressed(MouseEvent e) {setCursor(new Cursor(Cursor.DEFAULT_CURSOR));}
+    public void mouseReleased(MouseEvent e) {setCursor(new Cursor(Cursor.DEFAULT_CURSOR));}
+    public void mouseEntered(MouseEvent e) {setCursor(new Cursor(Cursor.HAND_CURSOR));}
+    public void mouseExited(MouseEvent e) {setCursor(new Cursor(Cursor.DEFAULT_CURSOR));}
 
     public void actionPerformed(ActionEvent e) {
         JButton source = (JButton)e.getSource();
-
-        if (source == this.cancelButton)
+        if (source == this.sendToServerButton) {
+            String cmd = "g_gear " + this.gearSpinner.getValue();
+            try {
+                Server server = (Server)this.parent.comboServerList.getSelectedItem();
+                BowserQuery q = new BowserQuery(server.getIP(), server.getPortAsInteger());
+                q.setPassword(server.getDecryptedPassword());
+                q.setMethod(server.getLoginType());
+                q.sendCmd(cmd);
+                this.parent.consolePanel.appendCommand(cmd);
+                this.parent.consolePanel.appendToConsole(q.getResponse());
+            }
+            catch (Exception event) {
+                System.out.print(event.getMessage());
+            }
             this.dispose();
+        }
+        if (source == this.cancelButton) {
+            this.dispose();
+        }
     }
 
     public void itemStateChanged(ItemEvent e) {
