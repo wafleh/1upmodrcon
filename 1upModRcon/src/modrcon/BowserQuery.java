@@ -194,6 +194,24 @@ public class BowserQuery {
         return input;
     }
 
+    /**
+     * Gets the current gear setting.
+     *
+     * This method might not always be accurate given
+     * its current implmentation method. It should be
+     * redone in the future to search for g_gear in the
+     * output and return the value associated with it.
+     *
+     * @return The gear setting integer.
+     */
+    public int getGearSetting() {
+        String input = this.getstatus();
+        String[] lines = input.split("\\n");
+        String[] values = lines[0].split("\\\\");
+        int output = Integer.parseInt(values[70]);
+        return output;
+    }
+
     public String getstatus() {
         this.send("getstatus");
         String resp = this.getResponse();
