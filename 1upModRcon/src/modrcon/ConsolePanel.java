@@ -65,10 +65,7 @@ public class ConsolePanel extends JPanel implements MouseListener {
         iconFind.addMouseListener(this);
         iconSave.addMouseListener(this);
 
-        popup = new JPopupMenu("1up ModRcon Console");
-        popup.add(new JMenuItem("Select All"));
-        popup.add(new JMenuItem("Copy Selected"));
-        popup.add(new JMenuItem("Save Console As..."));
+        popup = getConsolePopupMenu();
         this.taConsole.addMouseListener(this);
 
         buttonPanel.setLayout(new FlowLayout(FlowLayout.LEFT));
@@ -79,6 +76,23 @@ public class ConsolePanel extends JPanel implements MouseListener {
 
         this.add(jsp, BorderLayout.CENTER);
         this.add(buttonPanel, BorderLayout.SOUTH);
+    }
+
+    private JPopupMenu getConsolePopupMenu() {
+        JPopupMenu returnMenu = new JPopupMenu("1up ModRcon Console");
+
+        returnMenu.add(new JMenuItem("Select All"));
+        returnMenu.add(new JMenuItem("Copy Selected"));
+        returnMenu.add(new JMenuItem("Save Console As..."));
+        returnMenu.addSeparator();
+
+        JMenuItem getStatusItem = new JMenuItem(new MenuAction("Send \"getstatus\"", this.parent));
+        JMenuItem getServerInfoItem = new JMenuItem(new MenuAction("Send \"getinfo\"", this.parent));
+
+        returnMenu.add(getStatusItem);
+        returnMenu.add(getServerInfoItem);
+
+        return returnMenu;
     }
 
     public void setConsoleBackground(Color c) {

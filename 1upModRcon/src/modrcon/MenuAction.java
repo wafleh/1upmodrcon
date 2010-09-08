@@ -67,10 +67,40 @@ public class MenuAction extends AbstractAction {
         else if (selection.equals("Gear Calculator")) {
         new GearCalculatorDialog(this.parent);
         }
+
+        else if (selection.equals("Send \"getstatus\"")) {
+            try {
+                Server server = (Server)this.parent.comboServerList.getSelectedItem();
+                BowserQuery bQuery = new BowserQuery(server.getIP(), server.getPortAsInteger());
+                this.parent.consolePanel.appendCommand("getstatus");
+                this.parent.consolePanel.appendToConsole(bQuery.getstatus());
+            } catch (Exception exc) { System.out.println(exc.getMessage()); }
+        }
+
+        else if (selection.equals("Send \"getinfo\"")) {
+            try {
+                Server server = (Server)this.parent.comboServerList.getSelectedItem();
+                BowserQuery bQuery = new BowserQuery(server.getIP(), server.getPortAsInteger());
+                this.parent.consolePanel.appendCommand("getinfo");
+                this.parent.consolePanel.appendToConsole(this.getStringFromMap(bQuery.getServerInfo()));
+            } catch (Exception exc) { System.out.println(exc.getMessage()); }
+        }
        
         else {
             JOptionPane.showMessageDialog(parent, "This feature will be coming in a later version!", selection.toString(), JOptionPane.INFORMATION_MESSAGE);
         }
 
+    }
+
+    private String getStringFromMap(Map map) {
+        String returnString = "";
+
+        Iterator it = map.entrySet().iterator();
+        while (it.hasNext()) {
+            Map.Entry pairs = (Map.Entry)it.next();
+            returnString += pairs.getKey() + "=" + pairs.getValue() + "\n";
+        }
+
+        return returnString;
     }
 }
