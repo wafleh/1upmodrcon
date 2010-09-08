@@ -113,7 +113,7 @@ public class ServerInfoPanel extends JPanel implements MouseListener {
                 GameLauncher.Launch(pathToUrbanTerror, this.ip.getText());
             }
             catch (Exception event) {
-                JOptionPane.showMessageDialog(this.parent, "<html>Error: Failed to launch Urban Terror.\nReports bugs at http://1upModRcon.googlecode.com");
+                JOptionPane.showMessageDialog(this.parent, "<html>Error: Failed to launch Urban Terror.\nReport bugs at http://1upModRcon.googlecode.com");
             }
         }
     }

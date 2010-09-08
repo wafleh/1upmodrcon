@@ -12,7 +12,7 @@ public class SettingManager extends JDialog implements ActionListener, MouseList
 
     private MainWindow parent;
 
-    private JTextField textGamePath;
+    private FileChooserPanel gamePathPanel;
     private JSpinner timeoutSpinner;
     private JCheckBox sendStatusCheck;
 
@@ -67,14 +67,14 @@ public class SettingManager extends JDialog implements ActionListener, MouseList
         JLabel lblBGColor = new JLabel("Console BG Color");
         JLabel lblFGColor = new JLabel("Console Font Color");
         
-        this.textGamePath = new JTextField(25);
+        this.gamePathPanel = new FileChooserPanel(25);
         this.timeoutSpinner = new JSpinner();
         this.timeoutSpinner.setValue(1500);
 
         JPanel springPanel = new JPanel(new SpringLayout());
         springPanel.add(lblGamePath);
-        lblGamePath.setLabelFor(textGamePath);
-        springPanel.add(textGamePath);
+        lblGamePath.setLabelFor(gamePathPanel);
+        springPanel.add(gamePathPanel);
         springPanel.add(lblTimeOut);
         lblTimeOut.setLabelFor(timeoutSpinner);
         springPanel.add(timeoutSpinner);
@@ -130,7 +130,7 @@ public class SettingManager extends JDialog implements ActionListener, MouseList
 
     private void getSettings() {
         PropertyManager pm = new PropertyManager();
-        this.textGamePath.setText(pm.getGamePath());
+        this.gamePathPanel.setGamePath(pm.getGamePath());
         this.timeoutSpinner.setValue(pm.getReceiveTimeoutNumber());
         this.sendStatusCheck.setSelected(pm.getStatusOnConnect());
         this.bgColorLabel.setBackground(Color.decode(pm.getConsoleBGColor()));
@@ -141,7 +141,7 @@ public class SettingManager extends JDialog implements ActionListener, MouseList
         AbstractButton pressedButton = (AbstractButton)e.getSource();
         if (pressedButton == btnSave) {
             PropertyManager pm = new PropertyManager();
-            pm.setGamePath(this.textGamePath.getText());
+            pm.setGamePath(this.gamePathPanel.getGamePath());
             pm.setReceiveTimeout(this.timeoutSpinner.getValue().toString());
             pm.setStatusOnConnect(this.sendStatusCheck.isSelected());
             // Console Colors
