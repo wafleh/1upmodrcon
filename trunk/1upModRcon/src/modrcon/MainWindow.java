@@ -271,7 +271,7 @@ public class MainWindow extends JFrame implements ActionListener, ItemListener {
     public void refreshServerInfo() {
         Server server = (Server)this.comboServerList.getSelectedItem();
         try {
-            BowserQuery q = new BowserQuery(server.getIP(), server.getPortAsInteger());
+            BowserQuery q = new BowserQuery(server);
             Map map = q.getServerInfo();
             this.serverInfoPanel.setServerName((String)map.get("hostname"));
             this.serverInfoPanel.setServerIP(server.getIP());

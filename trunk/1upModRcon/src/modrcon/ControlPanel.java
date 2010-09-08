@@ -88,9 +88,7 @@ public class ControlPanel extends JPanel implements ActionListener, KeyListener 
     public void sendStatusCommand() {
         try {
             Server server = (Server)this.parent.comboServerList.getSelectedItem();
-            BowserQuery q = new BowserQuery(server.getIP(), server.getPortAsInteger());
-            q.setPassword(server.getDecryptedPassword());
-            q.setMethod(server.getLoginType());
+            BowserQuery q = new BowserQuery(server);
             q.sendCmd("status");
             this.parent.consolePanel.appendCommand("status");
             this.parent.consolePanel.appendWithColor(q.getResponse());
@@ -127,9 +125,7 @@ public class ControlPanel extends JPanel implements ActionListener, KeyListener 
                 String cmd = ((String)this.comboCommandBox.getSelectedItem()).trim();
                 try {
                     Server server = (Server)this.parent.comboServerList.getSelectedItem();
-                    BowserQuery q = new BowserQuery(server.getIP(), 27960);
-                    q.setPassword(server.getDecryptedPassword());
-                    q.setMethod(server.getLoginType());
+                    BowserQuery q = new BowserQuery(server);
                     q.sendCmd(cmd);
                     this.parent.consolePanel.appendCommand(cmd);
                     this.parent.consolePanel.appendToConsole(q.getResponse());
@@ -148,10 +144,9 @@ public class ControlPanel extends JPanel implements ActionListener, KeyListener 
             input = (input != null && input.length() > 0) ? input.trim() : "";
             try {
                 Server server = (Server)this.parent.comboServerList.getSelectedItem();
-                BowserQuery q = new BowserQuery(server.getIP(), server.getPortAsInteger());
-                q.setPassword(server.getDecryptedPassword());
-                q.mod("dumpuser "+input);
-                this.parent.consolePanel.appendCommand("dumpuser " + input);
+                BowserQuery q = new BowserQuery(server);
+                q.sendCmd("dumpuser "+input);
+                this.parent.consolePanel.appendCommand("dumpuser "+input);
                 this.parent.consolePanel.appendToConsole(q.getResponse());
             }
             catch (Exception e) {
@@ -164,10 +159,9 @@ public class ControlPanel extends JPanel implements ActionListener, KeyListener 
             input = (input != null && input.length() > 0) ? input.trim() : "";
             try {
                 Server server = (Server)this.parent.comboServerList.getSelectedItem();
-                BowserQuery q = new BowserQuery(server.getIP(), server.getPortAsInteger());
-                q.setPassword(server.getDecryptedPassword());
-                q.mod("slap "+input);
-                this.parent.consolePanel.appendCommand("slap " + input);
+                BowserQuery q = new BowserQuery(server);
+                q.sendCmd("slap "+input);
+                this.parent.consolePanel.appendCommand("slap "+input);
                 this.parent.consolePanel.appendToConsole(q.getResponse());
             }
             catch (Exception e) {
@@ -180,10 +174,9 @@ public class ControlPanel extends JPanel implements ActionListener, KeyListener 
             input = (input != null && input.length() > 0) ? input.trim() : "";
             try {
                 Server server = (Server)this.parent.comboServerList.getSelectedItem();
-                BowserQuery q = new BowserQuery(server.getIP(), server.getPortAsInteger());
-                q.setPassword(server.getDecryptedPassword());
-                q.mod("kick "+input);
-                this.parent.consolePanel.appendCommand("kick " + input);
+                BowserQuery q = new BowserQuery(server);
+                q.sendCmd("kick "+input);
+                this.parent.consolePanel.appendCommand("kick "+input);
                 this.parent.consolePanel.appendToConsole(q.getResponse());
             }
             catch (Exception e) {
@@ -196,9 +189,9 @@ public class ControlPanel extends JPanel implements ActionListener, KeyListener 
             input = (input != null && input.length() > 0) ? input.trim() : "";
             try {
                 Server server = (Server)this.parent.comboServerList.getSelectedItem();
-                BowserQuery q = new BowserQuery(server.getIP(), server.getPortAsInteger());
-                q.setPassword(server.getDecryptedPassword());
-                q.mod("mute "+input);
+                BowserQuery q = new BowserQuery(server);
+                q.sendCmd("mute "+input);
+                this.parent.consolePanel.appendCommand("mute "+input);
                 this.parent.consolePanel.appendToConsole(q.getResponse());
             }
             catch (Exception e) {
@@ -211,9 +204,9 @@ public class ControlPanel extends JPanel implements ActionListener, KeyListener 
             input = (input != null && input.length() > 0) ? input.trim() : "";
             try {
                 Server server = (Server)this.parent.comboServerList.getSelectedItem();
-                BowserQuery q = new BowserQuery(server.getIP(), server.getPortAsInteger());
-                q.setPassword(server.getDecryptedPassword());
-                q.mod("togglemute "+input);
+                BowserQuery q = new BowserQuery(server);
+                q.sendCmd("togglemute "+input);
+                this.parent.consolePanel.appendCommand("togglemute "+input);
                 this.parent.consolePanel.appendToConsole(q.getResponse());
             }
             catch (Exception e) {

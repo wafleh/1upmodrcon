@@ -225,9 +225,7 @@ public class GearCalculatorDialog extends JDialog implements MouseListener, Acti
             String cmd = "g_gear " + this.gearSpinner.getValue();
             try {
                 Server server = (Server)this.parent.comboServerList.getSelectedItem();
-                BowserQuery q = new BowserQuery(server.getIP(), server.getPortAsInteger());
-                q.setPassword(server.getDecryptedPassword());
-                q.setMethod(server.getLoginType());
+                BowserQuery q = new BowserQuery(server);
                 q.sendCmd(cmd);
                 this.parent.consolePanel.appendCommand(cmd);
                 this.parent.consolePanel.appendToConsole(q.getResponse());
