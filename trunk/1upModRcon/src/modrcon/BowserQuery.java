@@ -57,6 +57,14 @@ public class BowserQuery {
         this.ia = InetAddress.getByName(address);
     }
 
+    public BowserQuery(Server s) throws Exception {
+        this.oob = (byte)0xff;
+        this.port = s.getPortAsInteger();
+        this.ds = new DatagramSocket();
+        this.ds.setSoTimeout(2000);
+        this.ia = InetAddress.getByName(s.getIP());
+    }
+
     /**
      * Sets the login method type of the server.
      *
@@ -208,8 +216,8 @@ public class BowserQuery {
         String input = this.getstatus();
         String[] lines = input.split("\\n");
         String[] values = lines[0].split("\\\\");
-        int output = Integer.parseInt(values[70]);
-        return output;
+        int gear = Integer.parseInt(values[70]);
+        return gear;
     }
 
     public String getstatus() {
