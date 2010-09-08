@@ -60,6 +60,8 @@ public class BowserQuery {
     public BowserQuery(Server s) throws Exception {
         this.oob = (byte)0xff;
         this.port = s.getPortAsInteger();
+        this.method = s.getLoginType();
+        this.password = s.getDecryptedPassword();
         this.ds = new DatagramSocket();
         this.ds.setSoTimeout(2000);
         this.ia = InetAddress.getByName(s.getIP());
