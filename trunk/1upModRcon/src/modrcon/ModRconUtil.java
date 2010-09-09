@@ -45,5 +45,10 @@ public class ModRconUtil {
         return ipPattern.matcher(str).matches();
     }
 
+    public static boolean isMac() {
+        String os = System.getProperty("os.name").toLowerCase();
+        return (os.indexOf( "mac" ) >= 0);
+    }
+
 
 }
