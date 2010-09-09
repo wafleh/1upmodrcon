@@ -8,13 +8,13 @@ import java.util.*;
 
 
 /**
- * A Urban Terror Class for use by BowserBot for Clan 1up.
+ * A class to query Q3 based games, like Urban Terror.
  *
  * Unauthenticated commands:
  * getstatus, getinfo, getchallenge, connect, rcon
  *
  * @author  Brandon Tanner
- * @author  Gerald Kaszuba <http://misc.slowchop.com/misc/wiki/q3query>
+ * @author  Philip Edelbrock (phil@studiogeologie.com) <http://secure.netroedge.com/~phil/q3tool-1.0.0/q3tool.java>
  * @author  http://opensource.org/licenses/gpl-license.php GNU Public License
  */
 public class BowserQuery {
