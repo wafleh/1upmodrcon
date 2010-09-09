@@ -60,6 +60,15 @@ public class MenuAction extends AbstractAction {
             System.exit(0);
         }
 
+        /*
+        else if (selection.equals("1up ModRcon Help")) {
+            try {
+                BrowserLauncher.openURL("http://1upclan.info/1uprcon/help/");
+            }
+            catch (Exception exception) {}
+        }
+        */
+        
         else if (selection.equals("About")) {
             new AboutWindow(this.parent);
         }
