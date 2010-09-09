@@ -221,6 +221,10 @@ public class ControlPanel extends JPanel implements ActionListener, KeyListener 
             new ForceTeamDialog(this.parent);
         }
 
+        else if (pressedButton == btnBanUser) {
+            new BanUserDialog(this.parent);
+        }
+
     }
 
     public void keyTyped(KeyEvent e) {

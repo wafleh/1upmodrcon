@@ -45,7 +45,7 @@ public class MainWindow extends JFrame implements ActionListener, ItemListener {
         this.setIconImage(topLeftIcon.getImage());
         this.setJMenuBar(this.getModRconMenuBar());
         this.setDefaultCloseOperation(EXIT_ON_CLOSE);
-        this.setSize(904,697);
+        this.setSize(950,700);
         this.setResizable(true);
 
         // Setup the Content Pane
