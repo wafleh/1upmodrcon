@@ -32,6 +32,7 @@ public class ControlPanel extends JPanel implements ActionListener, KeyListener 
     private JButton btnMute = new JButton("Mute");
     private JButton btnToggleMute = new JButton("ToggleMute");
     private JButton btnForceTeam = new JButton("ForceTeam");
+    private JButton btnBanUser = new JButton("Ban User");
     
     
     /** The type of currently logged in user (Rcon, Mod, Ref). */
@@ -62,6 +63,7 @@ public class ControlPanel extends JPanel implements ActionListener, KeyListener 
         btnMute.addActionListener(this);
         btnToggleMute.addActionListener(this);
         btnForceTeam.addActionListener(this);
+        btnBanUser.addActionListener(this);
 
         this.top.add(labelType);
         this.top.add(comboCommandBox);
@@ -73,6 +75,7 @@ public class ControlPanel extends JPanel implements ActionListener, KeyListener 
         this.bottom.add(btnMute);
         this.bottom.add(btnToggleMute);
         this.bottom.add(btnForceTeam);
+        this.bottom.add(btnBanUser);
 
         this.add(top);
         this.add(bottom);
@@ -228,7 +231,7 @@ public class ControlPanel extends JPanel implements ActionListener, KeyListener 
     }
 
     public void keyReleased(KeyEvent e) {
-        if (e.getKeyCode() == e.VK_ENTER) {
+        if (e.getKeyCode() == KeyEvent.VK_ENTER) {
             actionPerformed(new ActionEvent(btnSend, 1, ""));
         }
     }
