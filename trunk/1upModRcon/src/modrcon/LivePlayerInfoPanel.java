@@ -256,7 +256,6 @@ public class LivePlayerInfoPanel extends JPanel {
                 if (playerName.charAt(i) == '^' && this.isValidQuakeNumber(playerName.charAt(i + 1))) {
                     xLoc = paintPart(temp, getQuakeColor(color), xLoc, g);
                     color = playerName.charAt(i + 1);
-                    System.out.println(color);
                     temp = ""; // Clear temp for the next series of colored text
                     i++; // Jump past the color number
                 }
