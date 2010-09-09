@@ -115,6 +115,7 @@ public class MainWindow extends JFrame implements ActionListener, ItemListener {
 
         // Bring the Window into Focus
         this.setVisible(true);
+        this.setMinimumSize(new Dimension((int)this.getWidth(), (int)this.getHeight()));
 
         PropertyManager pm = new PropertyManager();
         if (pm.getStatusOnConnect()) {
