@@ -82,7 +82,7 @@ public class MenuAction extends AbstractAction {
                 Server server = (Server)this.parent.comboServerList.getSelectedItem();
                 BowserQuery bQuery = new BowserQuery(server);
                 this.parent.consolePanel.appendCommand("getstatus");
-                this.parent.consolePanel.appendToConsole(bQuery.getstatus());
+                this.parent.consolePanel.appendToConsole(bQuery.getstatus() + "\n");
             } catch (Exception exc) { System.out.println(exc.getMessage()); }
         }
 
@@ -91,7 +91,7 @@ public class MenuAction extends AbstractAction {
                 Server server = (Server)this.parent.comboServerList.getSelectedItem();
                 BowserQuery bQuery = new BowserQuery(server);
                 this.parent.consolePanel.appendCommand("getinfo");
-                this.parent.consolePanel.appendToConsole(this.getStringFromMap(bQuery.getServerInfo()));
+                this.parent.consolePanel.appendToConsole(this.getStringFromMap(bQuery.getServerInfo()) + "\n");
             } catch (Exception exc) { System.out.println(exc.getMessage()); }
         }
        
