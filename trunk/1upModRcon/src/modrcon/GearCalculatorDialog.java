@@ -70,7 +70,6 @@ public class GearCalculatorDialog extends JDialog implements MouseListener,
         this.gearSpinner = new JSpinner();
         this.gearSpinner.addChangeListener(this);
         this.gearSpinner.setValue(MIN_VALUE);
-        this.gearSpinner.setPreferredSize(new Dimension(35, 20));
 
         this.grenadeBox = new JCheckBox("Grenades");
         this.grenadeBox.setSelected(true);
@@ -117,12 +116,11 @@ public class GearCalculatorDialog extends JDialog implements MouseListener,
 
         this.gearSpinner.setValue(gGearNum);
         this.updateGearBoxes();
+        System.out.println(this.gearSpinner.getHeight());
     }
 
     private void center() {
-        //this.setSize(400, 380);
         this.pack();
-        this.setSize(400, this.getHeight());
         int x = (int)(parent.getWidth() / 2) - (int)(this.getWidth() / 2) + this.parent.getX();
         int y = (int)(parent.getHeight() / 2) - (int)(this.getHeight() / 2) + this.parent.getY();
 
@@ -142,8 +140,7 @@ public class GearCalculatorDialog extends JDialog implements MouseListener,
         infoTopPanel.add(this.getCheckBoxPanel(automaticBox, AUTOMATIC_VALUE));
         infoTopPanel.add(this.getCheckBoxPanel(negevBox, NEGEV_VALUE));
 
-        JLabel gearLabel = new JLabel("Set g_Gear");
-        gearLabel.setPreferredSize(new Dimension(54, 25));
+        JLabel gearLabel = new JLabel("Set g_gear");
         JPanel gearSpinnerPanel = new JPanel();
         gearSpinnerPanel.setLayout(new FlowLayout(FlowLayout.LEFT));
         gearSpinnerPanel.add(gearLabel);
@@ -158,6 +155,7 @@ public class GearCalculatorDialog extends JDialog implements MouseListener,
         infoBottomPanel.setPreferredSize(new Dimension(260, 30));
         infoBottomPanel.add(gearSpinnerPanel, BorderLayout.WEST);
         infoBottomPanel.add(controlButtonPanel, BorderLayout.EAST);
+        this.gearSpinner.setPreferredSize(new Dimension(35, this.gearSpinner.getEditor().getFont().getSize() + 10));
 
         JPanel infoPanel = new JPanel();
         infoPanel.setLayout(new BoxLayout(infoPanel, BoxLayout.Y_AXIS));
