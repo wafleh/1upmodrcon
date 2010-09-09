@@ -86,6 +86,7 @@ public class ForceTeamDialog extends JDialog implements ActionListener {
                     Server server = (Server)this.parent.comboServerList.getSelectedItem();
                     BowserQuery q = new BowserQuery(server);
                     q.forceTeam(player, team);
+                    this.parent.consolePanel.appendCommand("forceteam "+player+" "+team);
                     this.parent.consolePanel.appendToConsole(q.getResponse());
                 }
                 catch (Exception event) {
