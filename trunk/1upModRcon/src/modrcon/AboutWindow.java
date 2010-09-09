@@ -79,10 +79,19 @@ public class AboutWindow extends JDialog implements ActionListener {
 
     protected JComponent getAboutTab() {
         JPanel panel = new JPanel(false);
-        JLabel filler = new JLabel("About 1up ModRcon X");
-        filler.setHorizontalAlignment(JLabel.CENTER);
-        panel.setLayout(new GridLayout(1, 1));
-        panel.add(filler);
+        panel.setLayout(new VerticalFlowLayout());
+        JLabel text1 = new JLabel("Application Name: 1up ModRcon");
+        JLabel text2 = new JLabel("Version: 1.0");
+        JLabel text3 = new JLabel("Website: http://1upclan.info");
+        JLabel text4 = new JLabel("Beta Testers: RonaldLee[1up]");
+        JLabel text5 = new JLabel("The 1up Mushroom is Copyright \u00A9 2010 Nintendo Corp of America.");
+        JLabel text6 = new JLabel("1up ModRcon is Copyright \u00A9 2010 Tesla[1up]. All Rights Reserved.");
+        panel.add(text1);
+        panel.add(text2);
+        panel.add(text3);
+        panel.add(text4);
+        panel.add(text5);
+        panel.add(text6);
         return panel;
     }
 
