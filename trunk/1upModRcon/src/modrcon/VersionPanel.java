@@ -13,7 +13,8 @@ public class VersionPanel extends JPanel {
 
     public VersionPanel() {
         super();
-        version = new JLabel("Version: September 3, 2010");
+        PropertyManager pm = new PropertyManager();
+        version = new JLabel("Version: "+pm.getVersion());
         this.setLayout(new FlowLayout(FlowLayout.LEFT));
         this.add(version);
     }
