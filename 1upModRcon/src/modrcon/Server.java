@@ -1,12 +1,14 @@
 package modrcon;
 
+import java.io.Serializable;
+
 /**
  * A server class is a representation of Q3 based game server
  * consisting of a name, ip, port, login method, and password.
  * 
  * @author Pyrite[1up]
  */
-public class Server {
+public class Server implements Serializable {
 
     /** The server name. */
     private String name;
@@ -20,9 +22,6 @@ public class Server {
     /** The server login method (ref, mod, rcon). */
     private String loginType;
 
-    /** The server password un-encrypted. */
-    private String decryptedPassword;
-
     /** The server password encrypted. */
     private String encryptedPassword;
 
@@ -31,7 +30,7 @@ public class Server {
         this.ip = "";
         this.port = "27960";
         this.loginType = "";
-        this.decryptedPassword = "";
+        this.encryptedPassword = "";
     }
 
     /**
@@ -48,7 +47,6 @@ public class Server {
         this.ip = ip;
         this.port = port;
         this.loginType = loginType;
-        this.decryptedPassword = password;
         this.encryptedPassword = ModRconUtil.encryptString(password);
     }
 
@@ -77,11 +75,11 @@ public class Server {
     }
 
     public String getDecryptedPassword() {
-        return this.decryptedPassword;
+        return ModRconUtil.decryptString(this.encryptedPassword);
     }
     
     public String[] toArray() {
-        String[] server = {this.name, this.ip, this.port, this.loginType, this.decryptedPassword };
+        String[] server = {this.name, this.ip, this.port, this.loginType, this.getDecryptedPassword() };
         return server;
     }
     

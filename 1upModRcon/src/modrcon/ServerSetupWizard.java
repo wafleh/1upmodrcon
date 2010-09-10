@@ -268,7 +268,11 @@ public class ServerSetupWizard extends JFrame implements ActionListener {
                 }
                 String password = new String(serverPassword.getPassword());
                 Server s = new Server(serverName.getText(), serverIP.getText(), serverPort.getText(), method, password);
-                ServerParser.newServer(s);
+
+                ServerDatabase db = new ServerDatabase();
+                db.addServer(s);
+                db.saveDatabase();
+                
                 this.dispose();
                 this.runMainWindow();
             }
