@@ -11,7 +11,6 @@ public class ModRconUtil {
     
     private static final String key = "EncryptionIsFun";
 
-    /*
     public static String encryptString(String str) {
         StringBuffer sb = new StringBuffer (str);
         int lenStr = str.length();
@@ -28,16 +27,11 @@ public class ModRconUtil {
     public static String decryptString(String str) {
         return encryptString(str);
     }
-    */
-
-    public static String encryptString(String str) {
+    
+    public static String reverseString(String str) {
         StringBuffer buffer = new StringBuffer(str);
         buffer = buffer.reverse();
         return buffer.toString();
-    }
-
-    public static String decryptString(String str) {
-        return encryptString(str);
     }
 
     public static boolean isIPAddress(String str) {
@@ -50,5 +44,31 @@ public class ModRconUtil {
         return (os.indexOf( "mac" ) >= 0);
     }
 
+    public static String getGameTypeString(int gt) {
+        if (gt == 0) {
+            return "Free for All";
+        }
+        else if (gt == 3) {
+            return "Team Deathmatch";
+        }
+        else if (gt == 4) {
+            return "Team Survivor";
+        }
+        else if (gt == 5) {
+            return "Follow the Leader";
+        }
+        else if (gt == 6) {
+            return "Capture & Hold";
+        }
+        else if (gt == 7) {
+            return "Capture the Flag";
+        }
+        else if (gt == 8) {
+            return "Bomb";
+        }
+        else {
+            return "N/A";
+        }
+    }
 
 }

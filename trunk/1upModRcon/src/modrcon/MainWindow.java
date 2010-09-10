@@ -25,13 +25,6 @@ public class MainWindow extends JFrame implements ActionListener, ItemListener {
     public LivePlayerInfoPanel livePlayerInfoPanel;
     
     public JComboBox comboServerList;
-    private JButton btnConnect;
-    
-    private JLabel sinfoServerName;
-    private JLabel sinfoServerIP;
-    private JLabel sinfoServerPort;
-    private JLabel sinfoGameType;
-    private JLabel sinfoMap;
 
     /** Timer to control how often LivePlayerInfo Panel Updates. */
     private final Timer timer;
@@ -64,7 +57,6 @@ public class MainWindow extends JFrame implements ActionListener, ItemListener {
 
         this.comboServerList = new JComboBox();
         this.comboServerList.addItemListener(this);
-        this.btnConnect = new JButton("Connect");
 
         this.logoPanel.add(this.getComboServerListPanel(), BorderLayout.EAST);
         
@@ -262,10 +254,17 @@ public class MainWindow extends JFrame implements ActionListener, ItemListener {
         //this.comboServerList.removeAllItems();
         this.comboServerList.setModel( new DefaultComboBoxModel() );
 
-        ServerParser sp = new ServerParser();
-        java.util.List servers = sp.getServers();
-        for (int i=0; i < servers.size(); i++) {
-            this.comboServerList.addItem(servers.get(i));
+        //ServerParser sp = new ServerParser();
+        //java.util.List servers = sp.getServers();
+        //for (int i=0; i < servers.size(); i++) {
+        //    this.comboServerList.addItem(servers.get(i));
+        //}
+
+        ServerDatabase db = new ServerDatabase();
+        ArrayList servers = db.getServerList();
+        for (Object o : servers) {
+            Server s = (Server)o;
+            this.comboServerList.addItem(s);
         }
     }
 
@@ -277,7 +276,7 @@ public class MainWindow extends JFrame implements ActionListener, ItemListener {
             this.serverInfoPanel.setServerName((String)map.get("hostname"));
             this.serverInfoPanel.setServerIP(server.getIP());
             this.serverInfoPanel.setServerPort(server.getPortAsString());
-            this.serverInfoPanel.setGameType(ServerInfo.getGameTypeString(Integer.parseInt((String)map.get("gametype"))));
+            this.serverInfoPanel.setGameType(ModRconUtil.getGameTypeString(Integer.parseInt((String)map.get("gametype"))));
             this.serverInfoPanel.setMap((String)map.get("mapname"));
         }
         catch (Exception e) {

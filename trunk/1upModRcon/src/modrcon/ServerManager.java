@@ -4,7 +4,7 @@ import java.awt.event.*;
 import java.awt.*;
 import javax.swing.table.*;
 import javax.swing.*;
-import java.io.*;
+import java.util.ArrayList;
 
 /**
  *
@@ -124,81 +124,75 @@ public class ServerManager extends JDialog implements ActionListener, MouseListe
         this.setVisible(true);
     }
 
-    private void writeFile(String contents) {
-        try {
-            // Will put the file where the 1upmodrcon.properties file exists.
-            // Will also create the file if it does not exist!
-            FileOutputStream fos = new FileOutputStream("servers.xml");
-            OutputStreamWriter out = new OutputStreamWriter(fos, "UTF-8");
-            out.write(contents);
-            out.close();
-        }
-        catch (Exception e) {
-            System.out.println("Failed to Write File in ServerManager.writeFile");
-            System.out.println(e.getMessage());
-        }
-    }
-
     private void readFile() {
         DefaultTableModel dm = (DefaultTableModel)this.serverTable.getModel();
 
         // Clear any Rows that may be there by default.
         dm.getDataVector().removeAllElements();
 
-        // Bring in Servers from servers.xml
-        ServerParser sp = new ServerParser();
-        java.util.List servers = sp.getServers();
-        for (int i=0; i < servers.size(); i++) {
-            dm.addRow(((Server)servers.get(i)).toArray());
+        // Bring in Servers from servers.db
+        ServerDatabase db = new ServerDatabase();
+        ArrayList servers = db.getServerList();
+        for (Object o : servers) {
+            Server s = (Server)o;
+            dm.addRow(s.toArray());
         }
         ColumnResizer.adjustColumnPreferredWidths(this.serverTable);
+    }
+
+    private void saveTable() {
+        ArrayList servers = new ArrayList();
+        TableModel tm = this.serverTable.getModel();
+        int numRows = tm.getRowCount();
+        for (int i=0; i< numRows; i++) {
+            String name = (String)tm.getValueAt(i, 0);
+            String ip = (String)tm.getValueAt(i, 1);
+            String port = (String)tm.getValueAt(i, 2);
+            String loginType = (String)tm.getValueAt(i, 3);
+            String password = (String)tm.getValueAt(i, 4);
+            Server s = new Server(name, ip, port, loginType, password);
+            servers.add(s);
+        }
+        ServerDatabase db = new ServerDatabase();
+        db.setServerList(servers);
+        db.saveDatabase();
+    }
+
+    /**
+     * Checks all table cells to verify that they are non-empty.
+     *
+     * @return True if all cells are populated, otherwise returns false.
+     */
+    private boolean validateFields() {
+        boolean flag = true;
+        TableModel tm = this.serverTable.getModel();
+        int numRows = tm.getRowCount();
+        int numCols = tm.getColumnCount();
+        for (int i=0; i < numRows; i++) {
+            for (int j=0; j < numCols; j++) {
+                String cell = (String)tm.getValueAt(i, j);
+                if (cell.equals("")) {
+                    flag = false;
+                }
+            }
+        }
+        return flag;
     }
 
     public void actionPerformed(ActionEvent event) {
         AbstractButton pressedButton = (AbstractButton)event.getSource();
         if (pressedButton == btnSave) {
-            // TODO add your handling code here:
-            TableModel tm = this.serverTable.getModel();
-            int numRows = tm.getRowCount();
-            String contents = "<servers>\r\n";
-            for (int i = 0; i < numRows; i++) {
-                contents += "\t<server>\r\n";
-
-                String name = (String)tm.getValueAt(i, 0);
-                if (name == null) name = "";
-                contents += "\t\t<name>"+name+"</name>\r\n";
-
-                String ip = (String)tm.getValueAt(i, 1);
-                if (ip == null) ip = "";
-                contents += "\t\t<ip>"+ip+"</ip>\r\n";
-
-                String port = (String)tm.getValueAt(i, 2);
-                if (port == null) port = "";
-                contents += "\t\t<port>"+port+"</port>\r\n";
-
-                String loginType = (String)tm.getValueAt(i, 3);
-                if (loginType == null) loginType = "";
-                contents += "\t\t<logintype>"+loginType+"</logintype>\r\n";
-
-                String password = (String)tm.getValueAt(i, 4);
-                if (password == null) password = "";
-                password = ModRconUtil.encryptString(password);
-                contents += "\t\t<password>"+password+"</password>\r\n";
-
-                contents += "\t</server>\r\n";
+            if (this.validateFields()) {
+                this.saveTable();
+                this.parent.refreshServerCombo();
+                this.dispose();
             }
-            contents += "</servers>\r\n";
-
-            //System.out.print(contents);
-            this.writeFile(contents);
-            this.parent.refreshServerCombo();
-            this.dispose();
+            else {
+                JOptionPane.showMessageDialog(this, "<html>All fields are required, and cannot be empty.<br>If you are still in editing mode on a particular cell,<br>hit tab or click outside of the cell, then try to save again.</html>");
+            }
         }
         else if (pressedButton == btnClose) {
             this.dispose();
-        }
-        else {
-            // Do nothing
         }
     }
 
