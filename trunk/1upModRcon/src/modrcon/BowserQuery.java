@@ -11,7 +11,7 @@ import java.util.*;
  * A class to query Q3 based games, like Urban Terror.
  *
  * Unauthenticated commands:
- * getstatus, getinfo, getchallenge, connect, rcon
+ * getstatus, getinfo, getchallenge, connect, disconnect, rcon, ipAuthorize.
  *
  * @author  Brandon Tanner
  * @author  Philip Edelbrock (phil@studiogeologie.com) <http://secure.netroedge.com/~phil/q3tool-1.0.0/q3tool.java>
@@ -80,6 +80,11 @@ public class BowserQuery {
         this.password = password;
     }
 
+    /**
+     * Sends an authenticated command to the server.
+     *
+     * @param cmd The command to send.
+     */
     public void sendCmd(String cmd) {
         this.lastCommand = cmd;
         if (this.method.equals("ref")) {
@@ -224,10 +229,13 @@ public class BowserQuery {
         return resp;
     }
 
-    public String getRaw(String cmd) {
+    /**
+     * Send Connection-less Packet Commands to the Server.
+     *
+     * @param cmd The connection-less packet command to send.
+     */
+    public void sendConnectionlessPacket(String cmd) {
         this.send(cmd);
-        String resp = this.getResponse();
-        return resp;
     }
 
     /**

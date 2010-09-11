@@ -48,10 +48,15 @@ public class ServerInfoPanel extends JPanel implements MouseListener {
         joinPanel.add(lblJoin);
 
         server   = new JLabel("N/A");
+        server.setFont(new Font("Tahoma", Font.PLAIN, 11));
         ip       = new JLabel("N/A");
+        ip.setFont(new Font("Tahoma", Font.PLAIN, 11));
         port     = new JLabel("N/A");
+        port.setFont(new Font("Tahoma", Font.PLAIN, 11));
         gametype = new JLabel("N/A");
+        gametype.setFont(new Font("Tahoma", Font.PLAIN, 11));
         map      = new JLabel("N/A");
+        map.setFont(new Font("Tahoma", Font.PLAIN, 11));
 
         infoPanel.add(lblServerName);
         lblServerName.setLabelFor(server);

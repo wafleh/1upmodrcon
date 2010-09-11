@@ -43,7 +43,7 @@ public class MenuAction extends AbstractAction {
             Clipboard clipboard = java.awt.Toolkit.getDefaultToolkit().getSystemClipboard();
             clipboard.setContents(data, data);
         }
-        else if (selection.equals("Clear")) {
+        else if (selection.equals("Clear") || selection.equals("Clear Console")) {
             this.parent.consolePanel.clearConsole();
         }
 
@@ -74,25 +74,22 @@ public class MenuAction extends AbstractAction {
         }
 
         else if (selection.equals("Gear Calculator")) {
-        new GearCalculatorDialog(this.parent);
+            new GearCalculatorDialog(this.parent);
         }
-
-        else if (selection.equals("Send \"getstatus\"")) {
+       
+        else if (selection.equals("Send Connectionless Packet")) {
+            String cmd = JOptionPane.showInputDialog(this.parent, "<html>Enter a Connectionless Packet Command.<br>E.g. getstatus, getinfo, getchallenge, etc.</html>", "getinfo");
             try {
                 Server server = (Server)this.parent.comboServerList.getSelectedItem();
-                BowserQuery bQuery = new BowserQuery(server);
-                this.parent.consolePanel.appendCommand("getstatus");
-                this.parent.consolePanel.appendToConsole(bQuery.getstatus() + "\n");
-            } catch (Exception exc) { System.out.println(exc.getMessage()); }
-        }
-
-        else if (selection.equals("Send \"getinfo\"")) {
-            try {
-                Server server = (Server)this.parent.comboServerList.getSelectedItem();
-                BowserQuery bQuery = new BowserQuery(server);
-                this.parent.consolePanel.appendCommand("getinfo");
-                this.parent.consolePanel.appendToConsole(this.getStringFromMap(bQuery.getServerInfo()) + "\n");
-            } catch (Exception exc) { System.out.println(exc.getMessage()); }
+                BowserQuery q = new BowserQuery(server);
+                q.setRawOutput(true);
+                q.sendConnectionlessPacket(cmd);
+                this.parent.consolePanel.appendCommand(cmd);
+                this.parent.consolePanel.appendToConsole(q.getResponse());
+            }
+            catch (Exception exc) {
+                System.out.println(exc.getMessage());
+            }
         }
        
         else {
