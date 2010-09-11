@@ -49,8 +49,13 @@ public class PropertyManager {
     }
 
     public int getReceiveTimeoutNumber() {
-        int timeout = Integer.parseInt(propFile.getProperty("receivetimeout"));
-        return timeout;
+        try {
+            int timeout = Integer.parseInt(propFile.getProperty("receivetimeout"));
+            return timeout;
+        }
+        catch (NumberFormatException e) {
+            return 100;
+        }
     }
 
     public void setReceiveTimeout(String timeout) {
