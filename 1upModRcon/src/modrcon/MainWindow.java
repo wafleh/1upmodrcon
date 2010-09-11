@@ -48,7 +48,7 @@ public class MainWindow extends JFrame implements ActionListener, ItemListener {
         this.contentPanel = new JPanel();
         this.versionPanel = new VersionPanel();
         this.consolePanel = new ConsolePanel(this);
-        this.controlPanel = new ControlPanel(this, 2);
+        this.controlPanel = new ControlPanel(this);
         this.serverInfoPanel = new ServerInfoPanel(this);
         this.livePlayerInfoPanel = new LivePlayerInfoPanel(this);
 
@@ -252,12 +252,15 @@ public class MainWindow extends JFrame implements ActionListener, ItemListener {
         Server s = (Server)this.comboServerList.getSelectedItem();
         if (s.getLoginType().equals("mod")) {
             this.setTitle("1up ModRcon - Main (Moderator Mode)");
+            this.controlPanel.setLoginMethod(s.getLoginType());
         }
         else if (s.getLoginType().equals("ref")) {
             this.setTitle("1up ModRcon - Main (Referee Mode)");
+            this.controlPanel.setLoginMethod(s.getLoginType());
         }
         else if (s.getLoginType().equals("rcon")) {
             this.setTitle("1up ModRcon - Main (Rcon Mode)");
+            this.controlPanel.setLoginMethod(s.getLoginType());
         }
         else {}
     }
