@@ -60,26 +60,64 @@ public class ControlPanel extends JPanel implements ActionListener, KeyListener 
         btnForceTeam.addActionListener(this);
         btnBanUser.addActionListener(this);
 
-        this.add(getTopPanel());
-        this.add(getBottomPanel());
+        this.setLayout(new BorderLayout());
+        this.add(getWestPanel(), BorderLayout.WEST);
+        this.add(getCenterPanel(), BorderLayout.CENTER);
+        //this.add(getTopPanel());
+        //this.add(getBottomPanel());
 
+    }
+
+    private JPanel getWestPanel() {
+        JPanel westPanel = new JPanel();
+        westPanel.setLayout(new BoxLayout(westPanel, BoxLayout.Y_AXIS));
+        westPanel.add(Box.createVerticalStrut(4));
+        westPanel.add(this.labelType);
+        westPanel.add(Box.createGlue());
+
+        return westPanel;
+    }
+
+    private JPanel getCenterPanel() {
+        JPanel centerPanel = new JPanel();
+        centerPanel.setLayout(new BoxLayout(centerPanel, BoxLayout.Y_AXIS));
+
+        JPanel topPanel = new JPanel();
+        topPanel.setLayout(new BoxLayout(topPanel, BoxLayout.X_AXIS));
+        topPanel.add(this.comboCommandBox);
+        topPanel.add(Box.createHorizontalStrut(5));
+        topPanel.add(this.btnSend);
+        topPanel.add(Box.createHorizontalStrut(5));
+
+        JPanel bottomPanel = getBottomPanel();
+
+        centerPanel.add(topPanel);
+        centerPanel.add(Box.createVerticalStrut(5));
+        centerPanel.add(bottomPanel);
+        centerPanel.add(Box.createGlue());
+
+        return centerPanel;
     }
 
     private JPanel getBottomPanel() {
         JPanel returnPanel = new JPanel();
         returnPanel.setLayout(new BoxLayout(returnPanel, BoxLayout.X_AXIS));
 
-        returnPanel.add(Box.createGlue());
         returnPanel.add(this.btnStatus);
+        returnPanel.add(Box.createGlue());
         returnPanel.add(this.btnDumpUser);
+        returnPanel.add(Box.createGlue());
         returnPanel.add(this.btnSlap);
+        returnPanel.add(Box.createGlue());
         returnPanel.add(this.btnKick);
+        returnPanel.add(Box.createGlue());
         returnPanel.add(this.btnMute);
+        returnPanel.add(Box.createGlue());
         returnPanel.add(this.btnToggleMute);
+        returnPanel.add(Box.createGlue());
         returnPanel.add(this.btnForceTeam);
+        returnPanel.add(Box.createGlue());
         returnPanel.add(this.btnBanUser);
-        returnPanel.add(Box.createHorizontalStrut(8));
-
         return returnPanel;
     }
 
