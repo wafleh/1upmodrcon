@@ -37,14 +37,19 @@ public class MenuAction extends AbstractAction {
             this.parent.consolePanel.saveConsole();
         }
 
-        else if (selection.equals("Copy")) {
+        else if (selection.equals("Copy") || selection.equals("Copy Selected")) {
             String selectedText = this.parent.consolePanel.getSelectedText(); //this.consoleTextArea.getSelectedText();
             StringSelection data = new StringSelection(selectedText);
             Clipboard clipboard = java.awt.Toolkit.getDefaultToolkit().getSystemClipboard();
             clipboard.setContents(data, data);
         }
+
         else if (selection.equals("Clear") || selection.equals("Clear Console")) {
             this.parent.consolePanel.clearConsole();
+        }
+
+        else if (selection.equals("Select All")) {
+            this.parent.consolePanel.selectAllText();
         }
 
         else if (selection.equals("Manage Servers")) {
