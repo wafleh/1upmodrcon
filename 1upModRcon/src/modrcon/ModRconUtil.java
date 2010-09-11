@@ -1,17 +1,9 @@
 package modrcon;
 
-import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
-import java.net.URL;
 import java.util.regex.Pattern;
-import javax.sound.sampled.AudioInputStream;
-import javax.sound.sampled.AudioSystem;
-import javax.sound.sampled.UnsupportedAudioFileException;
-import javax.swing.JFrame;
-import sun.audio.AudioPlayer;
-import sun.audio.AudioStream;
 
 /**
  * A utility class for 1up ModRcon.
@@ -83,21 +75,6 @@ public class ModRconUtil {
         }
         else {
             return "N/A";
-        }
-    }
-
-    /** This method currently does not work, not sure why. */
-    public static void playSound(String sound) throws IOException {
-        try {
-            InputStream inputStream = ClassLoader.getSystemClassLoader().getResourceAsStream("/modrcon/resources/"+sound);
-            AudioStream audioStream = new AudioStream(inputStream);
-            AudioPlayer.player.start(audioStream);
-        }
-        catch (FileNotFoundException e) {
-            System.out.println("Didn't find audio file.");
-        }
-        catch (IOException e) {
-            System.out.println("Input Error with sound file.");
         }
     }
 
