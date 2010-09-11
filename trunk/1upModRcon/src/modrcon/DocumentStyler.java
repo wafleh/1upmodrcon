@@ -25,8 +25,6 @@ public class DocumentStyler {
      */
     public static StyledDocument styleDocument(StyledDocument documentToStyle,
             Font consoleFont, Color defaultForeground) {
-        Style parentStyle = StyleContext.getDefaultStyleContext()
-                .getStyle(StyleContext.DEFAULT_STYLE);
 
         // Default Style
         DocumentStyler.addNewStyle(documentToStyle, "default", consoleFont,
