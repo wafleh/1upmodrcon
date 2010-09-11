@@ -55,17 +55,8 @@ public class BowserQuery {
         this.method = s.getLoginType();
         this.password = s.getDecryptedPassword();
         this.ds = new DatagramSocket();
-        this.ds.setSoTimeout(2000); // not sure if this has any effect here.
+        //this.ds.setSoTimeout(2000); // not sure if this has any effect here.
         this.ia = InetAddress.getByName(s.getIP());
-    }
-
-    /**
-     * Sets the login method type of the server.
-     *
-     * @param method ref, mod, or rcon.
-     */
-    public void setMethod(String method) {
-        this.method = method.toLowerCase().trim();
     }
 
     public void setRawOutput(boolean flag) {
@@ -74,10 +65,6 @@ public class BowserQuery {
 
     public boolean getRawOutput() {
         return this.rawOutput;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
     }
 
     /**
@@ -115,22 +102,25 @@ public class BowserQuery {
     }
 
     public void say(String message) {
-        this.mod("say ^1"+message);
+        this.sendCmd("say ^1"+message);
     }
     
     public void kick(int clientNumber, String message) {
-        this.mod("sendclientcommand "+clientNumber+" disconnect "+String.valueOf(34)+message+String.valueOf(34));
+        String command = "sendclientcommand "+clientNumber+" disconnect "+String.valueOf(34)+message+String.valueOf(34);
+        this.sendCmd(command);
     }
 
     public void crash(int clientNumber) {
-        this.mod("sendclientcommand "+clientNumber+" cs 400");
+        String command = "sendclientcommand "+clientNumber+" cs 400";
+        this.sendCmd(command);
     }
     
     public void renamePlayer(int clientNumber, String newName) {
-        this.mod("forcecvar "+clientNumber+" name "+String.valueOf(34)+newName+String.valueOf(34));
+        String command = "forcecvar "+clientNumber+" name "+String.valueOf(34)+newName+String.valueOf(34);
+        this.sendCmd(command);
     }
 
-    protected void send(String data) {
+    private void send(String data) {
         try {
             String out = "xxxx"+data;
             byte [] buff = out.getBytes();
@@ -154,7 +144,7 @@ public class BowserQuery {
             try {
                 dpacket = new DatagramPacket(buffer, buffer.length);
                 // Decrease value speeds things up, increase slows things down.
-                this.ds.setSoTimeout(100);                
+                this.ds.setSoTimeout(100);
                 this.ds.receive(dpacket);
                 String packet = new String(dpacket.getData(), 0, dpacket.getLength());
                 this.output += packet;
@@ -174,38 +164,28 @@ public class BowserQuery {
     }
 
     /**
-     * Remove erroneus print commands.
+     * Remove print commands.
      *
      * @param input The input string buffer.
      * @return      The buffer without print commands.
      */
-    public String stripPrintCommands(String input) {
+    private String stripPrintCommands(String input) {
         Pattern r = Pattern.compile("....print\n");
         Matcher m = r.matcher(input);
         return m.replaceAll("");
     }
 
-    public String stripColors(String input) {
+    private String stripColors(String input) {
         Pattern r = Pattern.compile("\\^.");
         Matcher m = r.matcher(input);
         return m.replaceAll("");
     }
 
     /**
-     * TBD.
-     * The status command returns blank players names for UnknownPlayer.
-     * @param input
-     * @return
-     */
-    public String fixBlankPlayerNames(String input) {
-        return input;
-    }
-
-    /**
      * Gets the current gear setting.
      *
      * This method might not always be accurate given
-     * its current implmentation method. It should be
+     * its current implementation method. It should be
      * redone in the future to search for g_gear in the
      * output and return the value associated with it.
      *
@@ -282,10 +262,5 @@ public class BowserQuery {
         }
         return map;
     }
-
-
-
-
-
     
 }
