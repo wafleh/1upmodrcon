@@ -115,6 +115,13 @@ public class ConsolePanel extends JPanel implements MouseListener {
         return this.taConsole.getText();
     }
 
+    public void findText() {
+        String input = (String)JOptionPane.showInputDialog(this.parent, "Search for Text inside the Console");
+        if (input != null) {
+            // find and highlight text in console matching input.
+        }
+    }
+
     public void clearConsole() {
         this.taConsole.setText("");
     }
@@ -165,7 +172,7 @@ public class ConsolePanel extends JPanel implements MouseListener {
             this.clearConsole();
         }
         else if (e.getSource() == this.iconFind) {
-            JOptionPane.showMessageDialog(parent, "This feature will be coming in a later version!", iconFind.getToolTipText(), JOptionPane.INFORMATION_MESSAGE);
+            this.findText();
         }
         else if (e.getSource() == this.iconSave) {
             this.saveConsole();
