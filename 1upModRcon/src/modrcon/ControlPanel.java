@@ -63,8 +63,6 @@ public class ControlPanel extends JPanel implements ActionListener, KeyListener 
         this.setLayout(new BorderLayout());
         this.add(getWestPanel(), BorderLayout.WEST);
         this.add(getCenterPanel(), BorderLayout.CENTER);
-        //this.add(getTopPanel());
-        //this.add(getBottomPanel());
 
     }
 
@@ -118,21 +116,7 @@ public class ControlPanel extends JPanel implements ActionListener, KeyListener 
         returnPanel.add(this.btnForceTeam);
         returnPanel.add(Box.createGlue());
         returnPanel.add(this.btnBanUser);
-        return returnPanel;
-    }
-
-    private JPanel getTopPanel() {
-        JPanel returnPanel = new JPanel();
-        returnPanel.setLayout(new BoxLayout(returnPanel, BoxLayout.X_AXIS));
-
-        returnPanel.add(Box.createHorizontalStrut(8));
-        returnPanel.add(this.labelType);
-        returnPanel.add(Box.createHorizontalStrut(5));
-        returnPanel.add(this.comboCommandBox);
-        returnPanel.add(Box.createHorizontalStrut(5));
-        returnPanel.add(this.btnSend);
-        returnPanel.add(Box.createHorizontalStrut(8));
-
+        
         return returnPanel;
     }
 
@@ -186,6 +170,7 @@ public class ControlPanel extends JPanel implements ActionListener, KeyListener 
                     q.sendCmd(cmd);
                     this.parent.consolePanel.appendCommand(cmd);
                     this.parent.consolePanel.appendToConsole(q.getResponse());
+                    this.comboCommandBox.setSelectedItem(null);
                 }
                 catch (Exception e) {
                     System.out.print(e.getMessage());
@@ -198,76 +183,87 @@ public class ControlPanel extends JPanel implements ActionListener, KeyListener 
         }
         else if (pressedButton == btnDumpUser) {
             String input = JOptionPane.showInputDialog(this.parent, "Enter the player number for the player\nyou want more info about.", "Dump User", JOptionPane.PLAIN_MESSAGE);
-            input = (input != null && input.length() > 0) ? input.trim() : "";
-            try {
-                Server server = (Server)this.parent.comboServerList.getSelectedItem();
-                BowserQuery q = new BowserQuery(server);
-                q.sendCmd("dumpuser "+input);
-                this.parent.consolePanel.appendCommand("dumpuser "+input);
-                this.parent.consolePanel.appendToConsole(q.getResponse());
-            }
-            catch (Exception e) {
-                System.out.print(e.getMessage());
+            
+            if (input != null) {
+                input = (input.length() > 0) ? input.trim() : "";
+                try {
+                    Server server = (Server)this.parent.comboServerList.getSelectedItem();
+                    BowserQuery q = new BowserQuery(server);
+                    q.sendCmd("dumpuser "+input);
+                    this.parent.consolePanel.appendCommand("dumpuser "+input);
+                    this.parent.consolePanel.appendToConsole(q.getResponse());
+                }
+                catch (Exception e) {
+                    System.out.print(e.getMessage());
+                }
             }
         }
 
         else if (pressedButton == btnSlap) {
             String input = JOptionPane.showInputDialog(this.parent, "Enter the player number for the player\nyou want to slap.", "Slap User", JOptionPane.PLAIN_MESSAGE);
-            input = (input != null && input.length() > 0) ? input.trim() : "";
-            try {
-                Server server = (Server)this.parent.comboServerList.getSelectedItem();
-                BowserQuery q = new BowserQuery(server);
-                q.sendCmd("slap "+input);
-                this.parent.consolePanel.appendCommand("slap "+input);
-                this.parent.consolePanel.appendToConsole(q.getResponse());
-            }
-            catch (Exception e) {
-                System.out.print(e.getMessage());
+            if (input != null) {
+                input = (input.length() > 0) ? input.trim() : "";
+                try {
+                    Server server = (Server)this.parent.comboServerList.getSelectedItem();
+                    BowserQuery q = new BowserQuery(server);
+                    q.sendCmd("slap "+input);
+                    this.parent.consolePanel.appendCommand("slap "+input);
+                    this.parent.consolePanel.appendToConsole(q.getResponse());
+                }
+                catch (Exception e) {
+                    System.out.print(e.getMessage());
+                }
             }
         }
 
         else if (pressedButton == btnKick) {
             String input = JOptionPane.showInputDialog(this.parent, "Enter the player number for the player\nyou want to kick.", "Kick User", JOptionPane.PLAIN_MESSAGE);
-            input = (input != null && input.length() > 0) ? input.trim() : "";
-            try {
-                Server server = (Server)this.parent.comboServerList.getSelectedItem();
-                BowserQuery q = new BowserQuery(server);
-                q.sendCmd("kick "+input);
-                this.parent.consolePanel.appendCommand("kick "+input);
-                this.parent.consolePanel.appendToConsole(q.getResponse());
-            }
-            catch (Exception e) {
-                System.out.print(e.getMessage());
+            if (input != null) {
+                input = (input.length() > 0) ? input.trim() : "";
+                try {
+                    Server server = (Server)this.parent.comboServerList.getSelectedItem();
+                    BowserQuery q = new BowserQuery(server);
+                    q.sendCmd("kick "+input);
+                    this.parent.consolePanel.appendCommand("kick "+input);
+                    this.parent.consolePanel.appendToConsole(q.getResponse());
+                }
+                catch (Exception e) {
+                    System.out.print(e.getMessage());
+                }
             }
         }
 
         else if (pressedButton == btnMute) {
             String input = JOptionPane.showInputDialog(this.parent, "Enter the player number for the player\nyou want to mute.", "Mute User", JOptionPane.PLAIN_MESSAGE);
-            input = (input != null && input.length() > 0) ? input.trim() : "";
-            try {
-                Server server = (Server)this.parent.comboServerList.getSelectedItem();
-                BowserQuery q = new BowserQuery(server);
-                q.sendCmd("mute "+input);
-                this.parent.consolePanel.appendCommand("mute "+input);
-                this.parent.consolePanel.appendToConsole(q.getResponse());
-            }
-            catch (Exception e) {
-                System.out.print(e.getMessage());
+            if (input != null) {
+                input = (input.length() > 0) ? input.trim() : "";
+                try {
+                    Server server = (Server)this.parent.comboServerList.getSelectedItem();
+                    BowserQuery q = new BowserQuery(server);
+                    q.sendCmd("mute "+input);
+                    this.parent.consolePanel.appendCommand("mute "+input);
+                    this.parent.consolePanel.appendToConsole(q.getResponse());
+                }
+                catch (Exception e) {
+                    System.out.print(e.getMessage());
+                }
             }
         }
 
         else if (pressedButton == btnToggleMute) {
             String input = JOptionPane.showInputDialog(this.parent, "Enter the player number for the player\nyou want to togglemute.", "Togglemute User", JOptionPane.PLAIN_MESSAGE);
-            input = (input != null && input.length() > 0) ? input.trim() : "";
-            try {
-                Server server = (Server)this.parent.comboServerList.getSelectedItem();
-                BowserQuery q = new BowserQuery(server);
-                q.sendCmd("togglemute "+input);
-                this.parent.consolePanel.appendCommand("togglemute "+input);
-                this.parent.consolePanel.appendToConsole(q.getResponse());
-            }
-            catch (Exception e) {
-                System.out.print(e.getMessage());
+            if (input != null) {
+                input = (input.length() > 0) ? input.trim() : "";
+                try {
+                    Server server = (Server)this.parent.comboServerList.getSelectedItem();
+                    BowserQuery q = new BowserQuery(server);
+                    q.sendCmd("togglemute "+input);
+                    this.parent.consolePanel.appendCommand("togglemute "+input);
+                    this.parent.consolePanel.appendToConsole(q.getResponse());
+                }
+                catch (Exception e) {
+                    System.out.print(e.getMessage());
+                }
             }
         }
 
