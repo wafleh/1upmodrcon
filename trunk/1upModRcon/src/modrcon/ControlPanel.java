@@ -14,10 +14,6 @@ public class ControlPanel extends JPanel implements ActionListener, KeyListener 
     /** A reference to the Main Window */
     private MainWindow parent;
 
-    public static int TYPE_RCON = 3;
-    public static int TYPE_MOD = 2;
-    public static int TYPE_REF = 1;
-
     private JLabel labelType;
     private JComboBox comboCommandBox;
     
@@ -30,21 +26,16 @@ public class ControlPanel extends JPanel implements ActionListener, KeyListener 
     private JButton btnToggleMute = new JButton("ToggleMute");
     private JButton btnForceTeam = new JButton("ForceTeam");
     private JButton btnBanUser = new JButton("Ban User");
-    
-    
-    /** The type of currently logged in user (Rcon, Mod, Ref). */
-    private int type;
 
-    public ControlPanel(MainWindow owner, int type) {
+    public ControlPanel(MainWindow owner) {
         super();
         this.parent = owner;
 
-        this.type = type;
-        this.labelType = new JLabel(" /"+this.getType().toLowerCase()+" ");
+        this.labelType = new JLabel("foobar");
         this.labelType.setFont(new Font("Arial", Font.BOLD, 11));
 
         this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
-        this.setBorder(BorderFactory.createTitledBorder(this.getType()+" Control Panel"));
+        this.setBorder(BorderFactory.createTitledBorder("Control Panel"));
 
         this.comboCommandBox = new JComboBox();
         this.comboCommandBox.setEditable(true);
@@ -139,23 +130,10 @@ public class ControlPanel extends JPanel implements ActionListener, KeyListener 
         }
     }
 
-    private String getType() {
-        if (this.type == 1) {
-            return "Ref";
-        }
-        else if (this.type == 2) {
-            return "Mod";
-        }
-        else if (this.type == 3) {
-            return "Rcon";
-        }
-        else {
-            return "ERROR";
-        }
-    }
-
-    public void setType(int type) {
-        this.type = type;
+    public void setLoginMethod(String s) {
+        String titleCase = s.substring(0,1).toUpperCase()+s.substring(1).toLowerCase();
+        this.setBorder(BorderFactory.createTitledBorder(titleCase+" Control Panel"));
+        this.labelType.setText(" /"+s.toLowerCase()+" ");
     }
 
     public void actionPerformed(ActionEvent event) {
