@@ -63,6 +63,21 @@ public class ConsoleTextPane extends JTextPane {
         super.setFont(newFont);
         this.updateStyles();
     }
+    public void find(String search) {
+        this.requestFocusInWindow();
+        try {
+            String cText = this.styledDoc.getText(0, this.styledDoc.getLength());
+            int selStart = cText.indexOf(search);
+            int selEnd = selStart + search.length();
+
+            if (selStart > 0) {
+                this.setSelectionStart(selStart);
+                this.setSelectionEnd(selEnd);
+            } else
+                JOptionPane.showMessageDialog(null, "Query not found! Try again.",
+                        "Search Failed", JOptionPane.ERROR_MESSAGE);
+        } catch (Exception exc) { System.out.println(exc.getMessage()); }
+    }
     /** Determines if the character passed is indeed a valid console Quake 3 color number (0-8)
      * This method is a helper method for appendWithColors(), it allows the
      * console to determine if the character following a Caret (^) is supposed
