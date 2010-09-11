@@ -4,7 +4,6 @@ import javax.swing.*;
 import java.awt.event.*;
 import java.util.*;
 import java.awt.datatransfer.*;
-import java.io.*;
 
 /**
  * Handles the menu bar actions for the MainWindow singleton.
@@ -83,17 +82,19 @@ public class MenuAction extends AbstractAction {
         }
        
         else if (selection.equals("Send Connectionless Packet")) {
-            String cmd = JOptionPane.showInputDialog(this.parent, "<html>Enter a Connectionless Packet Command.<br>E.g. getstatus, getinfo, getchallenge, etc.</html>", "getinfo");
-            try {
-                Server server = (Server)this.parent.comboServerList.getSelectedItem();
-                BowserQuery q = new BowserQuery(server);
-                q.setRawOutput(true);
-                q.sendConnectionlessPacket(cmd);
-                this.parent.consolePanel.appendCommand(cmd);
-                this.parent.consolePanel.appendToConsole(q.getResponse());
-            }
-            catch (Exception exc) {
-                System.out.println(exc.getMessage());
+            String cmd = (String)JOptionPane.showInputDialog(this.parent, "<html>Enter a Connectionless Packet Command.<br>E.g. getstatus, getinfo, getchallenge, etc.</html>", "getinfo");
+            if (cmd != null) {
+                try {
+                    Server server = (Server)this.parent.comboServerList.getSelectedItem();
+                    BowserQuery q = new BowserQuery(server);
+                    q.setRawOutput(true);
+                    q.sendConnectionlessPacket(cmd);
+                    this.parent.consolePanel.appendCommand(cmd);
+                    this.parent.consolePanel.appendToConsole(q.getResponse());
+                }
+                catch (Exception exc) {
+                    System.out.println(exc.getMessage());
+                }
             }
         }
        
