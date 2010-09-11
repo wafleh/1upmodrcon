@@ -1,6 +1,5 @@
 package modrcon;
 
-import java.awt.Color;
 import java.awt.Cursor;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
@@ -41,6 +40,11 @@ public class FileChooserPanel extends JPanel implements MouseListener {
         folderLabel.setBorder(null);
         this.add(gamePathText);
         this.add(folderLabel);
+        SwingUtilities.invokeLater(new Runnable() {
+            public void run() {
+                setPreferredSize(new java.awt.Dimension((int)getWidth(), (int)gamePathText.getHeight()));
+            }
+        });
     }
 
     public void mouseClicked(MouseEvent e) {
