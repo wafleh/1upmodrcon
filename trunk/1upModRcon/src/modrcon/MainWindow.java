@@ -12,9 +12,7 @@ import javax.swing.Timer;
  * @author Pyrite[1up]
  */
 public class MainWindow extends JFrame implements ActionListener, ItemListener {
-
-    private String frameTitle;
-    
+   
     public LogoPanel logoPanel;
     private JPanel contentPanel;
     private VersionPanel versionPanel;
@@ -32,8 +30,7 @@ public class MainWindow extends JFrame implements ActionListener, ItemListener {
     /** Creates new form NewJFrame */
     public MainWindow() {
         // Sets Some of the JFrame Options
-        this.frameTitle = "1up ModRcon - Main (Moderator Mode)";
-        this.setTitle(this.frameTitle);
+        this.setTitle("1up ModRcon - Main");
         ImageIcon topLeftIcon = new ImageIcon(getClass().getResource("/modrcon/resources/1up8bit_green.png"));
         this.setIconImage(topLeftIcon.getImage());
         this.setJMenuBar(this.getModRconMenuBar());
@@ -96,6 +93,7 @@ public class MainWindow extends JFrame implements ActionListener, ItemListener {
         //initComponents();
         refreshServerCombo();
         refreshServerInfo();
+        refreshServerType();
         //this.livePlayerInfoPanel.fireItUp();
 
         // Populate Live Server Info
@@ -250,18 +248,25 @@ public class MainWindow extends JFrame implements ActionListener, ItemListener {
         this.consolePanel.setConsoleForeground(color);
     }
 
+    public void refreshServerType() {
+        Server s = (Server)this.comboServerList.getSelectedItem();
+        if (s.getLoginType().equals("mod")) {
+            this.setTitle("1up ModRcon - Main (Moderator Mode)");
+        }
+        else if (s.getLoginType().equals("ref")) {
+            this.setTitle("1up ModRcon - Main (Referee Mode)");
+        }
+        else if (s.getLoginType().equals("rcon")) {
+            this.setTitle("1up ModRcon - Main (Rcon Mode)");
+        }
+        else {}
+    }
+
     public void refreshServerCombo() {
-        // Load Server List
-
-        // The removeAllItems causes a nullPointerException, just reset the model instead.
-        //this.comboServerList.removeAllItems();
+        // The removeAllItems causes a nullPointerException,
+        // just reset the model instead.
+        // this.comboServerList.removeAllItems();
         this.comboServerList.setModel( new DefaultComboBoxModel() );
-
-        //ServerParser sp = new ServerParser();
-        //java.util.List servers = sp.getServers();
-        //for (int i=0; i < servers.size(); i++) {
-        //    this.comboServerList.addItem(servers.get(i));
-        //}
 
         ServerDatabase db = new ServerDatabase();
         ArrayList servers = db.getServerList();
@@ -293,6 +298,7 @@ public class MainWindow extends JFrame implements ActionListener, ItemListener {
         if (source == this.comboServerList) {
             this.livePlayerInfoPanel.fireItUp();
             this.refreshServerInfo();
+            this.refreshServerType();
         }
     }
 

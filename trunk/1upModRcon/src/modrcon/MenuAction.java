@@ -47,6 +47,10 @@ public class MenuAction extends AbstractAction {
             this.parent.consolePanel.clearConsole();
         }
 
+        else if (selection.equals("Find")) {
+            this.parent.consolePanel.findText();
+        }
+
         else if (selection.equals("Select All")) {
             this.parent.consolePanel.selectAllText();
         }
