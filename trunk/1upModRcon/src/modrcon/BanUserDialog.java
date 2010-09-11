@@ -18,6 +18,7 @@ public class BanUserDialog extends JDialog implements ActionListener {
     private JCheckBox rangeCheckBox;
     private JButton btnOK;
     private JButton btnCancel;
+    private String lastIP;
 
     public BanUserDialog(MainWindow owner) {
         super();
@@ -113,6 +114,7 @@ public class BanUserDialog extends JDialog implements ActionListener {
             String ip = this.ipTextField.getText();
             if (rangeCheckBox.isSelected()) {
                 if (ModRconUtil.isIPAddress(ip)) {
+                    this.lastIP = ip;
                     String start = ip.substring(0, ip.lastIndexOf("."));
                     this.ipTextField.setText(start+".0:-1");
                 } else {
@@ -121,7 +123,7 @@ public class BanUserDialog extends JDialog implements ActionListener {
                 }
             }
             else {
-                this.ipTextField.setText("");
+                this.ipTextField.setText(this.lastIP);
             }
         }
         else if (pressedButton == btnCancel) {
