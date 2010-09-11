@@ -278,7 +278,11 @@ public class ServerSetupWizard extends JFrame implements ActionListener {
             }
         }
         else {
-            this.dispose();
+            String str = "<html>Your connection settings have not been saved<br>to the database. If you exit now, you will have<br>to run this wizard again the next time you start<br>this program.<br><br>Are you sure you want to exit now?</html>";
+            int choice = (int)JOptionPane.showConfirmDialog(this, str, "Information Not Saved" , JOptionPane.YES_NO_OPTION);
+            if (choice == JOptionPane.YES_OPTION) {
+                this.dispose();
+            }
         }
     }
 
