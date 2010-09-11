@@ -63,6 +63,19 @@ public class MenuAction extends AbstractAction {
             new SettingManager(this.parent);
         }
 
+        else if (selection.equals("Server Info")) {
+            try {
+                Server server = (Server)this.parent.comboServerList.getSelectedItem();
+                BowserQuery q = new BowserQuery(server);
+                q.sendCmd("serverinfo");
+                this.parent.consolePanel.appendCommand("serverinfo");
+                this.parent.consolePanel.appendToConsole(q.getResponse());
+            }
+            catch (Exception exc) {
+                System.out.println(exc.getMessage());
+            }
+        }
+
         else if (selection.equals("Exit")) {
             //parent.savePropertyFile();
             System.exit(0);

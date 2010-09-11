@@ -83,12 +83,15 @@ public class ConsolePanel extends JPanel implements MouseListener {
         JMenuItem selectAll = new JMenuItem(new MenuAction("Select All", this.parent));
         JMenuItem copySelected = new JMenuItem(new MenuAction("Copy Selected", this.parent));
         JMenuItem saveConsole = new JMenuItem(new MenuAction("Save Console As...", this.parent));
-        JMenuItem clearConsole = new JMenuItem(new MenuAction("Clear Console", this.parent));    
+        JMenuItem clearConsole = new JMenuItem(new MenuAction("Clear Console", this.parent));
+        JMenuItem serverInfo = new JMenuItem(new MenuAction("Server Info", this.parent));
         JMenuItem sendCP = new JMenuItem(new MenuAction("Send Connectionless Packet", this.parent));
         p.add(selectAll);
         p.add(copySelected);
         p.add(saveConsole);
         p.add(clearConsole);
+        p.addSeparator();
+        p.add(serverInfo);
         p.addSeparator();
         p.add(sendCP);
         return p;
