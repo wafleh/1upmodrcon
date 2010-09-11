@@ -18,9 +18,6 @@ public class ControlPanel extends JPanel implements ActionListener, KeyListener 
     public static int TYPE_MOD = 2;
     public static int TYPE_REF = 1;
 
-    private JPanel top = new JPanel();
-    private JPanel bottom = new JPanel();
-
     private JLabel labelType;
     private JComboBox comboCommandBox;
     
@@ -53,8 +50,6 @@ public class ControlPanel extends JPanel implements ActionListener, KeyListener 
         this.comboCommandBox.setEditable(true);
         this.comboCommandBox.getEditor().getEditorComponent().addKeyListener(this);
 
-        this.top.setLayout(new BoxLayout(top, BoxLayout.X_AXIS));      
-
         btnSend.addActionListener(this);
         btnStatus.addActionListener(this);
         btnDumpUser.addActionListener(this);
@@ -65,21 +60,42 @@ public class ControlPanel extends JPanel implements ActionListener, KeyListener 
         btnForceTeam.addActionListener(this);
         btnBanUser.addActionListener(this);
 
-        this.top.add(labelType);
-        this.top.add(comboCommandBox);
-        this.top.add(btnSend);
-        this.bottom.add(btnStatus);
-        this.bottom.add(btnDumpUser);
-        this.bottom.add(btnSlap);
-        this.bottom.add(btnKick);
-        this.bottom.add(btnMute);
-        this.bottom.add(btnToggleMute);
-        this.bottom.add(btnForceTeam);
-        this.bottom.add(btnBanUser);
+        this.add(getTopPanel());
+        this.add(getBottomPanel());
 
-        this.add(top);
-        this.add(bottom);
+    }
 
+    private JPanel getBottomPanel() {
+        JPanel returnPanel = new JPanel();
+        returnPanel.setLayout(new BoxLayout(returnPanel, BoxLayout.X_AXIS));
+
+        returnPanel.add(Box.createGlue());
+        returnPanel.add(this.btnStatus);
+        returnPanel.add(this.btnDumpUser);
+        returnPanel.add(this.btnSlap);
+        returnPanel.add(this.btnKick);
+        returnPanel.add(this.btnMute);
+        returnPanel.add(this.btnToggleMute);
+        returnPanel.add(this.btnForceTeam);
+        returnPanel.add(this.btnBanUser);
+        returnPanel.add(Box.createHorizontalStrut(8));
+
+        return returnPanel;
+    }
+
+    private JPanel getTopPanel() {
+        JPanel returnPanel = new JPanel();
+        returnPanel.setLayout(new BoxLayout(returnPanel, BoxLayout.X_AXIS));
+
+        returnPanel.add(Box.createHorizontalStrut(8));
+        returnPanel.add(this.labelType);
+        returnPanel.add(Box.createHorizontalStrut(5));
+        returnPanel.add(this.comboCommandBox);
+        returnPanel.add(Box.createHorizontalStrut(5));
+        returnPanel.add(this.btnSend);
+        returnPanel.add(Box.createHorizontalStrut(8));
+
+        return returnPanel;
     }
 
     public void printSize() {
