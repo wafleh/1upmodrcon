@@ -163,12 +163,14 @@ public class SettingManager extends JDialog implements ActionListener, MouseList
         if (e.getSource() == bgColorLabel) {
             JColorChooser mycolor = new JColorChooser();
             Color chosenColor = mycolor.showDialog(mycolor, "Select a Background Color for the Console", bgColorLabel.getBackground());
-            bgColorLabel.setBackground(chosenColor);
+            if (chosenColor != null)
+                bgColorLabel.setBackground(chosenColor);
         }
         else if (e.getSource() == fgColorLabel) {
             JColorChooser mycolor = new JColorChooser();
             Color chosenColor = mycolor.showDialog(mycolor, "Select a Font Color for the Console", fgColorLabel.getBackground());
-            fgColorLabel.setBackground(chosenColor);
+            if (chosenColor != null)
+                fgColorLabel.setBackground(chosenColor);
         }
     }
 
