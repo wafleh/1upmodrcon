@@ -224,6 +224,12 @@ public class BowserQuery {
         return resp;
     }
 
+    public String getRaw(String cmd) {
+        this.send(cmd);
+        String resp = this.getResponse();
+        return resp;
+    }
+
     /**
      * Gets the output of the getinfo command,
      * and parses it into a useful data structure.
