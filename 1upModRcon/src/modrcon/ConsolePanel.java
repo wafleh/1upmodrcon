@@ -79,20 +79,25 @@ public class ConsolePanel extends JPanel implements MouseListener {
     }
 
     private JPopupMenu getConsolePopupMenu() {
-        JPopupMenu returnMenu = new JPopupMenu("1up ModRcon Console");
+        JPopupMenu p = new JPopupMenu();
+        JMenuItem selectAll = new JMenuItem(new MenuAction("Select All", this.parent));
+        JMenuItem copySelected = new JMenuItem(new MenuAction("Copy Selected", this.parent));
+        JMenuItem saveConsole = new JMenuItem(new MenuAction("Save Console As...", this.parent));
+        JMenuItem clearConsole = new JMenuItem(new MenuAction("Clear Console", this.parent));    
+        JMenuItem sendCP = new JMenuItem(new MenuAction("Send Connectionless Packet", this.parent));
+        p.add(selectAll);
+        p.add(copySelected);
+        p.add(saveConsole);
+        p.add(clearConsole);
+        p.addSeparator();
+        p.add(sendCP);
+        return p;
+    }
 
-        returnMenu.add(new JMenuItem("Select All"));
-        returnMenu.add(new JMenuItem("Copy Selected"));
-        returnMenu.add(new JMenuItem("Save Console As..."));
-        JMenuItem clearConsoleItem = new JMenuItem(new MenuAction("Clear Console", this.parent));
-        returnMenu.add(clearConsoleItem);
-        
-        returnMenu.addSeparator(); // doesn't show up on Linux with some themes.
-
-        JMenuItem getStatusItem = new JMenuItem(new MenuAction("Send Connectionless Packet", this.parent));
-        returnMenu.add(getStatusItem);
-
-        return returnMenu;
+    public void selectAllText() {
+        // TODO: Highlight Text that gets Selected.
+        // Highlighting works intermitendly on Linux for some reason.
+        this.taConsole.selectAll();
     }
 
     public void setConsoleBackground(Color c) {
