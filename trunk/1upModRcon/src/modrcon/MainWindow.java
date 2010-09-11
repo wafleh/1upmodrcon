@@ -56,6 +56,8 @@ public class MainWindow extends JFrame implements ActionListener, ItemListener {
         this.livePlayerInfoPanel = new LivePlayerInfoPanel(this);
 
         this.comboServerList = new JComboBox();
+        this.comboServerList.setBorder(null);
+        this.comboServerList.setOpaque(false);
         this.comboServerList.addItemListener(this);
 
         this.logoPanel.add(this.getComboServerListPanel(), BorderLayout.EAST);
