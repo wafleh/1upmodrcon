@@ -95,8 +95,7 @@ public class ConsolePanel extends JPanel implements MouseListener {
     }
 
     public void selectAllText() {
-        // TODO: Highlight Text that gets Selected.
-        // Highlighting works intermitendly on Linux for some reason.
+        this.taConsole.requestFocusInWindow();
         this.taConsole.selectAll();
     }
 
