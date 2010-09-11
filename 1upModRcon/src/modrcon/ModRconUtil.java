@@ -46,6 +46,19 @@ public class ModRconUtil {
         return ipPattern.matcher(str).matches();
     }
 
+    /**
+     * Determines if a string is a Q3 IP Range.
+     *
+     * E.g. The range for 208.43.15.81 is 208.43.15.0:-1
+     *
+     * @param str The string to test.
+     * @return True or False
+     */
+    public static boolean isIPRange(String str) {
+        Pattern ipRangePattern = Pattern.compile("\\d{1,3}\\.\\d{1,3}\\.\\d{1,3}\\.0:-1");
+        return ipRangePattern.matcher(str).matches();
+    }
+
     public static boolean isMac() {
         String os = System.getProperty("os.name").toLowerCase();
         return (os.indexOf( "mac" ) >= 0);

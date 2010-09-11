@@ -1,6 +1,5 @@
 package modrcon;
 
-import java.awt.Container;
 import java.awt.Point;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -44,6 +43,8 @@ public class BanUserDialog extends JDialog implements ActionListener {
         JPanel line3 = new JPanel();
         rangeCheckBox = new JCheckBox();
         rangeCheckBox.setText("Format IP As Range");
+        rangeCheckBox.addActionListener(this);
+        //rangeCheckBox.setEnabled(false); // Disabled until they start typing.
         line3.add(rangeCheckBox);
 
         JPanel buttonPanel = new JPanel();
@@ -82,10 +83,46 @@ public class BanUserDialog extends JDialog implements ActionListener {
         this.setVisible(true);
     }
 
+    private void banPlayer(String ip) {
+        try {
+            Server s = (Server)this.parent.comboServerList.getSelectedItem();
+            BowserQuery q = new BowserQuery(s);
+            q.sendCmd("addip "+ip);
+            this.parent.consolePanel.appendCommand("addip "+ip);
+            this.parent.consolePanel.appendToConsole(q.getResponse());
+        }
+        catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
+    }
+
     public void actionPerformed(ActionEvent e) {
         AbstractButton pressedButton = (AbstractButton)e.getSource();
         if (pressedButton == btnOK) {
-            this.dispose();
+            String input = this.ipTextField.getText();
+            if (input != null && input.length() > 0 && (ModRconUtil.isIPAddress(input) || ModRconUtil.isIPRange(input))) {
+                // Proceed with Ban
+                this.banPlayer(input);
+                this.dispose();
+            }
+            else {
+                JOptionPane.showMessageDialog(this, "You must supply a valid IP address or range.");
+            }
+        }
+        else if (pressedButton == rangeCheckBox) {
+            String ip = this.ipTextField.getText();
+            if (rangeCheckBox.isSelected()) {
+                if (ModRconUtil.isIPAddress(ip)) {
+                    String start = ip.substring(0, ip.lastIndexOf("."));
+                    this.ipTextField.setText(start+".0:-1");
+                } else {
+                    JOptionPane.showMessageDialog(this, "The IP you entered is not valid.");
+                    this.rangeCheckBox.setSelected(false);
+                }
+            }
+            else {
+                this.ipTextField.setText("");
+            }
         }
         else if (pressedButton == btnCancel) {
             this.dispose();
