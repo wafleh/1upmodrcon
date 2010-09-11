@@ -130,6 +130,7 @@ public class MainWindow extends JFrame implements ActionListener, ItemListener {
 
         JPanel comboListLabelPanel = new JPanel();
         comboListLabelPanel.setOpaque(false);
+        comboListLabelPanel.setBackground(null);
         comboListLabelPanel.add(connectedToLabel);
         comboListLabelPanel.add(this.comboServerList);
 
