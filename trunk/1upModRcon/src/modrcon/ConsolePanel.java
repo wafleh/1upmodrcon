@@ -119,10 +119,11 @@ public class ConsolePanel extends JPanel implements MouseListener {
     }
 
     public void findText() {
-        String input = (String)JOptionPane.showInputDialog(this.parent, "Search for Text inside the Console");
+        /*String input = (String)JOptionPane.showInputDialog(this.parent, "Search for Text inside the Console");
         if (input != null && !(input.equals(""))) {
-            this.taConsole.find(input.trim());
-        }
+            this.taConsole.find(input.trim(), false);
+        }*/
+        new SearchConsoleDialog(this.parent, this.taConsole);
     }
 
     public void clearConsole() {

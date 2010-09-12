@@ -3,6 +3,7 @@ package modrcon;
 import java.awt.Color;
 import javax.swing.*;
 import javax.swing.text.*;
+
 /** Custom JTextPane for use outputting with colored styles.
  * ConsoleTextPane extends JTextPane for the purpose of outputting with
  * user specified Styles which are added at initialization and updated when the
@@ -27,16 +28,18 @@ import javax.swing.text.*;
  */
 public class ConsoleTextPane extends JTextPane {
     private StyledDocument styledDoc;
+
     /** Default Constructor */
     public ConsoleTextPane() {
         super();
         this.styledDoc = this.getStyledDocument();
         this.styledDoc = DocumentStyler.styleDocument(styledDoc, this.getFont(), this.getForeground());
     }
+
     /** Updates the styles that are in the StyledDocument (ONLY DEFAULT STYLES)
      * This method is called from setForeground, setBackground, and setFont so
      * that anytime a global Console style change is made it's reflected in any
-     * NEW occurences of the Styles of the StyledDocument, previous printed
+     * NEW occurrences of the Styles of the StyledDocument, previous printed
      * Styles will reflect the colors/fonts of the Styles that they were added
      * to the console with.
      */
@@ -63,21 +66,68 @@ public class ConsoleTextPane extends JTextPane {
         super.setFont(newFont);
         this.updateStyles();
     }
-    public void find(String search) {
+
+    /** Finds the next occurrence of the String after the given index
+     * Finds the next occurrence of the passed String and selects it in the
+     * console.
+     * @param search The String to be found in the ConsoleTextPane
+     * @return Returns <code>true</code> or <code>false</code> depending on if the string was found or not.
+     */
+    public boolean find(String search, int startIndex, boolean caseSensitive) {
+        boolean found = false;
         this.requestFocusInWindow();
         try {
             String cText = this.styledDoc.getText(0, this.styledDoc.getLength());
+
+            if (!caseSensitive) {
+                cText = cText.toLowerCase();
+                search = search.toLowerCase();
+            }
+
             int selStart = cText.indexOf(search);
             int selEnd = selStart + search.length();
 
             if (selStart > 0) {
                 this.setSelectionStart(selStart);
                 this.setSelectionEnd(selEnd);
-            } else
-                JOptionPane.showMessageDialog(null, "Query not found! Try again.",
-                        "Search Failed", JOptionPane.ERROR_MESSAGE);
+                found = true;
+            } 
         } catch (Exception exc) { System.out.println(exc.getMessage()); }
+
+        return found;
     }
+    
+    /** Finds the first occurrence of the passed String
+     * Finds the first occurrence of the passed string and selects it in the
+     * console.
+     * @param search The String to be found in the ConsoleTextPane
+     * @return Returns <code>true</code> or <code>false</code> depending on if the string was found or not.
+     */
+    public boolean find(String search, boolean caseSensitive) {
+        boolean found = false;
+        
+        this.requestFocusInWindow();
+        try {
+            String cText = this.styledDoc.getText(0, this.styledDoc.getLength());
+            
+            if (!caseSensitive) {
+                cText = cText.toLowerCase();
+                search = search.toLowerCase();
+            }
+            
+            int selStart = cText.indexOf(search);
+            int selEnd = selStart + search.length();
+
+            if (selStart > 0) {
+                this.setSelectionStart(selStart);
+                this.setSelectionEnd(selEnd);
+                found = true;
+            }
+        } catch (Exception exc) { System.out.println(exc.getMessage()); }
+        
+        return found;
+    }
+
     /** Determines if the character passed is indeed a valid console Quake 3 color number (0-8)
      * This method is a helper method for appendWithColors(), it allows the
      * console to determine if the character following a Caret (^) is supposed
@@ -96,6 +146,7 @@ public class ConsoleTextPane extends JTextPane {
 
         return false;
     }
+
     /** Returns the StyledDocument this console uses.
      * This method will allow a call to DocumentStyler from outside the
      * ConsoleTextPane class use the proper StyledDocument so the Styles that
@@ -105,6 +156,7 @@ public class ConsoleTextPane extends JTextPane {
     public StyledDocument getConsoleStyledDocument() {
         return this.styledDoc;
     }
+
     /** Appends the given string to the Console after processing for Quake 3 color codes.
      * This method functions different from the other append methods, the sole
      * purpose of this method is to process output for Quake 3 Color numbers
@@ -135,6 +187,7 @@ public class ConsoleTextPane extends JTextPane {
         }
         append(temp + "\n", style);
     }
+
     /** Adds the passed message to the Console with the formatting of the passed Style name
      * Adds the append text to the console following the settings of the
      * specified style. This method prints the whole append in the Style passed,
@@ -157,6 +210,7 @@ public class ConsoleTextPane extends JTextPane {
             System.exit(0);
         }
     }
+
     /** Appends a series of lines to the Console with the given styles per line.
      * Takes a list of ConsoleTextPane.AppendLine and adds each line to the
      * console with the set Style. This method is ideal when printing multiple
@@ -167,6 +221,7 @@ public class ConsoleTextPane extends JTextPane {
         for (int i = 0; i < bulkAppends.length; i++)
             this.append(bulkAppends[i].getLine(), bulkAppends[i].getStyleName());
     }
+
     /** Appends the String to the Console with the default Style.
      * Appends the passed String to the console with the "default" style.
      * @param append The line to be added to the console.
@@ -174,6 +229,7 @@ public class ConsoleTextPane extends JTextPane {
     public void append(String append) {
         append(append, "default");
     }
+
     /** Creates a String containing the command entered and the date/time entered, adding it to the console.
      * Takes the command that was entered and creates a String to alert the user
      * what command was entered and adds a date/time String to display when
