@@ -253,13 +253,16 @@ public class LivePlayerInfoPanel extends JPanel {
             int xLoc = 2;
             
             for (int i = 0; i < playerName.length(); i++) {
-                if (playerName.charAt(i) == '^' && this.isValidQuakeNumber(playerName.charAt(i + 1))) {
-                    xLoc = paintPart(temp, getQuakeColor(color), xLoc, g);
-                    color = playerName.charAt(i + 1);
-                    temp = ""; // Clear temp for the next series of colored text
-                    i++; // Jump past the color number
-                }
-                else
+                if (i + 1 < playerName.length()) {
+                    if (playerName.charAt(i) == '^' && this.isValidQuakeNumber(playerName.charAt(i + 1))) {
+                        xLoc = paintPart(temp, getQuakeColor(color), xLoc, g);
+                        color = playerName.charAt(i + 1);
+                        temp = ""; // Clear temp for the next series of colored text
+                        i++; // Jump past the color number
+                    }
+                    else
+                        temp = temp + playerName.charAt(i);
+                } else
                     temp = temp + playerName.charAt(i);
             }
             paintPart(temp, getQuakeColor(color), xLoc, g);
