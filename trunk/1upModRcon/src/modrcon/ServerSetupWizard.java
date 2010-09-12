@@ -31,8 +31,7 @@ public class ServerSetupWizard extends JFrame implements ActionListener {
         ImageIcon topLeftIcon = new ImageIcon(getClass().getResource("/modrcon/resources/1up8bit_blue.png"));
         this.setIconImage(topLeftIcon.getImage());
         this.setResizable(false);
-        //410x422
-        this.setSize(410, 422);
+        this.setSize(420, 450);
         
 
         // Setup the Content Pane
@@ -42,10 +41,9 @@ public class ServerSetupWizard extends JFrame implements ActionListener {
         GradientPanel gp = new GradientPanel(GradientPanel.WIZARD_COLOR_START, GradientPanel.WIZARD_COLOR_END);
         gp.add(this.getGPTitle());
 
-        JPanel cPanel = new JPanel();
-        cPanel.setLayout(new BoxLayout(cPanel, BoxLayout.Y_AXIS));
-        cPanel.add(this.getIntroPanel());
-        cPanel.add(this.getServerPanel());
+        JPanel cPanel = new JPanel(new BorderLayout());
+        cPanel.add(ModRconUtil.getPaddedPanel(5, this.getIntroPanel()), BorderLayout.NORTH);
+        cPanel.add(ModRconUtil.getPaddedPanel(5, this.getServerPanel()), BorderLayout.CENTER);
 
         buttonPanel = new JPanel(new FlowLayout(FlowLayout.CENTER));
         btnSaveNow = new JButton("Save Now");
@@ -81,12 +79,16 @@ public class ServerSetupWizard extends JFrame implements ActionListener {
 
     private JPanel getIntroPanel() {
         JPanel panel = new JPanel();
+        panel.setLayout(new BoxLayout(panel, BoxLayout.X_AXIS));
         introText = new JLabel();
         introText.setForeground(new Color(0x228B22)); // Forrest Green
         introText.setFont(new Font("Tahoma", Font.BOLD, 11));
         introText.setOpaque(false);
         introText.setText("<html>Please take a moment to setup your first server connection.<br>If you need help just hover your mouse over one of the<br>information icons and a hint will appear for that item.<br>All fields are required!</html>");
+        //introText.setText("<html><p>Please take a moment to setup your first server connection. If you need help just hover your mouse over one of the information icons and a hint will appear for that item. All fields are required!</p></html>");
+        panel.add(Box.createHorizontalStrut(5));
         panel.add(introText);
+        panel.add(Box.createHorizontalStrut(5));
         return panel;
     }
 
@@ -102,17 +104,33 @@ public class ServerSetupWizard extends JFrame implements ActionListener {
         JLabel lblServerPassword = new JLabel("Server Password: ", JLabel.TRAILING);
 
         // initial jtextfileds
-        serverName = new JTextField(25);
+        //Dimension d = new Dimension(100, 20);
+
+        serverName = new JTextField();
         serverName.setBackground(GradientPanel.SELECTED_GRID_CELL_BG_COLOR);
-        serverIP = new JTextField(25);
+
+        Dimension d = serverName.getPreferredSize();
+        Dimension d2 = new Dimension(200, (int)d.getHeight());
+
+        serverName.setPreferredSize(d2);
+        serverName.setMaximumSize(d2);
+        serverIP = new JTextField();
         serverIP.setBackground(GradientPanel.SELECTED_GRID_CELL_BG_COLOR);
-        serverPort = new JTextField(25);
+        serverIP.setPreferredSize(d2);
+        serverIP.setMaximumSize(d2);
+        serverPort = new JTextField();
         serverPort.setText("27960");
         serverPort.setBackground(GradientPanel.SELECTED_GRID_CELL_BG_COLOR);
+        serverPort.setPreferredSize(d2);
+        serverPort.setMaximumSize(d2);
         serverMethod = this.getMethodCombo();
         serverMethod.setBackground(GradientPanel.SELECTED_GRID_CELL_BG_COLOR);
-        serverPassword = new JPasswordField(25);
+        serverMethod.setPreferredSize(d2);
+        serverMethod.setMaximumSize(d2);
+        serverPassword = new JPasswordField();
         serverPassword.setBackground(GradientPanel.SELECTED_GRID_CELL_BG_COLOR);
+        serverPassword.setPreferredSize(d2);
+        serverPassword.setMaximumSize(d2);
 
         // Info Icons
         JLabel infoIconServer = new JLabel();
@@ -125,48 +143,80 @@ public class ServerSetupWizard extends JFrame implements ActionListener {
         infoIconPort.setIcon(new ImageIcon(getClass().getResource("/modrcon/resources/about.png")));
         infoIconMethod.setIcon(new ImageIcon(getClass().getResource("/modrcon/resources/about.png")));
         infoIconPassword.setIcon(new ImageIcon(getClass().getResource("/modrcon/resources/about.png")));
-        infoIconServer.setToolTipText("Enter your server name here, it can be anything you want.");
-        infoIconIP.setToolTipText("Enter the IP address for the above server here.");
-        infoIconPort.setToolTipText("Enter the port the server runs on, usually it is just 27960.");
-        infoIconMethod.setToolTipText("<html>The type of connection to the server (ref, mod, rcon).<br>Please note however, Moderator is a custom login type for the 1up clan.</html>");
-        infoIconPassword.setToolTipText("The ref/mod/rcon password on the server.");
+        infoIconServer.setToolTipText(getNiceToolTip("Server Name", "Enter your server name here, it can be anything you want."));
+        infoIconIP.setToolTipText(getNiceToolTip("IP Address", "Enter the IP address for the above server here."));
+        infoIconPort.setToolTipText(getNiceToolTip("Port", "Enter the port the server runs on, usually it is just 27960."));
+        infoIconMethod.setToolTipText(getNiceToolTip("Login Method", "The type of connection to the server (ref, mod, rcon).<br>Please note however, Moderator is a custom login type for the 1up clan."));
+        infoIconPassword.setToolTipText(getNiceToolTip("Password", "The ref/mod/rcon password on the server."));
         infoIconServer.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
         infoIconIP.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
         infoIconPort.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
         infoIconMethod.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
         infoIconPassword.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 
-        JPanel line1 = new JPanel(new FlowLayout(FlowLayout.RIGHT));
+        JPanel line1 = new JPanel();
+        line1.setLayout(new BoxLayout(line1, BoxLayout.X_AXIS));
+        line1.add(Box.createHorizontalGlue());
         line1.add(lblServerName);
         line1.add(serverName);
+        line1.add(Box.createHorizontalStrut(5));
         line1.add(infoIconServer);
+        line1.add(Box.createHorizontalStrut(5));
 
-        JPanel line2 = new JPanel(new FlowLayout(FlowLayout.RIGHT));
+        JPanel line2 = new JPanel();
+        line2.setLayout(new BoxLayout(line2, BoxLayout.X_AXIS));
+        line2.add(Box.createHorizontalGlue());
         line2.add(lblServerIP);
         line2.add(serverIP);
+        line2.add(Box.createHorizontalStrut(5));
         line2.add(infoIconIP);
+        line2.add(Box.createHorizontalStrut(5));
 
-        JPanel line3 = new JPanel(new FlowLayout(FlowLayout.RIGHT));
+        JPanel line3 = new JPanel();
+        line3.setLayout(new BoxLayout(line3, BoxLayout.X_AXIS));
+        line3.add(Box.createHorizontalGlue());
         line3.add(lblServerPort);
         line3.add(serverPort);
+        line3.add(Box.createHorizontalStrut(5));
         line3.add(infoIconPort);
+        line3.add(Box.createHorizontalStrut(5));
 
-        JPanel line4 = new JPanel(new FlowLayout(FlowLayout.RIGHT));
+        JPanel line4 = new JPanel();
+        line4.setLayout(new BoxLayout(line4, BoxLayout.X_AXIS));
+        line4.add(Box.createHorizontalGlue());
         line4.add(lblServerMethod);
         line4.add(serverMethod);
+        line4.add(Box.createHorizontalStrut(5));
         line4.add(infoIconMethod);
+        line4.add(Box.createHorizontalStrut(5));
 
-        JPanel line5 = new JPanel(new FlowLayout(FlowLayout.RIGHT));
+        JPanel line5 = new JPanel();
+        line5.setLayout(new BoxLayout(line5, BoxLayout.X_AXIS));
+        line5.add(Box.createHorizontalGlue());
         line5.add(lblServerPassword);
         line5.add(serverPassword);
+        line5.add(Box.createHorizontalStrut(5));
         line5.add(infoIconPassword);
+        line5.add(Box.createHorizontalStrut(5));
+
+        JPanel line6 = new JPanel();
+        line6.setLayout(new BoxLayout(line6, BoxLayout.X_AXIS));
+        line6.add(Box.createHorizontalGlue());
+        line6.add(new JLabel("Click Save Now once you have filled out all required fields to continue."));
+        line6.add(Box.createHorizontalGlue());
 
         serverPanel.add(line1);
+        serverPanel.add(Box.createVerticalStrut(5));
         serverPanel.add(line2);
+        serverPanel.add(Box.createVerticalStrut(5));
         serverPanel.add(line3);
+        serverPanel.add(Box.createVerticalStrut(5));
         serverPanel.add(line4);
+        serverPanel.add(Box.createVerticalStrut(5));
         serverPanel.add(line5);
-        serverPanel.add(this.getLastInstructionsPanel());
+        serverPanel.add(Box.createVerticalStrut(15));
+        serverPanel.add(line6);
+        //serverPanel.add(this.getLastInstructionsPanel());
 
 
         return serverPanel;
@@ -219,17 +269,18 @@ public class ServerSetupWizard extends JFrame implements ActionListener {
     private JComboBox getMethodCombo() {
         String[] values = new String[] { "Referee", "Moderator", "RCON" };
         this.serverMethod = new JComboBox(values);
-        this.serverMethod.setPrototypeDisplayValue("WWWWWWWWWWWWWWWWWW");
+        //this.serverMethod.setPrototypeDisplayValue("WWWWWWWWWWWWWWWWWW");
         this.serverMethod.setSelectedItem("Moderator");
         return this.serverMethod;
     }
 
-    private JPanel getLastInstructionsPanel() {
-        JPanel panel = new JPanel();
-        panel.add(new JLabel("Click Save Now once you have filled out all required fields to continue."));
-        return panel;
+    public String getNiceToolTip(String title, String tip) {
+        String output = "";
+        output += "<html>";
+        output += "<img src=\""+getClass().getResource("/modrcon/resources/about.png")+"\">";
+        output += "&nbsp;&nbsp;<b>"+title+"</b><br>"+tip+"</html>";
+        return output;
     }
-
 
     private JLabel getGPTitle() {
         JLabel label = new JLabel("Server Setup Wizard");
@@ -278,7 +329,7 @@ public class ServerSetupWizard extends JFrame implements ActionListener {
             }
         }
         else {
-            String str = "<html>Your connection settings have not been saved<br>to the database. If you exit now, you will have<br>to run this wizard again the next time you start<br>this program.<br><br>Are you sure you want to exit now?</html>";
+            String str = "<html><p>Your connection settings have not been saved<br>to the database. If you exit now, you will have<br>to run this wizard again the next time you start<br>this program.<br><br>Are you sure you want to exit now?</p></html>";
             int choice = (int)JOptionPane.showConfirmDialog(this, str, "Information Not Saved" , JOptionPane.YES_NO_OPTION);
             if (choice == JOptionPane.YES_OPTION) {
                 this.dispose();

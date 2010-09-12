@@ -19,6 +19,7 @@ public class ServerInfoPanel extends JPanel implements MouseListener {
     private JLabel port;
     private JLabel gametype;
     private JLabel map;
+    private JLabel joinServerLabel;
 
     public ServerInfoPanel(MainWindow owner) {
         super();
@@ -41,11 +42,11 @@ public class ServerInfoPanel extends JPanel implements MouseListener {
 
         // Not sure where/how to place this atm.
         JPanel joinPanel = new JPanel(new FlowLayout(FlowLayout.RIGHT));
-        JLabel lblJoin = new JLabel("<html><u>Join Server</u></html>");
-        lblJoin.setFont(new Font("Tahoma", Font.BOLD, 11));
-        lblJoin.setForeground(GradientPanel.HEADER_COLOR_END);
-        lblJoin.addMouseListener(this);
-        joinPanel.add(lblJoin);
+        joinServerLabel = new JLabel("<html><u>Join Server</u></html>");
+        joinServerLabel.setFont(new Font("Tahoma", Font.BOLD, 11));
+        joinServerLabel.setForeground(GradientPanel.HEADER_COLOR_END);
+        joinServerLabel.addMouseListener(this);
+        joinPanel.add(joinServerLabel);
 
         server   = new JLabel("N/A");
         server.setFont(new Font("Tahoma", Font.PLAIN, 11));
@@ -55,6 +56,7 @@ public class ServerInfoPanel extends JPanel implements MouseListener {
         port.setFont(new Font("Tahoma", Font.PLAIN, 11));
         gametype = new JLabel("N/A");
         gametype.setFont(new Font("Tahoma", Font.PLAIN, 11));
+        gametype.addMouseListener(this);
         map      = new JLabel("N/A");
         map.setFont(new Font("Tahoma", Font.PLAIN, 11));
 
@@ -100,7 +102,7 @@ public class ServerInfoPanel extends JPanel implements MouseListener {
     }
 
     public void setGameType(String type) {
-        this.gametype.setText(type);
+        this.gametype.setText("<html>"+type+" (<font color=\"#DD5731\"><u>Change</u></font>)</html>");
     }
 
     public void setMap(String map) {
@@ -108,17 +110,42 @@ public class ServerInfoPanel extends JPanel implements MouseListener {
     }
 
     public void mouseClicked(MouseEvent e) {
-        PropertyManager pm = new PropertyManager();
-        String pathToUrbanTerror = pm.getGamePath();
-        if (pathToUrbanTerror.isEmpty()) {
-            new SettingManager(this.parent);
-        }
-        else {
-            try {
-                GameLauncher.Launch(pathToUrbanTerror, this.ip.getText());
+        if (e.getSource() == this.joinServerLabel) {
+            PropertyManager pm = new PropertyManager();
+            String pathToUrbanTerror = pm.getGamePath();
+            if (pathToUrbanTerror.isEmpty()) {
+                new SettingManager(this.parent);
             }
-            catch (Exception event) {
-                JOptionPane.showMessageDialog(this.parent, "<html>Error: Failed to launch Urban Terror.\nReport bugs at http://1upModRcon.googlecode.com");
+            else {
+                try {
+                    GameLauncher.Launch(pathToUrbanTerror, this.ip.getText());
+                }
+                catch (Exception event) {
+                    JOptionPane.showMessageDialog(this.parent, "<html>Error: Failed to launch Urban Terror.\nReport bugs at http://1upModRcon.googlecode.com");
+                }
+            }
+        }
+        else if (e.getSource() == this.gametype) {
+            String[] values = {"Free For All", "Team Deathmatch", "Team Survivor", "Follow the Leader", "Capture and Hold", "Capture the Flag", "Bomb"};
+            String choice = (String)JOptionPane.showInputDialog(
+                    this.parent,
+                    "",
+                    "Change the Server's Game Type",
+                    JOptionPane.QUESTION_MESSAGE,
+                    null,
+                    values,
+                    values[0]
+            );
+            try {
+                Server s = (Server)this.parent.comboServerList.getSelectedItem();
+                BowserQuery q = new BowserQuery(s);
+                int gt = ModRconUtil.getGameType(choice);
+                q.sendCmd("g_gametype "+gt);
+                this.parent.consolePanel.appendCommand("g_gametype "+gt);
+                this.parent.consolePanel.appendToConsole(q.getResponse());
+            }
+            catch (Exception exc) {
+                System.out.println(exc.getMessage());
             }
         }
     }

@@ -85,6 +85,32 @@ public class ModRconUtil {
         }
     }
 
+    public static int getGameType(String type) {
+        int gt = 0;
+        if (type.equalsIgnoreCase("free for all")) {
+            gt = 0;
+        }
+        else if (type.equalsIgnoreCase("team deathmatch")) {
+            gt = 3;
+        }
+        else if (type.equalsIgnoreCase("team survivor")) {
+            gt = 4;
+        }
+        else if (type.equalsIgnoreCase("follow the leader")) {
+            gt = 5;
+        }
+        else if (type.equalsIgnoreCase("capture and hold")) {
+            gt = 6;
+        }
+        else if (type.equalsIgnoreCase("capture the flag")) {
+            gt = 7;
+        }
+        else if (type.equalsIgnoreCase("bomb")) {
+            gt = 8;
+        }
+        return gt;
+    }
+
     public static JPanel getPaddedPanel(int padding, JPanel panelToPad) {
         JPanel innerPanel = new JPanel();
         innerPanel.setLayout(new BoxLayout(innerPanel, BoxLayout.X_AXIS));
