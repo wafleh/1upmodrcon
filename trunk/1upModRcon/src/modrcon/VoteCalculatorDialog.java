@@ -52,6 +52,7 @@ public class VoteCalculatorDialog extends JDialog implements MouseListener,
         this.setModalityType(JDialog.DEFAULT_MODALITY_TYPE);
         this.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
         this.addWindowListener(this);
+        this.setResizable(false);
 
         this.initialize();
         this.add(buildUI());
@@ -102,8 +103,7 @@ public class VoteCalculatorDialog extends JDialog implements MouseListener,
     }
 
     private void center() {
-        //this.setSize(500, 500);
-        this.pack();
+        this.setSize(370, 400);
 
         int x = parent.getX() + ((parent.getWidth() / 2) - (this.getWidth() / 2));
         int y = parent.getY() + ((parent.getHeight() / 2) - (this.getHeight() / 2));
@@ -200,7 +200,7 @@ public class VoteCalculatorDialog extends JDialog implements MouseListener,
                 + "Terror that may cause your server to crash when the <font "
                 + "color='yellow'>Shuffle Teams</font> vote is called. You "
                 + "should only allow this if you are 100% certain that it will "
-                + "not adversly effect the server in any way.</p></html>");
+                + "not adversly affect the server in any way.</p></html>");
         warningLabel.setForeground(Color.WHITE);
         Dimension wDim = new Dimension(280, 100);
         warningLabel.setPreferredSize(wDim);
