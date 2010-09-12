@@ -1,6 +1,7 @@
 package modrcon;
 
 import java.util.regex.Pattern;
+import javax.swing.*;
 
 /**
  * A utility class for 1up ModRcon.
@@ -84,4 +85,53 @@ public class ModRconUtil {
         }
     }
 
+    public static JPanel getPaddedPanel(int padding, JPanel panelToPad) {
+        JPanel innerPanel = new JPanel();
+        innerPanel.setLayout(new BoxLayout(innerPanel, BoxLayout.X_AXIS));
+        innerPanel.add(Box.createHorizontalStrut(padding));
+        innerPanel.add(panelToPad);
+        innerPanel.add(Box.createHorizontalStrut(padding));
+
+        JPanel returnPanel = new JPanel();
+        returnPanel.setLayout(new BoxLayout(returnPanel, BoxLayout.Y_AXIS));
+        returnPanel.add(Box.createVerticalStrut(padding));
+        returnPanel.add(innerPanel);
+        returnPanel.add(Box.createVerticalStrut(padding));
+
+        return returnPanel;
+    }
+
+    public static JPanel getPaddedPanel(int northSouthPadding,
+            int eastWestPadding, JPanel panelToPad) {
+        JPanel innerPanel = new JPanel();
+        innerPanel.setLayout(new BoxLayout(innerPanel, BoxLayout.X_AXIS));
+        innerPanel.add(Box.createHorizontalStrut(eastWestPadding));
+        innerPanel.add(panelToPad);
+        innerPanel.add(Box.createHorizontalStrut(eastWestPadding));
+
+        JPanel returnPanel = new JPanel();
+        returnPanel.setLayout(new BoxLayout(returnPanel, BoxLayout.Y_AXIS));
+        returnPanel.add(Box.createVerticalStrut(northSouthPadding));
+        returnPanel.add(innerPanel);
+        returnPanel.add(Box.createVerticalStrut(northSouthPadding));
+
+        return returnPanel;
+    }
+
+    public static JPanel getPaddedPanel(int northPadding, int eastPadding,
+            int southPadding, int westPadding, JPanel panelToPad) {
+        JPanel innerPanel = new JPanel();
+        innerPanel.setLayout(new BoxLayout(innerPanel, BoxLayout.X_AXIS));
+        innerPanel.add(Box.createHorizontalStrut(eastPadding));
+        innerPanel.add(panelToPad);
+        innerPanel.add(Box.createHorizontalStrut(westPadding));
+
+        JPanel returnPanel = new JPanel();
+        returnPanel.setLayout(new BoxLayout(returnPanel, BoxLayout.Y_AXIS));
+        returnPanel.add(Box.createVerticalStrut(northPadding));
+        returnPanel.add(innerPanel);
+        returnPanel.add(Box.createVerticalStrut(southPadding));
+
+        return returnPanel;
+    }
 }
