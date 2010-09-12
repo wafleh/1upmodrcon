@@ -28,12 +28,17 @@ import javax.swing.text.*;
  */
 public class ConsoleTextPane extends JTextPane {
     private StyledDocument styledDoc;
+    private Highlighter highlighter;
+    private Highlighter.HighlightPainter hPainter;
 
     /** Default Constructor */
     public ConsoleTextPane() {
         super();
         this.styledDoc = this.getStyledDocument();
         this.styledDoc = DocumentStyler.styleDocument(styledDoc, this.getFont(), this.getForeground());
+        this.highlighter = new DefaultHighlighter();
+        this.hPainter = new DefaultHighlighter.DefaultHighlightPainter(this.getSelectionColor());
+        this.setHighlighter(this.highlighter);
     }
 
     /** Updates the styles that are in the StyledDocument (ONLY DEFAULT STYLES)
@@ -73,9 +78,9 @@ public class ConsoleTextPane extends JTextPane {
      * @param search The String to be found in the ConsoleTextPane
      * @return Returns <code>true</code> or <code>false</code> depending on if the string was found or not.
      */
-    public boolean find(String search, int startIndex, boolean caseSensitive) {
-        boolean found = false;
-        this.requestFocusInWindow();
+    public int find(String search, int startIndex, boolean caseSensitive) {
+        int found = -1;
+
         try {
             String cText = this.styledDoc.getText(0, this.styledDoc.getLength());
 
@@ -84,13 +89,12 @@ public class ConsoleTextPane extends JTextPane {
                 search = search.toLowerCase();
             }
 
-            int selStart = cText.indexOf(search);
+            int selStart = cText.indexOf(search, startIndex);
             int selEnd = selStart + search.length();
 
             if (selStart > 0) {
-                this.setSelectionStart(selStart);
-                this.setSelectionEnd(selEnd);
-                found = true;
+                this.setSelection(selStart, selEnd);
+                found = selStart;
             } 
         } catch (Exception exc) { System.out.println(exc.getMessage()); }
 
@@ -103,10 +107,9 @@ public class ConsoleTextPane extends JTextPane {
      * @param search The String to be found in the ConsoleTextPane
      * @return Returns <code>true</code> or <code>false</code> depending on if the string was found or not.
      */
-    public boolean find(String search, boolean caseSensitive) {
-        boolean found = false;
+    public int find(String search, boolean caseSensitive) {
+        int found = -1;
         
-        this.requestFocusInWindow();
         try {
             String cText = this.styledDoc.getText(0, this.styledDoc.getLength());
             
@@ -119,13 +122,33 @@ public class ConsoleTextPane extends JTextPane {
             int selEnd = selStart + search.length();
 
             if (selStart > 0) {
-                this.setSelectionStart(selStart);
-                this.setSelectionEnd(selEnd);
-                found = true;
+                this.setSelection(selStart, selEnd);
+                found = selStart;
             }
         } catch (Exception exc) { System.out.println(exc.getMessage()); }
         
         return found;
+    }
+
+    /**
+     * This method sets the selection range for this ConsoleTextPane, this should
+     * be used instead of using setSelectionStart and setSelectionEnd.
+     * @param selectionStart The beginning of the selection.
+     * @param selectionEnd The ending of the selection.
+     */
+    public void setSelection(int selectionStart, int selectionEnd) {
+        this.highlighter.removeAllHighlights();
+        try {
+            this.requestFocusInWindow();
+            this.setCaretPosition(selectionStart);
+            this.setSelectionStart(selectionStart);
+            this.setSelectionEnd(selectionEnd);
+            this.highlighter.addHighlight(selectionStart, selectionEnd, hPainter);
+        } catch (Exception exc) { System.out.println(exc.getMessage()); }
+    }
+
+    public void removeHighlights() {
+        this.highlighter.removeAllHighlights();
     }
 
     /** Determines if the character passed is indeed a valid console Quake 3 color number (0-8)

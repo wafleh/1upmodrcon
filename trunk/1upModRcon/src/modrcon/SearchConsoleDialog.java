@@ -7,25 +7,24 @@ import java.awt.event.*;
  * The Dialog that controls matching Strings within the Console.
  * @author izuriel
  */
-public class SearchConsoleDialog extends JDialog implements ActionListener{
+public class SearchConsoleDialog extends JDialog implements ActionListener, KeyListener, WindowListener {
     private ConsoleTextPane console;
+    private MainWindow parent;
 
     private JButton findNextButton;
     private JButton cancelButton;
 
     private JTextField searchField;
+    private String currentSearch;
 
-    private java.util.ArrayList<Integer> previous;
+    private int step;
 
     private JCheckBox matchCaseBox;
     private JCheckBox matchWordBox;
 
-    private JRadioButton searchUpRadio;
-    private JRadioButton searchDownRadio;
-
     private final String ENTER_QUERY = "You have to search for something!";
-    private final String NOT_FOUND_1 = "Could not find anymore occurrences of \"";
-    private final String NOT_FOUND_2 = "\"";
+    private final String NOT_FOUND = "Could not find any occurrences of \"";
+    private final String NO_MORE = "Could not find anymore occurrences of \"";
     
     private JLabel messageLabel;
 
@@ -36,7 +35,9 @@ public class SearchConsoleDialog extends JDialog implements ActionListener{
         this.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         this.setAlwaysOnTop(true);
         this.setResizable(false);
+        this.addWindowListener(this);
 
+        this.parent = parent;
         this.console = console;
         initialize();
 
@@ -55,7 +56,7 @@ public class SearchConsoleDialog extends JDialog implements ActionListener{
     }
 
     private void initialize() {
-        this.previous = new java.util.ArrayList<Integer>();
+        this.step = -1;
         this.messageLabel = new JLabel();
 
         this.findNextButton = new JButton("Find Next");
@@ -67,15 +68,10 @@ public class SearchConsoleDialog extends JDialog implements ActionListener{
         this.matchWordBox = new JCheckBox("Match Whole Word");
         this.matchCaseBox = new JCheckBox("Match Case");
 
-        this.searchUpRadio = new JRadioButton("Up");
-        this.searchDownRadio = new JRadioButton("Down");
-        this.searchDownRadio.setSelected(true);
-
-        ButtonGroup directionGroup = new ButtonGroup();
-        directionGroup.add(this.searchUpRadio);
-        directionGroup.add(this.searchDownRadio);
-
         this.searchField = new JTextField(25);
+        this.searchField.setText("");
+        this.searchField.addKeyListener(this);
+        this.currentSearch = null;
     }
 
     private JPanel buildUI() {
@@ -121,22 +117,6 @@ public class SearchConsoleDialog extends JDialog implements ActionListener{
         topPanel.add(queryPanel);
         topPanel.add(Box.createVerticalStrut(10));
 
-        JPanel directionPanel = new JPanel();
-        directionPanel.setBorder(BorderFactory.createTitledBorder("Direction"));
-        directionPanel.setLayout(new BoxLayout(directionPanel, BoxLayout.X_AXIS));
-        directionPanel.add(this.searchUpRadio);
-        directionPanel.add(this.searchDownRadio);
-
-        JPanel eastCenterPanel = new JPanel();
-        eastCenterPanel.setLayout(new BoxLayout(eastCenterPanel, BoxLayout.X_AXIS));
-        eastCenterPanel.add(directionPanel);
-        eastCenterPanel.add(Box.createHorizontalStrut(5));
-
-        JPanel eastPanel = new JPanel();
-        eastPanel.setLayout(new BoxLayout(eastPanel, BoxLayout.Y_AXIS));
-        eastPanel.add(eastCenterPanel);
-        eastPanel.add(Box.createVerticalStrut(5));
-
         JPanel searchControlPanel = new JPanel();
         searchControlPanel.setLayout(new BoxLayout(searchControlPanel, BoxLayout.Y_AXIS));
         searchControlPanel.add(this.matchWordBox);
@@ -149,7 +129,6 @@ public class SearchConsoleDialog extends JDialog implements ActionListener{
 
         JPanel returnPanel = new JPanel(new BorderLayout());
         returnPanel.add(topPanel, BorderLayout.NORTH);
-        returnPanel.add(eastPanel, BorderLayout.EAST);
         returnPanel.add(westPanel, BorderLayout.WEST);
 
         return returnPanel;
@@ -177,6 +156,10 @@ public class SearchConsoleDialog extends JDialog implements ActionListener{
         return returnPanel;
     }
 
+    private void resetSearch() {
+        this.step = -1;
+    }
+
     private void setMessageLabel(String message, Color fontColor, Font font) {
         new MessageThread(message, fontColor, font, this.messageLabel);
     }
@@ -185,11 +168,69 @@ public class SearchConsoleDialog extends JDialog implements ActionListener{
         JButton source = (JButton)e.getSource();
 
         if (source == this.findNextButton)
-            this.setMessageLabel("Not implmented yet.", Color.RED, this.messageLabel.getFont().deriveFont(Font.BOLD));
+            this.performConsoleSearch();
         
-        if (source == this.cancelButton)
+        if (source == this.cancelButton) {
+            this.console.removeHighlights();
+            this.console.requestFocusInWindow();
             this.dispose();
+        }
     }
+
+    private void performConsoleSearch() {
+        String currentText = this.searchField.getText();
+
+        if (currentText.length() > 0) {
+
+            if (!(currentText.equalsIgnoreCase(this.currentSearch))) {
+                this.resetSearch();
+                this.currentSearch = currentText;
+            }
+
+            int start;
+            if (step == -1)
+                start = this.console.find(currentText, this.matchCaseBox.isSelected());
+            else
+                start = this.console.find(currentText, this.step, this.matchCaseBox.isSelected());
+
+            if (start == -1 && this.step == -1)
+                this.setMessageLabel(this.NOT_FOUND + currentText + "\"", Color.RED,
+                        this.messageLabel.getFont().deriveFont(Font.BOLD));
+            else if (start == -1 && this.step > -1)
+                this.setMessageLabel(this.NO_MORE + currentText + "\"", Color.BLACK,
+                        this.messageLabel.getFont().deriveFont(Font.PLAIN));
+            else if (start > -1)
+                this.step = start + currentText.length();
+        } else
+            this.setMessageLabel(this.ENTER_QUERY, Color.RED,
+                    this.messageLabel.getFont().deriveFont(Font.BOLD));
+    }
+
+    public void keyTyped(KeyEvent e) { }
+
+    public void keyPressed(KeyEvent e) {
+        if (e.getKeyCode() == KeyEvent.VK_ENTER)
+            this.performConsoleSearch();
+    }
+
+    public void keyReleased(KeyEvent e) { }
+
+    public void windowOpened(WindowEvent e) { }
+
+    public void windowClosing(WindowEvent e) {
+        this.console.removeHighlights();
+        this.console.requestFocusInWindow();
+    }
+
+    public void windowClosed(WindowEvent e) { }
+
+    public void windowIconified(WindowEvent e) { }
+
+    public void windowDeiconified(WindowEvent e) { }
+
+    public void windowActivated(WindowEvent e) { }
+
+    public void windowDeactivated(WindowEvent e) { }
 
     private class MessageThread extends Thread {
         private String message;
@@ -210,6 +251,7 @@ public class SearchConsoleDialog extends JDialog implements ActionListener{
             start();
         }
 
+        @Override
         public void run() {
             try {
                 label.setForeground(fontColor);
