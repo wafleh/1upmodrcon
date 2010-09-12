@@ -70,6 +70,7 @@ public class GearCalculatorDialog extends JDialog implements MouseListener,
         this.gearSpinner = new JSpinner();
         this.gearSpinner.addChangeListener(this);
         this.gearSpinner.setValue(MIN_VALUE);
+        ((JSpinner.NumberEditor)this.gearSpinner.getEditor()).getTextField().setEditable(false);
 
         this.grenadeBox = new JCheckBox("Grenades");
         this.grenadeBox.setSelected(true);
@@ -116,7 +117,6 @@ public class GearCalculatorDialog extends JDialog implements MouseListener,
 
         this.gearSpinner.setValue(gGearNum);
         this.updateGearBoxes();
-        System.out.println(this.gearSpinner.getHeight());
     }
 
     private void center() {
@@ -139,6 +139,7 @@ public class GearCalculatorDialog extends JDialog implements MouseListener,
         infoTopPanel.add(this.getCheckBoxPanel(pistolBox, PISTOL_VALUE));
         infoTopPanel.add(this.getCheckBoxPanel(automaticBox, AUTOMATIC_VALUE));
         infoTopPanel.add(this.getCheckBoxPanel(negevBox, NEGEV_VALUE));
+        infoTopPanel.add(Box.createVerticalStrut(10));
 
         JLabel gearLabel = new JLabel("Set g_gear");
         JPanel gearSpinnerPanel = new JPanel();
@@ -155,7 +156,7 @@ public class GearCalculatorDialog extends JDialog implements MouseListener,
         infoBottomPanel.setPreferredSize(new Dimension(260, 30));
         infoBottomPanel.add(gearSpinnerPanel, BorderLayout.WEST);
         infoBottomPanel.add(controlButtonPanel, BorderLayout.EAST);
-        this.gearSpinner.setPreferredSize(new Dimension(35, this.gearSpinner.getEditor().getFont().getSize() + 10));
+        this.gearSpinner.setPreferredSize(new Dimension(45, this.gearSpinner.getEditor().getFont().getSize() + 10));
 
         JPanel infoPanel = new JPanel();
         infoPanel.setLayout(new BoxLayout(infoPanel, BoxLayout.Y_AXIS));
@@ -322,8 +323,6 @@ public class GearCalculatorDialog extends JDialog implements MouseListener,
 
         this.gearSpinner.setValue(oldValue);
     }
-    
-    
 
     public void stateChanged(ChangeEvent e) {
         JSpinner source = (JSpinner)e.getSource();

@@ -101,7 +101,11 @@ public class MenuAction extends AbstractAction {
         else if (selection.equals("Gear Calculator")) {
             new GearCalculatorDialog(this.parent);
         }
-       
+
+        else if (selection.equals("Vote Calculator")) {
+            new VoteCalculatorDialog(this.parent);
+        }
+
         else if (selection.equals("Send Connectionless Packet")) {
             String cmd = (String)JOptionPane.showInputDialog(this.parent, "<html>Enter a Connectionless Packet Command.<br>E.g. getstatus, getinfo, getchallenge, etc.</html>", "getinfo");
             if (cmd != null) {
