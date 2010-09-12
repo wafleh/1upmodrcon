@@ -91,6 +91,7 @@ public class BanUserDialog extends JDialog implements ActionListener {
             q.sendCmd("addip "+ip);
             this.parent.consolePanel.appendCommand("addip "+ip);
             this.parent.consolePanel.appendToConsole(q.getResponse());
+            this.parent.consolePanel.appendToConsole("Writing: banlist.txt");
         }
         catch (Exception e) {
             System.out.println(e.getMessage());
