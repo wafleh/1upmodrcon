@@ -104,8 +104,12 @@ public class LivePlayerInfoPanel extends JPanel {
             e.printStackTrace();
             System.out.print("Error: "+e.getMessage());
         }
-        this.playerTable.setModel(getPlayerDTM(foo));
-        ColumnResizer.adjustColumnPreferredWidths(this.playerTable);
+        if (foo == null || foo.equals("")) {
+            // do nothing
+        } else {
+            this.playerTable.setModel(getPlayerDTM(foo));
+            ColumnResizer.adjustColumnPreferredWidths(this.playerTable);
+        }
     }
 
     public DefaultTableModel getPlayerDTM(String input) {
