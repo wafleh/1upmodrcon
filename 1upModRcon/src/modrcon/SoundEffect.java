@@ -16,7 +16,7 @@ import javax.sound.sampled.*;
  * 4. You can use the static variable SoundEffect.volume to mute the sound.
  */
 public enum SoundEffect {
-   DUKE_GROOVY("/modrcon/resources/du_groovy.wav");
+   DUKE_BABE("/modrcon/resources/du_babealicious.wav");
    //DUKETEMPBAN("/modrcon/resources/du_somedowntime.wav");   // explosion
 
    // kick: du_youarethemissinglink.ogg
