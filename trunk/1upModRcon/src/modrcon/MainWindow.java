@@ -83,17 +83,10 @@ public class MainWindow extends JFrame implements ActionListener, ItemListener {
         cp.add(versionPanel, BorderLayout.SOUTH);
 
 
-        /*
-         * Add MenuBar
-         * Add LogoPanel NORTH
-         * Add ContentPanel CENTER
-         * Add VersionPanel South
-         */
-
-        //initComponents();
-        refreshServerCombo();
-        refreshServerInfo();
-        refreshServerType();
+        this.refreshServerCombo();
+        this.refreshServerInfo();
+        this.refreshServerType();
+        this.controlPanel.refreshCommandCombo();
         //this.livePlayerInfoPanel.fireItUp();
 
         // Populate Live Server Info

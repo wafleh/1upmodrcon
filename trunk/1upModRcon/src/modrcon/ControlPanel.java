@@ -3,6 +3,7 @@ package modrcon;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
+import java.util.ArrayList;
 
 /**
  * The Control Panel portion of the main 1up ModRcon window.
@@ -134,6 +135,17 @@ public class ControlPanel extends JPanel implements ActionListener, KeyListener 
         String titleCase = s.substring(0,1).toUpperCase()+s.substring(1).toLowerCase();
         this.setBorder(BorderFactory.createTitledBorder(titleCase+" Control Panel"));
         this.labelType.setText(" /"+s.toLowerCase()+" ");
+    }
+
+    public void refreshCommandCombo() {
+        this.comboCommandBox.setModel(new DefaultComboBoxModel());
+        Q3CommandDatabase db = new Q3CommandDatabase();
+        ArrayList commands = db.getCommandList();
+        for (Object o : commands) {
+            Q3Command c = (Q3Command)o;
+            this.comboCommandBox.addItem(c.getCommand());
+        }
+        this.comboCommandBox.setSelectedItem("");
     }
 
     public void actionPerformed(ActionEvent event) {
