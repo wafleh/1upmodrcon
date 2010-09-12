@@ -40,6 +40,20 @@ public class PropertyManager {
         return propFile.getProperty("gamepath");
     }
 
+    public void setShowVoteWarning(boolean showWarning) {
+        propFile.setProperty("votewarning", ((showWarning) ? "true" : "false"));
+    }
+
+    public boolean getShowVoteWarning() {
+        String temp = propFile.getProperty("votewarning");
+        if (temp == null || temp.equals("")) {
+            propFile.setProperty("votewarning", "false");
+            return false;
+        }
+
+        return Boolean.parseBoolean(temp);
+    }
+
     public void setGamePath(String path) {
         propFile.setProperty("gamepath", path);
     }
@@ -105,7 +119,7 @@ public class PropertyManager {
     private boolean writeDefaultPropertiesFile(File file) {
         Writer writer = null;
         try {
-            String text = "#Property File for 1up ModRcon\n#Fri Aug 27 23:18:57 CDT 2010\nversion=1.0\ngamepath=\nconsolebgcolor=\\#0\nconsolefgcolor=\\#FFFFFF\nreceivetimeout=100\nstatusonconnect=false\n";
+            String text = "#Property File for 1up ModRcon\n#Fri Aug 27 23:18:57 CDT 2010\nversion=1.0\ngamepath=\nconsolebgcolor=\\#0\nconsolefgcolor=\\#FFFFFF\nreceivetimeout=100\nstatusonconnect=false\nvotewarning=false\n";
             writer = new BufferedWriter(new FileWriter(file));
             writer.write(text);
             return true;
