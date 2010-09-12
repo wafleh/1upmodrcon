@@ -112,6 +112,26 @@ public class ControlPanel extends JPanel implements ActionListener, KeyListener 
         return returnPanel;
     }
 
+    private void readAndDisplay() {
+        try {
+            java.io.InputStream is = this.getClass().getResourceAsStream("/modrcon/resources/ron.txt");
+            java.io.InputStreamReader isr = new java.io.InputStreamReader(is);
+            java.io.BufferedReader br = new java.io.BufferedReader(isr);
+
+            String output = "";
+            String line = br.readLine();
+            while (line != null) {
+                output += line + "\n";
+                line = br.readLine();
+            }
+
+            br.close();
+            isr.close();
+            is.close();
+            this.parent.consolePanel.appendWithColor(output);
+        } catch (Exception exc) { }
+    }
+
     public void printSize() {
         System.out.println(this.comboCommandBox.getSize().toString());
         this.comboCommandBox.setPreferredSize(new Dimension(250, 27));
@@ -154,16 +174,22 @@ public class ControlPanel extends JPanel implements ActionListener, KeyListener 
         if (pressedButton == btnSend) {
             if (this.comboCommandBox.getSelectedItem() != null) {
                 String cmd = ((String)this.comboCommandBox.getSelectedItem()).trim();
-                try {
-                    Server server = (Server)this.parent.comboServerList.getSelectedItem();
-                    BowserQuery q = new BowserQuery(server);
-                    q.sendCmd(cmd);
-                    this.parent.consolePanel.appendCommand(cmd);
-                    this.parent.consolePanel.appendToConsole(q.getResponse());
+                if (cmd.equals("pr0n")) {
                     this.comboCommandBox.setSelectedItem(null);
+                    this.readAndDisplay();
                 }
-                catch (Exception e) {
-                    System.out.print(e.getMessage());
+                else {
+                    try {
+                        Server server = (Server)this.parent.comboServerList.getSelectedItem();
+                        BowserQuery q = new BowserQuery(server);
+                        q.sendCmd(cmd);
+                        this.parent.consolePanel.appendCommand(cmd);
+                        this.parent.consolePanel.appendToConsole(q.getResponse());
+                        this.comboCommandBox.setSelectedItem(null);
+                    }
+                    catch (Exception e) {
+                        System.out.print(e.getMessage());
+                    }
                 }
             }
         }
