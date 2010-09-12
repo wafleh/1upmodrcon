@@ -1,4 +1,4 @@
   * On the command box, if they type a command not in the manage commands list, ask them if they want to add the command to the list.
-  * Create a custom cursor simliar to the help cursor in the previous program.
+  * Create a custom cursor simliar to the help cursor in the previous program (http://blog.codebeach.com/2008/02/using-custom-cursors-in-java.html).
   * Add sounds to the program Duke Nukem style.
   * Planned easter egg invoving some ascii art.
