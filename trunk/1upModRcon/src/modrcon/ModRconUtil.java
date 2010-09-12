@@ -1,12 +1,6 @@
 package modrcon;
 
-import java.io.FileNotFoundException;
-import java.io.IOException;
-import java.io.InputStream;
 import java.util.regex.Pattern;
-
-import sun.audio.AudioPlayer;
-import sun.audio.AudioStream;
 
 /**
  * A utility class for 1up ModRcon.
@@ -16,10 +10,6 @@ import sun.audio.AudioStream;
 public class ModRconUtil {
     
     private static final String key = "EncryptionIsFun";
-
-    public ModRconUtil() {
-
-    }
 
     public static String encryptString(String str) {
         StringBuffer sb = new StringBuffer (str);
@@ -65,13 +55,6 @@ public class ModRconUtil {
     public static boolean isMac() {
         String os = System.getProperty("os.name").toLowerCase();
         return (os.indexOf( "mac" ) >= 0);
-    }
-
-    public static void playSound(MainWindow owner, String fileName) throws IOException {
-        Class c = owner.getClass();
-        InputStream soundName = c.getResourceAsStream("/modrcon/resources/"+fileName);
-        AudioStream audioStream = new AudioStream(soundName);
-        AudioPlayer.player.start(audioStream);
     }
 
     public static String getGameTypeString(int gt) {
