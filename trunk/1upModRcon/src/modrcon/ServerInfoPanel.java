@@ -126,7 +126,9 @@ public class ServerInfoPanel extends JPanel implements MouseListener {
             }
         }
         else if (e.getSource() == this.gametype) {
-            String[] values = {"Free For All", "Team Deathmatch", "Team Survivor", "Follow the Leader", "Capture and Hold", "Capture the Flag", "Bomb"};
+            String curType = this.gametype.getText();
+            curType = curType.substring(curType.indexOf(">")+1, curType.indexOf(" ("));
+            String[] values = {"Free for All", "Team Deathmatch", "Team Survivor", "Follow the Leader", "Capture and Hold", "Capture the Flag", "Bomb"};
             String choice = (String)JOptionPane.showInputDialog(
                     this.parent,
                     "",
@@ -134,18 +136,20 @@ public class ServerInfoPanel extends JPanel implements MouseListener {
                     JOptionPane.QUESTION_MESSAGE,
                     null,
                     values,
-                    values[0]
+                    curType
             );
-            try {
-                Server s = (Server)this.parent.comboServerList.getSelectedItem();
-                BowserQuery q = new BowserQuery(s);
-                int gt = ModRconUtil.getGameType(choice);
-                q.sendCmd("g_gametype "+gt);
-                this.parent.consolePanel.appendCommand("g_gametype "+gt);
-                this.parent.consolePanel.appendToConsole(q.getResponse());
-            }
-            catch (Exception exc) {
-                System.out.println(exc.getMessage());
+            if (choice != null) {
+                try {
+                    Server s = (Server)this.parent.comboServerList.getSelectedItem();
+                    BowserQuery q = new BowserQuery(s);
+                    int gt = ModRconUtil.getGameType(choice);
+                    q.sendCmd("g_gametype "+gt);
+                    this.parent.consolePanel.appendCommand("g_gametype "+gt);
+                    this.parent.consolePanel.appendToConsole(q.getResponse());
+                }
+                catch (Exception exc) {
+                    System.out.println(exc.getMessage());
+                }
             }
         }
     }
