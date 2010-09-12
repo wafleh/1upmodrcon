@@ -59,6 +59,10 @@ public class MenuAction extends AbstractAction {
             new ServerManager(this.parent);
         }
 
+        else if (selection.equals("Manage Commands")) {
+            new Q3CommandManager(this.parent);
+        }
+
         else if (selection.equals("Settings")) {
             new SettingManager(this.parent);
         }
