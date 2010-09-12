@@ -72,7 +72,7 @@ public class ModRconUtil {
             return "Follow the Leader";
         }
         else if (gt == 6) {
-            return "Capture & Hold";
+            return "Capture and Hold";
         }
         else if (gt == 7) {
             return "Capture the Flag";
