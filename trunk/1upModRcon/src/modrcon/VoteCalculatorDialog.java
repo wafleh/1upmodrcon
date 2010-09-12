@@ -10,7 +10,7 @@ import javax.swing.event.*;
  * @author izuriel
  */
 public class VoteCalculatorDialog extends JDialog implements MouseListener,
-            ItemListener, ChangeListener {
+            ItemListener, ChangeListener, ActionListener, WindowListener {
     private final int MIN_VALUE = 0;
     private final int MAX_VALUE = 1073741823;
 
@@ -18,7 +18,8 @@ public class VoteCalculatorDialog extends JDialog implements MouseListener,
 
     private JCheckBox dontShowBox;
 
-    private JPanel warningCalcPanel;
+    private JPanel warningPanel;
+    private JPanel votePanel;
 
     private ImageIcon selectAllIcon;
     private ImageIcon selectAllGrayIcon;
@@ -27,13 +28,16 @@ public class VoteCalculatorDialog extends JDialog implements MouseListener,
 
     private JLabel selectAllLabel;
     private JLabel deselectAllLabel;
+    private JLabel showCalcLabel;
+    private JCheckBox showAgainBox;
 
     private PropertyManager pManager;
 
     private Color mouseOverColor;
     private Color defaultColor;
 
-    private JSpinner voteSpinner;
+    //private JSpinner voteSpinner;
+    private JLabel voteLabel;
 
     private JButton sendButton;
     private JButton cancelButton;
@@ -47,6 +51,7 @@ public class VoteCalculatorDialog extends JDialog implements MouseListener,
         this.parent = parent;
         this.setModalityType(JDialog.DEFAULT_MODALITY_TYPE);
         this.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
+        this.addWindowListener(this);
 
         this.initialize();
         this.add(buildUI());
@@ -66,8 +71,10 @@ public class VoteCalculatorDialog extends JDialog implements MouseListener,
 
         this.selectAllLabel = new JLabel();
         this.selectAllLabel.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+        this.selectAllLabel.setIcon(this.selectAllGrayIcon);
         this.deselectAllLabel = new JLabel();
         this.deselectAllLabel.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+        this.deselectAllLabel.setIcon(this.deselectAllGrayIcon);
 
         this.pManager = new PropertyManager();
 
@@ -75,21 +82,28 @@ public class VoteCalculatorDialog extends JDialog implements MouseListener,
         this.mouseOverColor = new Color(235, 235, 235);
 
         this.sendButton = new JButton("Send to Server");
+        this.sendButton.addActionListener(this);
         this.cancelButton = new JButton("Cancel");
+        this.cancelButton.addActionListener(this);
 
-        this.voteSpinner = new JSpinner();
-        this.voteSpinner.setValue(MIN_VALUE);
-        ((JSpinner.NumberEditor)this.voteSpinner.getEditor()).getTextField().setEditable(false);
-        Dimension sDim = new Dimension(130, (int)this.voteSpinner.getPreferredSize().getHeight());
-        this.voteSpinner.setPreferredSize(sDim);
-        this.voteSpinner.setMaximumSize(sDim);
-        this.voteSpinner.setMinimumSize(sDim);
+        //this.voteSpinner = new JSpinner();
+        //this.voteSpinner.setValue(MIN_VALUE);
+        //this.voteSpinner.addChangeListener(this);
+        //((JSpinner.NumberEditor)this.voteSpinner.getEditor()).getTextField().setEditable(false);
+        //Dimension sDim = new Dimension(130, (int)this.voteSpinner.getPreferredSize().getHeight());
+        //this.voteSpinner.setPreferredSize(sDim);
+        //this.voteSpinner.setMaximumSize(sDim);
+        //this.voteSpinner.setMinimumSize(sDim);
+        this.voteLabel = new JLabel(MIN_VALUE + "");
+
+        this.showCalcLabel = new JLabel();
 
         this.vbcList = new java.util.ArrayList<VoteCheckBox>();
     }
 
     private void center() {
-        this.setSize(500, 500);
+        //this.setSize(500, 500);
+        this.pack();
 
         int x = parent.getX() + ((parent.getWidth() / 2) - (this.getWidth() / 2));
         int y = parent.getY() + ((parent.getHeight() / 2) - (this.getHeight() / 2));
@@ -126,18 +140,30 @@ public class VoteCalculatorDialog extends JDialog implements MouseListener,
     }
 
     private JPanel getCenterPanel() {
-        this.warningCalcPanel = new JPanel();
-        this.warningCalcPanel.setLayout(new BorderLayout());
-        //if (this.pManager.getShowVoteWarning())
-            //this.warningCalcPanel.add(this.getVoteWarningPanel());
-        //else
-            this.warningCalcPanel.add(this.getVoteTypePanel());
+        this.warningPanel = new JPanel();
+        this.warningPanel.setLayout(new BorderLayout());
+        this.warningPanel.add(this.getVoteWarningPanel(), BorderLayout.CENTER);
+        this.warningPanel.setVisible(true);
+        this.votePanel = new JPanel();
+        this.votePanel.setLayout(new BorderLayout());
+        this.votePanel.add(this.getVoteTypePanel(), BorderLayout.CENTER);
+        this.votePanel.setVisible(false);
+        
+        if (!(this.pManager.getShowVoteWarning()))
+            this.switchPanels();
+            
+
+        JPanel altPanel = new JPanel();
+        altPanel.setLayout(new BoxLayout(altPanel, BoxLayout.X_AXIS));
+        altPanel.add(this.warningPanel);
+        altPanel.add(this.votePanel);
 
         JPanel bottomPanel = new JPanel();
         bottomPanel.setLayout(new BoxLayout(bottomPanel, BoxLayout.X_AXIS));
         bottomPanel.add(Box.createHorizontalStrut(15));
         bottomPanel.add(new JLabel("Set g_allowvote "));
-        bottomPanel.add(this.voteSpinner);
+        //bottomPanel.add(this.voteSpinner);
+        bottomPanel.add(this.voteLabel);
         bottomPanel.add(Box.createGlue());
         bottomPanel.add(this.selectAllLabel);
         bottomPanel.add(Box.createHorizontalStrut(3));
@@ -146,7 +172,7 @@ public class VoteCalculatorDialog extends JDialog implements MouseListener,
 
         JPanel centerPanel = new JPanel(new BorderLayout());
         centerPanel.setBorder(BorderFactory.createTitledBorder("Allow Vote Calculator"));
-        centerPanel.add(this.warningCalcPanel, BorderLayout.CENTER);
+        centerPanel.add(altPanel, BorderLayout.CENTER);
         centerPanel.add(ModRconUtil.getPaddedPanel(0, 0, 5, 0, bottomPanel), BorderLayout.SOUTH);
 
         return ModRconUtil.getPaddedPanel(8, centerPanel);
@@ -154,8 +180,6 @@ public class VoteCalculatorDialog extends JDialog implements MouseListener,
 
     private JPanel getVoteWarningPanel() {
         ImageIcon yeildIcon = new ImageIcon(this.getClass().getResource("/modrcon/resources/info.png"));
-        this.selectAllLabel.setIcon(this.selectAllGrayIcon);
-        this.deselectAllLabel.setIcon(this.deselectAllGrayIcon);
 
         JPanel topPanel = new JPanel();
         topPanel.setLayout(new BoxLayout(topPanel, BoxLayout.X_AXIS));
@@ -178,6 +202,10 @@ public class VoteCalculatorDialog extends JDialog implements MouseListener,
                 + "should only allow this if you are 100% certain that it will "
                 + "not adversly effect the server in any way.</p></html>");
         warningLabel.setForeground(Color.WHITE);
+        Dimension wDim = new Dimension(280, 100);
+        warningLabel.setPreferredSize(wDim);
+        warningLabel.setMaximumSize(wDim);
+        warningLabel.setMinimumSize(wDim);
 
         JPanel centerPanel = new JPanel();
         centerPanel.setLayout(new BoxLayout(centerPanel, BoxLayout.X_AXIS));
@@ -188,16 +216,18 @@ public class VoteCalculatorDialog extends JDialog implements MouseListener,
         centerPanel.add(Box.createHorizontalStrut(10));
         centerPanel.add(Box.createGlue());
 
-        JLabel understandLabel = new JLabel("<html><u>I Understand show me the calculator</u></html>");
-        understandLabel.setForeground(Color.WHITE);
-        understandLabel.setFont(understandLabel.getFont().deriveFont(Font.BOLD));
-        understandLabel.setHorizontalAlignment(SwingConstants.CENTER);
+        this.showCalcLabel = new JLabel("<html><u>I Understand show me the calculator</u></html>");
+        this.showCalcLabel.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+        this.showCalcLabel.addMouseListener(this);
+        this.showCalcLabel.setForeground(Color.WHITE);
+        this.showCalcLabel.setFont(this.showCalcLabel.getFont().deriveFont(Font.BOLD));
+        this.showCalcLabel.setHorizontalAlignment(SwingConstants.CENTER);
 
         JPanel understandPanel = new JPanel();
         understandPanel.setLayout(new BoxLayout(understandPanel, BoxLayout.X_AXIS));
         understandPanel.setOpaque(false);
         understandPanel.add(Box.createGlue());
-        understandPanel.add(understandLabel);
+        understandPanel.add(this.showCalcLabel);
         understandPanel.add(Box.createGlue());
 
         JPanel checkBoxPanel = new JPanel();
@@ -249,11 +279,6 @@ public class VoteCalculatorDialog extends JDialog implements MouseListener,
     }
 
     private JPanel getVoteTypePanel() {
-        this.selectAllLabel.setIcon(this.selectAllIcon);
-        this.selectAllLabel.addMouseListener(this);
-        this.deselectAllLabel.setIcon(this.deselectAllIcon);
-        this.deselectAllLabel.addMouseListener(this);
-
         JPanel voteListPanel = new JPanel();
         voteListPanel.setLayout(new BoxLayout(voteListPanel, BoxLayout.Y_AXIS));
         voteListPanel.add(this.getVoteCheckBoxPanel("reload", 1));
@@ -292,14 +317,14 @@ public class VoteCalculatorDialog extends JDialog implements MouseListener,
                 JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
         sPane.getVerticalScrollBar().setUnitIncrement(20);
 
-        JLabel voteLabel = new JLabel("     Vote");
-        voteLabel.setFont(voteLabel.getFont().deriveFont(Font.BOLD, 14));
+        JLabel voteTitleLabel = new JLabel("     Vote");
+        voteTitleLabel.setFont(voteTitleLabel.getFont().deriveFont(Font.BOLD, 14));
         JLabel valueLabel = new JLabel("Value     ");
-        valueLabel.setFont(voteLabel.getFont());
+        valueLabel.setFont(voteTitleLabel.getFont());
 
         JPanel titlePanel = new JPanel();
         titlePanel.setLayout(new BoxLayout(titlePanel, BoxLayout.X_AXIS));
-        titlePanel.add(voteLabel);
+        titlePanel.add(voteTitleLabel);
         titlePanel.add(Box.createGlue());
         titlePanel.add(valueLabel);
 
@@ -330,8 +355,31 @@ public class VoteCalculatorDialog extends JDialog implements MouseListener,
                 for (VoteCheckBox vBox: vbcList)
                     vBox.setSelected(false);
             }
+
+            if (source == this.showCalcLabel)
+                this.switchPanels();
         }
     }
+
+    @Override
+    public void dispose() {
+        pManager.savePropertyFile();
+        super.dispose();
+    }
+
+    private void switchPanels() {
+        this.selectAllLabel.setIcon(this.selectAllIcon);
+        this.selectAllLabel.addMouseListener(this);
+        this.deselectAllLabel.setIcon(this.deselectAllIcon);
+        this.deselectAllLabel.addMouseListener(this);
+        this.warningPanel.setVisible(false);
+        this.votePanel.setVisible(true);
+        this.defaultColor = votePanel.getBackground();
+
+        if (pManager.getShowVoteWarning())
+            pManager.setShowVoteWarning(!(this.dontShowBox.isSelected()));
+    }
+
     public void mousePressed(MouseEvent e) { }
     public void mouseReleased(MouseEvent e) { }
 
@@ -363,14 +411,16 @@ public class VoteCalculatorDialog extends JDialog implements MouseListener,
 
     public void itemStateChanged(ItemEvent e) {
         VoteCheckBox source = (VoteCheckBox)e.getSource();
-        int value = (Integer)(this.voteSpinner.getValue());
+        //int value = (Integer)(this.voteSpinner.getValue());
+        int value = Integer.parseInt(this.voteLabel.getText());
 
         if (source.isSelected())
             value += source.getValue();
         else
             value -= source.getValue();
 
-        this.voteSpinner.setValue(value);
+        //this.voteSpinner.setValue(value);
+        this.voteLabel.setText("" + value);
     }
 
     public void stateChanged(ChangeEvent e) {
@@ -384,6 +434,30 @@ public class VoteCalculatorDialog extends JDialog implements MouseListener,
 
         source.setValue(value);
     }
+
+    public void actionPerformed(ActionEvent e) {
+        JButton source = (JButton)e.getSource();
+
+        if (source == this.sendButton) {
+            // Todo
+            System.out.println("g_allowvote " + this.voteLabel.getText());
+        }
+
+        if (source == this.cancelButton)
+            this.dispose();
+    }
+
+    public void windowOpened(WindowEvent e) { }
+    public void windowClosing(WindowEvent e) { }
+
+    public void windowClosed(WindowEvent e) {
+        this.dispose();
+    }
+
+    public void windowIconified(WindowEvent e) { }
+    public void windowDeiconified(WindowEvent e) { }
+    public void windowActivated(WindowEvent e) { }
+    public void windowDeactivated(WindowEvent e) { }
 
     private class VoteCheckBox extends JCheckBox {
         private long value;
