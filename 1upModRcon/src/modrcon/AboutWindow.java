@@ -36,6 +36,7 @@ public class AboutWindow extends JDialog implements ActionListener {
         tabbedPane.addTab("About", panel1);
         JComponent panel2 = getThirdPartiesTab();
         tabbedPane.addTab("Third Parties", panel2);
+        tabbedPane.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
 
 
         JPanel buttonPanel = new JPanel(new FlowLayout(FlowLayout.CENTER));
