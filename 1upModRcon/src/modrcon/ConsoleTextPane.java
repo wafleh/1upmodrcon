@@ -72,15 +72,33 @@ public class ConsoleTextPane extends JTextPane {
         this.updateStyles();
     }
 
+    /**
+     * Tests the char passed against an array of chars that are declared by the
+     * class as acceptable word endings for the purpose of calling <code>find()</code> 
+     * and only wanted whole words selected.
+     * @param test
+     * @return
+     */
+    private boolean isValidWordEnd(char test) {
+        char[] enders = {' ', ',', '.', '?', '!', ':', ';'};
+
+        for (int i = 0; i < enders.length; i++) {
+            if (enders[i] == test)
+                return true;
+        }
+
+        return false;
+    }
+
     /** Finds the next occurrence of the String after the given index
      * Finds the next occurrence of the passed String and selects it in the
      * console.
      * @param search The String to be found in the ConsoleTextPane
-     * @return Returns <code>true</code> or <code>false</code> depending on if the string was found or not.
+     * @param caseSensitive Whether to search based on character case or not.
+     * @param matchWord Only select Words as defined by, beginning with a " " and ending with a " " , . ? ! ; :
+     * @return Returns the index of the beginning of the word if it's in the document, or -1 if it's not found.
      */
-    public int find(String search, int startIndex, boolean caseSensitive) {
-        int found = -1;
-
+    public int find(String search, int startIndex, boolean caseSensitive, boolean matchWord) {
         try {
             String cText = this.styledDoc.getText(0, this.styledDoc.getLength());
 
@@ -89,27 +107,48 @@ public class ConsoleTextPane extends JTextPane {
                 search = search.toLowerCase();
             }
 
+
             int selStart = cText.indexOf(search, startIndex);
             int selEnd = selStart + search.length();
 
-            if (selStart > 0) {
+            boolean isWord = false;
+            if (matchWord) {
+                if (selStart > 1) {
+                    char before = this.styledDoc.getText(selStart - 1, selStart).charAt(0);
+                    if (before == ' ')
+                        isWord = true;
+                    else
+                        isWord = false;
+                } else
+                    isWord = true;
+
+                if (selEnd + 2 <= this.styledDoc.getLength() && isWord) {
+                    char after = this.styledDoc.getText(selEnd + 1, selEnd + 2).charAt(0);
+                    if (!(this.isValidWordEnd(after)))
+                        isWord = false;
+                } else
+                    isWord = true;
+            } else
+                isWord = true;
+
+            if (selStart > 0 && isWord) {
                 this.setSelection(selStart, selEnd);
-                found = selStart;
+                return selStart;
             } 
         } catch (Exception exc) { System.out.println(exc.getMessage()); }
 
-        return found;
+        return -1;
     }
     
     /** Finds the first occurrence of the passed String
      * Finds the first occurrence of the passed string and selects it in the
      * console.
      * @param search The String to be found in the ConsoleTextPane
-     * @return Returns <code>true</code> or <code>false</code> depending on if the string was found or not.
+     * @param caseSensitive Whether to search based on character case or not.
+     * @param matchWord Only select Words as defined by, beginning with a " " and ending with a " " , . ? ! ; :
+     * @return Returns the index of the beginning of the word if it's in the document, or -1 if it's not found.
      */
-    public int find(String search, boolean caseSensitive) {
-        int found = -1;
-        
+    public int find(String search, boolean caseSensitive, boolean matchWord) {
         try {
             String cText = this.styledDoc.getText(0, this.styledDoc.getLength());
             
@@ -121,13 +160,35 @@ public class ConsoleTextPane extends JTextPane {
             int selStart = cText.indexOf(search);
             int selEnd = selStart + search.length();
 
-            if (selStart > 0) {
+            boolean isWord = false;
+            if (matchWord) {
+                if (selStart > 1) {
+                    char before = this.styledDoc.getText(selStart - 1, selStart).charAt(0);
+
+                    if (before == ' ')
+                        isWord = true;
+                    else
+                        isWord = false;
+                } else
+                    isWord = true;
+
+                if (selEnd + 2 <= this.styledDoc.getLength() && isWord) {
+                    char after = this.styledDoc.getText(selEnd, selEnd + 1).charAt(0);
+
+                    if (!(this.isValidWordEnd(after)))
+                        isWord = false;
+                } else
+                    isWord = true;
+            } else
+                isWord = true;
+
+            if (selStart > 0 && isWord) {
                 this.setSelection(selStart, selEnd);
-                found = selStart;
+                return selStart;
             }
         } catch (Exception exc) { System.out.println(exc.getMessage()); }
         
-        return found;
+        return -1;
     }
 
     /**

@@ -7,7 +7,8 @@ import java.awt.event.*;
  * The Dialog that controls matching Strings within the Console.
  * @author izuriel
  */
-public class SearchConsoleDialog extends JDialog implements ActionListener, KeyListener, WindowListener {
+public class SearchConsoleDialog extends JDialog implements ActionListener, 
+        KeyListener, WindowListener, ItemListener {
     private ConsoleTextPane console;
     private MainWindow parent;
 
@@ -63,10 +64,14 @@ public class SearchConsoleDialog extends JDialog implements ActionListener, KeyL
         this.findNextButton.addActionListener(this);
         this.cancelButton = new JButton("Cancel");
         this.cancelButton.addActionListener(this);
-        //this.cancelButton.setPreferredSize(new Dimension((int)findNextButton.getPreferredSize().getWidth(), (int)cancelButton.getPreferredSize().getHeight()));
+        this.cancelButton.setMaximumSize(new Dimension(
+                (int)findNextButton.getPreferredSize().getWidth(),
+                (int)cancelButton.getPreferredSize().getHeight()));
 
         this.matchWordBox = new JCheckBox("Match Whole Word");
+        this.matchWordBox.addItemListener(this);
         this.matchCaseBox = new JCheckBox("Match Case");
+        this.matchCaseBox.addItemListener(this);
 
         this.searchField = new JTextField(25);
         this.searchField.setText("");
@@ -158,6 +163,7 @@ public class SearchConsoleDialog extends JDialog implements ActionListener, KeyL
 
     private void resetSearch() {
         this.step = -1;
+        this.console.removeHighlights();
     }
 
     private void setMessageLabel(String message, Color fontColor, Font font) {
@@ -189,9 +195,13 @@ public class SearchConsoleDialog extends JDialog implements ActionListener, KeyL
 
             int start;
             if (step == -1)
-                start = this.console.find(currentText, this.matchCaseBox.isSelected());
+                start = this.console.find(currentText, 
+                        this.matchCaseBox.isSelected(),
+                        this.matchWordBox.isSelected());
             else
-                start = this.console.find(currentText, this.step, this.matchCaseBox.isSelected());
+                start = this.console.find(currentText, this.step, 
+                        this.matchCaseBox.isSelected(),
+                        this.matchWordBox.isSelected());
 
             if (start == -1 && this.step == -1)
                 this.setMessageLabel(this.NOT_FOUND + currentText + "\"", Color.RED,
@@ -214,7 +224,6 @@ public class SearchConsoleDialog extends JDialog implements ActionListener, KeyL
     }
 
     public void keyReleased(KeyEvent e) { }
-
     public void windowOpened(WindowEvent e) { }
 
     public void windowClosing(WindowEvent e) {
@@ -223,14 +232,14 @@ public class SearchConsoleDialog extends JDialog implements ActionListener, KeyL
     }
 
     public void windowClosed(WindowEvent e) { }
-
     public void windowIconified(WindowEvent e) { }
-
     public void windowDeiconified(WindowEvent e) { }
-
     public void windowActivated(WindowEvent e) { }
-
     public void windowDeactivated(WindowEvent e) { }
+
+    public void itemStateChanged(ItemEvent e) {
+        this.resetSearch();
+    }
 
     private class MessageThread extends Thread {
         private String message;
