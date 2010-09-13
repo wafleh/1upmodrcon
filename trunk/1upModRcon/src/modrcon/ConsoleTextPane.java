@@ -314,6 +314,38 @@ public class ConsoleTextPane extends JTextPane {
         append(append, "default");
     }
 
+    /** Appends the String to the Console with the default Style and two newlines.
+     * Appends the passed String to the console with the "default" style, and
+     * adds two "\n" newline characters to the end of the string.
+     * @param append The line to be added to the console.
+     */
+    public void appendWithNewline(String append) {
+        append(append + "\n\n", "default");
+    }
+
+    /** Appends the String to the Console with the given Style and two newlines.
+     * Appends the passed String to the console with the specified style, and
+     * adds two "\n" newline characters to the end of the string.
+     * @param append The line to be added to the console.
+     */
+    public void appendWithNewline(String append, String styleName) {
+        append(append + "\n\n", styleName);
+    }
+
+    /** Appends a series of lines to the Console with the given styles per line.
+     * Takes a list of ConsoleTextPane.AppendLine and adds each line to the
+     * console with the set Style. This method is ideal when printing multiple
+     * colors in one line to the console. This method also prints two "\n"
+     * newline characters to the console once done withe ConsoleTextPane.AppendLine
+     * array.
+     * @param bulkAppends The AppendLine array containing each line and Style that will be appended.
+     */
+    public void appendWithNewline(AppendLine[] bulkAppends) {
+        for (int i = 0; i < bulkAppends.length; i++)
+            this.append(bulkAppends[i].getLine(), bulkAppends[i].getStyleName());
+        append("\n\n");
+    }
+
     /** Creates a String containing the command entered and the date/time entered, adding it to the console.
      * Takes the command that was entered and creates a String to alert the user
      * what command was entered and adds a date/time String to display when
@@ -331,7 +363,7 @@ public class ConsoleTextPane extends JTextPane {
         append(commandBulk);
     }
     
-    class AppendLine {
+    public class AppendLine {
         private String line;
         private String styleName;
 
