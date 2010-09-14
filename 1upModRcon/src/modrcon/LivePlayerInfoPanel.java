@@ -1,6 +1,8 @@
 package modrcon;
 
 import java.awt.*;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import javax.swing.*;
 import javax.swing.table.*;
 import java.util.*;
@@ -19,6 +21,9 @@ public class LivePlayerInfoPanel extends JPanel {
     //private MyTableModel mytmodel;
 
     private DefaultTableModel dtm;
+
+    /** Right click popup menu for player actions. */
+    private JPopupMenu popupMenu;
 
     public LivePlayerInfoPanel(MainWindow owner) {
         super();
@@ -73,6 +78,11 @@ public class LivePlayerInfoPanel extends JPanel {
         dtm.addColumn("Name");
         playerTable.setModel(dtm);
 
+        // Right Click Popup Menu for Player Actions
+        this.popupMenu = this.getPopupMenu();
+        playerTable.addMouseListener(new PopupListener());
+
+
         jspLivePlayerInfo = new JScrollPane(playerTable);
         jspLivePlayerInfo.getViewport().setBackground(Color.WHITE);
         //jspLivePlayerInfo.setBorder(BorderFactory.createMatteBorder(1, 1, 0, 1, Color.GRAY));
@@ -92,8 +102,30 @@ public class LivePlayerInfoPanel extends JPanel {
 
     private JPopupMenu getPopupMenu() {
         JPopupMenu p = new JPopupMenu();
-        JMenuItem slap = new JMenuItem(new MenuAction("Slap", this.parent));
-        p.add(slap);
+        JMenuItem dumpUser = new JMenuItem(new MenuAction("Dump User", this.parent));
+        dumpUser.setIcon(new ImageIcon(getClass().getResource("/modrcon/resources/about.png")));
+        JMenuItem slapUser = new JMenuItem(new MenuAction("Slap User", this.parent));
+        slapUser.setIcon(new ImageIcon(getClass().getResource("/modrcon/resources/smile_2.png")));
+        JMenuItem kickUser = new JMenuItem(new MenuAction("Kick User", this.parent));
+        kickUser.setIcon(new ImageIcon(getClass().getResource("/modrcon/resources/user_remove.png")));
+        JMenuItem muteUser = new JMenuItem(new MenuAction("Mute User", this.parent));
+        muteUser.setIcon(new ImageIcon(getClass().getResource("/modrcon/resources/user_off.png")));
+        JMenuItem toggleMuteUser = new JMenuItem(new MenuAction("ToggleMute User", this.parent));
+        toggleMuteUser.setIcon(new ImageIcon(getClass().getResource("/modrcon/resources/user_off.png")));
+        JMenuItem moveToRed = new JMenuItem(new MenuAction("Move To Red Team", this.parent));
+        moveToRed.setIcon(new ImageIcon(getClass().getResource("/modrcon/resources/banner_red.png")));
+        JMenuItem moveToBlue = new JMenuItem(new MenuAction("Move To Blue Team", this.parent));
+        moveToBlue.setIcon(new ImageIcon(getClass().getResource("/modrcon/resources/banner_blue.png")));
+        JMenuItem moveToSpec = new JMenuItem(new MenuAction("Move To Spectators", this.parent));
+        moveToSpec.setIcon(new ImageIcon(getClass().getResource("/modrcon/resources/banner_gray.png")));
+        p.add(dumpUser);
+        p.add(slapUser);
+        p.add(kickUser);
+        p.add(muteUser);
+        p.add(toggleMuteUser);
+        p.add(moveToRed);
+        p.add(moveToBlue);
+        p.add(moveToSpec);
         return p;
     }
 
@@ -279,6 +311,23 @@ public class LivePlayerInfoPanel extends JPanel {
             paintPart(temp, getQuakeColor(color), xLoc, g);
         }
     }
+
+    class PopupListener extends MouseAdapter {
+        @Override
+        public void mousePressed(MouseEvent e) {
+            showPopup(e);
+        }
+        @Override
+        public void mouseReleased(MouseEvent e) {
+            showPopup(e);
+        }
+        private void showPopup(MouseEvent e) {
+            if (e.isPopupTrigger()) {
+                popupMenu.show(e.getComponent(), e.getX(), e.getY());
+            }
+        }
+    }
+
 
     /*class MyTableModel extends AbstractTableModel {
         private String[] columnNames = {"Score", "Ping", "Name"};
