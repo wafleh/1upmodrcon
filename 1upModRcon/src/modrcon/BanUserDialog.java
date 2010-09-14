@@ -86,7 +86,7 @@ public class BanUserDialog extends JDialog implements ActionListener {
 
     private void banPlayer(String ip) {
         try {
-            Server s = (Server)this.parent.comboServerList.getSelectedItem();
+            Server s = this.parent.getCurrentServer();
             BowserQuery q = new BowserQuery(s);
             q.sendCmd("addip "+ip);
             this.parent.getConsolePanel().appendCommand("addip "+ip);

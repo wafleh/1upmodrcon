@@ -96,7 +96,7 @@ public class LivePlayerInfoPanel extends JPanel {
     public void fireItUp() {
         String foo = "";
         try {
-            Server server = (Server)this.parent.comboServerList.getSelectedItem();
+            Server server = this.parent.getCurrentServer();
             BowserQuery q = new BowserQuery(server);
             foo = q.getstatus();
         }

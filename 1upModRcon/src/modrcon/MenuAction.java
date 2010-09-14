@@ -69,7 +69,7 @@ public class MenuAction extends AbstractAction {
 
         else if (selection.equals("Server Info")) {
             try {
-                Server server = (Server)this.parent.comboServerList.getSelectedItem();
+                Server server = this.parent.getCurrentServer();
                 BowserQuery q = new BowserQuery(server);
                 q.sendCmd("serverinfo");
                 this.parent.getConsolePanel().appendCommand("serverinfo");
@@ -110,7 +110,7 @@ public class MenuAction extends AbstractAction {
             String cmd = (String)JOptionPane.showInputDialog(this.parent, "<html>Enter a Connectionless Packet Command.<br>E.g. getstatus, getinfo, getchallenge, etc.</html>", "getinfo");
             if (cmd != null) {
                 try {
-                    Server server = (Server)this.parent.comboServerList.getSelectedItem();
+                    Server server = this.parent.getCurrentServer();
                     BowserQuery q = new BowserQuery(server);
                     q.setRawOutput(true);
                     q.sendConnectionlessPacket(cmd);

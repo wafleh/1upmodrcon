@@ -20,8 +20,7 @@ public class MainWindow extends JFrame implements ActionListener, ItemListener {
     private ConsolePanel consolePanel;
     private ControlPanel controlPanel;
     private LivePlayerInfoPanel livePlayerInfoPanel;
-    
-    public JComboBox comboServerList;
+    private JComboBox comboServerList;
 
     /** Timer to control how often LivePlayerInfo Panel Updates. */
     private final Timer timer;
@@ -120,6 +119,12 @@ public class MainWindow extends JFrame implements ActionListener, ItemListener {
     /** Gets the ConsolePanel object. */
     public ConsolePanel getConsolePanel() {
         return this.consolePanel;
+    }
+
+    /** Gets the currently connected to server. */
+    public Server getCurrentServer() {
+        Server s = (Server)this.comboServerList.getSelectedItem();
+        return s;
     }
 
     private JPanel getComboServerListPanel() {

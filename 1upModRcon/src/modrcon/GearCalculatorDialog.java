@@ -111,7 +111,7 @@ public class GearCalculatorDialog extends JDialog implements MouseListener,
         int gGearNum = 0;
 
         try {
-            BowserQuery bQuery = new BowserQuery((Server)this.parent.comboServerList.getSelectedItem());
+            BowserQuery bQuery = new BowserQuery(this.parent.getCurrentServer());
             gGearNum = bQuery.getGearSetting();
         } catch(Exception exc) { System.out.println(exc.getMessage()); }
 
@@ -257,7 +257,7 @@ public class GearCalculatorDialog extends JDialog implements MouseListener,
         if (source == this.sendToServerButton) {
             String cmd = "g_gear " + this.gearSpinner.getValue();
             try {
-                Server server = (Server)this.parent.comboServerList.getSelectedItem();
+                Server server = this.parent.getCurrentServer();
                 BowserQuery q = new BowserQuery(server);
                 q.sendCmd(cmd);
                 this.parent.getConsolePanel().appendCommand(cmd);

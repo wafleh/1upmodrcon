@@ -140,7 +140,7 @@ public class ServerInfoPanel extends JPanel implements MouseListener {
             );
             if (choice != null) {
                 try {
-                    Server s = (Server)this.parent.comboServerList.getSelectedItem();
+                    Server s = this.parent.getCurrentServer();
                     BowserQuery q = new BowserQuery(s);
                     int gt = ModRconUtil.getGameType(choice);
                     q.sendCmd("g_gametype "+gt);
