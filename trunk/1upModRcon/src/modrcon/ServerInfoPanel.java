@@ -4,6 +4,7 @@ import java.awt.event.MouseEvent;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.MouseListener;
+import java.util.ArrayList;
 
 /**
  * The Server Info Panel.
@@ -59,6 +60,7 @@ public class ServerInfoPanel extends JPanel implements MouseListener {
         gametype.addMouseListener(this);
         map      = new JLabel("N/A");
         map.setFont(new Font("Tahoma", Font.PLAIN, 11));
+        map.addMouseListener(this);
 
         infoPanel.add(lblServerName);
         lblServerName.setLabelFor(server);
@@ -106,7 +108,7 @@ public class ServerInfoPanel extends JPanel implements MouseListener {
     }
 
     public void setMap(String map) {
-        this.map.setText(map);
+        this.map.setText("<html>"+map+" (<font color=\"#DD5731\"><u>Change</u></font>)</html>");
     }
 
     public void mouseClicked(MouseEvent e) {
@@ -149,6 +151,40 @@ public class ServerInfoPanel extends JPanel implements MouseListener {
                 }
                 catch (Exception exc) {
                     System.out.println(exc.getMessage());
+                }
+            }
+        }
+        else if (e.getSource() == this.map) {
+            ArrayList maps = new ArrayList();
+            try {
+                BowserQuery q = new BowserQuery(this.parent.getCurrentServer());
+                maps = q.getMapList();
+            }
+            catch (Exception event) {
+                System.out.println(event.getMessage());
+            }
+            if (maps.isEmpty()) {
+                //maps = ModRconUtil.getDefaultUrTMaps();
+                JOptionPane.showMessageDialog(this.parent, "Failure getting map list from server.\nPerhaps you don't have access to the \"dir\" command.");
+            }
+            else {
+                String choice = (String)JOptionPane.showInputDialog(
+                        this.parent,
+                        "",
+                        "Change the Server's Map",
+                        JOptionPane.QUESTION_MESSAGE,
+                        null,
+                        maps.toArray(),
+                        maps.get(0)
+                );
+                if (choice != null) {
+                    try {
+                        BowserQuery q = new BowserQuery(this.parent.getCurrentServer());
+                        q.sendCmd("map "+choice);
+                        this.parent.getConsolePanel().appendCommand("map "+choice);
+                        this.parent.getConsolePanel().appendToConsole(q.getResponse());
+                    }
+                    catch (Exception bqEvent) {}
                 }
             }
         }
