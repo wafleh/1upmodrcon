@@ -164,7 +164,7 @@ public class ControlPanel extends JPanel implements ActionListener, KeyListener 
         ArrayList commands = db.getCommandList();
         for (Object o : commands) {
             Q3Command c = (Q3Command)o;
-            this.comboCommandBox.addItem(c.getCommand());
+            this.comboCommandBox.addItem(c);
         }
         this.comboCommandBox.setSelectedItem("");
     }
