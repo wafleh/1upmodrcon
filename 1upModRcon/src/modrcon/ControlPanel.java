@@ -129,6 +129,7 @@ public class ControlPanel extends JPanel implements ActionListener, KeyListener 
             isr.close();
             is.close();
             this.parent.getConsolePanel().appendWithColor(output);
+            this.parent.getConsolePanel().scrollToTop();
         } catch (Exception exc) { }
     }
 

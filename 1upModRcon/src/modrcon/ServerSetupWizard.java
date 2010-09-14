@@ -65,18 +65,6 @@ public class ServerSetupWizard extends JFrame implements ActionListener {
         this.setVisible(true);
     }
 
-    public static void main(String[] args) {
-        try {
-            // Set the OS's Native Look and Feel
-            UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
-        }
-        catch (Exception e) {
-            System.out.println("Error: Was Unable to Set the OS's Native Widget Theme");
-            System.out.println(e.getMessage());
-        }
-        new ServerSetupWizard();
-    }
-
     private JPanel getIntroPanel() {
         JPanel panel = new JPanel();
         panel.setLayout(new BoxLayout(panel, BoxLayout.X_AXIS));
