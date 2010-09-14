@@ -17,10 +17,7 @@ public class PlayerCountPanel extends JPanel {
 
     public PlayerCountPanel() {
         super();
-
         this.setLayout(new BoxLayout(this, BoxLayout.X_AXIS));
-        //this.setBorder(BorderFactory.createTitledBorder(""));
-
         this.players = new JLabel("Players: ");
         this.players.setFont(new Font("Tahoma", Font.BOLD, 11));
         this.slash = new JLabel(" / ");
@@ -30,9 +27,6 @@ public class PlayerCountPanel extends JPanel {
         this.progressbar.setMinimum(0);
         this.progressbar.setMaximum(32);
         this.progressbar.setValue(0);
-        //this.progressbar.setBackground(Color.WHITE);
-        //this.progressbar.setForeground(Color.RED);
-
         this.add(players);
         this.add(numPlayers);
         this.add(slash);
@@ -40,12 +34,13 @@ public class PlayerCountPanel extends JPanel {
         this.add(progressbar);
     }
 
-    public void setMaxPlayers(String max) {
-        this.maxPlayers.setText(max);
+    public void setMaxPlayers(int max) {
+        this.maxPlayers.setText(" "+String.valueOf(max)+" ");
+        this.progressbar.setMaximum(max);
     }
 
     public void setNumPlayers(int num) {
-        this.numPlayers.setText(String.valueOf(num));
+        this.numPlayers.setText(" "+String.valueOf(num)+" ");
         this.progressbar.setValue(num);
     }
     

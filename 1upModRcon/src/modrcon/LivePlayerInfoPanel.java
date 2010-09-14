@@ -94,25 +94,27 @@ public class LivePlayerInfoPanel extends JPanel {
     }
 
     public void fireItUp() {
-        String foo = "";
+        String getStatusOutput = "";
+        int maxClients = 0;
         try {
             Server server = this.parent.getCurrentServer();
             BowserQuery q = new BowserQuery(server);
-            foo = q.getstatus();
+            getStatusOutput = q.getstatus();
+            maxClients = q.getMaxClients(getStatusOutput);
         }
         catch (Exception e) {
             e.printStackTrace();
             System.out.print("Error: "+e.getMessage());
         }
-        if (foo == null || foo.equals("")) {
+        if (getStatusOutput == null || getStatusOutput.equals("")) {
             // do nothing
         } else {
-            this.playerTable.setModel(getPlayerDTM(foo));
+            this.playerTable.setModel(getPlayerDTM(getStatusOutput, maxClients));
             ColumnResizer.adjustColumnPreferredWidths(this.playerTable);
         }
     }
 
-    public DefaultTableModel getPlayerDTM(String input) {
+    public DefaultTableModel getPlayerDTM(String input, int maxClients) {
         this.dtm.getDataVector().removeAllElements();
         String[] lines = input.split("\\n");
         for (int i=1; i<lines.length; i++) {
@@ -122,6 +124,7 @@ public class LivePlayerInfoPanel extends JPanel {
             this.dtm.addRow(lineSplit);
         }
         this.pcp.setNumPlayers(lines.length - 1);
+        this.pcp.setMaxPlayers(maxClients);
         return this.dtm;
     }
 
