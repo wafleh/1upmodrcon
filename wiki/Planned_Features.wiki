@@ -4,3 +4,4 @@
   * Planned easter egg invoving some ascii art.
   * Custom tooltips like the old program (hint: use html).
   * Use cross-platform installer like lzPack (http://en.wikipedia.org/wiki/IzPack)
+  * Pause LivePlayerInfo when application is minimized to cut down server usage.
