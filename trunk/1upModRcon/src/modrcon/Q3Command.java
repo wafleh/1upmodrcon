@@ -36,4 +36,9 @@ public class Q3Command implements Serializable {
         return cmd;
     }
 
+    @Override
+    public String toString() {
+        return this.command;
+    }
+
 }
