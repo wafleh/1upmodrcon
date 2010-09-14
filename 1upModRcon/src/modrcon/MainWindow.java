@@ -13,14 +13,13 @@ import javax.swing.Timer;
  */
 public class MainWindow extends JFrame implements ActionListener, ItemListener {
    
-    public LogoPanel logoPanel;
+    private LogoPanel logoPanel;
     private JPanel contentPanel;
     private VersionPanel versionPanel;
-
-    public ServerInfoPanel serverInfoPanel;
-    public ConsolePanel consolePanel;
-    public ControlPanel controlPanel;
-    public LivePlayerInfoPanel livePlayerInfoPanel;
+    private ServerInfoPanel serverInfoPanel;
+    private ConsolePanel consolePanel;
+    private ControlPanel controlPanel;
+    private LivePlayerInfoPanel livePlayerInfoPanel;
     
     public JComboBox comboServerList;
 
@@ -84,7 +83,7 @@ public class MainWindow extends JFrame implements ActionListener, ItemListener {
 
 
         this.refreshServerCombo();
-        this.refreshServerInfo();
+        //this.refreshServerInfo(); // May not be needed since itemStateChanged fires this
         this.refreshServerType();
         this.controlPanel.refreshCommandCombo();
         //this.livePlayerInfoPanel.fireItUp();
@@ -111,6 +110,16 @@ public class MainWindow extends JFrame implements ActionListener, ItemListener {
         timer = new Timer(2500, this);
         timer.setInitialDelay(1);
         timer.start();
+    }
+
+    /** Gets the ControlPanel object. */
+    public ControlPanel getControlPanel() {
+        return this.controlPanel;
+    }
+
+    /** Gets the ConsolePanel object. */
+    public ConsolePanel getConsolePanel() {
+        return this.consolePanel;
     }
 
     private JPanel getComboServerListPanel() {
@@ -284,14 +293,13 @@ public class MainWindow extends JFrame implements ActionListener, ItemListener {
             this.serverInfoPanel.setMap((String)map.get("mapname"));
         }
         catch (Exception e) {
-            System.out.println("Exception Caught: "+e.getMessage());
-            e.printStackTrace();
+            this.consolePanel.appendToConsole("Error: Could not connect to server at "+server.getIP()+":"+server.getPortAsString()+"\n\n");
         }
     }
 
     public void itemStateChanged(ItemEvent e) {
         Object source = e.getItemSelectable();
-        if (source == this.comboServerList) {
+        if (source == this.comboServerList && e.getStateChange() == ItemEvent.SELECTED) {
             this.livePlayerInfoPanel.fireItUp();
             this.refreshServerInfo();
             this.refreshServerType();

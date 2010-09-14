@@ -260,8 +260,8 @@ public class GearCalculatorDialog extends JDialog implements MouseListener,
                 Server server = (Server)this.parent.comboServerList.getSelectedItem();
                 BowserQuery q = new BowserQuery(server);
                 q.sendCmd(cmd);
-                this.parent.consolePanel.appendCommand(cmd);
-                this.parent.consolePanel.appendToConsole(q.getResponse());
+                this.parent.getConsolePanel().appendCommand(cmd);
+                this.parent.getConsolePanel().appendToConsole(q.getResponse());
             }
             catch (Exception event) {
                 System.out.print(event.getMessage());

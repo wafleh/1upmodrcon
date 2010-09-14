@@ -128,7 +128,7 @@ public class ControlPanel extends JPanel implements ActionListener, KeyListener 
             br.close();
             isr.close();
             is.close();
-            this.parent.consolePanel.appendWithColor(output);
+            this.parent.getConsolePanel().appendWithColor(output);
         } catch (Exception exc) { }
     }
 
@@ -143,8 +143,8 @@ public class ControlPanel extends JPanel implements ActionListener, KeyListener 
             Server server = (Server)this.parent.comboServerList.getSelectedItem();
             BowserQuery q = new BowserQuery(server);
             q.sendCmd("status");
-            this.parent.consolePanel.appendCommand("status");
-            this.parent.consolePanel.appendWithColor(q.getResponse());
+            this.parent.getConsolePanel().appendCommand("status");
+            this.parent.getConsolePanel().appendWithColor(q.getResponse());
         }
         catch (Exception e) {
             System.out.print(e.getMessage());
@@ -175,7 +175,7 @@ public class ControlPanel extends JPanel implements ActionListener, KeyListener 
             if (this.comboCommandBox.getSelectedItem() != null) {
                 String cmd = ((String)this.comboCommandBox.getSelectedItem()).trim();
                 if (cmd.equals("pr0n")) {
-                    this.parent.consolePanel.clearConsole();
+                    this.parent.getConsolePanel().clearConsole();
                     this.comboCommandBox.setSelectedItem(null);
                     this.readAndDisplay();
                     SoundEffect.DUKE_BABE.play();
@@ -185,8 +185,8 @@ public class ControlPanel extends JPanel implements ActionListener, KeyListener 
                         Server server = (Server)this.parent.comboServerList.getSelectedItem();
                         BowserQuery q = new BowserQuery(server);
                         q.sendCmd(cmd);
-                        this.parent.consolePanel.appendCommand(cmd);
-                        this.parent.consolePanel.appendToConsole(q.getResponse());
+                        this.parent.getConsolePanel().appendCommand(cmd);
+                        this.parent.getConsolePanel().appendToConsole(q.getResponse());
                         this.comboCommandBox.setSelectedItem(null);
                     }
                     catch (Exception e) {
@@ -208,8 +208,8 @@ public class ControlPanel extends JPanel implements ActionListener, KeyListener 
                     Server server = (Server)this.parent.comboServerList.getSelectedItem();
                     BowserQuery q = new BowserQuery(server);
                     q.sendCmd("dumpuser "+input);
-                    this.parent.consolePanel.appendCommand("dumpuser "+input);
-                    this.parent.consolePanel.appendToConsole(q.getResponse());
+                    this.parent.getConsolePanel().appendCommand("dumpuser "+input);
+                    this.parent.getConsolePanel().appendToConsole(q.getResponse());
                 }
                 catch (Exception e) {
                     System.out.print(e.getMessage());
@@ -225,8 +225,8 @@ public class ControlPanel extends JPanel implements ActionListener, KeyListener 
                     Server server = (Server)this.parent.comboServerList.getSelectedItem();
                     BowserQuery q = new BowserQuery(server);
                     q.sendCmd("slap "+input);
-                    this.parent.consolePanel.appendCommand("slap "+input);
-                    this.parent.consolePanel.appendToConsole(q.getResponse());
+                    this.parent.getConsolePanel().appendCommand("slap "+input);
+                    this.parent.getConsolePanel().appendToConsole(q.getResponse());
                 }
                 catch (Exception e) {
                     System.out.print(e.getMessage());
@@ -242,8 +242,8 @@ public class ControlPanel extends JPanel implements ActionListener, KeyListener 
                     Server server = (Server)this.parent.comboServerList.getSelectedItem();
                     BowserQuery q = new BowserQuery(server);
                     q.sendCmd("kick "+input);
-                    this.parent.consolePanel.appendCommand("kick "+input);
-                    this.parent.consolePanel.appendToConsole(q.getResponse());
+                    this.parent.getConsolePanel().appendCommand("kick "+input);
+                    this.parent.getConsolePanel().appendToConsole(q.getResponse());
                 }
                 catch (Exception e) {
                     System.out.print(e.getMessage());
@@ -259,8 +259,8 @@ public class ControlPanel extends JPanel implements ActionListener, KeyListener 
                     Server server = (Server)this.parent.comboServerList.getSelectedItem();
                     BowserQuery q = new BowserQuery(server);
                     q.sendCmd("mute "+input);
-                    this.parent.consolePanel.appendCommand("mute "+input);
-                    this.parent.consolePanel.appendToConsole(q.getResponse());
+                    this.parent.getConsolePanel().appendCommand("mute "+input);
+                    this.parent.getConsolePanel().appendToConsole(q.getResponse());
                 }
                 catch (Exception e) {
                     System.out.print(e.getMessage());
@@ -276,8 +276,8 @@ public class ControlPanel extends JPanel implements ActionListener, KeyListener 
                     Server server = (Server)this.parent.comboServerList.getSelectedItem();
                     BowserQuery q = new BowserQuery(server);
                     q.sendCmd("togglemute "+input);
-                    this.parent.consolePanel.appendCommand("togglemute "+input);
-                    this.parent.consolePanel.appendToConsole(q.getResponse());
+                    this.parent.getConsolePanel().appendCommand("togglemute "+input);
+                    this.parent.getConsolePanel().appendToConsole(q.getResponse());
                 }
                 catch (Exception e) {
                     System.out.print(e.getMessage());
@@ -295,12 +295,9 @@ public class ControlPanel extends JPanel implements ActionListener, KeyListener 
 
     }
 
-    public void keyTyped(KeyEvent e) {
-    }
+    public void keyTyped(KeyEvent e) {}
 
-    public void keyPressed(KeyEvent e) {
-        
-    }
+    public void keyPressed(KeyEvent e) {}
 
     public void keyReleased(KeyEvent e) {
         if (e.getKeyCode() == KeyEvent.VK_ENTER) {

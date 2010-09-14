@@ -132,7 +132,7 @@ public class BowserQuery {
             this.ds.send(this.dp);
         }
         catch (Exception e) {
-            System.out.println(e.getMessage());
+            System.out.println("Send method in BowserQuery Failed with: "+e.getMessage());
         }
     }
 
@@ -225,42 +225,51 @@ public class BowserQuery {
      * @return The output in a HashMap
      */
     public Map getServerInfo() {
+
         this.send("getinfo");
         String resp = this.getResponse();
-        
-        // Remove OOB command
-        Pattern r = Pattern.compile("....infoResponse\n");
-        Matcher m = r.matcher(resp);
-        resp = m.replaceAll("");
 
-        //System.out.println(resp);
+        // what if the response is null or nothing?
+        if (!resp.equals("")) {
 
-        // Remove the first character
-        resp = resp.substring(1);
-        // Split String by Single Backslash
-        String[] foo = resp.split("\\\\");       
+            // Remove OOB command
+            Pattern r = Pattern.compile("....infoResponse\n");
+            Matcher m = r.matcher(resp);
+            resp = m.replaceAll("");
 
-        // Now Separate Keys and Values
-        ArrayList<String> keys = new ArrayList();
-        ArrayList<String> vals = new ArrayList();
-        boolean direction = true;
-        for (int i=0; i < foo.length; i++) {
-            if (direction) {
-                keys.add(foo[i]);
-            } else {
-                vals.add(foo[i]);
+            //System.out.println(resp);
+
+            // Remove the first character
+            resp = resp.substring(1);
+            // Split String by Single Backslash
+            String[] foo = resp.split("\\\\");
+
+            // Now Separate Keys and Values
+            ArrayList<String> keys = new ArrayList();
+            ArrayList<String> vals = new ArrayList();
+            boolean direction = true;
+            for (int i=0; i < foo.length; i++) {
+                if (direction) {
+                    keys.add(foo[i]);
+                } else {
+                    vals.add(foo[i]);
+                }
+                direction = (direction) ? false : true;
             }
-            direction = (direction) ? false : true;
-        }
 
-        // Create Associative Array of Key/Value Pairs.
-        Map<String, String> map = new HashMap();
-        for (int i=0; i < keys.size(); i++) {
-            String key = keys.get(i);
-            String val = vals.get(i);
-            map.put(key, val);
+            // Create Associative Array of Key/Value Pairs.
+            Map<String, String> map = new HashMap();
+            for (int i=0; i < keys.size(); i++) {
+                String key = keys.get(i);
+                String val = vals.get(i);
+                map.put(key, val);
+            }
+            return map;
         }
-        return map;
+        else {
+            // No Response From Server, return null.
+            return null;
+        }
     }
     
 }

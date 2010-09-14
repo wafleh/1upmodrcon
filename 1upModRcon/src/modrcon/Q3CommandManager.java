@@ -171,7 +171,7 @@ public class Q3CommandManager extends JDialog implements ActionListener, MouseLi
         if (pressedButton == btnSave) {
             if (this.validateFields()) {
                 this.saveTable();
-                this.parent.controlPanel.refreshCommandCombo();
+                this.parent.getControlPanel().refreshCommandCombo();
                 this.dispose();
             }
             else {

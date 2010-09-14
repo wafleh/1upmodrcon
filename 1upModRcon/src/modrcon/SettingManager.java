@@ -149,8 +149,8 @@ public class SettingManager extends JDialog implements ActionListener, MouseList
             String fg = "#" + Integer.toHexString(fgColorLabel.getBackground().getRGB() & 0x00ffffff).toUpperCase();
             pm.setConsoleBGColor(bg);
             pm.setConsoleFGColor(fg);
-            this.parent.consolePanel.setConsoleBackground(bgColorLabel.getBackground());
-            this.parent.consolePanel.setConsoleForeground(fgColorLabel.getBackground());
+            this.parent.getConsolePanel().setConsoleBackground(bgColorLabel.getBackground());
+            this.parent.getConsolePanel().setConsoleForeground(fgColorLabel.getBackground());
             pm.savePropertyFile();
             this.dispose();
         }

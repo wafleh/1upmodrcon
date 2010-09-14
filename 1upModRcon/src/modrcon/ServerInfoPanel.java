@@ -144,8 +144,8 @@ public class ServerInfoPanel extends JPanel implements MouseListener {
                     BowserQuery q = new BowserQuery(s);
                     int gt = ModRconUtil.getGameType(choice);
                     q.sendCmd("g_gametype "+gt);
-                    this.parent.consolePanel.appendCommand("g_gametype "+gt);
-                    this.parent.consolePanel.appendToConsole(q.getResponse());
+                    this.parent.getConsolePanel().appendCommand("g_gametype "+gt);
+                    this.parent.getConsolePanel().appendToConsole(q.getResponse());
                 }
                 catch (Exception exc) {
                     System.out.println(exc.getMessage());
