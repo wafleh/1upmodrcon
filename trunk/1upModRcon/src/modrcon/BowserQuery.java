@@ -184,19 +184,27 @@ public class BowserQuery {
     /**
      * Gets the current gear setting.
      *
-     * This method might not always be accurate given
-     * its current implementation method. It should be
-     * redone in the future to search for g_gear in the
-     * output and return the value associated with it.
-     *
      * @return The gear setting integer.
      */
     public int getGearSetting() {
-        String input = this.getstatus();
-        String[] lines = input.split("\\n");
-        String[] values = lines[0].split("\\\\");
-        int gear = Integer.parseInt(values[70]);
-        return gear;
+        return getGearSetting(this.getstatus());
+    }
+
+    public int getGearSetting(String getStatusOutput) {
+        String gear = "";
+        String[] lines = getStatusOutput.split("\\\\");
+        for (int i=0; i < lines.length; i++) {
+            if (lines[i].equals("g_gear")) {
+                gear = lines[i+1];
+                break;
+            }
+        }
+        try {
+            return Integer.parseInt(gear);
+        }
+        catch (NumberFormatException e) {
+            return 0;
+        }
     }
 
     public String getstatus() {
@@ -218,6 +226,27 @@ public class BowserQuery {
         this.send(cmd);
     }
 
+    public int getMaxClients(String getStatusOutput) {
+        String maxClients = "";
+        String[] lines = getStatusOutput.split("\\\\");
+        for (int i=0; i < lines.length; i++) {
+            if (lines[i].equals("sv_maxclients")) {
+                maxClients = lines[i+1];
+                break;
+            }
+        }
+        try {
+            return Integer.parseInt(maxClients);
+        }
+        catch (NumberFormatException e) {
+            return 0;
+        }
+    }
+
+    public int getMaxClients() {
+        return this.getMaxClients(this.getstatus());
+    }
+
     /**
      * Gets the output of the getinfo command,
      * and parses it into a useful data structure.
@@ -225,7 +254,6 @@ public class BowserQuery {
      * @return The output in a HashMap
      */
     public Map getServerInfo() {
-
         this.send("getinfo");
         String resp = this.getResponse();
 
