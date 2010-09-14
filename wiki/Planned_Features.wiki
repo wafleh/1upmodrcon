@@ -5,3 +5,4 @@
   * Use cross-platform installer like lzPack (http://en.wikipedia.org/wiki/IzPack)
   * Pause LivePlayerInfo when application is minimized to cut down server usage (have MainWindow implement WindowListener, and in public void windowIconified(WindowEvent evt) you would tell LivePlayerInfoPanel to pause the list updating).
   * Audit Trail - Remembers/logs all commands sent to server.
+  * Map Images - Like the Servers page on 1upclan.info, show map image thumbnail below map name on ServerInfoPanel.
