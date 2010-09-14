@@ -1,8 +1,3 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
-
 package modrcon;
 
 import java.awt.*;
@@ -37,7 +32,8 @@ public class LivePlayerInfoPanel extends JPanel {
         playerTable = new JTable() {
             @Override
             public TableCellRenderer getCellRenderer(int row, int column) {
-                if (column == 2) {
+                int realColumnIndex = convertColumnIndexToModel(column);
+                if (realColumnIndex == 2) {
                     return playerRenderer;
                 }
                 else
@@ -92,6 +88,13 @@ public class LivePlayerInfoPanel extends JPanel {
         this.add(jspLivePlayerInfo);
         this.add(pcp);
 
+    }
+
+    private JPopupMenu getPopupMenu() {
+        JPopupMenu p = new JPopupMenu();
+        JMenuItem slap = new JMenuItem(new MenuAction("Slap", this.parent));
+        p.add(slap);
+        return p;
     }
 
     public void fireItUp() {
