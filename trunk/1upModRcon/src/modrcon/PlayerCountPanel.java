@@ -25,13 +25,13 @@ public class PlayerCountPanel extends JPanel {
         this.players.setFont(new Font("Tahoma", Font.BOLD, 11));
         this.slash = new JLabel(" / ");
         this.progressbar = new JProgressBar();
-        this.numPlayers = new JLabel(" 28 ");
-        this.maxPlayers = new JLabel(" 32 ");
+        this.numPlayers = new JLabel(" 00 ");
+        this.maxPlayers = new JLabel(" 00 ");
         this.progressbar.setMinimum(0);
         this.progressbar.setMaximum(32);
-        this.progressbar.setValue(28);
-        this.progressbar.setBackground(Color.WHITE);
-        this.progressbar.setForeground(Color.RED);
+        this.progressbar.setValue(0);
+        //this.progressbar.setBackground(Color.WHITE);
+        //this.progressbar.setForeground(Color.RED);
 
         this.add(players);
         this.add(numPlayers);

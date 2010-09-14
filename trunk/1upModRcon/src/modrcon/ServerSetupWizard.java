@@ -269,7 +269,6 @@ public class ServerSetupWizard extends JFrame implements ActionListener {
     private JComboBox getMethodCombo() {
         String[] values = new String[] { "Referee", "Moderator", "RCON" };
         this.serverMethod = new JComboBox(values);
-        //this.serverMethod.setPrototypeDisplayValue("WWWWWWWWWWWWWWWWWW");
         this.serverMethod.setSelectedItem("Moderator");
         return this.serverMethod;
     }

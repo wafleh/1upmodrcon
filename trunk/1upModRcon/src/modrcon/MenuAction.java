@@ -33,26 +33,26 @@ public class MenuAction extends AbstractAction {
         String selection = (String)getValue(Action.NAME);
 
         if (selection.equals("Save Console As...")) {
-            this.parent.consolePanel.saveConsole();
+            this.parent.getConsolePanel().saveConsole();
         }
 
         else if (selection.equals("Copy") || selection.equals("Copy Selected")) {
-            String selectedText = this.parent.consolePanel.getSelectedText(); //this.consoleTextArea.getSelectedText();
+            String selectedText = this.parent.getConsolePanel().getSelectedText(); //this.consoleTextArea.getSelectedText();
             StringSelection data = new StringSelection(selectedText);
             Clipboard clipboard = java.awt.Toolkit.getDefaultToolkit().getSystemClipboard();
             clipboard.setContents(data, data);
         }
 
         else if (selection.equals("Clear") || selection.equals("Clear Console")) {
-            this.parent.consolePanel.clearConsole();
+            this.parent.getConsolePanel().clearConsole();
         }
 
         else if (selection.equals("Find")) {
-            this.parent.consolePanel.findText();
+            this.parent.getConsolePanel().findText();
         }
 
         else if (selection.equals("Select All")) {
-            this.parent.consolePanel.selectAllText();
+            this.parent.getConsolePanel().selectAllText();
         }
 
         else if (selection.equals("Manage Servers")) {
@@ -72,8 +72,8 @@ public class MenuAction extends AbstractAction {
                 Server server = (Server)this.parent.comboServerList.getSelectedItem();
                 BowserQuery q = new BowserQuery(server);
                 q.sendCmd("serverinfo");
-                this.parent.consolePanel.appendCommand("serverinfo");
-                this.parent.consolePanel.appendToConsole(q.getResponse());
+                this.parent.getConsolePanel().appendCommand("serverinfo");
+                this.parent.getConsolePanel().appendToConsole(q.getResponse());
             }
             catch (Exception exc) {
                 System.out.println(exc.getMessage());
@@ -114,8 +114,8 @@ public class MenuAction extends AbstractAction {
                     BowserQuery q = new BowserQuery(server);
                     q.setRawOutput(true);
                     q.sendConnectionlessPacket(cmd);
-                    this.parent.consolePanel.appendCommand(cmd);
-                    this.parent.consolePanel.appendToConsole(q.getResponse());
+                    this.parent.getConsolePanel().appendCommand(cmd);
+                    this.parent.getConsolePanel().appendToConsole(q.getResponse());
                 }
                 catch (Exception exc) {
                     System.out.println(exc.getMessage());

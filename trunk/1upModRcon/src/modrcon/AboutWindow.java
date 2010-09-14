@@ -80,19 +80,36 @@ public class AboutWindow extends JDialog implements ActionListener {
 
     protected JComponent getAboutTab() {
         JPanel panel = new JPanel(false);
-        panel.setLayout(new VerticalFlowLayout());
-        JLabel text1 = new JLabel("Application Name: 1up ModRcon");
-        JLabel text2 = new JLabel("Version: 1.0");
-        JLabel text3 = new JLabel("Website: http://1upclan.info");
-        JLabel text4 = new JLabel("Beta Testers: RonaldLee[1up]");
-        JLabel text5 = new JLabel("The 1up Mushroom is Copyright \u00A9 2010 Nintendo Corp of America.");
-        JLabel text6 = new JLabel("1up ModRcon is Copyright \u00A9 2010 Tesla[1up]. All Rights Reserved.");
-        panel.add(text1);
-        panel.add(text2);
-        panel.add(text3);
-        panel.add(text4);
-        panel.add(text5);
-        panel.add(text6);
+        panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
+
+        JLabel appLabel = new JLabel("<html><b>Application Name:</b>  1up ModRcon</html>");
+        JLabel verLabel = new JLabel("<html><b>Version:</b>  Beta 0.7</html>");
+        JLabel webLabel = new JLabel("<html><b>Website:</b>  http://1upclan.info/</html>");
+        JLabel autLabel = new JLabel("<html><b>Authors:</b>  Tesla[1up], Pyrite[1up], Izuriel[1up]</html>");
+        JLabel betLabel = new JLabel("<html><b>Beta Testers:</b>  RonaldLee[1up], Dougy, Tits_McGee[1up]</html>");
+
+        JPanel copy1 = new JPanel();
+        copy1.setLayout(new BoxLayout(copy1, BoxLayout.X_AXIS));
+        copy1.add(new JLabel("The 1up Mushroom is Copyright \u00A9 2010 Nintendo Corp of America."));
+        JPanel copy2 = new JPanel();
+        copy2.setLayout(new BoxLayout(copy2, BoxLayout.X_AXIS));
+        copy2.add(new JLabel("1up ModRcon is Copyright \u00A9 2010 Tesla[1up]. All Rights Reserved."));
+
+        panel.add(Box.createHorizontalStrut(8));
+        panel.add(appLabel);
+        panel.add(Box.createHorizontalStrut(8));
+        panel.add(verLabel);
+        panel.add(Box.createHorizontalStrut(8));
+        panel.add(webLabel);
+        panel.add(Box.createHorizontalStrut(8));
+        panel.add(autLabel);
+        panel.add(Box.createHorizontalStrut(8));
+        panel.add(betLabel);
+        
+        //panel.add(copy1);
+        //panel.add(copy2);
+        
+
         return panel;
     }
 

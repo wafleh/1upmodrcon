@@ -89,9 +89,9 @@ public class BanUserDialog extends JDialog implements ActionListener {
             Server s = (Server)this.parent.comboServerList.getSelectedItem();
             BowserQuery q = new BowserQuery(s);
             q.sendCmd("addip "+ip);
-            this.parent.consolePanel.appendCommand("addip "+ip);
-            this.parent.consolePanel.appendToConsole(q.getResponse());
-            this.parent.consolePanel.appendToConsole("Writing: banlist.txt");
+            this.parent.getConsolePanel().appendCommand("addip "+ip);
+            this.parent.getConsolePanel().appendToConsole(q.getResponse());
+            this.parent.getConsolePanel().appendToConsole("Writing: banlist.txt");
         }
         catch (Exception e) {
             System.out.println(e.getMessage());
