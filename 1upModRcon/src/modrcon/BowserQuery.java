@@ -226,6 +226,23 @@ public class BowserQuery {
         this.send(cmd);
     }
 
+    public ArrayList getMapList() {
+        ArrayList mapList = new ArrayList();
+        this.sendCmd("dir maps .bsp");
+        String resp = this.getResponse();
+        // Remove .bsp extension from file names
+        Pattern r = Pattern.compile("\\.bsp");
+        Matcher m = r.matcher(resp);
+        resp = m.replaceAll("");
+        String[] lines = resp.split("\\n");
+        if (lines.length > 1) {
+            for (int i=2; i < lines.length; i++) {
+                mapList.add(lines[i]);
+            }
+        }
+        return mapList;
+    }
+
     public int getMaxClients(String getStatusOutput) {
         String maxClients = "";
         String[] lines = getStatusOutput.split("\\\\");

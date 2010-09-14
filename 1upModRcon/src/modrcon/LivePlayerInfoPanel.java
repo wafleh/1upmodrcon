@@ -64,9 +64,10 @@ public class LivePlayerInfoPanel extends JPanel {
         playerTable.setShowGrid(false);
         playerTable.getColumnModel().setColumnMargin(0);
         playerTable.setSelectionMode(0);
-        playerTable.setAutoCreateRowSorter(true);
+        //playerTable.setAutoCreateRowSorter(true); // this causes Exceptions.
         //mytmodel = new MyTableModel();
         dtm = new DefaultTableModel() {
+            @Override
             public boolean isCellEditable(int row, int col) {
                 return false; // Disallow the editing of any cell.
             }

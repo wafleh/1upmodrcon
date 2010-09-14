@@ -82,12 +82,14 @@ public class ConsolePanel extends JPanel implements MouseListener {
         JPopupMenu p = new JPopupMenu();
         JMenuItem selectAll = new JMenuItem(new MenuAction("Select All", this.parent));
         JMenuItem copySelected = new JMenuItem(new MenuAction("Copy Selected", this.parent));
+        JMenuItem saveSelected = new JMenuItem(new MenuAction("Save Selected to File", this.parent));
         JMenuItem saveConsole = new JMenuItem(new MenuAction("Save Console As...", this.parent));
         JMenuItem clearConsole = new JMenuItem(new MenuAction("Clear Console", this.parent));
         JMenuItem serverInfo = new JMenuItem(new MenuAction("Server Info", this.parent));
         JMenuItem sendCP = new JMenuItem(new MenuAction("Send Connectionless Packet", this.parent));
         p.add(selectAll);
         p.add(copySelected);
+        p.add(saveSelected);
         p.add(saveConsole);
         p.add(clearConsole);
         p.addSeparator();
@@ -123,10 +125,6 @@ public class ConsolePanel extends JPanel implements MouseListener {
     }
 
     public void findText() {
-        /*String input = (String)JOptionPane.showInputDialog(this.parent, "Search for Text inside the Console");
-        if (input != null && !(input.equals(""))) {
-            this.taConsole.find(input.trim(), false);
-        }*/
         new SearchConsoleDialog(this.parent, this.taConsole);
     }
 
@@ -149,13 +147,12 @@ public class ConsolePanel extends JPanel implements MouseListener {
     public void appendWithColor(String playerName) {
         this.taConsole.appendWithColors(playerName);
     }
-
-    public void saveConsole() {
+    
+    public void saveConsole(String contents) {
         JFileChooser file = new JFileChooser();
         int choice = file.showSaveDialog(file);
         if (choice == 0) {
             String path = file.getSelectedFile().getAbsolutePath();
-            String contents = this.getConsoleText();
             try {
                 FileWriter outFile = new FileWriter(path);
                 PrintWriter out = new PrintWriter(outFile);
@@ -168,6 +165,14 @@ public class ConsolePanel extends JPanel implements MouseListener {
                 JOptionPane.showMessageDialog(this.parent, e.getMessage());
             }
         }
+    }
+
+    public void saveConsole() {
+        this.saveConsole(getConsoleText());
+    }
+
+    public void saveSelected() {
+        this.saveConsole(getSelectedText());
     }
 
     public void mouseClicked(MouseEvent e) {

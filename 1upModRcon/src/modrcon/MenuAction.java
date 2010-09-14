@@ -36,6 +36,10 @@ public class MenuAction extends AbstractAction {
             this.parent.getConsolePanel().saveConsole();
         }
 
+        else if (selection.equals("Save Selected to File")) {
+            this.parent.getConsolePanel().saveSelected();
+        }
+
         else if (selection.equals("Copy") || selection.equals("Copy Selected")) {
             String selectedText = this.parent.getConsolePanel().getSelectedText(); //this.consoleTextArea.getSelectedText();
             StringSelection data = new StringSelection(selectedText);

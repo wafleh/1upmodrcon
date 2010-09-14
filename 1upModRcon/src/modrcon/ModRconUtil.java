@@ -1,5 +1,6 @@
 package modrcon;
 
+import java.util.ArrayList;
 import java.util.regex.Pattern;
 import javax.swing.*;
 
@@ -109,6 +110,37 @@ public class ModRconUtil {
             gt = 8;
         }
         return gt;
+    }
+
+    public static ArrayList getDefaultUrTMaps() {
+        ArrayList maps = new ArrayList();
+        maps.add("ut4_casa");
+        maps.add("ut4_kingdom");
+        maps.add("ut4_turnpike");
+        maps.add("ut4_abbey");
+        maps.add("ut4_prague");
+        maps.add("ut4_mandolin");
+        maps.add("ut4_uptown");
+        maps.add("ut4_algiers");
+        maps.add("ut4_austria");
+        maps.add("ut4_maya");
+        maps.add("ut4_tombs");
+        maps.add("ut4_elgin");
+        maps.add("ut4_oildepot");
+        maps.add("ut4_swim");
+        maps.add("ut4_harbortown");
+        maps.add("ut4_ramelle");
+        maps.add("ut4_toxic");
+        maps.add("ut4_sanc");
+        maps.add("ut4_riyadh");
+        maps.add("ut4_ambush");
+        maps.add("ut4_eagle");
+        maps.add("ut4_suburbs");
+        maps.add("ut4_crossing");
+        maps.add("ut4_subway");
+        maps.add("ut4_tunis");
+        maps.add("ut4_thingley");
+        return maps;
     }
 
     public static JPanel getPaddedPanel(int padding, JPanel panelToPad) {
