@@ -132,13 +132,105 @@ public class MenuAction extends AbstractAction {
             String name = (String)source.getModel().getValueAt(source.getSelectedRow(), 2);
             try {
                 BowserQuery q = new BowserQuery(this.parent.getCurrentServer());
-                q.sendCmd("dumpuser "+name);
-                this.parent.getConsolePanel().appendCommand("dumpuser "+name);
+                String cmd = "dumpuser \""+name+"\"";
+                q.sendCmd(cmd);
+                this.parent.getConsolePanel().appendCommand(cmd);
                 this.parent.getConsolePanel().appendToConsole(q.getResponse());
             }
             catch (Exception e) {}
         }
-       
+
+        else if (selection.equals("Slap User")) {
+            JTable source = this.parent.getLivePlayerInfoPanel().getLivePlayerInfoTable();
+            String name = (String)source.getModel().getValueAt(source.getSelectedRow(), 2);
+            try {
+                BowserQuery q = new BowserQuery(this.parent.getCurrentServer());
+                String cmd = "slap \""+name+"\"";
+                q.sendCmd(cmd);
+                this.parent.getConsolePanel().appendCommand(cmd);
+                this.parent.getConsolePanel().appendToConsole(q.getResponse());
+            }
+            catch (Exception e) {}
+        }
+
+        else if (selection.equals("Kick User")) {
+            JTable source = this.parent.getLivePlayerInfoPanel().getLivePlayerInfoTable();
+            String name = (String)source.getModel().getValueAt(source.getSelectedRow(), 2);
+            try {
+                BowserQuery q = new BowserQuery(this.parent.getCurrentServer());
+                String cmd = "kick \""+name+"\"";
+                q.sendCmd(cmd);
+                this.parent.getConsolePanel().appendCommand(cmd);
+                this.parent.getConsolePanel().appendToConsole(q.getResponse());
+            }
+            catch (Exception e) {}
+        }
+
+        else if (selection.equals("Mute User")) {
+            JTable source = this.parent.getLivePlayerInfoPanel().getLivePlayerInfoTable();
+            String name = (String)source.getModel().getValueAt(source.getSelectedRow(), 2);
+            try {
+                BowserQuery q = new BowserQuery(this.parent.getCurrentServer());
+                String cmd = "mute \""+name+"\"";
+                q.sendCmd(cmd);
+                this.parent.getConsolePanel().appendCommand(cmd);
+                this.parent.getConsolePanel().appendToConsole(q.getResponse());
+            }
+            catch (Exception e) {}
+        }
+
+        else if (selection.equals("ToggleMute User")) {
+            JTable source = this.parent.getLivePlayerInfoPanel().getLivePlayerInfoTable();
+            String name = (String)source.getModel().getValueAt(source.getSelectedRow(), 2);
+            try {
+                BowserQuery q = new BowserQuery(this.parent.getCurrentServer());
+                String cmd = "togglemute \""+name+"\"";
+                q.sendCmd(cmd);
+                this.parent.getConsolePanel().appendCommand(cmd);
+                this.parent.getConsolePanel().appendToConsole(q.getResponse());
+            }
+            catch (Exception e) {}
+        }
+
+        else if (selection.equals("Move To Red Team")) {
+            JTable source = this.parent.getLivePlayerInfoPanel().getLivePlayerInfoTable();
+            String name = (String)source.getModel().getValueAt(source.getSelectedRow(), 2);
+            try {
+                BowserQuery q = new BowserQuery(this.parent.getCurrentServer());
+                String cmd = "forceteam \""+name+"\" red";
+                q.sendCmd(cmd);
+                this.parent.getConsolePanel().appendCommand(cmd);
+                this.parent.getConsolePanel().appendToConsole(q.getResponse());
+            }
+            catch (Exception e) {}
+        }
+
+        else if (selection.equals("Move To Blue Team")) {
+            JTable source = this.parent.getLivePlayerInfoPanel().getLivePlayerInfoTable();
+            String name = (String)source.getModel().getValueAt(source.getSelectedRow(), 2);
+            try {
+                BowserQuery q = new BowserQuery(this.parent.getCurrentServer());
+                String cmd = "forceteam \""+name+"\" blue";
+                q.sendCmd(cmd);
+                this.parent.getConsolePanel().appendCommand(cmd);
+                this.parent.getConsolePanel().appendToConsole(q.getResponse());
+            }
+            catch (Exception e) {}
+        }
+
+        else if (selection.equals("Move To Spectators")) {
+            JTable source = this.parent.getLivePlayerInfoPanel().getLivePlayerInfoTable();
+            String name = (String)source.getModel().getValueAt(source.getSelectedRow(), 2);
+            try {
+                BowserQuery q = new BowserQuery(this.parent.getCurrentServer());
+                String cmd = "forceteam \""+name+"\" spectator";
+                q.sendCmd(cmd);
+                this.parent.getConsolePanel().appendCommand(cmd);
+                this.parent.getConsolePanel().appendToConsole(q.getResponse());
+            }
+            catch (Exception e) {}
+        }
+
         else {
             JOptionPane.showMessageDialog(parent, "This feature will be coming in a later version!", selection.toString(), JOptionPane.INFORMATION_MESSAGE);
         }

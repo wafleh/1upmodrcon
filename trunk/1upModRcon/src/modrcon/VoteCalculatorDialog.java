@@ -437,14 +437,23 @@ public class VoteCalculatorDialog extends JDialog implements MouseListener,
 
     public void actionPerformed(ActionEvent e) {
         JButton source = (JButton)e.getSource();
-
         if (source == this.sendButton) {
-            // Todo
-            System.out.println("g_allowvote " + this.voteLabel.getText());
-        }
-
-        if (source == this.cancelButton)
+            String cmd = "g_allowvote " + this.voteLabel.getText();
+            try {
+                Server server = this.parent.getCurrentServer();
+                BowserQuery q = new BowserQuery(server);
+                q.sendCmd(cmd);
+                this.parent.getConsolePanel().appendCommand(cmd);
+                this.parent.getConsolePanel().appendToConsole(q.getResponse());
+            }
+            catch (Exception event) {
+                System.out.print(event.getMessage());
+            }
             this.dispose();
+        }
+        if (source == this.cancelButton) {
+            this.dispose();
+        }
     }
 
     public void windowOpened(WindowEvent e) { }
