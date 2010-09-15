@@ -125,6 +125,8 @@ public class AutoCompleteTextField extends JTextField implements KeyListener,
         String entered = this.getText();
 
         for (int i = 0; i < this.possibilities.size(); i++) {
+            currentGuess = -1;
+
             String possibility = this.possibilities.get(i);
             if (possibility.startsWith(entered)) {
                 this.currentGuess = i;
@@ -154,8 +156,11 @@ public class AutoCompleteTextField extends JTextField implements KeyListener,
             guess = guess.toLowerCase();
         }
 
+        if (!(guess.startsWith(entered)))
+            this.areGuessing = false;
+
         if (entered != null && !(entered.equals("")) 
-                && this.areGuessing && guess.startsWith(entered)) {
+                && this.areGuessing) {
             String subGuess = drawGuess.substring(entered.length(), drawGuess.length());
             Rectangle2D subGuessBounds = g.getFontMetrics().getStringBounds("I", g);
 
