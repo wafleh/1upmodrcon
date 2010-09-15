@@ -127,6 +127,10 @@ public class MainWindow extends JFrame implements ActionListener, ItemListener {
         return s;
     }
 
+    public LivePlayerInfoPanel getLivePlayerInfoPanel() {
+        return this.livePlayerInfoPanel;
+    }
+
     private JPanel getComboServerListPanel() {
         JLabel connectedToLabel = new JLabel("Connected To:");
         connectedToLabel.setOpaque(false);
@@ -305,6 +309,7 @@ public class MainWindow extends JFrame implements ActionListener, ItemListener {
     public void itemStateChanged(ItemEvent e) {
         Object source = e.getItemSelectable();
         if (source == this.comboServerList && e.getStateChange() == ItemEvent.SELECTED) {
+            this.livePlayerInfoPanel.pauseLivePlayerInfo(false);
             this.livePlayerInfoPanel.fireItUp();
             this.refreshServerInfo();
             this.refreshServerType();

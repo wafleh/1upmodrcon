@@ -6,6 +6,8 @@ import java.awt.event.MouseEvent;
 import javax.swing.*;
 import javax.swing.table.*;
 import java.util.*;
+import javax.swing.border.Border;
+import javax.swing.border.TitledBorder;
 
 /**
  *
@@ -18,7 +20,7 @@ public class LivePlayerInfoPanel extends JPanel {
     private JScrollPane jspLivePlayerInfo;
     private JTable playerTable;
     private PlayerCountPanel pcp;
-    //private MyTableModel mytmodel;
+    private boolean pauseLivePlayerInfo;
 
     private DefaultTableModel dtm;
 
@@ -28,6 +30,7 @@ public class LivePlayerInfoPanel extends JPanel {
     public LivePlayerInfoPanel(MainWindow owner) {
         super();
         this.parent = owner;
+        this.pauseLivePlayerInfo = false;
 
         //this.setLayout(new BorderLayout());
         this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
@@ -129,25 +132,49 @@ public class LivePlayerInfoPanel extends JPanel {
         return p;
     }
 
-    public void fireItUp() {
-        String getStatusOutput = "";
-        int maxClients = 0;
-        try {
-            Server server = this.parent.getCurrentServer();
-            BowserQuery q = new BowserQuery(server);
-            getStatusOutput = q.getstatus();
-            maxClients = q.getMaxClients(getStatusOutput);
-        }
-        catch (Exception e) {
-            e.printStackTrace();
-            System.out.print("Error: "+e.getMessage());
-        }
-        if (getStatusOutput == null || getStatusOutput.equals("")) {
-            // do nothing
+    public boolean isLivePlayerInfoPaused() {
+        return this.pauseLivePlayerInfo;
+    }
+
+    public void pauseLivePlayerInfo(boolean paused) {
+        if (paused) {
+            Border b = BorderFactory.createTitledBorder(null, "Live Player Info (Paused)", TitledBorder.DEFAULT_JUSTIFICATION, TitledBorder.DEFAULT_POSITION, null, Color.RED);
+            this.setBorder(b);
+            this.pauseLivePlayerInfo = true;
         } else {
-            this.playerTable.setModel(getPlayerDTM(getStatusOutput, maxClients));
-            ColumnResizer.adjustColumnPreferredWidths(this.playerTable);
+            this.setBorder(BorderFactory.createTitledBorder("Live Player Info"));
+            this.pauseLivePlayerInfo = false;
         }
+    }
+
+    public void fireItUp() {
+        if (!popupMenu.isVisible()) {
+            this.pauseLivePlayerInfo(false);
+        }
+        if (!this.pauseLivePlayerInfo) {
+            String getStatusOutput = "";
+            int maxClients = 0;
+            try {
+                Server server = this.parent.getCurrentServer();
+                BowserQuery q = new BowserQuery(server);
+                getStatusOutput = q.getstatus();
+                maxClients = q.getMaxClients(getStatusOutput);
+            }
+            catch (Exception e) {
+                e.printStackTrace();
+                System.out.print("Error: "+e.getMessage());
+            }
+            if (getStatusOutput == null || getStatusOutput.equals("")) {
+                // do nothing
+            } else {
+                this.playerTable.setModel(getPlayerDTM(getStatusOutput, maxClients));
+                ColumnResizer.adjustColumnPreferredWidths(this.playerTable);
+            }
+        }
+    }
+
+    public JTable getLivePlayerInfoTable() {
+        return this.playerTable;
     }
 
     public DefaultTableModel getPlayerDTM(String input, int maxClients) {
@@ -319,7 +346,17 @@ public class LivePlayerInfoPanel extends JPanel {
         }
         @Override
         public void mouseReleased(MouseEvent e) {
-            showPopup(e);
+            if (e.isPopupTrigger()) {
+                // Pause LivePlayerInfo Table
+                pauseLivePlayerInfo(true);
+                JTable source = (JTable)e.getSource();
+                int row = source.rowAtPoint(e.getPoint());
+                int col = source.columnAtPoint(e.getPoint());
+                if (!source.isRowSelected(row)) {
+                    source.changeSelection(row, col, false, false);
+                }
+                showPopup(e);
+            }
         }
         private void showPopup(MouseEvent e) {
             if (e.isPopupTrigger()) {
