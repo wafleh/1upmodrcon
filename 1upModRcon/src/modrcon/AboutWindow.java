@@ -1,9 +1,11 @@
 package modrcon;
 
 import java.awt.event.ActionEvent;
+import java.awt.event.MouseEvent;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseListener;
 
 /**
  * Displays an About window for 1up ModRcon.
@@ -22,7 +24,7 @@ public class AboutWindow extends JDialog implements ActionListener {
         this.setTitle("1up ModRcon - About");
         this.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
         this.setModal(true);
-        this.setSize(385, 310);
+        this.setSize(385, 330);
         this.setResizable(false);
         ImageIcon topLeftIcon = new ImageIcon(getClass().getResource("/modrcon/resources/1up8bit_green.png"));
         this.setIconImage(topLeftIcon.getImage());
@@ -65,52 +67,128 @@ public class AboutWindow extends JDialog implements ActionListener {
     }
 
     protected JComponent getThirdPartiesTab() {
-        JPanel panel = new JPanel(false);
-        panel.setLayout(new VerticalFlowLayout());
-        JLabel text1 = new JLabel("<html>Portions of this software use components<br>developed by the following 3rd Parties.</html>");
+        JLabel text1 = new JLabel("<html><p><center>Portions of this software use components developed by the following 3rd Parties.</center></p></html>");
+        Font f = text1.getFont();
+        f = f.deriveFont(Font.BOLD);
+        text1.setFont(f);
         JLabel text2 = new JLabel("Q3Tool by Philip Edelbrock");
+        Dimension d2 = text2.getPreferredSize();
         JLabel text3 = new JLabel("VerticalFlowLayout by Vassili Dzuba");
+        Dimension d3 = text3.getPreferredSize();
         JLabel text4 = new JLabel("BrowserLauncher by Eric Albert");
-        panel.add(text1);
-        panel.add(text2);
-        panel.add(text3);
-        panel.add(text4);
+        Dimension d4 = text4.getPreferredSize();
+        
+        JPanel t1Panel = new JPanel();
+        t1Panel.setLayout(new BoxLayout(t1Panel, BoxLayout.X_AXIS));
+        t1Panel.add(text1);
+        
+        JPanel t2Panel = new JPanel();
+        t2Panel.setMaximumSize(d2);
+        t2Panel.add(text2);
+        
+        JPanel t3Panel = new JPanel();
+        t3Panel.setMaximumSize(d3);
+        t3Panel.add(text3);
+        
+        JPanel t4Panel = new JPanel();
+        t4Panel.setMaximumSize(d4);
+        t4Panel.add(text4);
+
+        JPanel panel = new JPanel();
+        panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
+        panel.add(Box.createGlue());
+        panel.add(ModRconUtil.getPaddedPanel(0, 25, t1Panel));
+        panel.add(t2Panel);
+        panel.add(t3Panel);
+        panel.add(t4Panel);
+        panel.add(Box.createGlue());
+
         return panel;
     }
 
     protected JComponent getAboutTab() {
-        JPanel panel = new JPanel(false);
+        JPanel panel = new JPanel();
         panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
 
-        JLabel appLabel = new JLabel("<html><b>Application Name:</b>  1up ModRcon</html>");
-        JLabel verLabel = new JLabel("<html><b>Version:</b>  Beta 0.7</html>");
-        JLabel webLabel = new JLabel("<html><b>Website:</b>  http://1upclan.info/</html>");
-        JLabel autLabel = new JLabel("<html><b>Authors:</b>  Tesla[1up], Pyrite[1up], Izuriel[1up]</html>");
-        JLabel betLabel = new JLabel("<html><b>Beta Testers:</b>  RonaldLee[1up], Dougy, Tits_McGee[1up]</html>");
+        JPanel appPanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
+        appPanel.add(Box.createHorizontalStrut(10));
+        appPanel.add(new JLabel("<html><b>Application Name:</b></html>"));
+        appPanel.add(Box.createHorizontalStrut(8));
+        appPanel.add(new JLabel("1up ModRcon"));
+        
+        JPanel verPanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
+        verPanel.add(Box.createHorizontalStrut(10));
+        verPanel.add(new JLabel("<html><b>Version:</b></html>"));
+        verPanel.add(Box.createHorizontalStrut(8));
+        verPanel.add(new JLabel(PropertyManager.MODRCON_VERSION));
 
+        JLabel webLabel = new JLabel("<html><u><b>http://1upclan.info/</b></u></html>");
+        webLabel.setForeground(LogoPanel.HEADER_COLOR_END);
+        webLabel.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+        webLabel.addMouseListener(new MouseListener() {
+            public void mouseClicked(MouseEvent e) {
+                try {
+                    BrowserLauncher.openURL("http://1upclan.info/");
+                } catch (Exception ex) { }
+            }
+
+            public void mousePressed(MouseEvent e) { }
+            public void mouseReleased(MouseEvent e) { }
+            public void mouseEntered(MouseEvent e) { }
+            public void mouseExited(MouseEvent e) { }
+        });
+
+        JPanel webPanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
+        webPanel.add(Box.createHorizontalStrut(10));
+        webPanel.add(new JLabel("<html><b>Website:</b></html>"));
+        webPanel.add(Box.createHorizontalStrut(8));
+        webPanel.add(webLabel);
+
+        JPanel autPanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
+        autPanel.add(Box.createHorizontalStrut(10));
+        autPanel.add(new JLabel("<html><b>Authors:</b></html>"));
+        autPanel.add(Box.createHorizontalStrut(8));
+        autPanel.add(new JLabel("Tesla[1up], Pyrite[1up], izuriel"));
+
+        JPanel betPanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
+        betPanel.add(Box.createHorizontalStrut(10));;
+        betPanel.add(new JLabel("<html><b>Beta Testers:</b><html>"));
+        betPanel.add(Box.createHorizontalStrut(8));
+        betPanel.add(new JLabel("RonaldLee[1up], Dougy, Tits_McGee[1up]"));
+
+        Font f = new Font("Tahoma", Font.PLAIN, 10);
+        JLabel c1Label = new JLabel("The 1up Mushroom is Copyright \u00A9 2010 Nintendo Corp of America.");
+        Dimension c1Dim = c1Label.getPreferredSize();
+        c1Label.setFont(f);
         JPanel copy1 = new JPanel();
-        copy1.setLayout(new BoxLayout(copy1, BoxLayout.X_AXIS));
-        copy1.add(new JLabel("The 1up Mushroom is Copyright \u00A9 2010 Nintendo Corp of America."));
+        copy1.setMaximumSize(c1Dim);
+        copy1.add(c1Label);
+
+        JLabel c2Label = new JLabel("1up ModRcon is Copyright \u00A9 2010 Tesla[1up]. All Rights Reserved.");
+        Dimension c2Dim = c2Label.getPreferredSize();
+        c2Label.setFont(f);
         JPanel copy2 = new JPanel();
-        copy2.setLayout(new BoxLayout(copy2, BoxLayout.X_AXIS));
-        copy2.add(new JLabel("1up ModRcon is Copyright \u00A9 2010 Tesla[1up]. All Rights Reserved."));
+        copy2.setMaximumSize(c2Dim);
+        copy2.add(c2Label);
 
         panel.add(Box.createHorizontalStrut(8));
-        panel.add(appLabel);
+        panel.add(appPanel);
         panel.add(Box.createHorizontalStrut(8));
-        panel.add(verLabel);
+        panel.add(verPanel);
         panel.add(Box.createHorizontalStrut(8));
-        panel.add(webLabel);
+        panel.add(webPanel);
         panel.add(Box.createHorizontalStrut(8));
-        panel.add(autLabel);
+        panel.add(autPanel);
         panel.add(Box.createHorizontalStrut(8));
-        panel.add(betLabel);
-        
-        //panel.add(copy1);
-        //panel.add(copy2);
-        
+        panel.add(betPanel);
+        panel.add(Box.createHorizontalStrut(8));
+        panel.add(copy1);
+        panel.add(copy2);
 
-        return panel;
+        JPanel borderPanel = new JPanel(new BorderLayout());
+        borderPanel.add(panel, BorderLayout.CENTER);
+
+        return borderPanel;
     }
 
     public void actionPerformed(ActionEvent e) {
