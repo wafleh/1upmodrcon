@@ -171,7 +171,7 @@ public class AutoCompleteTextField extends JTextField implements KeyListener,
             int centeredY = ((getHeight() / 2) + (int)(subGuessBounds.getHeight() / 2));
 
             g.setColor(this.incompleteColor);
-            g.drawString(subGuess, (int)(enteredBounds.getWidth()) + 2, centeredY - 2);
+            g.drawString(subGuess + "   press ENTER to send or \u2192 to fill", (int)(enteredBounds.getWidth()) + 2, centeredY - 2);
         }
     }
 
@@ -182,6 +182,14 @@ public class AutoCompleteTextField extends JTextField implements KeyListener,
             if (this.areGuessing) {
                 this.setText(this.getCurrentGuess());
                 this.areGuessing = false;
+            }
+        }
+
+        if (e.getKeyCode() == KeyEvent.VK_RIGHT) {
+            if (this.areGuessing) {
+                this.setText(this.getCurrentGuess());
+                this.areGuessing = false;
+                e.consume();
             }
         }
     }
