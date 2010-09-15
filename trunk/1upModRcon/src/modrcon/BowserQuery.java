@@ -207,6 +207,27 @@ public class BowserQuery {
         }
     }
 
+    public int getAllowVoteSetting() {
+        return this.getAllowVoteSetting(this.getstatus());
+    }
+
+    public int getAllowVoteSetting(String getStatusOutput) {
+        String vote = "";
+        String[] lines = getStatusOutput.split("\\\\");
+        for (int i=0; i < lines.length; i++) {
+            if (lines[i].equals("g_allowvote")) {
+                vote = lines[i+1];
+                break;
+            }
+        }
+        try {
+            return Integer.parseInt(vote);
+        }
+        catch (NumberFormatException e) {
+            return 0;
+        }
+    }
+
     public String getstatus() {
         this.send("getstatus");
         String resp = this.getResponse();

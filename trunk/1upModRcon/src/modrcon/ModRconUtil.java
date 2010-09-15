@@ -1,6 +1,7 @@
 package modrcon;
 
 import java.util.ArrayList;
+import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import javax.swing.*;
 
@@ -110,6 +111,12 @@ public class ModRconUtil {
             gt = 8;
         }
         return gt;
+    }
+
+    public static String trimAndStripColors(String name) {
+        Pattern r = Pattern.compile("\\^.");
+        Matcher m = r.matcher(name.trim());
+        return m.replaceAll("");
     }
 
     public static ArrayList getDefaultUrTMaps() {

@@ -143,6 +143,7 @@ public class MenuAction extends AbstractAction {
         else if (selection.equals("Slap User")) {
             JTable source = this.parent.getLivePlayerInfoPanel().getLivePlayerInfoTable();
             String name = (String)source.getModel().getValueAt(source.getSelectedRow(), 2);
+            name = ModRconUtil.trimAndStripColors(name);
             try {
                 BowserQuery q = new BowserQuery(this.parent.getCurrentServer());
                 String cmd = "slap \""+name+"\"";
@@ -169,6 +170,7 @@ public class MenuAction extends AbstractAction {
         else if (selection.equals("Mute User")) {
             JTable source = this.parent.getLivePlayerInfoPanel().getLivePlayerInfoTable();
             String name = (String)source.getModel().getValueAt(source.getSelectedRow(), 2);
+            name = ModRconUtil.trimAndStripColors(name);
             try {
                 BowserQuery q = new BowserQuery(this.parent.getCurrentServer());
                 String cmd = "mute \""+name+"\"";
@@ -195,6 +197,7 @@ public class MenuAction extends AbstractAction {
         else if (selection.equals("Move To Red Team")) {
             JTable source = this.parent.getLivePlayerInfoPanel().getLivePlayerInfoTable();
             String name = (String)source.getModel().getValueAt(source.getSelectedRow(), 2);
+            name = ModRconUtil.trimAndStripColors(name);
             try {
                 BowserQuery q = new BowserQuery(this.parent.getCurrentServer());
                 String cmd = "forceteam \""+name+"\" red";
@@ -208,6 +211,7 @@ public class MenuAction extends AbstractAction {
         else if (selection.equals("Move To Blue Team")) {
             JTable source = this.parent.getLivePlayerInfoPanel().getLivePlayerInfoTable();
             String name = (String)source.getModel().getValueAt(source.getSelectedRow(), 2);
+            name = ModRconUtil.trimAndStripColors(name);
             try {
                 BowserQuery q = new BowserQuery(this.parent.getCurrentServer());
                 String cmd = "forceteam \""+name+"\" blue";
@@ -221,6 +225,7 @@ public class MenuAction extends AbstractAction {
         else if (selection.equals("Move To Spectators")) {
             JTable source = this.parent.getLivePlayerInfoPanel().getLivePlayerInfoTable();
             String name = (String)source.getModel().getValueAt(source.getSelectedRow(), 2);
+            name = ModRconUtil.trimAndStripColors(name);
             try {
                 BowserQuery q = new BowserQuery(this.parent.getCurrentServer());
                 String cmd = "forceteam \""+name+"\" spectator";
