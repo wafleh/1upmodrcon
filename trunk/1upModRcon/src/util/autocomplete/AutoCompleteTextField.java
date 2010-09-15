@@ -123,11 +123,15 @@ public class AutoCompleteTextField extends JTextField implements KeyListener,
 
     private void findCurrentGuess() {
         String entered = this.getText();
+        if (!this.caseSensitive)
+            entered = entered.toLowerCase();
 
         for (int i = 0; i < this.possibilities.size(); i++) {
             currentGuess = -1;
 
             String possibility = this.possibilities.get(i);
+            if (!this.caseSensitive)
+                possibility = possibility.toLowerCase();
             if (possibility.startsWith(entered)) {
                 this.currentGuess = i;
                 break;
@@ -151,23 +155,23 @@ public class AutoCompleteTextField extends JTextField implements KeyListener,
         String entered = this.getText();
         Rectangle2D enteredBounds = g.getFontMetrics().getStringBounds(entered, g);
 
-        if (!(this.caseSensitive) && this.areGuessing) {
+        if (!(this.caseSensitive)) {
             entered = entered.toLowerCase();
             guess = guess.toLowerCase();
         }
-
+        
         if (!(guess.startsWith(entered)))
             this.areGuessing = false;
 
         if (entered != null && !(entered.equals("")) 
                 && this.areGuessing) {
             String subGuess = drawGuess.substring(entered.length(), drawGuess.length());
-            Rectangle2D subGuessBounds = g.getFontMetrics().getStringBounds("I", g);
+            Rectangle2D subGuessBounds = g.getFontMetrics().getStringBounds(drawGuess, g);
 
             int centeredY = ((getHeight() / 2) + (int)(subGuessBounds.getHeight() / 2));
 
             g.setColor(this.incompleteColor);
-            g.drawString(subGuess, (int)(enteredBounds.getWidth()) + 3, centeredY);
+            g.drawString(subGuess, (int)(enteredBounds.getWidth()) + 2, centeredY - 2);
         }
     }
 
