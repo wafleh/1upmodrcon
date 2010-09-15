@@ -4,6 +4,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
 import java.util.ArrayList;
+import util.autocomplete.*;
 
 /**
  * The Control Panel portion of the main 1up ModRcon window.
@@ -16,7 +17,8 @@ public class ControlPanel extends JPanel implements ActionListener, KeyListener 
     private MainWindow parent;
 
     private JLabel labelType;
-    private JComboBox comboCommandBox;
+    //private JComboBox comboCommandBox;
+    private AutoCompleteComboBox comboCommandBox;
     
     private JButton btnSend = new JButton("Send");
     private JButton btnStatus = new JButton("Status");
@@ -38,9 +40,11 @@ public class ControlPanel extends JPanel implements ActionListener, KeyListener 
         this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
         this.setBorder(BorderFactory.createTitledBorder("Control Panel"));
 
-        this.comboCommandBox = new JComboBox();
-        this.comboCommandBox.setEditable(true);
-        this.comboCommandBox.getEditor().getEditorComponent().addKeyListener(this);
+        //this.comboCommandBox = new JComboBox();
+        this.comboCommandBox = new AutoCompleteComboBox<Q3Command>();
+        //this.comboCommandBox.setEditable(true);
+        //this.comboCommandBox.getEditor().getEditorComponent().addKeyListener(this);
+        this.comboCommandBox.getEditorComponent().addKeyListener(this);
 
         btnSend.addActionListener(this);
         btnStatus.addActionListener(this);

@@ -149,46 +149,7 @@ public class ConsoleTextPane extends JTextPane {
      * @return Returns the index of the beginning of the word if it's in the document, or -1 if it's not found.
      */
     public int find(String search, boolean caseSensitive, boolean matchWord) {
-        try {
-            String cText = this.styledDoc.getText(0, this.styledDoc.getLength());
-            
-            if (!caseSensitive) {
-                cText = cText.toLowerCase();
-                search = search.toLowerCase();
-            }
-            
-            int selStart = cText.indexOf(search);
-            int selEnd = selStart + search.length();
-
-            boolean isWord = false;
-            if (matchWord) {
-                if (selStart > 1) {
-                    char before = this.styledDoc.getText(selStart - 1, selStart).charAt(0);
-
-                    if (before == ' ')
-                        isWord = true;
-                    else
-                        isWord = false;
-                } else
-                    isWord = true;
-
-                if (selEnd + 2 <= this.styledDoc.getLength() && isWord) {
-                    char after = this.styledDoc.getText(selEnd, selEnd + 1).charAt(0);
-
-                    if (!(this.isValidWordEnd(after)))
-                        isWord = false;
-                } else
-                    isWord = true;
-            } else
-                isWord = true;
-
-            if (selStart > 0 && isWord) {
-                this.setSelection(selStart, selEnd);
-                return selStart;
-            }
-        } catch (Exception exc) { System.out.println(exc.getMessage()); }
-        
-        return -1;
+        return find(search, 0, caseSensitive, matchWord);
     }
 
     /**
@@ -341,9 +302,8 @@ public class ConsoleTextPane extends JTextPane {
      * @param bulkAppends The AppendLine array containing each line and Style that will be appended.
      */
     public void appendWithNewline(AppendLine[] bulkAppends) {
-        for (int i = 0; i < bulkAppends.length; i++)
-            this.append(bulkAppends[i].getLine(), bulkAppends[i].getStyleName());
-        append("\n\n");
+        bulkAppends[bulkAppends.length - 1].appendLine("\n\n");
+        append(bulkAppends);
     }
 
     /** Creates a String containing the command entered and the date/time entered, adding it to the console.
@@ -376,15 +336,23 @@ public class ConsoleTextPane extends JTextPane {
             this.line = line;
             this.styleName = "default";
         }
+
         public String getLine() {
             return this.line;
         }
+
+        public void appendLine(String append) {
+            this.line += append;
+        }
+
         public String getStyleName() {
             return this.styleName;
         }
+
         public void setLine(String line) {
             this.line = line;
         }
+
         public void setStyleName(String styleName) {
             this.styleName = styleName;
         }
