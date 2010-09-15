@@ -42,6 +42,8 @@ public class VoteCalculatorDialog extends JDialog implements MouseListener,
     private JButton sendButton;
     private JButton cancelButton;
 
+    private boolean fireEvents;
+
     private java.util.ArrayList<VoteCheckBox> vbcList;
 
     public VoteCalculatorDialog(MainWindow parent) {
@@ -56,8 +58,19 @@ public class VoteCalculatorDialog extends JDialog implements MouseListener,
 
         this.initialize();
         this.add(buildUI());
+        this.getServerVoteSetting();
         this.center();
         this.setVisible(true);
+    }
+
+    private void getServerVoteSetting() {
+        try {
+            BowserQuery bq = new BowserQuery(this.parent.getCurrentServer());
+            int allowVote = bq.getAllowVoteSetting();
+            
+            this.voteLabel.setText(allowVote + "");
+            this.setVoteCheckBoxes();
+        } catch(Exception exc) { }
     }
 
     private void initialize() {
@@ -86,6 +99,8 @@ public class VoteCalculatorDialog extends JDialog implements MouseListener,
         this.sendButton.addActionListener(this);
         this.cancelButton = new JButton("Cancel");
         this.cancelButton.addActionListener(this);
+
+        this.fireEvents = true;
 
         //this.voteSpinner = new JSpinner();
         //this.voteSpinner.setValue(MIN_VALUE);
@@ -257,7 +272,7 @@ public class VoteCalculatorDialog extends JDialog implements MouseListener,
         return ModRconUtil.getPaddedPanel(15, gWarningPanel);
     }
 
-    private JPanel getVoteCheckBoxPanel(String text, long value) {
+    private JPanel getVoteCheckBoxPanel(String text, int value) {
         VoteCheckBox vBox = new VoteCheckBox(text, value);
         vBox.addMouseListener(this);
         vBox.addItemListener(this);
@@ -367,6 +382,22 @@ public class VoteCalculatorDialog extends JDialog implements MouseListener,
         super.dispose();
     }
 
+    private void setVoteCheckBoxes() {
+        this.fireEvents = false;
+        int gAllowVote = Integer.parseInt(this.voteLabel.getText());
+        for (int i = vbcList.size() - 1; i >= 0; i--) {
+            VoteCheckBox temp = vbcList.get(i);
+            int value = temp.getValue();
+
+            if (gAllowVote >= value) {
+                temp.setSelected(true);
+                gAllowVote -= value;
+            } else
+                temp.setSelected(false);
+        }
+        this.fireEvents = true;
+    }
+
     private void switchPanels() {
         this.selectAllLabel.setIcon(this.selectAllIcon);
         this.selectAllLabel.addMouseListener(this);
@@ -410,17 +441,20 @@ public class VoteCalculatorDialog extends JDialog implements MouseListener,
     }
 
     public void itemStateChanged(ItemEvent e) {
-        VoteCheckBox source = (VoteCheckBox)e.getSource();
-        //int value = (Integer)(this.voteSpinner.getValue());
-        int value = Integer.parseInt(this.voteLabel.getText());
+        if (this.fireEvents) {
+            VoteCheckBox source = (VoteCheckBox)e.getSource();
 
-        if (source.isSelected())
-            value += source.getValue();
-        else
-            value -= source.getValue();
+            //int value = (Integer)(this.voteSpinner.getValue());
+            int value = Integer.parseInt(this.voteLabel.getText());
 
-        //this.voteSpinner.setValue(value);
-        this.voteLabel.setText("" + value);
+            if (source.isSelected())
+                value += source.getValue();
+            else
+                value -= source.getValue();
+
+            //this.voteSpinner.setValue(value);
+            this.voteLabel.setText("" + value);
+        }
     }
 
     public void stateChanged(ChangeEvent e) {
@@ -469,10 +503,10 @@ public class VoteCalculatorDialog extends JDialog implements MouseListener,
     public void windowDeactivated(WindowEvent e) { }
 
     private class VoteCheckBox extends JCheckBox {
-        private long value;
+        private int value;
         private JPanel panel;
 
-        public VoteCheckBox(String text, long value) {
+        public VoteCheckBox(String text, int value) {
             super(text);
             this.setOpaque(false);
             this.value = value;
@@ -482,7 +516,7 @@ public class VoteCalculatorDialog extends JDialog implements MouseListener,
             this.panel = panel;
         }
 
-        public long getValue() {
+        public int getValue() {
             return this.value;
         }
 

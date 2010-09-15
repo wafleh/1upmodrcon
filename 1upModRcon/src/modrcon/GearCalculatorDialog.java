@@ -116,7 +116,9 @@ public class GearCalculatorDialog extends JDialog implements MouseListener,
         } catch(Exception exc) { System.out.println(exc.getMessage()); }
 
         this.gearSpinner.setValue(gGearNum);
+        this.fireEvents = false;
         this.updateGearBoxes();
+        this.fireEvents = true;
     }
 
     private void center() {
@@ -342,244 +344,39 @@ public class GearCalculatorDialog extends JDialog implements MouseListener,
     private void updateGearBoxes() {
         int gGearNum = (Integer)this.gearSpinner.getValue();
 
-        // negevBox
-        switch(gGearNum) {
-            case 0:
-            case 1:
-            case 2:
-            case 3:
-            case 4:
-            case 5:
-            case 6:
-            case 7:
-            case 8:
-            case 9:
-            case 10:
-            case 11:
-            case 12:
-            case 13:
-            case 14:
-            case 15:
-            case 16:
-            case 17:
-            case 18:
-            case 19:
-            case 20:
-            case 21:
-            case 22:
-            case 23:
-            case 24:
-            case 25:
-            case 26:
-            case 27:
-            case 28:
-            case 29:
-            case 30:
-            case 31:
-                this.negevBox.setSelected(true);
-                break;
-            default:
-                this.negevBox.setSelected(false);
-        }
+        if (gGearNum >= this.NEGEV_VALUE) {
+            this.negevBox.setSelected(true);
+            gGearNum -= this.NEGEV_VALUE;
+        } else
+            this.negevBox.setSelected(false);
 
-        // Automatic box
-        switch(gGearNum) {
-            case 0:
-            case 1:
-            case 2:
-            case 3:
-            case 4:
-            case 5:
-            case 6:
-            case 7:
-            case 8:
-            case 9:
-            case 10:
-            case 11:
-            case 12:
-            case 13:
-            case 14:
-            case 15:
-            case 32:
-            case 33:
-            case 34:
-            case 35:
-            case 36:
-            case 37:
-            case 38:
-            case 39:
-            case 40:
-            case 41:
-            case 42:
-            case 43:
-            case 44:
-            case 45:
-            case 46:
-            case 47:
-                this.automaticBox.setSelected(true);
-                break;
-            default:
-                this.automaticBox.setSelected(false);
-        }
+        if (gGearNum >= this.AUTOMATIC_VALUE) {
+            this.automaticBox.setSelected(true);
+            gGearNum -= this.AUTOMATIC_VALUE;
+        } else
+            this.automaticBox.setSelected(false);
 
-        // Pistol Box
-        switch(gGearNum) {
-            case 0:
-            case 1:
-            case 2:
-            case 3:
-            case 4:
-            case 5:
-            case 6:
-            case 7:
-            case 16:
-            case 17:
-            case 18:
-            case 19:
-            case 20:
-            case 21:
-            case 22:
-            case 23:
-            case 32:
-            case 33:
-            case 34:
-            case 35:
-            case 36:
-            case 37:
-            case 38:
-            case 39:
-            case 48:
-            case 49:
-            case 50:
-            case 51:
-            case 52:
-            case 53:
-            case 54:
-            case 55:
-                this.pistolBox.setSelected(true);
-                break;
-            default:
-                this.pistolBox.setSelected(false);
-        }
+        if (gGearNum >= this.PISTOL_VALUE) {
+            this.pistolBox.setSelected(true);
+            gGearNum -= this.PISTOL_VALUE;
+        } else
+            this.pistolBox.setSelected(false);
 
-        // Spas Box
-        switch(gGearNum) {
-            case 0:
-            case 1:
-            case 2:
-            case 3:
-            case 8:
-            case 9:
-            case 10:
-            case 11:
-            case 16:
-            case 17:
-            case 18:
-            case 19:
-            case 24:
-            case 25:
-            case 26:
-            case 27:
-            case 32:
-            case 33:
-            case 34:
-            case 35:
-            case 40:
-            case 41:
-            case 42:
-            case 43:
-            case 48:
-            case 49:
-            case 50:
-            case 51:
-            case 56:
-            case 57:
-            case 58:
-            case 59:
-                this.spasBox.setSelected(true);
-                break;
-            default:
-                this.spasBox.setSelected(false);
-        }
+        if (gGearNum >= this.SPAS_VALUE) {
+            this.spasBox.setSelected(true);
+            gGearNum -= this.SPAS_VALUE;
+        } else
+            this.spasBox.setSelected(false);
 
-        // Sniper Box
-        switch(gGearNum) {
-            case 0:
-            case 1:
-            case 4:
-            case 5:
-            case 8:
-            case 9:
-            case 12:
-            case 13:
-            case 16:
-            case 17:
-            case 20:
-            case 21:
-            case 24:
-            case 25:
-            case 28:
-            case 29:
-            case 32:
-            case 33:
-            case 36:
-            case 37:
-            case 40:
-            case 41:
-            case 44:
-            case 45:
-            case 48:
-            case 49:
-            case 52:
-            case 53:
-            case 56:
-            case 57:
-            case 60:
-            case 61:
-                this.sniperBox.setSelected(true);
-                break;
-            default:
-                this.sniperBox.setSelected(false);
-        }
+        if (gGearNum >= this.SNIPER_VALUE) {
+            this.sniperBox.setSelected(true);
+            gGearNum -= this.SNIPER_VALUE;
+        } else
+            this.sniperBox.setSelected(false);
 
-        // Grenade Box
-        switch(gGearNum) {
-            case 0:
-            case 2:
-            case 4:
-            case 6:
-            case 8:
-            case 10:
-            case 12:
-            case 14:
-            case 16:
-            case 18:
-            case 20:
-            case 22:
-            case 24:
-            case 26:
-            case 28:
-            case 30:
-            case 32:
-            case 34:
-            case 36:
-            case 38:
-            case 40:
-            case 42:
-            case 44:
-            case 46:
-            case 48:
-            case 50:
-            case 52:
-            case 54:
-            case 56:
-            case 58:
-            case 60:
-            case 62:
-                this.grenadeBox.setSelected(true);
-                break;
-            default:
-                this.grenadeBox.setSelected(false);
-        }
+        if (gGearNum >= this.GRENADE_VALUE)
+            this.grenadeBox.setSelected(true);
+        else
+            this.grenadeBox.setSelected(false);
     }
 }
