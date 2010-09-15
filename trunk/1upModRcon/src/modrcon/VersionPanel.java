@@ -14,7 +14,7 @@ public class VersionPanel extends JPanel {
     public VersionPanel() {
         super();
         PropertyManager pm = new PropertyManager();
-        version = new JLabel("Version: "+pm.getVersion());
+        version = new JLabel("Version: "+PropertyManager.MODRCON_VERSION);
         this.setLayout(new FlowLayout(FlowLayout.LEFT));
         this.add(version);
     }
