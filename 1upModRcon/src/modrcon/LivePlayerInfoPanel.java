@@ -199,7 +199,7 @@ public class LivePlayerInfoPanel extends JPanel {
 
         thisLine[0] = tempSplit[0]; // Score
         thisLine[1] = tempSplit[1]; // Ping
-        thisLine[2] = line.substring(line.indexOf('\"') + 1, line.lastIndexOf('\"')).trim();
+        thisLine[2] = line.substring(line.indexOf('\"') + 1, line.lastIndexOf('\"'));
 
         return thisLine;
     }
