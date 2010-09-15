@@ -2,6 +2,7 @@ package modrcon;
 
 import java.util.ArrayList;
 import java.io.*;
+import java.util.Collections;
 
 /**
  * A class to store the Q3Commands.
@@ -81,9 +82,9 @@ public class Q3CommandDatabase implements Serializable {
     /**
      * Add a Command to the Q3CommandDatabase.
      *
-     * @param s The Command to Add.
+     * @param cmd The Command to Add.
      */
-    public void addServer(Q3Command cmd) {
+    public void addCommand(Q3Command cmd) {
         this.commandList.add(cmd);
     }
 
@@ -115,6 +116,7 @@ public class Q3CommandDatabase implements Serializable {
      * Saves the commandList to the Hard Disk.
      */
     public void saveDatabase() {
+        Collections.sort(commandList);
         FileOutputStream fos = null;
         ObjectOutputStream out = null;
         try {
