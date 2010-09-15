@@ -11,6 +11,9 @@ import java.io.*;
  */
 public class PropertyManager {
 
+    /** The current version of 1up ModRcon. */
+    public static final String MODRCON_VERSION = "Beta 0.7";
+
     /** The Properties File */
     private Properties propFile;
 
