@@ -162,8 +162,41 @@ public class ControlPanel extends JPanel implements ActionListener, KeyListener 
         this.labelType.setText(" /"+s.toLowerCase()+" ");
     }
 
+    public void checkAddCommand(String command) {
+        String originalCmd = command;
+        if (command.contains(" ")) {
+            String cmd[] = command.split(" ");
+            command = cmd[0];
+        }
+
+        boolean newCommand = true;
+        Q3CommandDatabase db = new Q3CommandDatabase();
+        ArrayList<Q3Command> list = db.getCommandList();
+        for (Q3Command item: list) {
+            if (item.getCommand().equalsIgnoreCase(command)) {
+                newCommand = false;
+                break;
+            }
+        }
+
+        if (newCommand) {
+            int option = JOptionPane.showConfirmDialog(this.parent,
+                    "Would you like to add \"" + command
+                    + "\" to the command Database?", "New Command Detected",
+                    JOptionPane.YES_NO_OPTION);
+
+            if (option == JOptionPane.YES_OPTION) {
+                db.addCommand(new Q3Command(command, "Not entered yet",
+                        originalCmd));
+                db.saveDatabase();
+                this.refreshCommandCombo();
+            }
+        }
+    }
+
     public void refreshCommandCombo() {
-        this.comboCommandBox.setModel(new DefaultComboBoxModel());
+        //this.comboCommandBox.setModel(new DefaultComboBoxModel());
+        this.comboCommandBox.removeAllItems();
         Q3CommandDatabase db = new Q3CommandDatabase();
         ArrayList commands = db.getCommandList();
         for (Object o : commands) {
@@ -186,6 +219,8 @@ public class ControlPanel extends JPanel implements ActionListener, KeyListener 
                     SoundEffect.DUKE_BABE.play();
                 }
                 else {
+                    this.checkAddCommand(cmd);
+
                     try {
                         Server server = this.parent.getCurrentServer();
                         BowserQuery q = new BowserQuery(server);

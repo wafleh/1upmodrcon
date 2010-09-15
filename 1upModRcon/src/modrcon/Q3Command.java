@@ -7,7 +7,7 @@ import java.io.Serializable;
  *
  * @author Pyrite[1up]
  */
-public class Q3Command implements Serializable {
+public class Q3Command implements Serializable, Comparable {
 
     private String command;
     private String description;
@@ -41,4 +41,8 @@ public class Q3Command implements Serializable {
         return this.command;
     }
 
+    public int compareTo(Object o) {
+        Q3Command other = (Q3Command)o;
+        return this.command.compareTo(other.getCommand());
+    }
 }
