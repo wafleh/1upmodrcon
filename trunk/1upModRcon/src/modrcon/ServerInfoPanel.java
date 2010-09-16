@@ -19,7 +19,7 @@ public class ServerInfoPanel extends JPanel implements MouseListener {
     private JLabel ip;
     private JLabel port;
     private JLabel gametype;
-    private JLabel map;
+    private JImageLabel map;
     private JLabel joinServerLabel;
 
     public ServerInfoPanel(MainWindow owner) {
@@ -58,7 +58,7 @@ public class ServerInfoPanel extends JPanel implements MouseListener {
         gametype = new JLabel("N/A");
         gametype.setFont(new Font("Tahoma", Font.PLAIN, 11));
         gametype.addMouseListener(this);
-        map      = new JLabel("N/A");
+        map      = new JImageLabel("N/A", "/modrcon/resources/maps/default_ut.jpg");
         map.setFont(new Font("Tahoma", Font.PLAIN, 11));
         map.addMouseListener(this);
 
@@ -109,6 +109,7 @@ public class ServerInfoPanel extends JPanel implements MouseListener {
 
     public void setMap(String map) {
         this.map.setText("<html>"+map+" (<font color=\"#DD5731\"><u>Change</u></font>)</html>");
+        this.map.setResourcePath("/modrcon/resources/maps/ut4_swim.jpg");
     }
 
     public void mouseClicked(MouseEvent e) {
