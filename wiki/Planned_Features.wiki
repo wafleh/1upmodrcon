@@ -7,3 +7,4 @@
   * Audit Trail - Remembers/logs all commands sent to server.
   * Map Images - Like the Servers page on 1upclan.info, show map image thumbnail below map name on ServerInfoPanel.
   * Any other requests from page 3 of this thread (http://www.1upclan.info/forum/index.php?topic=2253.30).
+  * Add any features that Fragomatic's RCON Commander had.
