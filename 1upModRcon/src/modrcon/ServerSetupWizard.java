@@ -187,12 +187,6 @@ public class ServerSetupWizard extends JFrame implements ActionListener {
         line5.add(infoIconPassword);
         line5.add(Box.createHorizontalStrut(5));
 
-        JPanel line6 = new JPanel();
-        line6.setLayout(new BoxLayout(line6, BoxLayout.X_AXIS));
-        line6.add(Box.createHorizontalGlue());
-        line6.add(new JLabel("Click Save Now once you have filled out all required fields to continue."));
-        line6.add(Box.createHorizontalGlue());
-
         serverPanel.add(line1);
         serverPanel.add(Box.createVerticalStrut(5));
         serverPanel.add(line2);
@@ -203,9 +197,6 @@ public class ServerSetupWizard extends JFrame implements ActionListener {
         serverPanel.add(Box.createVerticalStrut(5));
         serverPanel.add(line5);
         serverPanel.add(Box.createVerticalStrut(15));
-        serverPanel.add(line6);
-        //serverPanel.add(this.getLastInstructionsPanel());
-
 
         return serverPanel;
     }
