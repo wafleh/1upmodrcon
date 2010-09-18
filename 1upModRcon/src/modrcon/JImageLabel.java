@@ -1,5 +1,8 @@
 package modrcon;
 
+import java.io.IOException;
+import java.net.MalformedURLException;
+import java.net.URL;
 import javax.swing.*;
 
 /**
@@ -9,29 +12,52 @@ import javax.swing.*;
  */
 public class JImageLabel extends JLabel {
 
-    private String resourcePath;
+    private String map;
 
     /**
      * Constructs a JImageLabel.
      *
      * @param text The text for the JLabel.
      * @param resourcePath The path to the image for the tooltip.
+     * @param stamina How long the tooltip should last.
      */
-    public JImageLabel(String text, String resourcePath) {
+    public JImageLabel(String text, int stamina) {
         super(text);
-        this.resourcePath = resourcePath;
+        this.map = "foobar";
         this.setToolTipText("");
+        ToolTipManager tm = ToolTipManager.sharedInstance();
+        tm.setDismissDelay(stamina);
     }
 
-    public void setResourcePath(String path) {
-        this.resourcePath = path;
+    public void setMapName(String map) {
+        this.map = map;
     }
 
     @Override
     public JToolTip createToolTip() {
-        JToolTipWithIcon tip = new JToolTipWithIcon(new ImageIcon(getClass().getResource(resourcePath)));
-        tip.setComponent(this);
-        return tip;
+        String strURL = "http://1upclan.info/serverstatus/servers2/maps/q3a/"+this.map+".jpg";
+        URL url = null;
+        boolean flag = false;
+        try {
+            url = new URL(strURL);
+            String type = url.openConnection().getContentType();
+            if (type.equals("image/jpeg")) {
+                flag = true;
+            }
+        }
+        catch (MalformedURLException mue) {flag = false;}
+        catch (IOException ioe) {flag = false;}
+
+        if (flag) {
+            JToolTipWithIcon tip = new JToolTipWithIcon(new ImageIcon(url));
+            tip.setComponent(this);
+            return tip;
+        }
+        else {
+            JToolTipWithIcon tip = new JToolTipWithIcon(new ImageIcon(getClass().getResource("/modrcon/resources/maps/default_ut.jpg")));
+            tip.setComponent(this);
+            return tip;
+        }
     }
 
 }
