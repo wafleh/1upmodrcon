@@ -99,12 +99,7 @@ public class MainWindow extends JFrame implements ActionListener, ItemListener {
         // Bring the Window into Focus
         this.setVisible(true);
         this.setMinimumSize(new Dimension((int)this.getWidth(), (int)this.getHeight()));
-
-        PropertyManager pm = new PropertyManager();
-        if (pm.getStatusOnConnect()) {
-            this.controlPanel.sendStatusCommand();
-        }
-
+       
         // Update LivePlayerInfo at set Intervals
         timer = new Timer(2500, this);
         timer.setInitialDelay(1);
@@ -306,6 +301,7 @@ public class MainWindow extends JFrame implements ActionListener, ItemListener {
         }
     }
 
+    /* This method is fired even when the program loads. */
     public void itemStateChanged(ItemEvent e) {
         Object source = e.getItemSelectable();
         if (source == this.comboServerList && e.getStateChange() == ItemEvent.SELECTED) {
@@ -313,6 +309,10 @@ public class MainWindow extends JFrame implements ActionListener, ItemListener {
             this.livePlayerInfoPanel.fireItUp();
             this.refreshServerInfo();
             this.refreshServerType();
+            PropertyManager pm = new PropertyManager();
+            if (pm.getStatusOnConnect()) {
+                this.controlPanel.sendStatusCommand();
+            }
         }
     }
 
