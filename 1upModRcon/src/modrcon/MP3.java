@@ -1,8 +1,7 @@
 package modrcon;
 
 import java.io.BufferedInputStream;
-import java.io.FileInputStream;
-import java.net.URL;
+import java.io.InputStream;
 import javazoom.jl.player.Player;
 
 /**
@@ -39,9 +38,8 @@ public enum MP3 {
     /** Play the MP3 file to the sound card. */
     public void play() {
         try {
-            URL url = this.getClass().getResource("/modrcon/resources/sounds/"+filename);
-            FileInputStream fis     = new FileInputStream(url.getFile());
-            BufferedInputStream bis = new BufferedInputStream(fis);
+            InputStream is = this.getClass().getResourceAsStream("/modrcon/resources/sounds/"+filename);            
+            BufferedInputStream bis = new BufferedInputStream(is);
             player = new Player(bis);
         }
         catch (Exception e) {
