@@ -47,6 +47,7 @@ public class ServerInfoPanel extends JPanel implements MouseListener {
         joinServerLabel.setFont(new Font("Tahoma", Font.BOLD, 11));
         joinServerLabel.setForeground(GradientPanel.HEADER_COLOR_END);
         joinServerLabel.addMouseListener(this);
+        joinServerLabel.setCursor(ModRconUtil.getHelpCursor());
         joinPanel.add(joinServerLabel);
 
         server   = new JLabel("N/A");
@@ -58,7 +59,7 @@ public class ServerInfoPanel extends JPanel implements MouseListener {
         gametype = new JLabel("N/A");
         gametype.setFont(new Font("Tahoma", Font.PLAIN, 11));
         gametype.addMouseListener(this);
-        map      = new JImageLabel("N/A", "/modrcon/resources/maps/default_ut.jpg");
+        map      = new JImageLabel("N/A", 5000);
         map.setFont(new Font("Tahoma", Font.PLAIN, 11));
         map.addMouseListener(this);
 
@@ -109,7 +110,7 @@ public class ServerInfoPanel extends JPanel implements MouseListener {
 
     public void setMap(String map) {
         this.map.setText("<html>"+map+" (<font color=\"#DD5731\"><u>Change</u></font>)</html>");
-        this.map.setResourcePath("/modrcon/resources/maps/ut4_swim.jpg");
+        this.map.setMapName(map);
     }
 
     public void mouseClicked(MouseEvent e) {

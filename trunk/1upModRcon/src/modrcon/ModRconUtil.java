@@ -1,5 +1,9 @@
 package modrcon;
 
+import java.awt.Cursor;
+import java.awt.Image;
+import java.awt.Point;
+import java.awt.Toolkit;
 import java.util.ArrayList;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -111,6 +115,16 @@ public class ModRconUtil {
             gt = 8;
         }
         return gt;
+    }
+
+    public static Cursor getHelpCursor() {
+        Toolkit toolkit = Toolkit.getDefaultToolkit();
+        ImageIcon i = new ImageIcon(ModRconUtil.class.getResource("/modrcon/resources/redshroom.gif"));
+        Image image = i.getImage();
+        //Create the hotspot for the cursor
+        Point hotSpot = new Point(0,0);
+        Cursor cursor = toolkit.createCustomCursor(image, hotSpot, "ModRconHelpCursor");
+        return cursor;
     }
 
     public static String trimAndStripColors(String name) {
