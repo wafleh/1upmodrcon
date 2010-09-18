@@ -267,6 +267,7 @@ public class ControlPanel extends JPanel implements ActionListener, KeyListener 
                     q.sendCmd("slap "+input);
                     this.parent.getConsolePanel().appendCommand("slap "+input);
                     this.parent.getConsolePanel().appendToConsole(q.getResponse());
+                    MP3.DUKE_SLAP.play();
                 }
                 catch (Exception e) {
                     System.out.print(e.getMessage());
