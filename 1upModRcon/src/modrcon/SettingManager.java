@@ -3,6 +3,7 @@ package modrcon;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
+import javax.swing.UIManager.LookAndFeelInfo;
 
 /**
  *
@@ -18,6 +19,8 @@ public class SettingManager extends JDialog implements ActionListener, MouseList
 
     private JLabel bgColorLabel;
     private JLabel fgColorLabel;
+
+    private JComboBox themeCombo;
 
 
 
@@ -109,10 +112,16 @@ public class SettingManager extends JDialog implements ActionListener, MouseList
         colorPanel.add(this.fgColorLabel);
         colorPanel.add(lblFGColor);
 
+        JPanel themePanel = new JPanel();
+        themePanel.setBorder(BorderFactory.createTitledBorder("Program Look & Feel"));
+        themePanel.add(new JLabel("Choose a Look & Feel (Requires Restart):"));
+        themePanel.add(this.getThemeCombo());
+
         sp.add(springPanel);
         sp.add(checkPanel);
         sp.add(new JSeparator());
         sp.add(colorPanel);
+        sp.add(themePanel);
         
         return sp;
     }
@@ -188,5 +197,14 @@ public class SettingManager extends JDialog implements ActionListener, MouseList
 
     public void mouseExited(MouseEvent e) {
         setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
+    }
+
+    private JComboBox getThemeCombo() {
+        this.themeCombo = new JComboBox();
+        for (LookAndFeelInfo info : UIManager.getInstalledLookAndFeels()) {
+            themeCombo.addItem(info.getClassName());
+        }
+        themeCombo.setSelectedItem(UIManager.getLookAndFeel().getClass().getName());
+        return this.themeCombo;
     }
 }
