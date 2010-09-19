@@ -199,15 +199,27 @@ public class ConsolePanel extends JPanel implements MouseListener {
     }
 
     public void mousePressed(MouseEvent e) {
-        setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
+        if (e.getSource() == this.taConsole) {
+            setCursor(new Cursor(Cursor.TEXT_CURSOR));
+        } else {
+            setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
+        }
     }
 
     public void mouseReleased(MouseEvent e) {
-        setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
+        if (e.getSource() == this.taConsole) {
+            setCursor(new Cursor(Cursor.TEXT_CURSOR));
+        } else {
+            setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
+        }
     }
 
     public void mouseEntered(MouseEvent e) {
-        setCursor(new Cursor(Cursor.HAND_CURSOR));
+        if (e.getSource() == this.taConsole) {
+            setCursor(new Cursor(Cursor.TEXT_CURSOR));
+        } else {
+            setCursor(new Cursor(Cursor.HAND_CURSOR));
+        }
     }
 
     public void mouseExited(MouseEvent e) {
