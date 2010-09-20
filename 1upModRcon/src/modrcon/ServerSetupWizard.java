@@ -5,6 +5,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionListener;
 import java.awt.geom.*;
+import java.util.ArrayList;
 
 /**
  * Displays a window to add a single server to the database.
@@ -22,6 +23,7 @@ public class ServerSetupWizard extends JFrame implements ActionListener {
     private JPasswordField serverPassword;
     private JPanel buttonPanel;
     private JButton btnSaveNow;
+    private JButton btnImport;
     private JButton btnCancel;
 
     public ServerSetupWizard() {
@@ -47,10 +49,13 @@ public class ServerSetupWizard extends JFrame implements ActionListener {
 
         buttonPanel = new JPanel(new FlowLayout(FlowLayout.CENTER));
         btnSaveNow = new JButton("Save Now");
+        btnImport = new JButton("Import");
         btnCancel = new JButton("Cancel");
         btnSaveNow.addActionListener(this);
+        btnImport.addActionListener(this);
         btnCancel.addActionListener(this);
         buttonPanel.add(btnSaveNow);
+        buttonPanel.add(btnImport);
         buttonPanel.add(btnCancel);
 
         cp.add(gp, BorderLayout.NORTH);
@@ -306,7 +311,29 @@ public class ServerSetupWizard extends JFrame implements ActionListener {
                 this.runMainWindow();
             }
         }
-        else {
+        else if (pressedButton == this.btnImport) {
+            String choice = JOptionPane.showInputDialog(this, "I can try to import all the 1up Servers for you.\nWhat is your mod password?", "Import 1up Servers", JOptionPane.QUESTION_MESSAGE);
+            if (choice != null) {
+                ArrayList servers = ModRconUtil.get1upServers();
+                if (servers.isEmpty()) {
+                    JOptionPane.showMessageDialog(this, "I'm sorry, I was unable to import the 1up server list.");
+                }
+                else {
+                    ArrayList newServerList = new ArrayList();
+                    for (Object o : servers) {
+                        Server s = (Server)o;
+                        Server n = new Server(s.getName(), s.getIP(), s.getPortAsString(), s.getLoginType(), choice.trim());
+                        newServerList.add(n);
+                    }
+                    ServerDatabase db = new ServerDatabase();
+                    db.setServerList(newServerList);
+                    db.saveDatabase();
+                    this.dispose();
+                    this.runMainWindow();
+                }
+            }
+        }
+        else if (pressedButton == this.btnCancel) {
             String str = "<html><p>Your connection settings have not been saved<br>to the database. If you exit now, you will have<br>to run this wizard again the next time you start<br>this program.<br><br>Are you sure you want to exit now?</p></html>";
             int choice = (int)JOptionPane.showConfirmDialog(this, str, "Information Not Saved" , JOptionPane.YES_NO_OPTION);
             if (choice == JOptionPane.YES_OPTION) {

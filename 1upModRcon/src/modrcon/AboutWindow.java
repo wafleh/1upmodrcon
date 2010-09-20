@@ -24,7 +24,6 @@ public class AboutWindow extends JDialog implements ActionListener {
         this.setTitle("1up ModRcon - About");
         this.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
         this.setModal(true);
-        this.setSize(385, 330);
         this.setResizable(false);
         ImageIcon topLeftIcon = new ImageIcon(getClass().getResource("/modrcon/resources/1up8bit_green.png"));
         this.setIconImage(topLeftIcon.getImage());
@@ -50,7 +49,7 @@ public class AboutWindow extends JDialog implements ActionListener {
         cp.add(tabbedPane, BorderLayout.CENTER);
         cp.add(buttonPanel, BorderLayout.SOUTH);
 
-        //this.pack();
+        this.pack();
 
         // Set the location of the About Window centered relative to the MainMenu
         // --CENTER--
@@ -67,7 +66,7 @@ public class AboutWindow extends JDialog implements ActionListener {
     }
 
     protected JComponent getThirdPartiesTab() {
-        JLabel text1 = new JLabel("<html><p><center>Portions of this software use components developed by the following 3rd Parties.</center></p></html>");
+        JLabel text1 = new JLabel("<html>Portions of this software use code developed<br>by the following 3rd Parties.</html>", JLabel.CENTER);
         Font f = text1.getFont();
         f = f.deriveFont(Font.BOLD);
         text1.setFont(f);

@@ -4,6 +4,13 @@ import java.awt.Cursor;
 import java.awt.Image;
 import java.awt.Point;
 import java.awt.Toolkit;
+import java.io.BufferedReader;
+import java.io.DataInputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -131,6 +138,28 @@ public class ModRconUtil {
         Pattern r = Pattern.compile("\\^.");
         Matcher m = r.matcher(name.trim());
         return m.replaceAll("");
+    }
+
+    /** Returns an ArrayList of 1up Server objects. */
+    public static ArrayList get1upServers() {
+        ArrayList servers = new ArrayList();
+        try {
+            String thisLine;
+            URL u = new URL("http://1upclan.info/servers.xml");
+            BufferedReader theHTML = new BufferedReader(new InputStreamReader(u.openStream()));
+            while ((thisLine = theHTML.readLine()) != null) {
+                if (thisLine.matches("\\t\\t\\t<title>.*</title>")) {
+                    String name = thisLine.substring(thisLine.indexOf(">")+1, thisLine.indexOf("</title>"));
+                    String ip = theHTML.readLine();
+                    ip = ip.substring(ip.indexOf(">")+1, ip.indexOf("</description>"));
+                    Server s = new Server(name, ip, "27960", "mod", "");
+                    servers.add(s);
+                }
+            }
+        }
+        catch (MalformedURLException e) {}
+        catch (IOException e) {}
+        return servers;
     }
 
     public static ArrayList getDefaultUrTMaps() {
