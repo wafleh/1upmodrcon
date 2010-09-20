@@ -21,6 +21,7 @@ public class SettingManager extends JDialog implements ActionListener, MouseList
     private JLabel fgColorLabel;
 
     private JComboBox themeCombo;
+    private String currentLAF;
 
 
 
@@ -66,6 +67,7 @@ public class SettingManager extends JDialog implements ActionListener, MouseList
         sp.setBorder(BorderFactory.createTitledBorder("Program Settings"));
         JLabel lblGamePath = new JLabel("Game Exe Path:", JLabel.TRAILING);
         JLabel lblTimeOut = new JLabel("Receive Timeout:", JLabel.TRAILING);
+        JLabel lblLAF = new JLabel("Look and Feel:", JLabel.TRAILING);
         JLabel lblSendStatus = new JLabel("Send status command on connect");
         JLabel lblBGColor = new JLabel("Console BG Color");
         JLabel lblFGColor = new JLabel("Console Font Color");
@@ -81,10 +83,14 @@ public class SettingManager extends JDialog implements ActionListener, MouseList
         springPanel.add(lblTimeOut);
         lblTimeOut.setLabelFor(timeoutSpinner);
         springPanel.add(timeoutSpinner);
+        JComboBox theme = this.getThemeCombo();
+        springPanel.add(lblLAF);
+        lblLAF.setLabelFor(theme);
+        springPanel.add(theme);
 
         //Lay out the panel.
         SpringUtilities.makeCompactGrid(springPanel,
-            2, 2, //rows, cols
+             3, 2, //rows, cols
             10, 6, //initX, initY
             10, 6  //xPad, yPad
         );
@@ -112,16 +118,10 @@ public class SettingManager extends JDialog implements ActionListener, MouseList
         colorPanel.add(this.fgColorLabel);
         colorPanel.add(lblFGColor);
 
-        JPanel themePanel = new JPanel();
-        themePanel.setBorder(BorderFactory.createTitledBorder("Program Look & Feel"));
-        themePanel.add(new JLabel("Choose a Look & Feel (Requires Restart):"));
-        themePanel.add(this.getThemeCombo());
-
         sp.add(springPanel);
         sp.add(checkPanel);
         sp.add(new JSeparator());
         sp.add(colorPanel);
-        sp.add(themePanel);
         
         return sp;
     }
@@ -160,6 +160,10 @@ public class SettingManager extends JDialog implements ActionListener, MouseList
             pm.setConsoleFGColor(fg);
             this.parent.getConsolePanel().setConsoleBackground(bgColorLabel.getBackground());
             this.parent.getConsolePanel().setConsoleForeground(fgColorLabel.getBackground());
+            pm.setLookAndFeel(this.themeCombo.getSelectedItem().toString());
+            if (!this.currentLAF.equals(this.themeCombo.getSelectedItem().toString())) {
+                JOptionPane.showMessageDialog(this.parent, "Note: Changing the Look & Feel doesn't\ntake effect until 1up ModRcon is restarted.");
+            }
             pm.savePropertyFile();
             this.dispose();
         }
@@ -202,9 +206,10 @@ public class SettingManager extends JDialog implements ActionListener, MouseList
     private JComboBox getThemeCombo() {
         this.themeCombo = new JComboBox();
         for (LookAndFeelInfo info : UIManager.getInstalledLookAndFeels()) {
-            themeCombo.addItem(info.getClassName());
+            themeCombo.addItem(info.getName());
         }
-        themeCombo.setSelectedItem(UIManager.getLookAndFeel().getClass().getName());
+        themeCombo.setSelectedItem(UIManager.getLookAndFeel().getName());
+        this.currentLAF = UIManager.getLookAndFeel().getName();
         return this.themeCombo;
     }
 }

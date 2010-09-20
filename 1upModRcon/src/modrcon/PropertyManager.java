@@ -97,6 +97,14 @@ public class PropertyManager {
         }
     }
 
+    public String getLookAndFeel() {
+        return propFile.getProperty("lookandfeel");
+    }
+
+    public void setLookAndFeel(String laf) {
+        propFile.setProperty("lookandfeel", laf);
+    }
+
     public String getConsoleBGColor() {
         return propFile.getProperty("consolebgcolor");
     }
