@@ -312,8 +312,10 @@ public class ServerSetupWizard extends JFrame implements ActionListener {
             }
         }
         else if (pressedButton == this.btnImport) {
-            String choice = JOptionPane.showInputDialog(this, "I can try to import all the 1up Servers for you.\nWhat is your mod password?", "Import 1up Servers", JOptionPane.QUESTION_MESSAGE);
-            if (choice != null) {
+            JPasswordField pass = new JPasswordField();
+            Object[] msg = { "Enter your 1up mod password:", pass };
+            int choice = JOptionPane.showConfirmDialog(this, msg, "Import 1up Server List", JOptionPane.OK_CANCEL_OPTION);
+            if (choice == JOptionPane.OK_OPTION) {
                 ArrayList servers = ModRconUtil.get1upServers();
                 if (servers.isEmpty()) {
                     JOptionPane.showMessageDialog(this, "I'm sorry, I was unable to import the 1up server list.");
@@ -322,7 +324,7 @@ public class ServerSetupWizard extends JFrame implements ActionListener {
                     ArrayList newServerList = new ArrayList();
                     for (Object o : servers) {
                         Server s = (Server)o;
-                        Server n = new Server(s.getName(), s.getIP(), s.getPortAsString(), s.getLoginType(), choice.trim());
+                        Server n = new Server(s.getName(), s.getIP(), s.getPortAsString(), s.getLoginType(), String.valueOf(pass.getPassword()));
                         newServerList.add(n);
                     }
                     ServerDatabase db = new ServerDatabase();
