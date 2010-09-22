@@ -72,7 +72,7 @@ public class SettingManager extends JDialog implements ActionListener, MouseList
         JLabel lblBGColor = new JLabel("Console BG Color");
         JLabel lblFGColor = new JLabel("Console Font Color");
         
-        this.gamePathPanel = new FileChooserPanel(25);
+        this.gamePathPanel = new FileChooserPanel(this.parent, 25);
         this.timeoutSpinner = new JSpinner();
         this.timeoutSpinner.setValue(1500);
 
