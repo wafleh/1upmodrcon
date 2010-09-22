@@ -16,6 +16,7 @@ import javax.swing.*;
  */
 public class FileChooserPanel extends JPanel implements MouseListener {
 
+    private MainWindow parent;
     private ImageIcon folderIcon;
     private JTextField gamePathText;
     private JLabel folderLabel;
@@ -26,8 +27,9 @@ public class FileChooserPanel extends JPanel implements MouseListener {
      *
      * @param columns The number of columns to set the JTextField to.
      */
-    public FileChooserPanel(int columns) {
+    public FileChooserPanel(MainWindow owner, int columns) {
         super();
+        this.parent = owner;
         this.setLayout(new BoxLayout(this, BoxLayout.X_AXIS));
         folderIcon = new ImageIcon(getClass().getResource("/modrcon/resources/folder_find.png"));
         folderLabel = new JLabel(folderIcon);       
@@ -48,7 +50,7 @@ public class FileChooserPanel extends JPanel implements MouseListener {
     }
 
     public void mouseClicked(MouseEvent e) {
-        int choice = jfc.showDialog(jfc, "Select");
+        int choice = jfc.showDialog(this.parent, "Select");
         if (choice == JFileChooser.APPROVE_OPTION) {
             String path = jfc.getSelectedFile().getAbsolutePath();
             this.gamePathText.setText(path);

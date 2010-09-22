@@ -151,7 +151,7 @@ public class ConsolePanel extends JPanel implements MouseListener {
     
     public void saveConsole(String contents) {
         JFileChooser file = new JFileChooser();
-        int choice = file.showSaveDialog(file);
+        int choice = file.showSaveDialog(parent);
         if (choice == 0) {
             String path = file.getSelectedFile().getAbsolutePath();
             try {
