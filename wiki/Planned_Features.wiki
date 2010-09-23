@@ -10,3 +10,4 @@
   * Add any features that Fragomatic's RCON Commander had.
   * ~~Status command on switching servers.~~
   * Import 1up Servers from 1upclan.info/servers.xml
+  * Some sort of geoip lookup feature.
