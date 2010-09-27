@@ -1,6 +1,6 @@
   * ~~On the command box, if they type a command not in the manage commands list, ask them if they want to add the command to the list.~~
   * Create a custom cursor simliar to the help cursor in the previous program (http://blog.codebeach.com/2008/02/using-custom-cursors-in-java.html).
-  * Add sounds to the program Duke Nukem style (http://www.soundboard.com/sb/solrosin.aspx).
+  * ~~Add sounds to the program Duke Nukem style (http://www.soundboard.com/sb/solrosin.aspx).~~
   * Custom tooltips like the old program (hint: use html).
   * Use cross-platform installer like lzPack (http://en.wikipedia.org/wiki/IzPack)
   * Pause LivePlayerInfo when application is minimized to cut down server usage (have MainWindow implement WindowListener, and in public void windowIconified(WindowEvent evt) you would tell LivePlayerInfoPanel to pause the list updating).
@@ -9,6 +9,6 @@
   * Any other requests from page 3 of this thread (http://www.1upclan.info/forum/index.php?topic=2253.30).
   * Add any features that Fragomatic's RCON Commander had.
   * ~~Status command on switching servers.~~
-  * Import 1up Servers from 1upclan.info/servers.xml
+  * ~~Import 1up Servers from 1upclan.info/servers.xml~~
   * Some sort of geoip lookup feature.
   * Tidy up the GUI in Server/Command Manager.
