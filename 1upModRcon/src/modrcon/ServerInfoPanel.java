@@ -117,7 +117,7 @@ public class ServerInfoPanel extends JPanel implements MouseListener {
         if (e.getSource() == this.joinServerLabel) {
             PropertyManager pm = new PropertyManager();
             String pathToUrbanTerror = pm.getGamePath();
-            if (pathToUrbanTerror.isEmpty()) {
+            if (pathToUrbanTerror.length() < 1) {
                 new SettingManager(this.parent);
             }
             else {
