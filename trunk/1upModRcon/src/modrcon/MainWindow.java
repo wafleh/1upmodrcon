@@ -297,7 +297,8 @@ public class MainWindow extends JFrame implements ActionListener, ItemListener {
             this.serverInfoPanel.setMap((String)map.get("mapname"));
         }
         catch (Exception e) {
-            this.consolePanel.appendToConsole("Error: Could not connect to server at "+server.getIP()+":"+server.getPortAsString()+"\n\n");
+            // No need for this now since the ServerInfo is on auto-refresh now.
+            // this.consolePanel.appendToConsole("Error: Could not connect to server at "+server.getIP()+":"+server.getPortAsString()+"\n\n");
         }
     }
 
@@ -318,6 +319,8 @@ public class MainWindow extends JFrame implements ActionListener, ItemListener {
 
     public void actionPerformed(ActionEvent e) {
         if (e.getSource() == this.timer) {
+            // Update ServerInfoPanel based on this.timer
+            this.refreshServerInfo();
             // Update LivePlayerInfo based on this.timer
             this.livePlayerInfoPanel.fireItUp();
         }

@@ -35,8 +35,9 @@ public class SettingManager extends JDialog implements ActionListener, MouseList
         this.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
         this.setResizable(false);
         this.setModal(true);
-        ImageIcon topLeftIcon = new ImageIcon(getClass().getResource("/modrcon/resources/1up8bit_green.png"));
-        this.setIconImage(topLeftIcon.getImage());
+        // Next 2 lines don't work in Java 1.5, can't setIconImage in JDialogs.
+        //ImageIcon topLeftIcon = new ImageIcon(getClass().getResource("/modrcon/resources/1up8bit_green.png"));
+        //this.setIconImage(topLeftIcon.getImage());
 
         // Setup the Content Pane
         Container cp = this.getContentPane();

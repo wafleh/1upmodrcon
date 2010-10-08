@@ -25,8 +25,9 @@ public class AboutWindow extends JDialog implements ActionListener {
         this.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
         this.setModal(true);
         this.setResizable(false);
-        ImageIcon topLeftIcon = new ImageIcon(getClass().getResource("/modrcon/resources/1up8bit_green.png"));
-        this.setIconImage(topLeftIcon.getImage());
+        // Next 2 lines don't work in Java 1.5, can't setIconImage in JDialogs.
+        //ImageIcon topLeftIcon = new ImageIcon(getClass().getResource("/modrcon/resources/1up8bit_green.png"));
+        //this.setIconImage(topLeftIcon.getImage());
 
         // Setup the Content Pane
         Container cp = this.getContentPane();
