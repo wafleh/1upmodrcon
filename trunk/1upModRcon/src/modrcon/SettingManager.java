@@ -23,8 +23,6 @@ public class SettingManager extends JDialog implements ActionListener, MouseList
     private JComboBox themeCombo;
     private String currentLAF;
 
-
-
     private JButton btnSave;
     private JButton btnClose;
 

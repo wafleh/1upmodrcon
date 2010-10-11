@@ -12,7 +12,10 @@ import java.io.*;
 public class PropertyManager {
 
     /** The current version of 1up ModRcon. */
-    public static final String MODRCON_VERSION = "Beta 0.7";
+    public static final String MODRCON_VERSION = "Beta 0.8";
+
+    /** The path to the settings folder. */
+    public static final String settingsPath = System.getProperty("user.home")+"/.1upmodrcon/";
 
     /** The Properties File */
     private Properties propFile;
@@ -30,7 +33,7 @@ public class PropertyManager {
         this.parent = null;
         this.loadPropertyFile();
     }
-
+    
     public String getVersion() {
         return propFile.getProperty("version");
     }
@@ -162,7 +165,11 @@ public class PropertyManager {
      */
     private void loadPropertyFile() {
         try {
-            File pfile = new File("1upmodrcon.properties");
+            File settingsDirectory = new File(settingsPath);
+            if (!settingsDirectory.exists()) {
+                settingsDirectory.mkdir();
+            }
+            File pfile = new File(settingsPath+"1upmodrcon.properties");
             if (!pfile.exists()) {
                 if (!writeDefaultPropertiesFile(pfile)) {
                     JOptionPane.showMessageDialog(parent, "Error attempting to create properties file.", "Error", JOptionPane.ERROR_MESSAGE);
@@ -189,7 +196,7 @@ public class PropertyManager {
      */
     public void savePropertyFile() {
         try {
-            propFile.store(new java.io.FileOutputStream(new java.io.File("1upmodrcon.properties")), "Property File for 1up ModRcon");
+            propFile.store(new FileOutputStream(new File(settingsPath+"1upmodrcon.properties")), "Property File for 1up ModRcon");
         }
         catch (Exception e) {
             JOptionPane.showMessageDialog(parent, "Error saving property file, if you changed\n"

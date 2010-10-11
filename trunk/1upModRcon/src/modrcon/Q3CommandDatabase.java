@@ -24,7 +24,7 @@ public class Q3CommandDatabase implements Serializable {
     public Q3CommandDatabase() {
         super();
         this.commandList = new ArrayList();
-        File f = new File(this.fileName);
+        File f = new File(PropertyManager.settingsPath+this.fileName);
         if (!f.exists()) {
             this.regenerateCommandList();
             this.saveDatabase();
@@ -93,12 +93,12 @@ public class Q3CommandDatabase implements Serializable {
      * and if found, reads it into this object.
      */
     private void loadDatabase() {
-        File db = new File(this.fileName);
+        File db = new File(PropertyManager.settingsPath+this.fileName);
         if (db.exists()) {
             FileInputStream fis = null;
             ObjectInputStream in = null;
             try {
-                fis = new FileInputStream(this.fileName);
+                fis = new FileInputStream(PropertyManager.settingsPath+this.fileName);
                 in = new ObjectInputStream(fis);
                 this.commandList = (ArrayList)in.readObject();
                 in.close();
@@ -120,7 +120,7 @@ public class Q3CommandDatabase implements Serializable {
         FileOutputStream fos = null;
         ObjectOutputStream out = null;
         try {
-            fos = new FileOutputStream(this.fileName);
+            fos = new FileOutputStream(PropertyManager.settingsPath+this.fileName);
             out = new ObjectOutputStream(fos);
             out.writeObject(this.commandList);
             out.close();
