@@ -59,12 +59,12 @@ public class ServerDatabase implements Serializable {
      * and if found, reads it into this object.
      */
     private void loadDatabase() {
-        File db = new File(this.fileName);
+        File db = new File(PropertyManager.settingsPath+this.fileName);
         if (db.exists()) {
             FileInputStream fis = null;
             ObjectInputStream in = null;
             try {
-                fis = new FileInputStream(this.fileName);
+                fis = new FileInputStream(PropertyManager.settingsPath+this.fileName);
                 in = new ObjectInputStream(fis);
                 this.serverList = (ArrayList)in.readObject();
                 in.close();
@@ -85,7 +85,7 @@ public class ServerDatabase implements Serializable {
         FileOutputStream fos = null;
         ObjectOutputStream out = null;
         try {
-            fos = new FileOutputStream(this.fileName);
+            fos = new FileOutputStream(PropertyManager.settingsPath+this.fileName);
             out = new ObjectOutputStream(fos);
             out.writeObject(this.serverList);
             out.close();
