@@ -47,11 +47,9 @@ public class GearCalculatorDialog extends JDialog implements MouseListener,
     private boolean fireEvents;
     
     public GearCalculatorDialog(MainWindow parent) {
-        super();
+        super(parent);
         this.setTitle("1up ModRcon - Gear Calculator");
         this.setModal(true);
-        this.setIconImage(parent.getIconImage());
-        this.setResizable(false);
         this.parent = parent;
 
         this.initialize();

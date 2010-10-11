@@ -27,15 +27,11 @@ public class SettingManager extends JDialog implements ActionListener, MouseList
     private JButton btnClose;
 
     public SettingManager(MainWindow owner) {
-        super();
+        super(owner);
         this.parent = owner;
         this.setTitle("1up ModRcon - Settings");
         this.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
-        this.setResizable(false);
         this.setModal(true);
-        // Next 2 lines don't work in Java 1.5, can't setIconImage in JDialogs.
-        //ImageIcon topLeftIcon = new ImageIcon(getClass().getResource("/modrcon/resources/1up8bit_green.png"));
-        //this.setIconImage(topLeftIcon.getImage());
 
         // Setup the Content Pane
         Container cp = this.getContentPane();

@@ -47,14 +47,12 @@ public class VoteCalculatorDialog extends JDialog implements MouseListener,
     private java.util.ArrayList<VoteCheckBox> vbcList;
 
     public VoteCalculatorDialog(MainWindow parent) {
-        super();
+        super(parent);
         this.setTitle("1up ModRcon - Allow Vote Calculator");
-        this.setIconImage(parent.getIconImage());
         this.parent = parent;
-        this.setModalityType(JDialog.DEFAULT_MODALITY_TYPE);
+        this.setModal(true);
         this.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
         this.addWindowListener(this);
-        this.setResizable(false);
 
         this.initialize();
         this.add(buildUI());

@@ -30,12 +30,10 @@ public class SearchConsoleDialog extends JDialog implements ActionListener,
     private JLabel messageLabel;
 
     public SearchConsoleDialog(MainWindow parent, ConsoleTextPane console) {
-        super();
+        super(parent);
         this.setTitle("Find");
-        this.setIconImage(parent.getIconImage());
         this.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         this.setAlwaysOnTop(true);
-        this.setResizable(false);
         this.addWindowListener(this);
 
         this.parent = parent;

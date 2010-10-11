@@ -21,11 +21,10 @@ public class BanUserDialog extends JDialog implements ActionListener {
     private String lastIP;
 
     public BanUserDialog(MainWindow owner) {
-        super();
+        super(owner);
         this.parent = owner;
         this.setTitle("Add user IP to banlist");
         this.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
-        this.setResizable(false);
         this.setModal(true);
         //this.setSize(350,170);
 

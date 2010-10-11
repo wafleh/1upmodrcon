@@ -19,15 +19,11 @@ public class AboutWindow extends JDialog implements ActionListener {
     private JTabbedPane tabbedPane;
 
     public AboutWindow(MainWindow owner) {
-        super();
+        super(owner);
         this.parent = owner;
         this.setTitle("1up ModRcon - About");
         this.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
         this.setModal(true);
-        this.setResizable(false);
-        // Next 2 lines don't work in Java 1.5, can't setIconImage in JDialogs.
-        //ImageIcon topLeftIcon = new ImageIcon(getClass().getResource("/modrcon/resources/1up8bit_green.png"));
-        //this.setIconImage(topLeftIcon.getImage());
 
         // Setup the Content Pane
         Container cp = this.getContentPane();
