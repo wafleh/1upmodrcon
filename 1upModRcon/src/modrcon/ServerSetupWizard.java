@@ -216,15 +216,15 @@ public class ServerSetupWizard extends JFrame implements ActionListener {
         serverPassword.setBackground(GradientPanel.SELECTED_GRID_CELL_BG_COLOR);
 
         // Ensure all fields are non-empty.
-        if (serverName.getText().isEmpty()) {
+        if (serverName.getText().length() < 1) {
             this.serverName.setBackground(GradientPanel.WARNING_COLOR_START);
             flag = false;
         }
-        if (serverIP.getText().isEmpty()) {
+        if (serverIP.getText().length() < 1) {
             serverIP.setBackground(GradientPanel.WARNING_COLOR_START);
             flag = false;
         }
-        if (serverPort.getText().isEmpty()) {
+        if (serverPort.getText().length() < 1) {
             serverPort.setBackground(GradientPanel.WARNING_COLOR_START);
             flag = false;
         }

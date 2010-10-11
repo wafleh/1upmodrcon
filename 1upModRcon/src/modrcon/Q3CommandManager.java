@@ -24,13 +24,10 @@ public class Q3CommandManager extends JDialog implements ActionListener, MouseLi
     private JButton btnClose;
 
     public Q3CommandManager(MainWindow owner) {
-        super();
+        super(owner);
         this.parent = owner;
-
         this.setTitle("1up ModRcon - Manage Commands");
         this.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
-        ImageIcon topLeftIcon = new ImageIcon(getClass().getResource("/modrcon/resources/1up8bit_green.png"));
-        this.setIconImage(topLeftIcon.getImage());
         this.setModal(true);
 
         Container cp = this.getContentPane();
