@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8" ?> 
+<application xmlns="http://ns.adobe.com/air/application/2.0">
+	
+	<id>com.verticalcue.misc.1upServerMonitor</id> 
+	<version>0.1</version> 
+	<filename>1upServerMonitor</filename> 
+	
+	<name>1up Server Monitor</name> 
+	<description>Application to monitor 1up server activity.</description> 
+	<copyright></copyright> 
+	
+	<initialWindow> 
+		<title>1up Server Monitor</title> 
+		<content>1upServerMonitor.swf</content> 
+		<systemChrome>none</systemChrome> 
+		<transparent>true</transparent> 
+		<visible>false</visible> 
+		<minimizable>true</minimizable> 
+		<maximizable>true</maximizable> 
+		<resizable>true</resizable>
+	</initialWindow> 
+	<installFolder>1up Server Monitor</installFolder>
+	<programMenuFolder>1up Utilities</programMenuFolder>
+	<!-- 
+	More options:
+	http://livedocs.adobe.com/flex/3/html/File_formats_1.html#1043413
+	-->
+</application>
