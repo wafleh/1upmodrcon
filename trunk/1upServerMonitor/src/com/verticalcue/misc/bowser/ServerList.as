@@ -2,6 +2,10 @@ package com.verticalcue.misc.bowser
 {
 	import flash.events.Event;
 	import flash.events.EventDispatcher;
+	import flash.events.IOErrorEvent;
+	import flash.filesystem.File;
+	import flash.filesystem.FileMode;
+	import flash.filesystem.FileStream;
 	import flash.net.URLLoader;
 	import flash.net.URLRequest;
 	
@@ -40,11 +44,12 @@ package com.verticalcue.misc.bowser
 			var urlReq:URLRequest = new URLRequest("http://1upclan.info/servers.xml");
 			var urlLoader:URLLoader = new URLLoader();
 			urlLoader.addEventListener(Event.COMPLETE, remoteServerDataLoaded, false, 0, true);
+			urlLoader.addEventListener(IOErrorEvent.IO_ERROR, remoteServerDataError, false, 0, true);
 			urlLoader.load(urlReq);
 		}
-		private function remoteServerDataLoaded(e:Event):void 
+		private function runServerList(listStr:String):void
 		{
-			var xml:XML = new XML(String(e.target.data));
+			var xml:XML = new XML(listStr);
 			var servers:XMLList = xml.channel.item;
 			_asyncProcTotal = servers.length();
 			for each (var srv:XML in servers) {
@@ -59,6 +64,27 @@ package com.verticalcue.misc.bowser
 				bowser.addEventListener(BowserEvent.RESPONSE, bowserEventReceived, false, 0, true);
 				bowser.send("getstatus");
 			}
+		}
+		private function remoteServerDataError(e:IOErrorEvent):void 
+		{
+			// Save List to file to File
+			var file:File = File.applicationStorageDirectory.resolvePath("1upServerList.xml");
+			if (file.exists) {
+				var stream:FileStream = new FileStream();
+				stream.open(file, FileMode.READ);
+				runServerList(stream.readUTF());
+			}
+		}
+		private function remoteServerDataLoaded(e:Event):void 
+		{
+			var dataStr:String = String(e.target.data);
+			runServerList(dataStr);
+			
+			// Save List to file to File
+			var file:File = File.applicationStorageDirectory.resolvePath("1upServerList.xml");
+			var stream:FileStream = new FileStream();
+			stream.open(file, FileMode.WRITE);
+			stream.writeUTF(dataStr);
 		}
 		public function reloadServerData():void {
 			_asyncProcComplete = 0;
