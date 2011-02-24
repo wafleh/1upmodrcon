@@ -10,6 +10,7 @@ package com.verticalcue.misc.bowser
 		private var _ip:String;
 		private var _link:String;
 		private var _maxClients:int;
+		private var _map:String;
 		private var _clients:Vector.<Client>;
 		public function Server() 
 		{
@@ -45,6 +46,16 @@ package com.verticalcue.misc.bowser
 		public function set maxClients(value:int):void 
 		{
 			_maxClients = value;
+		}
+		
+		public function get map():String { return _map; }
+		public function set map(value:String):void 
+		{
+			_map = replaceMapName(value);
+		}
+		private function replaceMapName(value:String):String
+		{
+			return value.replace(/ut4_/g, "");
 		}
 		
 	}

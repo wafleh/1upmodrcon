@@ -131,6 +131,7 @@ package com.verticalcue.misc
 				_srvWindow.getChildByName("backArrow").addEventListener(MouseEvent.MOUSE_OUT, mouseOutBackArrow);
 				_srvWindow.getChildByName("backArrow").addEventListener(MouseEvent.CLICK, mouseClickBackArrow);
 				_srvWindow.getChildByName("serverName").text = data.name;
+				_srvWindow.getChildByName("serverMap").text = "Map: " + data.map;
 				
 				// Setup Default TextFormat
 				var tf:TextFormat = new TextFormat();
