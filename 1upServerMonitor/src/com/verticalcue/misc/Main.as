@@ -151,11 +151,13 @@ package com.verticalcue.misc
 				for each (var client:Client in data.clients) {
 					_clientList.addItem( {a: client.name, b: client.points, c: client.ping} );
 				}
-				_clientList.columns[1].setWidth(30);
-				_clientList.columns[2].setWidth(30);
 				
-				_srvWindow.addChild(_clientList);
-				
+				if (data.clients.length > 0 ) {
+					_clientList.columns[1].setWidth(30);
+					_clientList.columns[2].setWidth(30);
+					
+					_srvWindow.addChild(_clientList);
+				}
 				var rollover:Sprite = Sprite(_srvWindow.getChildByName("backArrow").getChildByName("arrowGraphicRollover"));
 				rollover.visible = false;
 				_window.stage.addChild(_srvWindow);
