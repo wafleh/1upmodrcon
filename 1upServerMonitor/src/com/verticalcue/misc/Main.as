@@ -39,7 +39,7 @@ package com.verticalcue.misc
 		private var _clientList:DataGrid;
 		private var _timer:Timer;
 		private var _sysTrayIcon:SystemTrayIcon;
-		private var _srvWindow:*;
+		private var _srvWindow:*; 
 
 		public function Main():void 
 		{			
