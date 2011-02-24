@@ -2,7 +2,7 @@
 <application xmlns="http://ns.adobe.com/air/application/2.0">
 	
 	<id>com.verticalcue.misc.1upServerMonitor</id> 
-	<version>0.1</version> 
+	<version>0.2</version> 
 	<filename>1upServerMonitor</filename> 
 	
 	<name>1up Server Monitor</name> 
@@ -21,6 +21,11 @@
 	</initialWindow> 
 	<installFolder>1up Server Monitor</installFolder>
 	<programMenuFolder>1up Utilities</programMenuFolder>
+	<icon>
+		<image32x32>icons/mushroom32.png</image32x32>
+		<image48x48>icons/mushroom48.png</image48x48>
+		<image72x72>icons/mushroom72.png</image72x72>
+	</icon>
 	<!-- 
 	More options:
 	http://livedocs.adobe.com/flex/3/html/File_formats_1.html#1043413
