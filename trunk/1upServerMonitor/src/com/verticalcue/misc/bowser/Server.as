@@ -13,6 +13,7 @@ package com.verticalcue.misc.bowser
 		private var _clients:Vector.<Client>;
 		public function Server() 
 		{
+			_clients = new Vector.<Client>();
 		}
 		
 		public function get name():String { return _name; }
