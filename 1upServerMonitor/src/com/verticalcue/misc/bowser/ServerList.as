@@ -52,13 +52,12 @@ package com.verticalcue.misc.bowser
 				srvObj.name = srv.title.toString();
 				srvObj.ip = srv.description.toString();
 				srvObj.link = srv.link.toString();
+				_list.push(srvObj);
 				
 				var bowser:BowserQuery = new BowserQuery(srvObj.ip, 27960);
 				bowser.sender = srvObj;
 				bowser.addEventListener(BowserEvent.RESPONSE, bowserEventReceived, false, 0, true);
 				bowser.send("getstatus");
-				
-				_list.push(srvObj);
 			}
 		}
 		public function reloadServerData():void {
@@ -73,6 +72,7 @@ package com.verticalcue.misc.bowser
 		
 		private function bowserEventReceived(e:BowserEvent):void 
 		{
+			e.target.removeEventListener(BowserEvent.RESPONSE, bowserEventReceived);
 			for each (var srv:Server in _list) {
 				if (srv == e.sender) {
 					var data:Array = e.response.split("\n");
@@ -88,10 +88,10 @@ package com.verticalcue.misc.bowser
 					}
 				}
 			}
-			_asyncProcComplete++;
-			if (_asyncProcComplete == _asyncProcTotal ) {
+			//_asyncProcComplete++;
+			//if (_asyncProcComplete == _asyncProcTotal ) {
 				dispatchEvent(new Event(Event.COMPLETE));
-			}
+			//}
 		}
 		public function getServerByName(name:String):Server
 		{
