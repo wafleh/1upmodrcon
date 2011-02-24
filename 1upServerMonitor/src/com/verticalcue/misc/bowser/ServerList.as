@@ -104,6 +104,7 @@ package com.verticalcue.misc.bowser
 					var data:Array = e.response.split("\n");
 					var privateClients:int = parseInt(String(data[1]).match(/\\sv_privateClients\\(.*?)\\/)[1]);
 					srv.maxClients = parseInt(String(data[1]).match(/\\sv_maxclients\\(.*?)\\/)[1])/* - (isNaN(privateClients) ? 0 : privateClients)*/;
+					srv.map = String(data[1]).match(/\\mapname\\(.*?)\\/)[1];
 					if (data.length > 2) {
 						srv.clients = new Vector.<Client>();
 						for (var i:int = 2; i < data.length; i++) {
