@@ -96,7 +96,7 @@ package com.verticalcue.misc
 			_sList.x = -70;
 			_sList.y = -50;
 			_sList.width = 206.0;
-			_sList.height = 185.0;
+			_sList.height = 220.0;
 			_sList.setRendererStyle( "embedFonts", true );
 			_sList.setRendererStyle("textFormat", tf);
 			_sList.setStyle("cellRenderer", AntiAliasCellRenderer);
@@ -140,9 +140,9 @@ package com.verticalcue.misc
 				tf.kerning += 2;
 				
 				_clientList = new DataGrid();
-				_clientList.y = 50;
+				_clientList.y = 55;
 				_clientList.width = 195;
-				_clientList.height = 150;
+				_clientList.height = 160;
 				_clientList.setRendererStyle( "embedFonts", true );
 				_clientList.setRendererStyle("textFormat", tf);
 				_clientList.setStyle("cellRenderer", AntiAliasCellRenderer);
