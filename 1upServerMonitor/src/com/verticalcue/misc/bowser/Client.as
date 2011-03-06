@@ -19,7 +19,9 @@ package com.verticalcue.misc.bowser
 		public function get name():String { return _name; }
 		public function set name(value:String):void 
 		{
-			_name = QuakeColors.convertName(value);
+			var cleanStr:String = value.replace("<", "&#60;");
+			cleanStr = cleanStr.replace(">", "&#62;");
+			_name = QuakeColors.convertName(cleanStr);
 		}
 		
 		public function get ping():int { return _ping; }
