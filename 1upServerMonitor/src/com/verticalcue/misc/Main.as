@@ -243,23 +243,25 @@ package com.verticalcue.misc
 		private function loadSettings():void
 		{
 			var inFile:File = _file.resolvePath(File.applicationStorageDirectory.nativePath + "/settings.xml");
-			var fs:FileStream = new FileStream();
-			fs.open(inFile, FileMode.READ);
-			var t:XML = XML(fs.readUTFBytes(fs.bytesAvailable));
-			_setPath = t.path.toString();
-			_setRefreshRate = parseInt(t.refresh.toString());
-			if (_setRefreshRate < 500)
-				_setRefreshRate = 60000;
+			if (inFile.exists) {
+				var fs:FileStream = new FileStream();
+				fs.open(inFile, FileMode.READ);
+				var t:XML = XML(fs.readUTFBytes(fs.bytesAvailable));
+				_setPath = t.path.toString();
+				_setRefreshRate = parseInt(t.refresh.toString());
+				if (_setRefreshRate < 500)
+					_setRefreshRate = 60000;
+			}
 		}
 		private function launchUrbanTerror(server:Server):void
 		{
 			if(NativeProcess.isSupported)
 			{
 				var file:File = File.desktopDirectory;
-				file = file.resolvePath("C:\\Program Files (x86)\\UrbanTerror\\ioUrbanTerror.exe");
+				file = file.resolvePath(_setPath);
 				
 				var npsi:NativeProcessStartupInfo = new NativeProcessStartupInfo();
-				npsi.executable = file.resolvePath(_setPath + "\\ioUrbanTerror.exe");
+				npsi.executable = file.resolvePath(_setPath);
 				npsi.workingDirectory = file.resolvePath(_setPath.substr(0, _setPath.lastIndexOf("\\")));
 				npsi.arguments.push("+connect");
 				npsi.arguments.push(server.ip);
