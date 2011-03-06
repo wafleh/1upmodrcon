@@ -322,7 +322,15 @@ package com.verticalcue.misc
 		
 		private function joinServerButtonClicked(e:MouseEvent):void 
 		{
-			launchUrbanTerror(_selectedServer);
+			if (_setPath != "") {
+				launchUrbanTerror(_selectedServer);
+			}
+			else {
+				_window.stage.removeChild(_srvWindow);
+				_srvWindow = null;
+				_selectedServer = null;
+				createSettingsWindow();
+			}
 		}
 		
 		private function mouseClickBackArrow(e:MouseEvent):void 
