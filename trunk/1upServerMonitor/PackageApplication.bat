@@ -21,7 +21,8 @@ set APP_XML=application.xml
 set FILE_OR_DIR=-C bin .
 
 echo Signing AIR setup using certificate %CERTIFICATE%.
-call adt -package %SIGNING_OPTIONS% %AIR_FILE% %APP_XML% %FILE_OR_DIR%
+call adt -package %SIGNING_OPTIONS% %AIR_FILE% %APP_XML% %FILE_OR_DIR% 
+call adt -package -target native natives/1upServerMonitor.exe %AIR_FILE%
 if errorlevel 1 goto failed
 
 echo.

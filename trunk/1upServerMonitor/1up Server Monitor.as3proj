@@ -49,6 +49,10 @@
   <libraryPaths>
     <element path="lib\V3List.swc" />
     <element path="lib\V3DataGrid.swc" />
+    <element path="lib\V3SettingsList.swc" />
+    <element path="lib\LiquidComboBox.swc" />
+    <element path="lib\LiquidTextInput.swc" />
+    <element path="lib\LiquidButton.swc" />
   </libraryPaths>
   <!-- External Libraries -->
   <externalLibraryPaths>

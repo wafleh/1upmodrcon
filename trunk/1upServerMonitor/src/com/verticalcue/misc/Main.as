@@ -1,10 +1,16 @@
 package com.verticalcue.misc
 {
+	import com.liquid.controls.LiquidButton;
+	import com.liquid.controls.LiquidComboBox;
+	import com.liquid.controls.LiquidList;
+	import com.liquid.controls.LiquidTextInput;
 	import com.verticalcue.fonts.df3.Impact;
 	import com.verticalcue.fonts.df3.Verdana;
 	import fl.controls.DataGrid;
 	import fl.controls.dataGridClasses.DataGridColumn;
 	import flash.desktop.NativeApplication;
+	import flash.desktop.NativeProcess;
+	import flash.desktop.NativeProcessStartupInfo;
 	import flash.desktop.SystemTrayIcon;
 	import flash.display.*;
 	import flash.events.Event;
@@ -13,12 +19,16 @@ package com.verticalcue.misc
 	import flash.events.NativeWindowDisplayStateEvent;
 	import flash.events.ScreenMouseEvent;
 	import flash.events.TimerEvent;
+	import flash.filesystem.*;
 	import flash.geom.Point;
 	import flash.geom.Rectangle;
+	import flash.net.FileFilter;
 	import flash.text.TextFormat;
 	import com.verticalcue.misc.bowser.*;
 	import flash.utils.Timer;
 	import fl.events.ListEvent;
+	import flash.xml.XMLDocument;
+	import flash.xml.XMLNode;
 	
 	/**
 	 * ...
@@ -26,6 +36,8 @@ package com.verticalcue.misc
 	 */
 	public class Main extends Sprite 
 	{
+		[Embed(source = '../../../../assets/ServerMonitorGui.swf', symbol = 'SettingsWindow')]
+		private var SettingsWindow:Class;
 		[Embed(source = '../../../../assets/ServerMonitorGui.swf', symbol = 'ServerInfoWindow')]
 		private var ServerInfoWindow:Class;
 		[Embed(source = '../../../../assets/icon/mushroom32.png')]
@@ -40,10 +52,17 @@ package com.verticalcue.misc
 		private var _timer:Timer;
 		private var _sysTrayIcon:SystemTrayIcon;
 		private var _srvWindow:*; 
+		private var _settingsWindow:*;
+		private var _selectedServer:Server;
+		private var _file:File = File.desktopDirectory;
+		private var _setPath:String = "";
+		private var _setRefreshRate:int = 300000;
 
 		public function Main():void 
 		{			
 			stage.scaleMode = StageScaleMode.NO_SCALE;
+			
+			loadSettings();
 			
 			// Setup Tray Icon
 			NativeApplication.nativeApplication.autoExit = false;
@@ -76,6 +95,9 @@ package com.verticalcue.misc
 			_bg.x = -78;
 			_bg.y = -125;
 			_bg.addEventListener(MouseEvent.MOUSE_DOWN, bgMouseDown);
+			var settingsButton:Sprite = Sprite(_bg.getChildByName("settingsButton"));
+			settingsButton.alpha = 0;
+			settingsButton.addEventListener(MouseEvent.CLICK, settingsButtonClicked);
 			var minButton:Sprite = Sprite(_bg.getChildByName("minAppButton"));
 			minButton.alpha = 0;
 			minButton.addEventListener(MouseEvent.CLICK, minButtonClicked);
@@ -112,11 +134,140 @@ package com.verticalcue.misc
 			_serverList.getRemoteServerData();
 			
 			// Update List every 1min
-			_timer = new Timer(60000);
+			_timer = new Timer(_setRefreshRate);
 			_timer.addEventListener(TimerEvent.TIMER, timerTick);
 			_timer.start();
 		}
 		
+		private function settingsButtonClicked(e:MouseEvent):void 
+		{
+			if (_settingsWindow == null) {
+				createSettingsWindow();
+			}
+			else {
+				_window.stage.removeChild(_settingsWindow);
+				_settingsWindow = null;
+			}
+				
+		}
+		
+		private function createSettingsWindow():void
+		{
+			_settingsWindow = new SettingsWindow();
+			_settingsWindow.x = -64;
+			_settingsWindow.y = -52;		
+			_settingsWindow.getChildByName("backArrow").addEventListener(MouseEvent.MOUSE_OVER, mouseOverBackArrow);
+			_settingsWindow.getChildByName("backArrow").addEventListener(MouseEvent.MOUSE_OUT, mouseOutBackArrow);
+			_settingsWindow.getChildByName("backArrow").addEventListener(MouseEvent.CLICK, mouseClickBackArrow);
+			
+			// Setup Default TextFormat
+			var tf:TextFormat = new TextFormat();
+			tf.font = "Verdana";
+			tf.size = 9.5;
+			tf.color = 0x000000;
+			tf.kerning += 2;
+			
+			var refreshCbx:LiquidComboBox = new LiquidComboBox();
+			refreshCbx.x = 69;
+			refreshCbx.y = 31;
+			refreshCbx.width = 74;
+			refreshCbx.height = 22;
+			refreshCbx.loadSkin("back", "./skin/subWindowComboBox_back.png");
+			refreshCbx.loadSkin("cell", "./skin/subWindowList_cell.png");
+			refreshCbx.addItem( {data:10000, label:"10sec"} );
+			refreshCbx.addItem( {data:30000, label:"30sec"} );
+			refreshCbx.addItem( {data:60000, label:"1min"} );
+			refreshCbx.addItem( {data:300000, label:"5min"} );
+			refreshCbx.addItem( { data:600000, label:"10min" } );
+			refreshCbx.addEventListener(ListEvent.ITEM_CLICK, refreshRateSelected);
+			refreshCbx.name = "refresh";
+			for (var i:int = 0; i < 5; i++)
+				if (refreshCbx.getItemAt(i).data == _setRefreshRate)
+					refreshCbx.selectedIndex = i;
+			
+			
+			var terrorPathInput:LiquidTextInput = new LiquidTextInput();
+			terrorPathInput.y = 90;
+			terrorPathInput.x = 12;
+			terrorPathInput.width = 169;
+			terrorPathInput.loadSkin("back", "./skin/subWindowInput_back.png");
+			terrorPathInput.name = "path";
+			terrorPathInput.text = _setPath;
+			
+			
+			var browseButton:LiquidButton = new LiquidButton();
+			browseButton.label = "Browse";
+			browseButton.y = 120;
+			browseButton.width = 60;
+			browseButton.x = _settingsWindow.width / 2 - browseButton.width / 2;
+			browseButton.loadSkin("back", "./skin/subWindowButton_back.png");
+			browseButton.addEventListener(MouseEvent.MOUSE_UP, settingsBrowseButtonClicked);
+			
+			_settingsWindow.addChild(browseButton);
+			_settingsWindow.addChild(terrorPathInput);
+			_settingsWindow.addChild(refreshCbx);
+			
+			var rollover:Sprite = Sprite(_settingsWindow.getChildByName("backArrow").getChildByName("arrowGraphicRollover"));
+			rollover.visible = false;
+			_window.stage.addChild(_settingsWindow);
+		}
+		
+		private function refreshRateSelected(e:ListEvent):void 
+		{
+			_setRefreshRate = LiquidComboBox(e.currentTarget).getItemAt(parseInt(e.rowIndex.toString())).data;
+			_timer.delay = _setRefreshRate;
+			saveSettings();
+		}
+		
+		private function settingsBrowseButtonClicked(e:MouseEvent):void 
+		{
+			_file.addEventListener(Event.SELECT, urbanTerrorPathSelected);
+			_file.browseForOpen("Urban Terror Application (ioUrbanTerror.exe)", [new FileFilter("Urban Terror", "ioUrbanTerror.exe")]);
+		}
+		
+		private function urbanTerrorPathSelected(e:Event):void 
+		{
+			// FIXME: FOR MAC after the path to the ioUrbanTerror.app folder it is /Contents/MacOS/ioUrbanTerror.ub 
+			_setPath = _file.nativePath;
+			LiquidTextInput(_settingsWindow.getChildByName("path")).text = _setPath;
+			saveSettings();
+		}
+		private function saveSettings():void
+		{			
+			var outFile:File = _file.resolvePath(File.applicationStorageDirectory.nativePath + "/settings.xml");
+			var fs:FileStream = new FileStream();
+			fs.open(outFile, FileMode.WRITE);
+			fs.writeUTFBytes(XML("<?xml version=\"1.0\"?><settings><path>" + _setPath + "</path><refresh>" + _setRefreshRate.toString() + "</refresh></settings>"));
+			fs.close();
+		}
+		private function loadSettings():void
+		{
+			var inFile:File = _file.resolvePath(File.applicationStorageDirectory.nativePath + "/settings.xml");
+			var fs:FileStream = new FileStream();
+			fs.open(inFile, FileMode.READ);
+			var t:XML = XML(fs.readUTFBytes(fs.bytesAvailable));
+			_setPath = t.path.toString();
+			_setRefreshRate = parseInt(t.refresh.toString());
+			if (_setRefreshRate < 500)
+				_setRefreshRate = 60000;
+		}
+		private function launchUrbanTerror(server:Server):void
+		{
+			if(NativeProcess.isSupported)
+			{
+				var file:File = File.desktopDirectory;
+				file = file.resolvePath("C:\\Program Files (x86)\\UrbanTerror\\ioUrbanTerror.exe");
+				
+				var npsi:NativeProcessStartupInfo = new NativeProcessStartupInfo();
+				npsi.executable = file.resolvePath(_setPath + "\\ioUrbanTerror.exe");
+				npsi.workingDirectory = file.resolvePath(_setPath.substr(0, _setPath.lastIndexOf("\\")));
+				npsi.arguments.push("+connect");
+				npsi.arguments.push(server.ip);
+				var process:NativeProcess = new NativeProcess();
+
+				process.start(npsi);
+			}
+		}
 		private function sListItemClick(e:ListEvent):void 
 		{
 			createServerWindow(_serverList.getServerByName(e.item.server));
@@ -124,12 +275,14 @@ package com.verticalcue.misc
 		private function createServerWindow(data:Server):void
 		{
 			if (data) {
+				_selectedServer = data;
 				_srvWindow = new ServerInfoWindow();
 				_srvWindow.x = -64;
 				_srvWindow.y = -52;		
 				_srvWindow.getChildByName("backArrow").addEventListener(MouseEvent.MOUSE_OVER, mouseOverBackArrow);
 				_srvWindow.getChildByName("backArrow").addEventListener(MouseEvent.MOUSE_OUT, mouseOutBackArrow);
 				_srvWindow.getChildByName("backArrow").addEventListener(MouseEvent.CLICK, mouseClickBackArrow);
+				_srvWindow.getChildByName("joinButton").addEventListener(MouseEvent.CLICK, joinServerButtonClicked);
 				_srvWindow.getChildByName("serverName").text = data.name;
 				_srvWindow.getChildByName("serverMap").text = "Map: " + data.map;
 				
@@ -165,10 +318,22 @@ package com.verticalcue.misc
 			}
 		}
 		
+		private function joinServerButtonClicked(e:MouseEvent):void 
+		{
+			launchUrbanTerror(_selectedServer);
+		}
+		
 		private function mouseClickBackArrow(e:MouseEvent):void 
 		{
-			_window.stage.removeChild(_srvWindow);
+			if (_srvWindow) {
+				_window.stage.removeChild(_srvWindow);
+			}
+			if (_settingsWindow) {
+				_window.stage.removeChild(_settingsWindow);
+			}
+			_settingsWindow = null;
 			_srvWindow = null;
+			_selectedServer = null;
 		}
 		
 		private function mouseOutBackArrow(e:MouseEvent):void 

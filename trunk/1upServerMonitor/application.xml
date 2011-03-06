@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8" ?> 
-<application xmlns="http://ns.adobe.com/air/application/2.0">
+<!--<application xmlns="http://ns.adobe.com/air/application/2.0">
 	
 	<id>com.verticalcue.misc.1upServerMonitor</id> 
 	<version>0.2</version> 
-	<filename>1upServerMonitor</filename> 
+	<filename>1up Server Monitor</filename> 
 	
 	<name>1up Server Monitor</name> 
 	<description>Application to monitor 1up server activity.</description> 
@@ -25,9 +25,37 @@
 		<image32x32>icons/mushroom32.png</image32x32>
 		<image48x48>icons/mushroom48.png</image48x48>
 		<image72x72>icons/mushroom72.png</image72x72>
-	</icon>
+	</icon>-->
 	<!-- 
 	More options:
 	http://livedocs.adobe.com/flex/3/html/File_formats_1.html#1043413
 	-->
+<!--</application>-->
+<application xmlns="http://ns.adobe.com/air/application/2.5"> 
+    <id>com.verticalcue.misc.1upServerMonitor</id> 
+    <versionNumber>0.3</versionNumber> 
+    <filename>1up Server Monitor</filename> 
+    <name>1up Server Monitor</name> 
+     <description> 
+        <text xml:lang="en">This is an example.</text> 
+    </description> 
+    <copyright>Copyright (c) 2010 Example Co.</copyright> 
+	<supportedProfiles>extendedDesktop desktop</supportedProfiles>
+    <initialWindow> 
+        <title>1up Server Monitor</title> 
+        <content> 
+            1upServerMonitor.swf
+        </content>
+		<systemChrome>none</systemChrome> 
+		<transparent>true</transparent> 
+		<visible>false</visible> 
+		<minimizable>true</minimizable> 
+		<maximizable>true</maximizable> 
+		<resizable>true</resizable>
+    </initialWindow>  
+    <icon> 
+        <image32x32>icons/mushroom32.png</image32x32>
+		<image48x48>icons/mushroom48.png</image48x48>
+		<image72x72>icons/mushroom72.png</image72x72> 
+    </icon> 
 </application>
