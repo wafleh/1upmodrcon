@@ -23,6 +23,7 @@ package com.verticalcue.misc
 	import flash.geom.Point;
 	import flash.geom.Rectangle;
 	import flash.net.FileFilter;
+	import flash.system.Capabilities;
 	import flash.text.TextFormat;
 	import com.verticalcue.misc.bowser.*;
 	import flash.utils.Timer;
@@ -207,6 +208,8 @@ package com.verticalcue.misc
 			_settingsWindow.addChild(terrorPathInput);
 			_settingsWindow.addChild(refreshCbx);
 			
+			//_settingsWindow.getChildByName("debug").text = Capabilities.os;
+			
 			var rollover:Sprite = Sprite(_settingsWindow.getChildByName("backArrow").getChildByName("arrowGraphicRollover"));
 			rollover.visible = false;
 			_window.stage.addChild(_settingsWindow);
@@ -222,7 +225,10 @@ package com.verticalcue.misc
 		private function settingsBrowseButtonClicked(e:MouseEvent):void 
 		{
 			_file.addEventListener(Event.SELECT, urbanTerrorPathSelected);
-			_file.browseForOpen("Urban Terror Application (ioUrbanTerror.exe)", [new FileFilter("Urban Terror", "ioUrbanTerror.exe")]);
+			if (Capabilities.os == "Linux")
+				_file.browseForOpen("Urban Terror Application", [new FileFilter("Urban Terror", "ioUrbanTerror.*")]);
+			else if (Capabilities.os.indexOf("Windows") != -1)
+				_file.browseForOpen("Urban Terror Application (ioUrbanTerror.exe)", [new FileFilter("Urban Terror", "ioUrbanTerror.exe")]);
 		}
 		
 		private function urbanTerrorPathSelected(e:Event):void 
