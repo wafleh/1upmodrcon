@@ -33,7 +33,7 @@
 <!--</application>-->
 <application xmlns="http://ns.adobe.com/air/application/2.5"> 
     <id>com.verticalcue.misc.1upServerMonitor</id> 
-    <versionNumber>0.5</versionNumber> 
+    <versionNumber>0.5.1</versionNumber> 
     <filename>1up Server Monitor</filename> 
     <name>1up Server Monitor</name> 
      <description> 
