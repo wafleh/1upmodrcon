@@ -268,7 +268,10 @@ package com.verticalcue.misc
 				
 				var npsi:NativeProcessStartupInfo = new NativeProcessStartupInfo();
 				npsi.executable = file.resolvePath(_setPath);
-				npsi.workingDirectory = file.resolvePath(_setPath.substr(0, _setPath.lastIndexOf("\\")));
+				if (Capabilities.os.indexOf("Windows") != -1)
+					npsi.workingDirectory = file.resolvePath(_setPath.substr(0, _setPath.lastIndexOf("\\")));
+				else if (Capabilities.os.indexOf("Linux") != -1)
+					npsi.workingDirectory = file.resolvePath(_setPath.substr(0, _setPath.lastIndexOf("/")));
 				npsi.arguments.push("+connect");
 				npsi.arguments.push(server.ip);
 				var process:NativeProcess = new NativeProcess();
