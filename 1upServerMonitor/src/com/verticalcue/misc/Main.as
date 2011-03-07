@@ -176,6 +176,8 @@ package com.verticalcue.misc
 			_settingsWindow.getChildByName("backArrow").addEventListener(MouseEvent.MOUSE_OUT, mouseOutBackArrow);
 			_settingsWindow.getChildByName("backArrow").addEventListener(MouseEvent.CLICK, mouseClickBackArrow);
 			if (Capabilities.os.indexOf("Linux") == -1)
+				_settingsWindow.getChildByName("linuxEffectsLabel").visible = false;
+			else 
 				_settingsWindow.getChildByName("linuxEffectsLabel").visible = true;
 			
 			// Setup Default TextFormat
