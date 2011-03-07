@@ -58,6 +58,8 @@ package com.verticalcue.misc
 		private var _file:File = File.desktopDirectory;
 		private var _setPath:String = "";
 		private var _setRefreshRate:int = 300000;
+		private var _windowFilters:Array;
+		private var _linuxEffects:Boolean = true;
 
 		public function Main():void 
 		{			
@@ -95,6 +97,9 @@ package com.verticalcue.misc
 			_bg = new GUIBox();
 			_bg.x = -78;
 			_bg.y = -125;
+			_windowFilters = _bg.getChildByName("bg").filters;
+			if (!_linuxEffects)
+				_bg.getChildByName("bg").filters = [];
 			_bg.addEventListener(MouseEvent.MOUSE_DOWN, bgMouseDown);
 			var settingsButton:Sprite = Sprite(_bg.getChildByName("settingsButton"));
 			settingsButton.alpha = 0;
@@ -160,6 +165,8 @@ package com.verticalcue.misc
 			_settingsWindow.getChildByName("backArrow").addEventListener(MouseEvent.MOUSE_OVER, mouseOverBackArrow);
 			_settingsWindow.getChildByName("backArrow").addEventListener(MouseEvent.MOUSE_OUT, mouseOutBackArrow);
 			_settingsWindow.getChildByName("backArrow").addEventListener(MouseEvent.CLICK, mouseClickBackArrow);
+			if (Capabilities.os.indexOf("Linux") == -1)
+				_settingsWindow.getChildByName("linuxEffectsLabel").visible = true;
 			
 			// Setup Default TextFormat
 			var tf:TextFormat = new TextFormat();
@@ -185,7 +192,21 @@ package com.verticalcue.misc
 			for (var i:int = 0; i < 5; i++)
 				if (refreshCbx.getItemAt(i).data == _setRefreshRate)
 					refreshCbx.selectedIndex = i;
-			
+					
+			var linuxEffects:LiquidComboBox = new LiquidComboBox();
+			linuxEffects.y = 155;
+			linuxEffects.x = 95;
+			linuxEffects.width = 70;
+			linuxEffects.loadSkin("back", "./skin/subWindowComboBox_back.png");
+			linuxEffects.loadSkin("cell", "./skin/subWindowList_cell.png");
+			linuxEffects.addItem( {data:"disable", label:"Disable"} );
+			linuxEffects.addItem( {data:"enable", label:"Enable" } );
+			linuxEffects.addEventListener(ListEvent.ITEM_CLICK, linuxEffectSelected);
+			linuxEffects.name = "linuxEffects";		
+			if (_linuxEffects)
+				linuxEffects.selectedIndex = 1;
+			else 
+				linuxEffects.selectedIndex = 0;
 			
 			var terrorPathInput:LiquidTextInput = new LiquidTextInput();
 			terrorPathInput.y = 90;
@@ -195,7 +216,6 @@ package com.verticalcue.misc
 			terrorPathInput.name = "path";
 			terrorPathInput.text = _setPath;
 			
-			
 			var browseButton:LiquidButton = new LiquidButton();
 			browseButton.label = "Browse";
 			browseButton.y = 120;
@@ -203,6 +223,9 @@ package com.verticalcue.misc
 			browseButton.x = _settingsWindow.width / 2 - browseButton.width / 2;
 			browseButton.loadSkin("back", "./skin/subWindowButton_back.png");
 			browseButton.addEventListener(MouseEvent.MOUSE_UP, settingsBrowseButtonClicked);
+			
+			if (Capabilities.os.indexOf("Linux") != -1)
+				_settingsWindow.addChild(linuxEffects);
 			
 			_settingsWindow.addChild(browseButton);
 			_settingsWindow.addChild(terrorPathInput);
@@ -213,6 +236,16 @@ package com.verticalcue.misc
 			var rollover:Sprite = Sprite(_settingsWindow.getChildByName("backArrow").getChildByName("arrowGraphicRollover"));
 			rollover.visible = false;
 			_window.stage.addChild(_settingsWindow);
+		}
+		
+		private function linuxEffectSelected(e:ListEvent):void 
+		{
+			_linuxEffects = LiquidComboBox(e.currentTarget).getItemAt(parseInt(e.rowIndex.toString())).data == "enable" ? true : false;
+			if (_linuxEffects)
+				_bg.getChildByName("bg").filters = _windowFilters;
+			else
+				_bg.getChildByName("bg").filters = [];
+			saveSettings();
 		}
 		
 		private function refreshRateSelected(e:ListEvent):void 
@@ -243,7 +276,7 @@ package com.verticalcue.misc
 			var outFile:File = _file.resolvePath(File.applicationStorageDirectory.nativePath + "/settings.xml");
 			var fs:FileStream = new FileStream();
 			fs.open(outFile, FileMode.WRITE);
-			fs.writeUTFBytes(XML("<?xml version=\"1.0\"?><settings><path>" + _setPath + "</path><refresh>" + _setRefreshRate.toString() + "</refresh></settings>"));
+			fs.writeUTFBytes(XML("<?xml version=\"1.0\"?><settings><path>" + _setPath + "</path><refresh>" + _setRefreshRate.toString() + "</refresh><linuxEffects>" + _linuxEffects.toString() + "</linuxEffects></settings>"));
 			fs.close();
 		}
 		private function loadSettings():void
@@ -255,6 +288,7 @@ package com.verticalcue.misc
 				var t:XML = XML(fs.readUTFBytes(fs.bytesAvailable));
 				_setPath = t.path.toString();
 				_setRefreshRate = parseInt(t.refresh.toString());
+				_linuxEffects = t.linuxEffects.toString() == "true" ? true : false;
 				if (_setRefreshRate < 500)
 					_setRefreshRate = 60000;
 			}
