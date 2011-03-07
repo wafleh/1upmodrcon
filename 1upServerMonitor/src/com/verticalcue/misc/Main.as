@@ -91,16 +91,26 @@ package com.verticalcue.misc
 			windowOptions.type = NativeWindowType.UTILITY;
 			_window = new NativeWindow(windowOptions);
 			_window.stage.scaleMode = StageScaleMode.NO_SCALE;
-			_window.bounds = new Rectangle(0, 0, 238, 345);
 			
 			// Add Background
 			_bg = new GUIBox();
 			_bg.x = -78;
 			_bg.y = -125;
 			_windowFilters = _bg.getChildByName("bg").filters;
-			if (!_linuxEffects)
+			if (!_linuxEffects) {
 				_bg.getChildByName("bg").filters = [];
+				_bg.x += 1;
+//				_bg.y += 4;
+			}
 			_bg.addEventListener(MouseEvent.MOUSE_DOWN, bgMouseDown);
+
+			// Settings Bounds
+			if (!_linuxEffects)
+				_window.bounds = new Rectangle(0, 0, 206, 294);
+			else
+				_window.bounds = new Rectangle(0, 0, 238, 345);
+
+
 			var settingsButton:Sprite = Sprite(_bg.getChildByName("settingsButton"));
 			settingsButton.alpha = 0;
 			settingsButton.addEventListener(MouseEvent.CLICK, settingsButtonClicked);
@@ -288,7 +298,7 @@ package com.verticalcue.misc
 				var t:XML = XML(fs.readUTFBytes(fs.bytesAvailable));
 				_setPath = t.path.toString();
 				_setRefreshRate = parseInt(t.refresh.toString());
-				_linuxEffects = t.linuxEffects.toString() == "true" ? true : false;
+				_linuxEffects = t.linuxEffects.toString() == "false" ? false : true;
 				if (_setRefreshRate < 500)
 					_setRefreshRate = 60000;
 			}
