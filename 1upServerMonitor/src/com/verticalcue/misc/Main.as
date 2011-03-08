@@ -423,6 +423,7 @@ package com.verticalcue.misc
 		
 		private function sysTrayIconClicked(e:ScreenMouseEvent):void 
 		{
+			_window.visible = false;
 			toggleHide();
 		}
 		
@@ -432,6 +433,7 @@ package com.verticalcue.misc
 				_window.visible = false;
 			}
 			else {
+				_window.visible = true;
 				_window.activate();
 				_window.alwaysInFront = true;
 				_window.alwaysInFront = false;
