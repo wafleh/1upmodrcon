@@ -15,6 +15,7 @@ package com.verticalcue.misc.bowser
 		public function Server() 
 		{
 			_clients = new Vector.<Client>();
+			_map = "n/a";
 		}
 		
 		public function get name():String { return _name; }

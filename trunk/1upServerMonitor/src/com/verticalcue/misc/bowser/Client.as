@@ -21,6 +21,9 @@ package com.verticalcue.misc.bowser
 		{
 			var cleanStr:String = value.replace("<", "&#60;");
 			cleanStr = cleanStr.replace(">", "&#62;");
+			
+			if (cleanStr == "")
+				cleanStr = "Unnamed Player";
 			_name = QuakeColors.convertName(cleanStr);
 		}
 		

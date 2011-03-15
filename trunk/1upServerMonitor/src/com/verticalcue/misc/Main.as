@@ -452,6 +452,7 @@ package com.verticalcue.misc
 		
 		private function serverListLoaded(e:Event):void 
 		{
+			trace("Server List Loaded!");
 			var srvCol:DataGridColumn;
 			var plyCol:DataGridColumn;
 			_sList.removeAll();
