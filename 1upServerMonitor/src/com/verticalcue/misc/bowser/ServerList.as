@@ -64,6 +64,7 @@ package com.verticalcue.misc.bowser
 				bowser.addEventListener(BowserEvent.RESPONSE, bowserEventReceived, false, 0, true);
 				bowser.send("getstatus");
 			}
+			dispatchEvent(new Event(Event.COMPLETE));
 		}
 		private function remoteServerDataError(e:IOErrorEvent):void 
 		{
