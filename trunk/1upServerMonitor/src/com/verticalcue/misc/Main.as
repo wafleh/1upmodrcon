@@ -62,7 +62,7 @@ package com.verticalcue.misc
 		private var _windowFilters:Array;
 		private var _linuxEffects:Boolean = true;
 		private var _updater:Updater = new Updater();
-		private var _version:String = "0.5.6";
+		private var _version:String = "0.5.7";
 
 		public function Main():void 
 		{			
@@ -264,6 +264,7 @@ package com.verticalcue.misc
 			var file:File = File.applicationStorageDirectory.resolvePath("update.xml");
 			if (file.exists) {
 				var fs:FileStream = new FileStream();
+				fs.open(file, FileMode.READ);
 				var xml:XML = XML(fs.readUTF());
 				fs.close();
 				return String(xml.version.text());
