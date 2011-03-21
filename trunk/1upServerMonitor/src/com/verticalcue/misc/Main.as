@@ -24,6 +24,7 @@ package com.verticalcue.misc
 	import flash.geom.Rectangle;
 	import flash.net.FileFilter;
 	import flash.system.Capabilities;
+	import flash.system.System;
 	import flash.text.TextFormat;
 	import com.verticalcue.misc.bowser.*;
 	import flash.utils.Timer;
@@ -60,6 +61,7 @@ package com.verticalcue.misc
 		private var _setRefreshRate:int = 300000;
 		private var _windowFilters:Array;
 		private var _linuxEffects:Boolean = true;
+		private var _updater:Updater = new Updater();
 
 		public function Main():void 
 		{			
@@ -67,10 +69,13 @@ package com.verticalcue.misc
 			
 			loadSettings();
 			
+			_updater.checkForUpdate("0.0.10");
+			
+			
 			// Setup Tray Icon
 			NativeApplication.nativeApplication.autoExit = false;
 			if (NativeApplication.supportsSystemTrayIcon) { 
-				var menu:NativeMenu = new NativeMenu()
+				var menu:NativeMenu = new NativeMenu();
 				var mush:Bitmap = new MushroomIcon(); 
 				var exitItem:NativeMenuItem = new NativeMenuItem("Exit");
 				NativeApplication.nativeApplication.icon.bitmaps = [mush.bitmapData];
@@ -110,7 +115,7 @@ package com.verticalcue.misc
 			else
 				_window.bounds = new Rectangle(0, 0, 238, 345);
 
-
+			
 			var settingsButton:Sprite = Sprite(_bg.getChildByName("settingsButton"));
 			settingsButton.alpha = 0;
 			settingsButton.addEventListener(MouseEvent.CLICK, settingsButtonClicked);
@@ -155,6 +160,10 @@ package com.verticalcue.misc
 			_timer.start();
 		}
 		
+		private function setApplicationVersion():void {
+            var appXML:XML = NativeApplication.nativeApplication.applicationDescriptor;
+            var ns:Namespace = appXML.namespace();
+        }
 		private function settingsButtonClicked(e:MouseEvent):void 
 		{
 			if (_settingsWindow == null) {
@@ -448,6 +457,7 @@ package com.verticalcue.misc
 		private function timerTick(e:TimerEvent):void 
 		{
 			_serverList.reloadServerData();
+			System.gc();
 		}
 		
 		private function serverListLoaded(e:Event):void 
