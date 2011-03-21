@@ -18,6 +18,8 @@ package com.verticalcue.misc
 	import flash.display.NativeWindowType;
 	import flash.display.StageScaleMode;
 	import flash.filesystem.*;
+	import flash.system.Capabilities;
+	import flash.system.System;
 	import flash.utils.ByteArray;
 	import flash.desktop.NativeApplication;
 	
@@ -71,12 +73,15 @@ package com.verticalcue.misc
 		
 		private function updateMouseDown(e:MouseEvent):void 
 		{
-			_loader = new URLLoader();
-			_loader.dataFormat = URLLoaderDataFormat.BINARY;
-			_loader.addEventListener(Event.COMPLETE, updateFileDownloadComplete);
-			_loader.addEventListener(ProgressEvent.PROGRESS, updateFileProgressEvent);
-			_loader.load(new URLRequest(_updateXml.windowsUrl.text()));
-			
+			if (Capabilities.os.indexOf("Win") != -1) {
+				_loader = new URLLoader();
+				_loader.dataFormat = URLLoaderDataFormat.BINARY;
+				_loader.addEventListener(Event.COMPLETE, updateFileDownloadComplete);
+				_loader.addEventListener(ProgressEvent.PROGRESS, updateFileProgressEvent);
+				_loader.load(new URLRequest(_updateXml.windowsUrl.text()));
+			} else {
+				_updateGui.getChildByName("status").text = "Error! Updater is currently not supported on this operating system.";
+			}
 		}
 		
 		private function updateFileProgressEvent(e:ProgressEvent):void 
@@ -88,6 +93,7 @@ package com.verticalcue.misc
 		{
 			var file:File = File.applicationStorageDirectory.resolvePath("update.xml");
 			var fs:FileStream = new FileStream();
+			fs.open(file, FileMode.WRITE);
 			fs.writeUTFBytes(_updateXml.toXMLString());
 			fs.close();
 		}
@@ -100,10 +106,9 @@ package com.verticalcue.misc
 			fs.open(file, FileMode.WRITE);
 			fs.writeBytes(ByteArray(e.target.data));
 			fs.close();
-			_window.close();
-			
 			saveNewUpdateXml();
-			
+			_window.close();
+						
 			NativeApplication.nativeApplication.exit();
 			
 			var proc:NativeProcess = new NativeProcess();
