@@ -84,6 +84,14 @@ package com.verticalcue.misc
 			_updateGui.getChildByName("status").text = "Downloading Update: " + Number(e.bytesTotal / e.bytesLoaded) * 100 + "%";
 		}
 		
+		private function saveNewUpdateXml():void
+		{
+			var file:File = File.applicationStorageDirectory.resolvePath("update.xml");
+			var fs:FileStream = new FileStream();
+			fs.writeUTFBytes(_updateXml.toXMLString());
+			fs.close();
+		}
+		
 		private function updateFileDownloadComplete(e:Event):void 
 		{
 			var url:String = String(_updateXml.windowsUrl.text());
@@ -93,6 +101,8 @@ package com.verticalcue.misc
 			fs.writeBytes(ByteArray(e.target.data));
 			fs.close();
 			_window.close();
+			
+			saveNewUpdateXml();
 			
 			NativeApplication.nativeApplication.exit();
 			

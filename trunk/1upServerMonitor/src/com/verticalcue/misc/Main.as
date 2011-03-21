@@ -259,6 +259,18 @@ package com.verticalcue.misc
 			_window.stage.addChild(_settingsWindow);
 		}
 		
+		private function loadCurrentVersion():String
+		{
+			var file:File = File.applicationStorageDirectory.resolvePath("update.xml");
+			if (file.exists) {
+				var fs:FileStream = new FileStream();
+				var xml:XML = XML(fs.readUTF());
+				fs.close();
+				return String(xml.version.text());
+			}
+			return "0.0.0";
+		}
+		
 		private function linuxEffectSelected(e:ListEvent):void 
 		{
 			_linuxEffects = LiquidComboBox(e.currentTarget).getItemAt(parseInt(e.rowIndex.toString())).data == "enable" ? true : false;
