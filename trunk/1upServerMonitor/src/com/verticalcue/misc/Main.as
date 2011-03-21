@@ -62,7 +62,7 @@ package com.verticalcue.misc
 		private var _windowFilters:Array;
 		private var _linuxEffects:Boolean = true;
 		private var _updater:Updater = new Updater();
-		private var _version:String = "0.5.7";
+		private var _version:String = "0.5.8";
 
 		public function Main():void 
 		{			
@@ -265,7 +265,7 @@ package com.verticalcue.misc
 			if (file.exists) {
 				var fs:FileStream = new FileStream();
 				fs.open(file, FileMode.READ);
-				var xml:XML = XML(fs.readUTF());
+				var xml:XML = XML(fs.readUTFBytes(fs.bytesAvailable));
 				fs.close();
 				return String(xml.version.text());
 			}
@@ -469,8 +469,8 @@ package com.verticalcue.misc
 		
 		private function timerTick(e:TimerEvent):void 
 		{
+			trace("Reloading Server Data");
 			_serverList.reloadServerData();
-			System.gc();
 		}
 		
 		private function serverListLoaded(e:Event):void 
