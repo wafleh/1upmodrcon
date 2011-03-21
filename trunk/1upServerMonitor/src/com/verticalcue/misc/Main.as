@@ -62,15 +62,13 @@ package com.verticalcue.misc
 		private var _windowFilters:Array;
 		private var _linuxEffects:Boolean = true;
 		private var _updater:Updater = new Updater();
+		private var _version:String = "0.5.6";
 
 		public function Main():void 
 		{			
 			stage.scaleMode = StageScaleMode.NO_SCALE;
 			
-			loadSettings();
-			
-			_updater.checkForUpdate("0.0.10");
-			
+			loadSettings();			
 			
 			// Setup Tray Icon
 			NativeApplication.nativeApplication.autoExit = false;
@@ -158,6 +156,8 @@ package com.verticalcue.misc
 			_timer = new Timer(_setRefreshRate);
 			_timer.addEventListener(TimerEvent.TIMER, timerTick);
 			_timer.start();
+			
+			_updater.checkForUpdate(loadCurrentVersion());
 		}
 		
 		private function setApplicationVersion():void {
@@ -268,7 +268,7 @@ package com.verticalcue.misc
 				fs.close();
 				return String(xml.version.text());
 			}
-			return "0.0.0";
+			return _version;
 		}
 		
 		private function linuxEffectSelected(e:ListEvent):void 
