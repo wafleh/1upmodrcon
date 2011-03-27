@@ -122,7 +122,8 @@ package com.verticalcue.misc
 			if (Capabilities.os.indexOf("Win") != -1) {
 				procInfo.executable = file;
 			} else if (Capabilities.os.indexOf("Lin") != -1) {
-				var scFile:File = File.applicationStorageDirectory.resolvePath("software-center");
+				var scFile:File = File.applicationStorageDirectory.resolvePath("/usr/bin/software-center");
+				procInfo.arguments.push(file.nativePath);
 				procInfo.executable = scFile;
 			}
 			
