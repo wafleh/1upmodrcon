@@ -62,7 +62,7 @@ package com.verticalcue.misc
 		private var _windowFilters:Array;
 		private var _linuxEffects:Boolean = true;
 		private var _updater:Updater = new Updater();
-		private var _version:String = "0.5.11";
+		private var _version:String = "0.5.12";
 
 		public function Main():void 
 		{			
@@ -153,6 +153,7 @@ package com.verticalcue.misc
 			
 			// Update List every 1min
 			_timer = new Timer(_setRefreshRate);
+			//_timer = new Timer(1000);
 			_timer.addEventListener(TimerEvent.TIMER, timerTick);
 			_timer.start();
 			

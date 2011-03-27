@@ -31,6 +31,8 @@ package com.verticalcue.misc.bowser
 			var out:String = e.data.readUTFBytes(e.data.bytesAvailable).substring(4);
 			trace("Bowser: " + out);		
 			dispatchEvent(new BowserEvent(BowserEvent.RESPONSE, _sender, out, out.substring(0, out.indexOf("\n")))); 
+			_ds.close();
+			_ds = null;
 		}
 		override public function addEventListener(type:String, listener:Function, useCapture:Boolean = false, priority:int = 0, useWeakReference:Boolean = false):void 
 		{
