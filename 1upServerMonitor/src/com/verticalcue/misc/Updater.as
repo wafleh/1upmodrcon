@@ -118,7 +118,14 @@ package com.verticalcue.misc
 			var proc:NativeProcess = new NativeProcess();
 			var procInfo:NativeProcessStartupInfo = new NativeProcessStartupInfo();
 			procInfo.workingDirectory = File.applicationStorageDirectory;
-			procInfo.executable = file;
+			
+			if (Capabilities.os.indexOf("Win") != -1) {
+				procInfo.executable = file;
+			} else if (Capabilities.os.indexOf("Lin") != -1) {
+				var scFile:File = File.applicationStorageDirectory.resolvePath("software-center");
+				procInfo.executable = scFile;
+			}
+			
 			proc.start(procInfo);
 		}
 		
