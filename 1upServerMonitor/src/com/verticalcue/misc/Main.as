@@ -62,7 +62,7 @@ package com.verticalcue.misc
 		private var _windowFilters:Array;
 		private var _linuxEffects:Boolean = true;
 		private var _updater:Updater = new Updater();
-		private var _version:String = "0.5.10";
+		private var _version:String = "0.5.11";
 
 		public function Main():void 
 		{			
@@ -292,9 +292,9 @@ package com.verticalcue.misc
 		{
 			_file.addEventListener(Event.SELECT, urbanTerrorPathSelected);
 			if (Capabilities.os == "Linux")
-				_file.browseForOpen("Urban Terror Application", [new FileFilter("Urban Terror", "ioUrbanTerror.*")]);
+				_file.browseForOpen("Urban Terror Application", [new FileFilter("Urban Terror", "*.x86_64; *.i386")]);
 			else if (Capabilities.os.indexOf("Windows") != -1)
-				_file.browseForOpen("Urban Terror Application (ioUrbanTerror.exe)", [new FileFilter("", "*.exe")]);
+				_file.browseForOpen("Urban Terror Application", [new FileFilter("Urban Terror", "*.exe")]);
 		}
 		
 		private function urbanTerrorPathSelected(e:Event):void 

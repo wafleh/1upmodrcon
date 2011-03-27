@@ -36,6 +36,7 @@ package com.verticalcue.misc
 		private var _curVersion:String;
 		private var _window:NativeWindow;
 		private var _updateGui:*;
+		private var _downloadUrl:String = "";
 		
 		
 		public function Updater(target:IEventDispatcher = null) 
@@ -66,19 +67,22 @@ package com.verticalcue.misc
 			_window.alwaysInFront = true;
 			_updateGui.addEventListener(MouseEvent.MOUSE_DOWN, mouseDownOnBackground, false, 0, true);
 			_updateGui.getChildByName("status").text = "Update Available: " + _updateXml.version.text();
-			
 			_updateGui.getChildByName("cancelButton").addEventListener(MouseEvent.MOUSE_DOWN, cancelMouseDown, false, 0, true);
 			_updateGui.getChildByName("updateButton").addEventListener(MouseEvent.MOUSE_DOWN, updateMouseDown, false, 0, true);
 		}
 		
 		private function updateMouseDown(e:MouseEvent):void 
 		{
-			if (Capabilities.os.indexOf("Win") != -1) {
+			if (Capabilities.os.indexOf("Win") != -1 || Capabilities.os.indexOf("Lin") != -1) {
 				_loader = new URLLoader();
 				_loader.dataFormat = URLLoaderDataFormat.BINARY;
 				_loader.addEventListener(Event.COMPLETE, updateFileDownloadComplete);
 				_loader.addEventListener(ProgressEvent.PROGRESS, updateFileProgressEvent);
-				_loader.load(new URLRequest(_updateXml.windowsUrl.text()));
+				if (Capabilities.os.indexOf("Win") != -1)
+					_downloadUrl = _updateXml.windowsUrl.text();
+				else if (Capabilities.os.indexOf("Lin") != -1)
+					_downloadUrl = _updateXml.ubuntuUrl.text();
+				_loader.load(new URLRequest(_downloadUrl));
 			} else {
 				_updateGui.getChildByName("status").text = "Error! Updater is currently not supported on this operating system.";
 			}
@@ -100,7 +104,7 @@ package com.verticalcue.misc
 		
 		private function updateFileDownloadComplete(e:Event):void 
 		{
-			var url:String = String(_updateXml.windowsUrl.text());
+			var url:String = String(_downloadUrl);
 			var file:File = File.applicationStorageDirectory.resolvePath(url.substring(url.lastIndexOf("/") + 1));
 			var fs:FileStream = new FileStream();
 			fs.open(file, FileMode.WRITE);
