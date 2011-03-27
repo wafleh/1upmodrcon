@@ -21,6 +21,7 @@ package com.verticalcue.misc
 	import flash.system.Capabilities;
 	import flash.system.System;
 	import flash.utils.ByteArray;
+	import flash.geom.Rectangle;
 	import flash.desktop.NativeApplication;
 	
 	/**
@@ -37,6 +38,7 @@ package com.verticalcue.misc
 		private var _window:NativeWindow;
 		private var _updateGui:*;
 		private var _downloadUrl:String = "";
+		public var linuxEffects:Boolean = true;
 		
 		
 		public function Updater(target:IEventDispatcher = null) 
@@ -60,8 +62,8 @@ package com.verticalcue.misc
 			
 			_window.width = _updateGui.width + 10;
 			_window.height = _updateGui.height + 10;
-			_updateGui.x = -145;
-			_updateGui.y = -40;
+			_updateGui.x = -146;
+			_updateGui.y = -41;
 			_window.activate();
 			_window.orderToFront();
 			_window.alwaysInFront = true;
@@ -69,6 +71,10 @@ package com.verticalcue.misc
 			_updateGui.getChildByName("status").text = "Update Available: " + _updateXml.version.text();
 			_updateGui.getChildByName("cancelButton").addEventListener(MouseEvent.MOUSE_DOWN, cancelMouseDown, false, 0, true);
 			_updateGui.getChildByName("updateButton").addEventListener(MouseEvent.MOUSE_DOWN, updateMouseDown, false, 0, true);
+
+			if (!linuxEffects) {
+				_window.bounds = new Rectangle(0, 0, 365, 155);
+			}
 		}
 		
 		private function updateMouseDown(e:MouseEvent):void 
@@ -85,6 +91,7 @@ package com.verticalcue.misc
 				_loader.load(new URLRequest(_downloadUrl));
 			} else {
 				_updateGui.getChildByName("status").text = "Error! Updater is currently not supported on this operating system.";
+				_window.close();
 			}
 		}
 		
