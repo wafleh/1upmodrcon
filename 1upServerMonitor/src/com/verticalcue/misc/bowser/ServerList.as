@@ -43,8 +43,8 @@ package com.verticalcue.misc.bowser
 		{
 			var urlReq:URLRequest = new URLRequest("http://1upclan.info/servers.xml");
 			var urlLoader:URLLoader = new URLLoader();
-			urlLoader.addEventListener(Event.COMPLETE, remoteServerDataLoaded, false, 0);
-			urlLoader.addEventListener(IOErrorEvent.IO_ERROR, remoteServerDataError, false, 0);
+			urlLoader.addEventListener(Event.COMPLETE, remoteServerDataLoaded);
+			urlLoader.addEventListener(IOErrorEvent.IO_ERROR, remoteServerDataError);
 			urlLoader.load(urlReq);
 		}
 		private function runServerList(listStr:String):void
@@ -61,7 +61,7 @@ package com.verticalcue.misc.bowser
 				
 				var bowser:BowserQuery = new BowserQuery(srvObj.ip, 27960);
 				bowser.sender = srvObj;
-				bowser.addEventListener(BowserEvent.RESPONSE, bowserEventReceived, false, 0, false);
+				bowser.addEventListener(BowserEvent.RESPONSE, bowserEventReceived);
 				bowser.send("getstatus");
 			}
 			dispatchEvent(new Event(Event.COMPLETE));
@@ -92,7 +92,7 @@ package com.verticalcue.misc.bowser
 			for each (var srv:Server in _list) {
 				var bowser:BowserQuery = new BowserQuery(srv.ip, 27960);
 				bowser.sender = srv;
-				bowser.addEventListener(BowserEvent.RESPONSE, bowserEventReceived, false, 0, false);
+				bowser.addEventListener(BowserEvent.RESPONSE, bowserEventReceived);
 				bowser.send("getstatus");
 			}
 		}
@@ -116,10 +116,8 @@ package com.verticalcue.misc.bowser
 					}
 				}
 			}
-			//_asyncProcComplete++;
-			//if (_asyncProcComplete == _asyncProcTotal ) {
-				dispatchEvent(new Event(Event.COMPLETE));
-			//}
+			
+			dispatchEvent(new Event(Event.COMPLETE));
 		}
 		public function getServerByName(name:String):Server
 		{

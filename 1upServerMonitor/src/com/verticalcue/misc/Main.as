@@ -62,7 +62,7 @@ package com.verticalcue.misc
 		private var _windowFilters:Array;
 		private var _linuxEffects:Boolean = true;
 		private var _updater:Updater = new Updater();
-		private var _version:String = "0.5.9";
+		private var _version:String = "0.5.10";
 
 		public function Main():void 
 		{			
@@ -103,7 +103,6 @@ package com.verticalcue.misc
 			if (!_linuxEffects) {
 				_bg.getChildByName("bg").filters = [];
 				_bg.x += 1;
-//				_bg.y += 4;
 			}
 			_bg.addEventListener(MouseEvent.MOUSE_DOWN, bgMouseDown);
 
@@ -357,7 +356,7 @@ package com.verticalcue.misc
 				_selectedServer = data;
 				_srvWindow = new ServerInfoWindow();
 				_srvWindow.x = -64;
-				_srvWindow.y = -52;		
+				_srvWindow.y = -52;
 				_srvWindow.getChildByName("backArrow").addEventListener(MouseEvent.MOUSE_OVER, mouseOverBackArrow);
 				_srvWindow.getChildByName("backArrow").addEventListener(MouseEvent.MOUSE_OUT, mouseOutBackArrow);
 				_srvWindow.getChildByName("backArrow").addEventListener(MouseEvent.CLICK, mouseClickBackArrow);
@@ -380,17 +379,18 @@ package com.verticalcue.misc
 				_clientList.setRendererStyle("textFormat", tf);
 				_clientList.setStyle("cellRenderer", AntiAliasCellRenderer);
 				_clientList.headerHeight = 0;
+				_clientList.columns = ["a", "b", "c"];
 				
 				for each (var client:Client in data.clients) {
 					_clientList.addItem( {a: client.name, b: client.points, c: client.ping} );
 				}
-				
+
 				if (data.clients.length > 0 ) {
 					_clientList.columns[1].setWidth(30);
-					_clientList.columns[2].setWidth(30);
-					
+					_clientList.columns[2].setWidth(33);
 					_srvWindow.addChild(_clientList);
 				}
+				
 				var rollover:Sprite = Sprite(_srvWindow.getChildByName("backArrow").getChildByName("arrowGraphicRollover"));
 				rollover.visible = false;
 				_window.stage.addChild(_srvWindow);
@@ -401,8 +401,7 @@ package com.verticalcue.misc
 		{
 			if (_setPath != "") {
 				launchUrbanTerror(_selectedServer);
-			}
-			else {
+			} else {
 				_window.stage.removeChild(_srvWindow);
 				_srvWindow = null;
 				_selectedServer = null;
@@ -464,11 +463,24 @@ package com.verticalcue.misc
 		
 		private function exitItemSelected(e:Event):void 
 		{
+			_window.close();
+			_timer.stop();
+			var exitTimer:Timer = new Timer(100);
+			exitTimer.addEventListener(TimerEvent.TIMER, exitApplicationTimer);
+			exitTimer.start();
+		}
+		
+		private function exitApplicationTimer(e:TimerEvent):void 
+		{
+			var exitingEvent:Event = new Event(Event.EXITING, false, true);
+			NativeApplication.nativeApplication.dispatchEvent(exitingEvent);
 			NativeApplication.nativeApplication.exit();
 		}
 		
 		private function timerTick(e:TimerEvent):void 
 		{
+			//trace("Collecting garbage...");
+			//gc();
 			trace("Reloading Server Data");
 			_serverList.reloadServerData();
 		}
@@ -483,14 +495,16 @@ package com.verticalcue.misc
 				_sList.addItem( { server: srvObj.name, players: srvObj.clients.length + "/" + srvObj.maxClients } );
 				if (_srvWindow) {
 					if (srvObj.name == _srvWindow.getChildByName("serverName").text) {
+						_clientList.columns = ["a", "b", "c"];
 						_clientList.removeAll();
 						for each (var client:Client in srvObj.clients) {
 							_clientList.addItem( {a: client.name, b: client.points, c: client.ping} );
 						}
 						_clientList.columns[1].setWidth(30);
-						_clientList.columns[2].setWidth(30);
+						_clientList.columns[2].setWidth(33);
 					}					
 				}
+				
 				trace(srvObj.name);
 				
 			}
@@ -515,9 +529,8 @@ package com.verticalcue.misc
 		}
 		
 		private function closeButtonClicked(e:MouseEvent):void 
-		{
-			_window.close();
-			NativeApplication.nativeApplication.exit();
+		{			
+			exitItemSelected(null);
 		}
 		
 		private function bgMouseDown(e:MouseEvent):void 
@@ -525,6 +538,11 @@ package com.verticalcue.misc
 			_window.startMove();
 		}
 		
+		// This seems to remove some weak listeners so do not use
+		private function gc():void
+		{
+			System.gc();
+		}
 	}
 	
 }
