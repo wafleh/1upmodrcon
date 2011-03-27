@@ -16,7 +16,7 @@ $FLEXSDKBIN/mxmlc -load-config+=obj/linux1upServerMonitorConfig.xml -debug=true 
 # Package Air File
 elif  [ "$1" == "air" ]
 then
-$FLEXSDKBIN/adt -package $SIGNING_OPTIONS $AIR_FILE $APP_XML $FILE_OR_DIR
+$AIRSDKBIN/adt -package $SIGNING_OPTIONS $AIR_FILE $APP_XML $FILE_OR_DIR
 
 # Package for Debian
 elif  [ "$1" == "package" ]
