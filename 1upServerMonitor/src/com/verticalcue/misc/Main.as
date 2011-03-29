@@ -297,6 +297,8 @@ package com.verticalcue.misc
 				_file.browseForOpen("Urban Terror Application", [new FileFilter("Urban Terror", "*.x86_64; *.i386")]);
 			else if (Capabilities.os.indexOf("Windows") != -1)
 				_file.browseForOpen("Urban Terror Application", [new FileFilter("Urban Terror", "*.exe")]);
+			else if (Capabilities.os.indexOf("Mac") != -1)
+				_file.browseForOpen("Urban Terror Application", [new FileFilter("Urban Terror", "*.app")]);
 		}
 		
 		private function urbanTerrorPathSelected(e:Event):void 
@@ -332,15 +334,19 @@ package com.verticalcue.misc
 		{
 			if(NativeProcess.isSupported)
 			{
+				var tmpPath:String = _setPath;
 				var file:File = File.desktopDirectory;
-				file = file.resolvePath(_setPath);
+				file = file.resolvePath(tmpPath);
 				
 				var npsi:NativeProcessStartupInfo = new NativeProcessStartupInfo();
-				npsi.executable = file.resolvePath(_setPath);
+				if (Capabilities.os.indexOf("Mac") != -1)
+					tmpPath += " /Contents/MacOS/ioUrbanTerror.ub";
+				npsi.executable = file.resolvePath(tmpPath);
+					
 				if (Capabilities.os.indexOf("Windows") != -1)
-					npsi.workingDirectory = file.resolvePath(_setPath.substr(0, _setPath.lastIndexOf("\\")));
-				else if (Capabilities.os.indexOf("Linux") != -1)
-					npsi.workingDirectory = file.resolvePath(_setPath.substr(0, _setPath.lastIndexOf("/")));
+					npsi.workingDirectory = file.resolvePath(tmpPath.substr(0, tmpPath.lastIndexOf("\\")));
+				else
+					npsi.workingDirectory = file.resolvePath(tmpPath.substr(0, tmpPath.lastIndexOf("/")));
 				npsi.arguments.push("+connect");
 				npsi.arguments.push(server.ip);
 				var process:NativeProcess = new NativeProcess();
