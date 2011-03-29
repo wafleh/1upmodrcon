@@ -185,11 +185,17 @@ package com.verticalcue.misc
 			_settingsWindow.getChildByName("backArrow").addEventListener(MouseEvent.MOUSE_OVER, mouseOverBackArrow);
 			_settingsWindow.getChildByName("backArrow").addEventListener(MouseEvent.MOUSE_OUT, mouseOutBackArrow);
 			_settingsWindow.getChildByName("backArrow").addEventListener(MouseEvent.CLICK, mouseClickBackArrow);
+			
 			if (Capabilities.os.indexOf("Linux") == -1)
 				_settingsWindow.getChildByName("linuxEffectsLabel").visible = false;
 			else 
 				_settingsWindow.getChildByName("linuxEffectsLabel").visible = true;
 			
+			if (Capabilities.os.indexOf("Mac") == -1)
+				_settingsWindow.getChildByName("mac_note").visible = false;
+			else 
+				_settingsWindow.getChildByName("mac_note").visible = true;	
+				
 			// Setup Default TextFormat
 			var tf:TextFormat = new TextFormat();
 			tf.font = "Verdana";
@@ -301,8 +307,9 @@ package com.verticalcue.misc
 		
 		private function urbanTerrorPathSelected(e:Event):void 
 		{
-			// FIXME: FOR MAC after the path to the ioUrbanTerror.app folder it is /Contents/MacOS/ioUrbanTerror.ub 
 			_setPath = _file.nativePath;
+			if (Capabilities.os.indexOf("Mac") != -1) 
+				_setPath = _setPath.replace(".exe", ".app");
 			LiquidTextInput(_settingsWindow.getChildByName("path")).text = _setPath;
 			saveSettings();
 		}
@@ -345,6 +352,7 @@ package com.verticalcue.misc
 					npsi.workingDirectory = file.resolvePath(tmpPath.substr(0, tmpPath.lastIndexOf("\\")));
 				else
 					npsi.workingDirectory = file.resolvePath(tmpPath.substr(0, tmpPath.lastIndexOf("/")));
+					
 				npsi.arguments.push("+connect");
 				npsi.arguments.push(server.ip);
 				var process:NativeProcess = new NativeProcess();
@@ -421,6 +429,7 @@ package com.verticalcue.misc
 				_window.stage.removeChild(_srvWindow);
 			}
 			if (_settingsWindow) {
+				saveSettings();
 				_window.stage.removeChild(_settingsWindow);
 			}
 			_settingsWindow = null;
