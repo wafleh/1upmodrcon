@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <update>
-	<version>0.5.115</version>
+	<version>0.5.15</version>
 	<windowsUrl>http://1upmodrcon.googlecode.com/svn/trunk/1upServerMonitor/natives/1upServerMonitor.exe</windowsUrl>
 	<ubuntuUrl>http://1upmodrcon.googlecode.com/svn/trunk/1upServerMonitor/natives/1upServerMonitor.deb</ubuntuUrl>
 	<macUrl>http://1upmodrcon.googlecode.com/svn/trunk/1upServerMonitor/natives/1upServerMonitor.dmg</macUrl>
