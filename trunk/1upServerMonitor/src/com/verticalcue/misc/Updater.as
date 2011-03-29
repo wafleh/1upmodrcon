@@ -79,15 +79,19 @@ package com.verticalcue.misc
 		
 		private function updateMouseDown(e:MouseEvent):void 
 		{
-			if (Capabilities.os.indexOf("Win") != -1 || Capabilities.os.indexOf("Lin") != -1) {
+			if (Capabilities.os.indexOf("Win") != -1 || Capabilities.os.indexOf("Lin") != -1 || Capabilities.os.indexOf("Mac") != -1){
 				_loader = new URLLoader();
 				_loader.dataFormat = URLLoaderDataFormat.BINARY;
 				_loader.addEventListener(Event.COMPLETE, updateFileDownloadComplete);
 				_loader.addEventListener(ProgressEvent.PROGRESS, updateFileProgressEvent);
+				
 				if (Capabilities.os.indexOf("Win") != -1)
 					_downloadUrl = _updateXml.windowsUrl.text();
 				else if (Capabilities.os.indexOf("Lin") != -1)
 					_downloadUrl = _updateXml.ubuntuUrl.text();
+				else if (Capabilities.os.indexOf("Mac") != -1)
+					_downloadUrl = _updateXml.macUrl.text();
+					
 				_loader.load(new URLRequest(_downloadUrl));
 			} else {
 				_updateGui.getChildByName("status").text = "Error! Updater is currently not supported on this operating system.";
@@ -124,12 +128,17 @@ package com.verticalcue.misc
 			
 			var proc:NativeProcess = new NativeProcess();
 			var procInfo:NativeProcessStartupInfo = new NativeProcessStartupInfo();
+			var scFile:File;
 			procInfo.workingDirectory = File.applicationStorageDirectory;
 			
 			if (Capabilities.os.indexOf("Win") != -1) {
 				procInfo.executable = file;
 			} else if (Capabilities.os.indexOf("Lin") != -1) {
-				var scFile:File = File.applicationStorageDirectory.resolvePath("/usr/bin/software-center");
+				scFile = File.applicationStorageDirectory.resolvePath("/usr/bin/software-center");
+				procInfo.arguments.push(file.nativePath);
+				procInfo.executable = scFile;
+			} else if (Capabilities.os.indexOf("Mac") != -1) {
+				scFile = File.applicationStorageDirectory.resolvePath("/usr/bin/open");
 				procInfo.arguments.push(file.nativePath);
 				procInfo.executable = scFile;
 			}
