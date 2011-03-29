@@ -345,7 +345,7 @@ package com.verticalcue.misc
 				
 				var npsi:NativeProcessStartupInfo = new NativeProcessStartupInfo();
 				if (Capabilities.os.indexOf("Mac") != -1)
-					tmpPath += " /Contents/MacOS/ioUrbanTerror.ub";
+					tmpPath += "/Contents/MacOS/ioUrbanTerror.ub";
 				npsi.executable = file.resolvePath(tmpPath);
 					
 				if (Capabilities.os.indexOf("Windows") != -1)
