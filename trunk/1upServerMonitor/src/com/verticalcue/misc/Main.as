@@ -295,10 +295,8 @@ package com.verticalcue.misc
 			_file.addEventListener(Event.SELECT, urbanTerrorPathSelected);
 			if (Capabilities.os == "Linux")
 				_file.browseForOpen("Urban Terror Application", [new FileFilter("Urban Terror", "*.x86_64; *.i386")]);
-			else if (Capabilities.os.indexOf("Windows") != -1)
-				_file.browseForOpen("Urban Terror Application", [new FileFilter("Urban Terror", "*.exe")]);
-			else if (Capabilities.os.indexOf("Mac") != -1)
-				_file.browseForOpen("Urban Terror Application", [new FileFilter("Urban Terror", "")]);
+			else
+				_file.browseForOpen("Urban Terror Application", [new FileFilter("Urban Terror", "*.exe", "APP")]);
 		}
 		
 		private function urbanTerrorPathSelected(e:Event):void 
