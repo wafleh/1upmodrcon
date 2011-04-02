@@ -1,0 +1,1065 @@
+
+#file-cache D:\work\projects\liquid\opensource\src\com\liquid\containers\LiquidScrollPane.as
+package com.liquid.containers{import com.liquid.skin.SkinLoader;import fl.containers.ScrollPane;import fl.core.InvalidationType;import fl.controls.ScrollBarDirection;import fl.core.UIComponent;import fl.events.ScrollEvent;import flash.display.BitmapData;import flash.events.Event;import flash.events.EventPhase;import flash.system.LoaderContext;import com.liquid.core.SkinBox;import com.liquid.core.ILiquidComponent;import com.liquid.core.LiquidManager;import com.liquid.skin.SkinAsset;import com.liquid.skin.SkinLoader;import com.liquid.events.LiquidEvent;import com.liquid.controls.LiquidScrollBar;/**
+* @author Didier Brun	 * @version 1.0
+*/
+public class LiquidScrollPane extends ScrollPane{/**
+* @private
+*/
+public var _pSkinBack : String;/**
+* @private
+*/
+public var _pLoadBack : String;/**
+* @private
+*/
+public var _pSkinUpArrow : String;/**
+* @private
+*/
+public var _pSkinDownArrow : String;/**
+* @private
+*/
+public var _pSkinThumb : String;/**
+* @private
+*/
+public var _pSkinTrack : String;/**
+* @private
+*/
+public var _pSkinIcons : String;/**
+* @private
+*/
+public var _pLoadUpArrow : String;/**
+* @private
+*/
+public var _pLoadDownArrow : String;/**
+* @private
+*/
+public var _pLoadThumb : String;/**
+* @private
+*/
+public var _pLoadIcons : String;/**
+* @private
+*/
+public var _pLoadTrack : String;private static const SKIN_UP : int;private static const SKIN_DISABLED : int;private var _skinBack : SkinBox;private static var _instances : Array;internal function LiquidScrollPane ();/**
+* Set a BitmapData skin for the LiquidScrollPane instance.		 * 		 * @example 	<listing version="3.0" >myScrollPane.setSkin("upArrow",myBitmapId(0,0));</listing> 		 * 		 * @param id	String indentifier, this property take the folowing value :		 * <p><table class=innertable>		 * <tr><th>id</th><th>Description</th></tr>		 * <tr><td>upArrow</td><td>The up/left arrow button of the scrollbars</td></tr>		 * <tr><td>downArrow</td><td>The down/right arrow button of the scrollbars</td></tr>		 * <tr><td>track</td><td>The track background of the scrollbars</td></tr>		 * <tr><td>thumb</td><td>The draggable thumb of the scrollbars</td></tr>		 * <tr><td>icons</td><td>The 12 icons the scrollbars</td></tr>		 * <tr><td>back</td><td>The background of the scrollpane</td></tr>		 * </table></p>		 * @param bmp	BitmapData instance
+*/
+public function setSkin (id:String, bmp:BitmapData) : void;/**
+* Load an external bitmap skin file and apply it to the LiquidScrollPane instance.		 * 		 * @example 	<listing version="3.0" >myScrollPane.loadSkin("back","./skin/mySkin.png");</listing> 		 * 		 * @param id	String indentifier, this property take the folowing value :			 * <p><table class=innertable>		 * <tr><th>id</th><th>Description</th></tr>		 * <tr><td>upArrow</td><td>The up/left arrow button of the scrollbars</td></tr>		 * <tr><td>downArrow</td><td>The down/right arrow button of the scrollbars</td></tr>		 * <tr><td>track</td><td>The track background of the scrollbars</td></tr>		 * <tr><td>thumb</td><td>The draggable thumb of the scrollbars</td></tr>		 * <tr><td>icons</td><td>The 12 icons the scrollbars</td></tr>		 * <tr><td>back</td><td>The background of the scrollpane</td></tr>		 * </table></p>		 * @param url		URL of the bitmap file		 * @param context 	A LoaderContext object, which has properties that define the following :    <ul>    <li>Whether or not Flash Player should check for the existence of a policy file   upon loading the object</li>    <li>The ApplicationDomain for the loaded object</li>    <li>The SecurityDomain for the loaded object</li>    </ul>    <p>For complete details, see the description of the properties in the   <a target='_blank' href="http://livedocs.adobe.com/flash/9.0/ActionScriptLangRefV3/flash/system/LoaderContext.html">LoaderContext</a> class.</p>
+*/
+public function loadSkin (id:String, url:String, context:LoaderContext = null) : void;/**
+* draw		 * @private
+*/
+protected function draw () : void;/**
+* initialize the liquid component		 * @private
+*/
+protected function initializeLiquid () : void;/**
+* added handler		 * @private
+*/
+protected function addedHandler (e:Event) : void;/**
+* render handler		 * @private
+*/
+protected function renderHandler (e:Event) : void;/**
+* init skin		 * @private
+*/
+protected function initSkin () : void;/**
+* config UI		 * @private
+*/
+protected function configUI () : void;/**
+* load back
+*/
+private function load_back (url:String, context:LoaderContext = null) : void;/**
+* back loaded
+*/
+private function back_loaded (e:Event) : void;}}
+#file-cache D:\work\projects\liquid\opensource\src\com\liquid\controls\LiquidButton.as
+package com.liquid.controls{import com.liquid.display.LiquidIcon;import com.liquid.skin.SkinLoader;import fl.controls.Button;import fl.core.UIComponent;import flash.display.BitmapData;import flash.events.Event;import flash.events.EventPhase;import flash.system.LoaderContext;import flash.text.TextFormat;import com.liquid.core.SkinBox;import com.liquid.core.ILiquidComponent;import com.liquid.core.LiquidManager;import com.liquid.skin.SkinAsset;import com.liquid.skin.SkinLoader;import com.liquid.events.LiquidEvent;import com.liquid.display.LiquidIcon;/**
+* @author Didier Brun	 * @version 1.0
+*/
+public class LiquidButton extends Button{/**
+* @private
+*/
+public var _pSkinBack : String;/**
+* @private
+*/
+public var _pLoadBack : String;/**
+* @private
+*/
+public var _pIcon : String;/**
+* @private
+*/
+public var _pLoadIcon : String;private static const SKIN_UP : int;private static const SKIN_OVER : int;private static const SKIN_DOWN : int;private static const SKIN_DISABLED : int;private static const SKIN_SELECTED_UP : int;private static const SKIN_SELECTED_OVER : int;private static const SKIN_SELECTED_DOWN : int;private static const SKIN_SELECTED_DISABLED : int;private static const SKIN_EMPHASIZED : int;protected var _skinBack : SkinBox;private var _skinEmphasized : SkinBox;private var _state : int;private var _icon : LiquidIcon;private static var _instances : Array;internal function LiquidButton ();/**
+* Set a BitmapData skin for the LiquidButton instance.		 * 		 * @example 	<listing version="3.0" >myButton.setSkin("back",myBitmapId(0,0));</listing> 		 * 		 * @param id	String indentifier, this property take the folowing value :		 * <p><table class=innertable>		 * <tr><th>id</th><th>Description</th></tr>		 * <tr><td>back</td><td>The background of the button</td></tr>		 * </table></p>		 * @param bmp	BitmapData instance
+*/
+public function setSkin (id:String, bmp:BitmapData) : void;/**
+* Load an external bitmap skin file and apply it to the LiquidButton instance.		 * 		 * @example 	<listing version="3.0" >myButton.loadSkin("back","./skin/mySkin.png");</listing> 		 * 		 * @param id	String indentifier, this property take the folowing value :		 * <p><table class=innertable>		 * <tr><th>id</th><th>Description</th></tr>		 * <tr><td>back</td><td>The background of the button.</td></tr>		 * </table></p>		 * @param url		URL of the bitmap file		 * @param context 	A LoaderContext object, which has properties that define the following :    <ul>    <li>Whether or not Flash Player should check for the existence of a policy file   upon loading the object</li>    <li>The ApplicationDomain for the loaded object</li>    <li>The SecurityDomain for the loaded object</li>    </ul>    <p>For complete details, see the description of the properties in the   <a target='_blank' href="http://livedocs.adobe.com/flash/9.0/ActionScriptLangRefV3/flash/system/LoaderContext.html">LoaderContext</a> class.</p>
+*/
+public function loadSkin (id:String, url:String, context:LoaderContext = null) : void;/**
+* Create a LiquidIcon for the button instance.		 * 		 * @example 	<listing version="3.0" >myButton.setIcon(myBitmapId(0,0));</listing> 		 * 		 * @param bmp		BitmapData instance		 * @param offset 	Offset added to the current number of the icon to be displayed		 * @param states	Number of states for the LiquidIcon
+*/
+public function setIcon (bmp:BitmapData, offset:int = 0, states:int = 0) : void;/**
+* Load an external bitmap source file and create a LiquidIcon instance.		 * 		 * @example 	<listing version="3.0" >myButton.loadIcon("./skin/mySkin.png");</listing> 		 * 		 * @param url		URL of the bitmap file		 * @param offset 	Offset added to the current number of the icon to be displayed		 * @param states	Number of states for the LiquidIcon		 * @param context 	A LoaderContext object, which has properties that define the following :    <ul>    <li>Whether or not Flash Player should check for the existence of a policy file   upon loading the object</li>    <li>The ApplicationDomain for the loaded object</li>    <li>The SecurityDomain for the loaded object</li>    </ul>    <p>For complete details, see the description of the properties in the   <a target='_blank' href="http://livedocs.adobe.com/flash/9.0/ActionScriptLangRefV3/flash/system/LoaderContext.html">LoaderContext</a> class.</p>
+*/
+public function loadIcon (url:String, offset:int = 0, states:int = 0, context:LoaderContext = null) : void;/**
+* override set size		 * @private
+*/
+public function setSize (width:Number, height:Number) : void;/**
+* get text color		 * @private
+*/
+public function getTextColor () : Number;/**
+* draw background		 * @private
+*/
+protected function drawBackground () : void;/**
+* draw icon		 *	@private
+*/
+protected function drawIcon () : void;/**
+* initialize the liquid component		 * @private
+*/
+protected function initializeLiquid () : void;/**
+* added handler		 * @private
+*/
+protected function addedHandler (e:Event) : void;/**
+* render handler		 * @private
+*/
+protected function renderHandler (e:Event) : void;/**
+* init skin		 * @private
+*/
+protected function initSkin () : void;/**
+* draw emphasized		 * @private
+*/
+protected function drawEmphasized () : void;/**
+* icon loaded		 * @private
+*/
+protected function iconLoadedHandler (e:LiquidEvent) : void;/**
+* skin back
+*/
+private function skin_back (bmp:BitmapData) : void;/**
+* load back
+*/
+private function load_back (url:String, context:LoaderContext = null) : void;/**
+* back loaded
+*/
+private function back_loaded (e:Event) : void;/**
+* Set a BitmapData skin for all LiquidButton instances.		 * 		 * @example 	<listing version="3.0" >LiquidButton.setSkin("back",myBitmapId(0,0));</listing> 		 * 		 * @param id	String indentifier, this property take the folowing value :		 * <p><table class=innertable>		 * <tr><th>id</th><th>Description</th></tr>		 * <tr><td>back</td><td>The background of the button</td></tr>		 * </table></p>		 * @param bmp	BitmapData instance
+*/
+public static function setDefaultSkin (id:String, bmp:BitmapData) : void;/**
+* Load an external bitmap skin file and apply it to all LiquidButton instances.		 * 		 * @example 	<listing version="3.0" >LiquidButton.loadSkin("back","./skin/mySkin.png");</listing> 		 * 		 * @param id	String indentifier, this property take the folowing value :		 * <p><table class=innertable>		 * <tr><th>id</th><th>Description</th></tr>		 * <tr><td>back</td><td>The background of the button.</td></tr>		 * </table></p>		 * @param url		URL of the bitmap file		 * @param context 	A LoaderContext object, which has properties that define the following :    <ul>    <li>Whether or not Flash Player should check for the existence of a policy file   upon loading the object</li>    <li>The ApplicationDomain for the loaded object</li>    <li>The SecurityDomain for the loaded object</li>    </ul>    <p>For complete details, see the description of the properties in the   <a target='_blank' href="http://livedocs.adobe.com/flash/9.0/ActionScriptLangRefV3/flash/system/LoaderContext.html">LoaderContext</a> class.</p>
+*/
+public static function loadDefaultSkin (id:String, url:String, context:LoaderContext = null) : void;}}
+#file-cache D:\work\projects\liquid\opensource\src\com\liquid\controls\LiquidCheckBox.as
+package com.liquid.controls{import fl.controls.CheckBox;import fl.core.InvalidationType;import flash.display.Bitmap;import flash.events.Event;import flash.events.EventPhase;import flash.text.TextFormat;import flash.display.BitmapData;import flash.system.LoaderContext;import com.liquid.core.LiquidManager;import com.liquid.core.SkinBox;import com.liquid.skin.SkinAsset;import com.liquid.skin.SkinLoader;import com.liquid.events.LiquidEvent;/**
+* @author Didier Brun	 * @version 1.0
+*/
+public class LiquidCheckBox extends CheckBox{/**
+* @private
+*/
+public var _pSkinIcon : String;/**
+* @private
+*/
+public var _pLoadIcon : String;private static const SKIN_UP : int;private static const SKIN_OVER : int;private static const SKIN_DOWN : int;private static const SKIN_DISABLED : int;private static const SKIN_SELECTED_UP : int;private static const SKIN_SELECTED_OVER : int;private static const SKIN_SELECTED_DOWN : int;private static const SKIN_SELECTED_DISABLED : int;private static const DEFAULT_ICON_WIDTH : int;private static const DEFAULT_ICON_HEIGHT : int;private var _skinIcon : SkinBox;private static var _instances : Array;internal function LiquidCheckBox ();/**
+* Set a BitmapData skin for the CheckBox instance.		 * 		 * @example 	<listing version="3.0" >myCheckBox.setSkin("icon",myBitmapId(0,0));</listing> 		 * 		 * @param id	String indentifier, this property take the folowing value :		 * <p><table class=innertable>		 * <tr><th>id</th><th>Description</th></tr>		 * <tr><td>icon</td><td>The icon of the checkbox</td></tr>		 * </table></p>		 * @param bmp	BitmapData instance
+*/
+public function setSkin (id:String, bmp:BitmapData) : void;/**
+* Load an external bitmap skin file and apply it to the LiquidCheckBox instance.		 * 		 * @example 	<listing version="3.0" >myCheckBox.loadSkin("icon","./skin/mySkin.png");</listing> 		 * 		 * @param id	String indentifier, this property take the folowing value :		 * <p><table class=innertable>		 * <tr><th>id</th><th>Description</th></tr>		 * <tr><td>icon</td><td>The icon of the checkbox</td></tr>		 * </table></p>		 * @param url		URL of the bitmap file		 * @param context 	A LoaderContext object, which has properties that define the following :    <ul>    <li>Whether or not Flash Player should check for the existence of a policy file   upon loading the object</li>    <li>The ApplicationDomain for the loaded object</li>    <li>The SecurityDomain for the loaded object</li>    </ul>    <p>For complete details, see the description of the properties in the   <a target='_blank' href="http://livedocs.adobe.com/flash/9.0/ActionScriptLangRefV3/flash/system/LoaderContext.html">LoaderContext</a> class.</p>
+*/
+public function loadSkin (id:String, url:String, context:LoaderContext = null) : void;/**
+* initialize the liquid component		 * @private
+*/
+protected function initializeLiquid () : void;/**
+* added handler		 * @private
+*/
+protected function addedHandler (e:Event) : void;/**
+* render handler		 * @private
+*/
+protected function renderHandler (e:Event) : void;/**
+* init skin		 * @private
+*/
+protected function initSkin () : void;/**
+* draw
+*/
+protected function draw () : void;/**
+* skin icon
+*/
+private function skin_icon (bmp:BitmapData) : void;/**
+* load icon
+*/
+private function load_icon (url:String, context:LoaderContext = null) : void;/**
+* icon loaded
+*/
+private function icon_loaded (e:Event) : void;/**
+* Set a BitmapData skin for all LiquidCheckBox instances.		 * 		 * @example 	<listing version="3.0" >LiquidCheckBox.setSkin("icon",myBitmapId(0,0));</listing> 		 * 		 * @param id	String indentifier, this property take the folowing value :		 * <p><table class=innertable>		 * <tr><th>id</th><th>Description</th></tr>		 * <tr><td>icon</td><td>The icon of the checkbox</td></tr>		 * </table></p>		 * @param bmp	BitmapData instance
+*/
+public static function setDefaultSkin (id:String, bmp:BitmapData) : void;/**
+* Load an external bitmap skin file and apply it to all CheckBox instances.		 * 		 * @example 	<listing version="3.0" >LiquidCheckBox.loadSkin("icon","./skin/mySkin.png");</listing> 		 * 		 * @param id	String indentifier, this property take the folowing value :		 * <p><table class=innertable>		 * <tr><th>id</th><th>Description</th></tr>		 * <tr><td>icon</td><td>The icon of the checkbox</td></tr>		 * </table></p>		 * @param url		URL of the bitmap file		 * @param context 	A LoaderContext object, which has properties that define the following :    <ul>    <li>Whether or not Flash Player should check for the existence of a policy file   upon loading the object</li>    <li>The ApplicationDomain for the loaded object</li>    <li>The SecurityDomain for the loaded object</li>    </ul>    <p>For complete details, see the description of the properties in the   <a target='_blank' href="http://livedocs.adobe.com/flash/9.0/ActionScriptLangRefV3/flash/system/LoaderContext.html">LoaderContext</a> class.</p>
+*/
+public static function loadDefaultSkin (id:String, url:String, context:LoaderContext = null) : void;}}
+#file-cache D:\work\projects\liquid\opensource\src\com\liquid\controls\LiquidComboBox.as
+package com.liquid.controls{import com.liquid.containers.LiquidScrollPane;import com.liquid.events.ButtonEvent;import fl.controls.ComboBox;import fl.core.UIComponent;import fl.events.ListEvent;import fl.core.InvalidationType;import flash.display.DisplayObject;import flash.display.Sprite;import flash.events.Event;import flash.events.MouseEvent;import flash.display.BitmapData;import flash.events.EventPhase;import flash.text.TextField;import flash.geom.Point;import flash.text.TextFormat;import flash.events.KeyboardEvent;import flash.system.LoaderContext;import com.liquid.controls.LiquidList;import com.liquid.controls.LiquidButton;import com.liquid.core.LiquidManager;import com.liquid.skin.SkinAsset;import com.liquid.display.LiquidIcon;import com.liquid.events.LiquidEvent;public class LiquidComboBox extends ComboBox{private static const OPEN_SPEED : Number;private static const EPSILON : Number;private static const LIST_UP : int;private static const LIST_DOWN : int;private static var _instances : Array;private var _icon : LiquidIcon;private var _mask : Sprite;private var _positionList : Number;private var _listPosition : int;/**
+* @private
+*/
+public var _pSkinBack : String;/**
+* @private
+*/
+public var _pSkinListBack : String;/**
+* @private
+*/
+public var _pSkinUpArrow : String;/**
+* @private
+*/
+public var _pSkinDownArrow : String;/**
+* @private
+*/
+public var _pSkinThumb : String;/**
+* @private
+*/
+public var _pSkinTrack : String;/**
+* @private
+*/
+public var _pSkinIcons : String;/**
+* @private
+*/
+public var _pSkinCell : String;/**
+* @private
+*/
+public var _pLoadBack : String;/**
+* @private
+*/
+public var _pLoadListBack : String;/**
+* @private
+*/
+public var _pLoadUpArrow : String;/**
+* @private
+*/
+public var _pLoadDownArrow : String;/**
+* @private
+*/
+public var _pLoadThumb : String;/**
+* @private
+*/
+public var _pLoadTrack : String;/**
+* @private
+*/
+public var _pLoadIcons : String;/**
+* @private
+*/
+public var _pLoadCell : String;internal function LiquidComboBox ();/**
+* Set a BitmapData skin for the LiquidComboBox instance.		 * 		 * @example 	<listing version="3.0" >myCombo.setSkin("upArrow",myBitmapId(0,0));</listing> 		 * 		 * @param id	String indentifier, this property take the folowing value :		 * <p><table class=innertable>		 * <tr><th>id</th><th>Description</th></tr>		 * <tr><td>upArrow</td><td>The up/left arrow button of the scrollbars</td></tr>		 * <tr><td>downArrow</td><td>The down/right arrow button of the scrollbars</td></tr>		 * <tr><td>track</td><td>The track background of the scrollbars</td></tr>		 * <tr><td>thumb</td><td>The draggable thumb of the scrollbars</td></tr>		 * <tr><td>icons</td><td>The 12 icons the scrollbars</td></tr>		 * <tr><td>back</td><td>The 12 icons the scrollbars</td></tr>		 * <tr><td>listBack</td><td>The background of the list</td></tr>		 * <tr><td>cell</td><td>The list cell background</td></tr>		 * </table></p>		 * @param bmp	BitmapData instance
+*/
+public function setSkin (id:String, bmp:BitmapData) : void;/**
+* Load an external bitmap skin file and apply it to the LiquidComboBox instance.		 * 		 * @example 	<listing version="3.0" >myCombo.loadSkin("back","./skin/mySkin.png");</listing> 		 * 		 * @param id	String indentifier, this property take the folowing value :		 * <p><table class=innertable>		 * <tr><th>id</th><th>Description</th></tr>		 * <tr><td>upArrow</td><td>The up/left arrow button of the scrollbars</td></tr>		 * <tr><td>downArrow</td><td>The down/right arrow button of the scrollbars</td></tr>		 * <tr><td>track</td><td>The track background of the scrollbars</td></tr>		 * <tr><td>thumb</td><td>The draggable thumb of the scrollbars</td></tr>		 * <tr><td>icons</td><td>The 12 icons the scrollbars</td></tr>		 * <tr><td>back</td><td>The 12 icons the scrollbars</td></tr>		 * <tr><td>listBack</td><td>The background of the list</td></tr>		 * <tr><td>cell</td><td>The list cell background</td></tr>		 * </table></p>		 * @param url		URL of the bitmap file		 * @param context 	A LoaderContext object, which has properties that define the following :    <ul>    <li>Whether or not Flash Player should check for the existence of a policy file   upon loading the object</li>    <li>The ApplicationDomain for the loaded object</li>    <li>The SecurityDomain for the loaded object</li>    </ul>    <p>For complete details, see the description of the properties in the   <a target='_blank' href="http://livedocs.adobe.com/flash/9.0/ActionScriptLangRefV3/flash/system/LoaderContext.html">LoaderContext</a> class.</p>
+*/
+public function loadSkin (id:String, url:String, context:LoaderContext = null) : void;/**
+* open		 * @private
+*/
+public function open () : void;/**
+* close		 * @private
+*/
+public function close () : void;/**
+* configUI		 * @private
+*/
+protected function configUI () : void;/**
+* position list		 * @private
+*/
+protected function positionList () : void;/**
+* list open handler		 * @private
+*/
+private function listOpenHandler (e:Event) : void;/**
+* list close handler		 * @private
+*/
+private function listCloseHandler (e:Event) : void;/**
+* drawTextFormat		 * @private
+*/
+protected function drawTextFormat () : void;/**
+* draw layout		 * @private
+*/
+protected function drawLayout () : void;/**
+* draw Mask		 * @private
+*/
+protected function drawMask () : void;/**
+* draw TextField		 * @private
+*/
+protected function drawTextField () : void;/**
+* keyDownHandler		 * @private
+*/
+protected function keyDownHandler (event:KeyboardEvent) : void;/**
+* update Icon		 * @private
+*/
+protected function updateIcon (index:int = -1) : void;/**
+* highlight cell		 * @private
+*/
+protected function highlightCell (index:int = -1) : void;/**
+* initialize the liquid component		 * @private
+*/
+protected function initializeLiquid () : void;/**
+* added handler		 * @private
+*/
+protected function addedHandler (e:Event) : void;/**
+* render handler		 * @private
+*/
+protected function renderHandler (e:Event) : void;/**
+* init skin		 * @private
+*/
+protected function initSkin () : void;/**
+* stateChangedHandler		 * @private
+*/
+protected function stateChangedHandler (e:LiquidEvent) : void;/**
+* skin loaded		 * @private
+*/
+protected function skinLoadedHandler (e:LiquidEvent) : void;}}
+#file-cache D:\work\projects\liquid\opensource\src\com\liquid\controls\LiquidList.as
+package com.liquid.controls{import fl.controls.List;import fl.controls.ScrollBarDirection;import fl.core.UIComponent;import fl.events.ScrollEvent;import fl.core.InvalidationType;import flash.events.Event;import flash.events.EventPhase;import flash.display.BitmapData;import flash.system.LoaderContext;import com.liquid.controls.LiquidScrollBar;import com.liquid.core.LiquidManager;import com.liquid.core.SkinBox;import com.liquid.events.LiquidEvent;import com.liquid.skin.SkinAsset;import com.liquid.listClasses.LiquidListCellRenderer;import com.liquid.skin.SkinLoader;public class LiquidList extends List{/**
+* @private
+*/
+public var _pSkinBack : String;/**
+* @private
+*/
+public var _pLoadBack : String;/**
+* @private
+*/
+public var _pSkinUpArrow : String;/**
+* @private
+*/
+public var _pSkinDownArrow : String;/**
+* @private
+*/
+public var _pSkinThumb : String;/**
+* @private
+*/
+public var _pSkinTrack : String;/**
+* @private
+*/
+public var _pSkinIcons : String;/**
+* @private
+*/
+public var _pSkinCell : String;/**
+* @private
+*/
+public var _pLoadUpArrow : String;/**
+* @private
+*/
+public var _pLoadDownArrow : String;/**
+* @private
+*/
+public var _pLoadThumb : String;/**
+* @private
+*/
+public var _pLoadIcons : String;/**
+* @private
+*/
+public var _pLoadTrack : String;/**
+* @private
+*/
+public var _pLoadCell : String;private static const SKIN_UP : int;private var _skinBack : SkinBox;private static var _instances : Array;private var _cellBitmap : BitmapData;private var _cellUrl : String;private var _cellContext : LoaderContext;private var _invalidateLiquidRenderers : Boolean;internal function LiquidList ();/**
+* Set a BitmapData skin for the LiquidList instance.		 * 		 * @example 	<listing version="3.0" >myList.setSkin("upArrow",myBitmapId(0,0));</listing> 		 * 		 * @param id	String indentifier, this property take the folowing value :		 * <p><table class=innertable>		 * <tr><th>id</th><th>Description</th></tr>		 * <tr><td>upArrow</td><td>The up/left arrow button of the scrollbars</td></tr>		 * <tr><td>downArrow</td><td>The down/right arrow button of the scrollbars</td></tr>		 * <tr><td>track</td><td>The track background of the scrollbars</td></tr>		 * <tr><td>thumb</td><td>The draggable thumb of the scrollbars</td></tr>		 * <tr><td>icons</td><td>The 12 icons the scrollbars</td></tr>		 * <tr><td>back</td><td>The background of the list</td></tr>		 * <tr><td>cell</td><td>The list cell background</td></tr>		 * </table></p>		 * @param bmp	BitmapData instance
+*/
+public function setSkin (id:String, bmp:BitmapData) : void;/**
+* Load an external bitmap skin file and apply it to the LiquidList instance.		 * 		 * @example 	<listing version="3.0" >myList.loadSkin("back","./skin/mySkin.png");</listing> 		 * 		 * @param id	String indentifier, this property take the folowing value :			 * <p><table class=innertable>		 * <tr><th>id</th><th>Description</th></tr>		 * <tr><td>upArrow</td><td>The up/left arrow button of the scrollbars</td></tr>		 * <tr><td>downArrow</td><td>The down/right arrow button of the scrollbars</td></tr>		 * <tr><td>track</td><td>The track background of the scrollbars</td></tr>		 * <tr><td>thumb</td><td>The draggable thumb of the scrollbars</td></tr>		 * <tr><td>icons</td><td>The 12 icons the scrollbars</td></tr>		 * <tr><td>back</td><td>The background of the list</td></tr>		 * <tr><td>cell</td><td>The list cell background</td></tr>		 * </table></p>		 * @param url		URL of the bitmap file		 * @param context 	A LoaderContext object, which has properties that define the following :    <ul>    <li>Whether or not Flash Player should check for the existence of a policy file   upon loading the object</li>    <li>The ApplicationDomain for the loaded object</li>    <li>The SecurityDomain for the loaded object</li>    </ul>    <p>For complete details, see the description of the properties in the   <a target='_blank' href="http://livedocs.adobe.com/flash/9.0/ActionScriptLangRefV3/flash/system/LoaderContext.html">LoaderContext</a> class.</p>
+*/
+public function loadSkin (id:String, url:String, context:LoaderContext = null) : void;/**
+* initialize the liquid component		 * @private
+*/
+protected function initializeLiquid () : void;/**
+* config UI		 * @private
+*/
+protected function configUI () : void;/**
+* added handler		 * @private
+*/
+protected function addedHandler (e:Event) : void;/**
+* render handler		 * @private
+*/
+protected function renderHandler (e:Event) : void;/**
+* init skin		 * @private
+*/
+protected function initSkin () : void;/**
+* drawList		 * @private
+*/
+protected function drawList () : void;/**
+* invalidate liquid renderers		 * @private
+*/
+protected function invalidateLiquidRenderers () : void;/**
+* load cell renderers		 * @private
+*/
+protected function loadCellRenderers (url:String, context:LoaderContext = null) : void;/**
+* load back
+*/
+private function load_back (url:String, context:LoaderContext = null) : void;/**
+* back loaded
+*/
+private function back_loaded (e:Event) : void;}}
+#file-cache D:\work\projects\liquid\opensource\src\com\liquid\controls\LiquidRadioButton.as
+package com.liquid.controls{import fl.controls.RadioButton;import fl.core.InvalidationType;import flash.display.Bitmap;import flash.events.Event;import flash.events.EventPhase;import flash.text.TextFormat;import flash.display.BitmapData;import flash.system.LoaderContext;import com.liquid.core.LiquidManager;import com.liquid.core.SkinBox;import com.liquid.skin.SkinAsset;import com.liquid.skin.SkinLoader;import com.liquid.events.LiquidEvent;/**
+* @author Didier Brun	 * @version 1.0
+*/
+public class LiquidRadioButton extends RadioButton{/**
+* @private
+*/
+public var _pSkinIcon : String;/**
+* @private
+*/
+public var _pLoadIcon : String;private static const SKIN_UP : int;private static const SKIN_OVER : int;private static const SKIN_DOWN : int;private static const SKIN_DISABLED : int;private static const SKIN_SELECTED_UP : int;private static const SKIN_SELECTED_OVER : int;private static const SKIN_SELECTED_DOWN : int;private static const SKIN_SELECTED_DISABLED : int;private static const DEFAULT_ICON_WIDTH : int;private static const DEFAULT_ICON_HEIGHT : int;private var _skinIcon : SkinBox;private static var _instances : Array;internal function LiquidRadioButton ();/**
+* Set a BitmapData skin for the RadioButton instance.		 * 		 * @example 	<listing version="3.0" >myRadioButton.setSkin("icon",myBitmapId(0,0));</listing> 		 * 		 * @param id	String indentifier, this property take the folowing value :		 * <p><table class=innertable>		 * <tr><th>id</th><th>Description</th></tr>		 * <tr><td>icon</td><td>The icon of the radui button</td></tr>		 * </table></p>		 * @param bmp	BitmapData instance
+*/
+public function setSkin (id:String, bmp:BitmapData) : void;/**
+* Load an external bitmap skin file and apply it to the LiquidRadioButton instance.		 * 		 * @example 	<listing version="3.0" >myRadioButton.loadSkin("icon","./skin/mySkin.png");</listing> 		 * 		 * @param id	String indentifier, this property take the folowing value :		 * <p><table class=innertable>		 * <tr><th>id</th><th>Description</th></tr>		 * <tr><td>icon</td><td>The icon of the radio button</td></tr>		 * </table></p>		 * @param url		URL of the bitmap file		 * @param context 	A LoaderContext object, which has properties that define the following :    <ul>    <li>Whether or not Flash Player should check for the existence of a policy file   upon loading the object</li>    <li>The ApplicationDomain for the loaded object</li>    <li>The SecurityDomain for the loaded object</li>    </ul>    <p>For complete details, see the description of the properties in the   <a target='_blank' href="http://livedocs.adobe.com/flash/9.0/ActionScriptLangRefV3/flash/system/LoaderContext.html">LoaderContext</a> class.</p>
+*/
+public function loadSkin (id:String, url:String, context:LoaderContext = null) : void;/**
+* initialize the liquid component		 * @private
+*/
+protected function initializeLiquid () : void;/**
+* added handler		 * @private
+*/
+protected function addedHandler (e:Event) : void;/**
+* render handler		 * @private
+*/
+protected function renderHandler (e:Event) : void;/**
+* init skin		 * @private
+*/
+protected function initSkin () : void;/**
+* draw
+*/
+protected function draw () : void;/**
+* skin icon
+*/
+private function skin_icon (bmp:BitmapData) : void;/**
+* load icon
+*/
+private function load_icon (url:String, context:LoaderContext = null) : void;/**
+* icon loaded
+*/
+private function icon_loaded (e:Event) : void;/**
+* Set a BitmapData skin for all LiquidRadioButton instances.		 * 		 * @example 	<listing version="3.0" >LiquidRadioButton.setSkin("icon",myBitmapId(0,0));</listing> 		 * 		 * @param id	String indentifier, this property take the folowing value :		 * <p><table class=innertable>		 * <tr><th>id</th><th>Description</th></tr>		 * <tr><td>icon</td><td>The icon of the radio button</td></tr>		 * </table></p>		 * @param bmp	BitmapData instance
+*/
+public static function setDefaultSkin (id:String, bmp:BitmapData) : void;/**
+* Load an external bitmap skin file and apply it to all RadioButton instances.		 * 		 * @example 	<listing version="3.0" >LiquidRadioButton.loadSkin("icon","./skin/mySkin.png");</listing> 		 * 		 * @param id	String indentifier, this property take the folowing value :		 * <p><table class=innertable>		 * <tr><th>id</th><th>Description</th></tr>		 * <tr><td>icon</td><td>The icon of the radio button</td></tr>		 * </table></p>		 * @param url		URL of the bitmap file		 * @param context 	A LoaderContext object, which has properties that define the following :    <ul>    <li>Whether or not Flash Player should check for the existence of a policy file   upon loading the object</li>    <li>The ApplicationDomain for the loaded object</li>    <li>The SecurityDomain for the loaded object</li>    </ul>    <p>For complete details, see the description of the properties in the   <a target='_blank' href="http://livedocs.adobe.com/flash/9.0/ActionScriptLangRefV3/flash/system/LoaderContext.html">LoaderContext</a> class.</p>
+*/
+public static function loadDefaultSkin (id:String, url:String, context:LoaderContext = null) : void;}}
+#file-cache D:\work\projects\liquid\opensource\src\com\liquid\controls\LiquidScrollBar.as
+package com.liquid.controls{import com.liquid.containers.LiquidScrollPane;import fl.controls.ScrollBar;import fl.events.ComponentEvent;import fl.controls.LabelButton;import fl.controls.BaseButton;import flash.display.Sprite;import flash.display.BitmapData;import flash.events.Event;import flash.events.EventPhase;import flash.events.MouseEvent;import flash.system.LoaderContext;import com.liquid.controls.LiquidButton;import com.liquid.skin.SkinAsset;import com.liquid.core.LiquidManager;/**
+* @author Didier Brun	 * @version 1.0
+*/
+public class LiquidScrollBar extends ScrollBar{/**
+* @private
+*/
+public var _pSkinUpArrow : String;/**
+* @private
+*/
+public var _pSkinDownArrow : String;/**
+* @private
+*/
+public var _pSkinThumb : String;/**
+* @private
+*/
+public var _pSkinTrack : String;/**
+* @private
+*/
+public var _pSkinIcons : String;/**
+* @private
+*/
+public var _pLoadUpArrow : String;/**
+* @private
+*/
+public var _pLoadDownArrow : String;/**
+* @private
+*/
+public var _pLoadThumb : String;/**
+* @private
+*/
+public var _pLoadIcons : String;/**
+* @private
+*/
+public var _pLoadTrack : String;private static const ICON_THUMB_OFFSET : int;private static const ICON_UP_ARROW_OFFSET : int;private static const ICON_DOWN_ARROW_OFFSET : int;private static const ICON_STATES_COUNT : int;private static var _instances : Array;internal function LiquidScrollBar ();/**
+* Set a BitmapData skin for the LiquidScrollBar instance.		 * 		 * @example 	<listing version="3.0" >myScroll.setSkin("upArrow",myBitmapId(0,0));</listing> 		 * 		 * @param id	String indentifier, this property take the folowing value :		 * <p><table class=innertable>		 * <tr><th>id</th><th>Description</th></tr>		 * <tr><td>upArrow</td><td>The up arrow button (left when horizontal)</td></tr>		 * <tr><td>downArrow</td><td>The down arrow button (right when horizontal)</td></tr>		 * <tr><td>track</td><td>The track background of the scrollbar</td></tr>		 * <tr><td>thumb</td><td>The draggable thumb</td></tr>		 * <tr><td>icons</td><td>The 12 icons of the scrollbar</td></tr>		 * </table></p>		 * @param bmp	BitmapData instance
+*/
+public function setSkin (id:String, bmp:BitmapData) : void;/**
+* Load an external bitmap skin file and apply it to the LiquidScrollBar instance.		 * 		 * @example 	<listing version="3.0" >myScroll.loadSkin("upArrow","./skin/mySkin.png");</listing> 		 * 		 * @param id	String indentifier, this property take the folowing value :		* <p><table class=innertable>		 * <tr><th>id</th><th>Description</th></tr>		 * <tr><td>upArrow</td><td>The up arrow button (left when horizontal)</td></tr>		 * <tr><td>downArrow</td><td>The down arrow button (right when horizontal)</td></tr>		 * <tr><td>track</td><td>The track background of the scrollbar</td></tr>		 * <tr><td>thumb</td><td>The draggable thumb</td></tr>		 * <tr><td>icons</td><td>The 12 icons of the scrollbar</td></tr>		 * </table></p>		 * @param url		URL of the bitmap file		 * @param context 	A LoaderContext object, which has properties that define the following :    <ul>    <li>Whether or not Flash Player should check for the existence of a policy file   upon loading the object</li>    <li>The ApplicationDomain for the loaded object</li>    <li>The SecurityDomain for the loaded object</li>    </ul>    <p>For complete details, see the description of the properties in the   <a target='_blank' href="http://livedocs.adobe.com/flash/9.0/ActionScriptLangRefV3/flash/system/LoaderContext.html">LoaderContext</a> class.</p>
+*/
+public function loadSkin (id:String, url:String, context:LoaderContext = null) : void;/**
+* initialize the liquid component		 * @private
+*/
+protected function initializeLiquid () : void;/**
+* added handler		 * @private
+*/
+protected function addedHandler (e:Event) : void;/**
+* render handler		 * @private
+*/
+protected function renderHandler (e:Event) : void;/**
+* init skin		 * @private
+*/
+protected function initSkin () : void;/**
+* configUI		 * @private
+*/
+protected function configUI () : void;/**
+* update thumb		 * @private
+*/
+protected function updateThumb () : void;}}
+#file-cache D:\work\projects\liquid\opensource\src\com\liquid\controls\LiquidTextInput.as
+package com.liquid.controls{import com.liquid.skin.SkinLoader;import fl.core.InvalidationType;import fl.controls.TextInput;import fl.core.UIComponent;import flash.display.BitmapData;import flash.events.Event;import flash.events.EventPhase;import flash.system.LoaderContext;import flash.text.TextFormat;import com.liquid.core.SkinBox;import com.liquid.core.ILiquidComponent;import com.liquid.core.LiquidManager;import com.liquid.skin.SkinAsset;import com.liquid.skin.SkinLoader;import com.liquid.events.LiquidEvent;/**
+* @author Didier Brun	 * @version 1.0
+*/
+public class LiquidTextInput extends TextInput{/**
+* @private
+*/
+public var _pSkinBack : String;/**
+* @private
+*/
+public var _pLoadBack : String;private static const SKIN_UP : int;private static const SKIN_DISABLED : int;private var _skinBack : SkinBox;private static var _instances : Array;internal function LiquidTextInput ();/**
+* Set a BitmapData skin for the LiquidTextInput instance.		 * 		 * @example 	<listing version="3.0" >myTextInput.setSkin("back",myBitmapId(0,0));</listing> 		 * 		 * @param id	String indentifier, this property take the folowing value :		 * <p><table class=innertable>		 * <tr><th>id</th><th>Description</th></tr>		 * <tr><td>back</td><td>The background of the text input</td></tr>		 * </table></p>		 * @param bmp	BitmapData instance
+*/
+public function setSkin (id:String, bmp:BitmapData) : void;/**
+* Load an external bitmap skin file and apply it to the LiquidTextInput instance.		 * 		 * @example 	<listing version="3.0" >myTextInput.loadSkin("back","./skin/mySkin.png");</listing> 		 * 		 * @param id	String indentifier, this property take the folowing value :		 * <p><table class=innertable>		 * <tr><th>id</th><th>Description</th></tr>		 * <tr><td>back</td><td>The background of the text input.</td></tr>		 * </table></p>		 * @param url		URL of the bitmap file		 * @param context 	A LoaderContext object, which has properties that define the following :    <ul>    <li>Whether or not Flash Player should check for the existence of a policy file   upon loading the object</li>    <li>The ApplicationDomain for the loaded object</li>    <li>The SecurityDomain for the loaded object</li>    </ul>    <p>For complete details, see the description of the properties in the   <a target='_blank' href="http://livedocs.adobe.com/flash/9.0/ActionScriptLangRefV3/flash/system/LoaderContext.html">LoaderContext</a> class.</p>
+*/
+public function loadSkin (id:String, url:String, context:LoaderContext = null) : void;/**
+* configUI		 * @private
+*/
+protected function configUI () : void;/**
+* draw background		 * @private
+*/
+protected function drawBackground () : void;/**
+* initialize the liquid component		 * @private
+*/
+protected function initializeLiquid () : void;/**
+* added handler		 * @private
+*/
+protected function addedHandler (e:Event) : void;/**
+* render handler		 * @private
+*/
+protected function renderHandler (e:Event) : void;/**
+* init skin		 * @private
+*/
+protected function initSkin () : void;/**
+* skin back
+*/
+private function skin_back (bmp:BitmapData) : void;/**
+* load back
+*/
+private function load_back (url:String, context:LoaderContext = null) : void;/**
+* back loaded
+*/
+private function back_loaded (e:Event) : void;/**
+* Set a BitmapData skin for all LiquidTextInput instances.		 * 		 * @example 	<listing version="3.0" >LiquidTextInput.setSkin("back",myBitmapId(0,0));</listing> 		 * 		 * @param id	String indentifier, this property take the folowing value :		 * <p><table class=innertable>		 * <tr><th>id</th><th>Description</th></tr>		 * <tr><td>back</td><td>The background of the text input</td></tr>		 * </table></p>		 * @param bmp	BitmapData instance
+*/
+public static function setDefaultSkin (id:String, bmp:BitmapData) : void;/**
+* Load an external bitmap skin file and apply it to all LiquidTextInput instances.		 * 		 * @example 	<listing version="3.0" >LiquidTextInput.loadSkin("back","./skin/mySkin.png");</listing> 		 * 		 * @param id	String indentifier, this property take the folowing value :		 * <p><table class=innertable>		 * <tr><th>id</th><th>Description</th></tr>		 * <tr><td>back</td><td>The background of the text input.</td></tr>		 * </table></p>		 * @param url		URL of the bitmap file		 * @param context 	A LoaderContext object, which has properties that define the following :    <ul>    <li>Whether or not Flash Player should check for the existence of a policy file   upon loading the object</li>    <li>The ApplicationDomain for the loaded object</li>    <li>The SecurityDomain for the loaded object</li>    </ul>    <p>For complete details, see the description of the properties in the   <a target='_blank' href="http://livedocs.adobe.com/flash/9.0/ActionScriptLangRefV3/flash/system/LoaderContext.html">LoaderContext</a> class.</p>
+*/
+public static function loadDefaultSkin (id:String, url:String, context:LoaderContext = null) : void;}}
+#file-cache D:\work\projects\liquid\opensource\src\com\liquid\core\ILiquidComponent.as
+package com.liquid.core{/**
+* @private
+*/
+public interface ILiquidComponent{}}
+#file-cache D:\work\projects\liquid\opensource\src\com\liquid\core\LiquidManager.as
+package com.liquid.core{import fl.core.UIComponent;import flash.display.DisplayObject;import flash.display.BitmapData;import flash.events.Event;import flash.events.EventPhase;import flash.system.LoaderContext;import com.liquid.core.ILiquidComponent;import com.liquid.core.SkinBox;import com.liquid.events.LiquidEvent;import com.liquid.skin.SkinAsset;import com.liquid.skin.SkinLoader;/**
+*
+*/
+public class LiquidManager{private static var DEFAULT_FOCUS_WIDTH : int;private static var DEFAULT_FOCUS_HEIGHT : int;private static var DEFAULT_FOCUS_SKIN : String;private static var __focusRect : Boolean;private static var __skinFocus : SkinBox;/**
+* register component		 * 		 * @private
+*/
+public static function register (cp:UIComponent) : void;/**
+* Set a shared BitmapData skin for Liquid Components.		 * 		 * Note : By default, LiquidManager attach the default BitmapData class in the library : Liquid_focusRect		 * 		 * @example 	<listing version="3.0" >LiquidManager.setSkin("focusRect",myBitmapId(0,0));</listing> 		 * 		 * @param id	String indentifier, this property take the folowing value :		 * <p><table class=innertable>		 * <tr><th>id</th><th>Description</th></tr>		 * <tr><td>focusRect</td><td>Focus rectangle of all components</td></tr>		 * </table></p>		 * @param bmp	BitmapData instance
+*/
+public static function setSharedSkin (id:String, bmp:BitmapData) : void;/**
+* getFocusSkinBox		 * 		 * @private
+*/
+public static function getFocusSkinBox () : SkinBox;/**
+* Load an external bitmap skin file and shared it for the Liquid Components.		 * 		 * Note : By default, LiquidManager attach the default BitmapData class in the library : Liquid_focusRect		 * 		 * @example 	<listing version="3.0" >LiquidManager.loadSharedSkin("focusRect","./skin/mySkin.png");</listing> 		 * 		 * @param id	String indentifier, this property take the folowing value :		 * <p><table class=innertable>		 * <tr><th>id</th><th>Description</th></tr>		 * <tr><td>focusRect</td><td>Focus rectangle of all components</td></tr>		 * </table></p>		 * @param url		URL of the bitmap file		 * @param context 	A LoaderContext object, which has properties that define the following :    <ul>    <li>Whether or not Flash Player should check for the existence of a policy file   upon loading the object</li>    <li>The ApplicationDomain for the loaded object</li>    <li>The SecurityDomain for the loaded object</li>    </ul>    <p>For complete details, see the description of the properties in the   <a target='_blank' href="http://livedocs.adobe.com/flash/9.0/ActionScriptLangRefV3/flash/system/LoaderContext.html">LoaderContext</a> class.</p>
+*/
+public static function loadSharedSkin (id:String, url:String, context:LoaderContext = null) : void;/**
+* initFocusRect
+*/
+private static function initFocusRect () : void;/**
+* load back
+*/
+private static function load_focusRect (url:String, context:LoaderContext = null) : void;/**
+* focusRect loaded
+*/
+private static function focusRectLoaded (e:Event) : void;}}
+#file-cache D:\work\projects\liquid\opensource\src\com\liquid\core\SkinBox.as
+package com.liquid.core{import com.liquid.draw.LiquidBitmap;import com.liquid.grid.LiquidGrid;import com.liquid.draw.LiquidMapper;import com.liquid.skin.SkinAsset;import com.liquid.events.LiquidEvent;import flash.display.BitmapData;import flash.display.Sprite;import flash.events.Event;/**
+* @private
+*/
+public class SkinBox extends Sprite{private var _grid : LiquidGrid;private var _skin : LiquidBitmap;private var _state : int;private var _skinReady : Boolean;private var _colors : Array;private var _width : Number;private var _height : Number;/**
+* is ready
+*/
+public function get isReady () : Boolean;/**
+* get min width
+*/
+public function get minWidth () : Number;/**
+* get min height
+*/
+public function get minHeight () : Number;/**
+* public set width
+*/
+public function set width (pw:Number) : Void;/**
+* publi function set height
+*/
+public function set height (ph:Number) : Void;/**
+* set state
+*/
+public function set state (s:int) : Void;/**
+* get state
+*/
+public function get state () : int;internal function SkinBox (pW:Number, pH:Number);/**
+* public function set size
+*/
+public function setSize (pw:Number, ph:Number) : void;/**
+* get nb layers
+*/
+public function nbLayers () : int;/**
+* set skin
+*/
+public function setSkin (pBmp:BitmapData) : void;/**
+* get state color
+*/
+public function getColor () : Number;/**
+* draw now
+*/
+public function drawNow () : void;/**
+* reset size
+*/
+public function resetSize () : void;/**
+* render
+*/
+private function render () : void;}}
+#file-cache D:\work\projects\liquid\opensource\src\com\liquid\display\LiquidIcon.as
+package com.liquid.display{import com.liquid.core.SkinBox;import fl.core.UIComponent;import flash.display.BitmapData;import flash.geom.Matrix;import flash.events.Event;import flash.events.EventPhase;import flash.system.LoaderContext;import com.liquid.skin.SkinAsset;import com.liquid.events.LiquidEvent;import com.liquid.skin.SkinLoader;/**
+* @author Didier Brun	 * @version 1.0
+*/
+public class LiquidIcon extends UIComponent{/**
+* @private
+*/
+public var _pIcon : String;/**
+* @private
+*/
+public var _pLoadIcon : String;private var _bmp : BitmapData;private var _iconWidth : int;private var _iconHeight : int;private var _state : int;private var _offset : int;private var _statesCount : int;private var _live : SkinBox;/**
+* Set the number of states of the LiquidIcon.		 * If the index(offset) is defined to a value greater or equal than statesCount, then the first icon is used (state=0).		 * 		 * @param pCount	the number of states
+*/
+public function set statesCount (pCount:int) : Void;/**
+* Get the number of states of the LiquidIcon.		 * 		 * @return the number of states of the LiquidIcon.
+*/
+public function get statesCount () : int;/**
+* Set the current state of LiquidIcon (begin from 0) and redraw it.		 * Note that the icon displayed by the LiquidIcon is always : <code>offset + state</code>.		 * 		 * @example 	<listing version="3.0" >myIcon.state=1;</listing> 		 * 		 * @param pState	the state of the LiquidIcon
+*/
+public function set state (pState:int) : Void;/**
+* Return the current state of the LiquidIcon.		 * 		 * @example 	<listing version="3.0" >trace (myIcon.state);</listing> 		 * 		 * @return the current state of the LiquidIcon
+*/
+public function get state () : int;/**
+* Set the current offset of LiquidIcon (begin from 0) and redraw it.		 * Note that the icon displayed by the LiquidIcon is always : <code>offset + state</code>.		 * 		 * @example 	<listing version="3.0" >myIcon.offset=4;</listing> 		 * 		 * @param pOffsset	the offset of the LiquidIcon
+*/
+public function set offset (pOffset:int) : Void;/**
+* Return the current offset of the LiquidIcon.		 * 		 * @example 	<listing version="3.0" >trace (myIcon.offset);</listing> 		 * 		 * @return the current offset of the LiquidIcon
+*/
+public function get offset () : int;internal function LiquidIcon ();/**
+* Set a BitmapData source for the LiquidIcon instance.		 * 		 * @example 	<listing version="3.0" >myIcon.setIcon(myBitmapId(0,0));</listing> 		 * 		 * @param bmp	BitmapData instance
+*/
+public function setIcon (bmp:BitmapData) : void;/**
+* Load an external bitmap source file and apply it to the LiquidIcon instance.		 * 		 * @example 	<listing version="3.0" >myIcon.loadIcon("./skin/mySkin.png");</listing> 		 * 		 * @param url		URL of the bitmap file		 * @param context 	A LoaderContext object, which has properties that define the following :    <ul>    <li>Whether or not Flash Player should check for the existence of a policy file   upon loading the object</li>    <li>The ApplicationDomain for the loaded object</li>    <li>The SecurityDomain for the loaded object</li>    </ul>    <p>For complete details, see the description of the properties in the   <a target='_blank' href="http://livedocs.adobe.com/flash/9.0/ActionScriptLangRefV3/flash/system/LoaderContext.html">LoaderContext</a> class.</p>
+*/
+public function loadIcon (url:String, context:LoaderContext = null) : void;/**
+* clone
+*/
+public function clone () : LiquidIcon;/**
+* initialize the liquid component		 * @private
+*/
+protected function initializeLiquid () : void;/**
+* added handler		 * @private
+*/
+protected function addedHandler (e:Event) : void;/**
+* render handler		 * @private
+*/
+protected function renderHandler (e:Event) : void;/**
+* init skin		 * @private
+*/
+protected function initSkin () : void;/**
+* init icon		 * @private
+*/
+protected function buildIcon () : void;/**
+* draw		 * @private
+*/
+protected function draw () : void;/**
+* icon loaded		 * @private
+*/
+protected function iconLoaded (e:LiquidEvent) : void;/**
+* initLivePreview
+*/
+private function initLivePreview () : void;}}
+#file-cache D:\work\projects\liquid\opensource\src\com\liquid\draw\LiquidBitmap.as
+package com.liquid.draw{import flash.events.EventDispatcher;import com.liquid.events.LiquidEvent;import com.liquid.grid.*;import flash.display.*;import flash.geom.*;/**
+* @private
+*/
+public class LiquidBitmap{private var texture : BitmapData;private var bitmaps : Object;private var defaultGrid : LiquidGrid;private var nbLayers : int;private var _width : Number;private var _height : Number;/**
+* get width
+*/
+public function get width () : Number;/**
+* get height
+*/
+public function get height () : Number;public function LiquidBitmap (g:LiquidGrid, bmp:BitmapData, nbl:int = 1);/**
+* getBitmap
+*/
+public function getBitmapCell (id:String, nl:int = 0) : Object;/**
+* change bitmap
+*/
+public function changeBitmap (bmp:BitmapData) : void;/**
+*	nb layers
+*/
+public function getNbLayers () : int;/**
+*  buildmap
+*/
+private function buildMap (g:LiquidGrid, addx:Number = 0, addy:Number = 0, ads:String = "") : void;}}
+#file-cache D:\work\projects\liquid\opensource\src\com\liquid\draw\LiquidMapper.as
+package com.liquid.draw{import flash.events.EventDispatcher;import com.liquid.events.LiquidEvent;import com.liquid.grid.*;import flash.display.*;import flash.geom.*;/**
+* @private
+*/
+public class LiquidMapper{public function LiquidMapper ();/**
+* draw liquid map on shape
+*/
+public static function drawShape (grid:LiquidGrid, bmp:LiquidBitmap, g:Graphics, layer:int = 0, addx:Number = 0, addy:Number = 0, ads:String = "") : void;}}
+#file-cache D:\work\projects\liquid\opensource\src\com\liquid\errors\LiquidError.as
+package com.liquid.errors{/**
+* @private
+*/
+public class LiquidError extends Error{private static var __init__ : Boolean;private static var errors : Object;public static const ERROR_DEFAULT : int;public static const IO_ERROR : int;internal function LiquidError (id:int = 0, arg:String = "");/**
+* static initialization
+*/
+private static function init () : void;}}
+#file-cache D:\work\projects\liquid\opensource\src\com\liquid\events\ButtonEvent.as
+package com.liquid.events{import flash.events.Event;/**
+* @private
+*/
+public class ButtonEvent extends Event{public static const ROLL_OVER : String;public static const ROLL_OUT : String;public static const RELEASE : String;public static const CLICK : String;public static const RELEASE_OUTSIDE : String;public static const DOWN : String;public function ButtonEvent (type:String, bubbles:Boolean = false, cancelable:Boolean = false);public function clone () : Event;}}
+#file-cache D:\work\projects\liquid\opensource\src\com\liquid\events\DataEvent.as
+package com.liquid.events{import flash.events.Event;/**
+* @private
+*/
+public class DataEvent extends Event{public static const DATA_CHANGE : String;public static const ITEM_ADDED : String;public static const ITEM_REMOVED : String;public var item : *;public function DataEvent (type:String, bubbles:Boolean = false, cancelable:Boolean = false, pItem:* = null);public function clone () : Event;}}
+#file-cache D:\work\projects\liquid\opensource\src\com\liquid\events\LiquidCellEvent.as
+package com.liquid.events{import flash.events.Event;/**
+* @private
+*/
+public class LiquidCellEvent extends Event{public static const ROWTYPE_RATIO_CHANGE : String;public static const ROWTYPE_FIXED_CHANGE : String;public static const ROWTYPE_RESIZE : String;public static const ROWTYPE_MOVE : String;public static const ROW_RESIZE : String;public static const CELL_MOVE : String;public static const CELL_SIZE : String;public static const GRID_MOVE : String;public static const GRID_SIZE : String;public var ratio : Number;public function LiquidCellEvent (type:String, bubbles:Boolean = false, cancelable:Boolean = false, pRatio:Number = 0);public function clone () : Event;}}
+#file-cache D:\work\projects\liquid\opensource\src\com\liquid\events\LiquidEvent.as
+package com.liquid.events{import flash.events.Event;/**
+* @private
+*/
+public class LiquidEvent extends Event{public static const SKIN_LOADED : String;public static const STATE_CHANGED : String;public function LiquidEvent (type:String, bubbles:Boolean = false, cancelable:Boolean = false);public function clone () : Event;}}
+#file-cache D:\work\projects\liquid\opensource\src\com\liquid\events\ScrollerEvent.as
+package com.liquid.events{import flash.events.Event;/**
+* @private
+*/
+public class ScrollerEvent extends Event{public static const SCROLL_START : String;public static const SCROLL_STOP : String;public static const SCROLL_CHANGE : String;public static const PAGE_UP : String;public static const PAGE_DOWN : String;public static const INVALID_RANGE : String;public static const VALID_RANGE : String;public function ScrollerEvent (type:String, bubbles:Boolean = false, cancelable:Boolean = false);public function clone () : Event;}}
+#file-cache D:\work\projects\liquid\opensource\src\com\liquid\grid\LiquidCell.as
+package com.liquid.grid{import flash.events.EventDispatcher;import flash.geom.Rectangle;import com.liquid.events.LiquidCellEvent;import com.liquid.grid.*;/**
+* @private
+*/
+public class LiquidCell extends EventDispatcher{public static const DRAW_REPEAT : int;public static const DRAW_STRETCH : int;public var drawModeX : int;public var drawModeY : int;public var rectBmp : Rectangle;public var rect : Rectangle;private var __grid : LiquidGrid;private var __parentGrid : LiquidGrid;private var __row : LiquidRowType;private var __col : LiquidRowType;private var __listenable : Boolean;/**
+* set listenable
+*/
+public function set listenable (value:Boolean) : Void;/**
+* 	get litenable
+*/
+public function get listenable () : Boolean;/**
+* get a grid
+*/
+public function get grid () : LiquidGrid;/**
+* get parentGrid
+*/
+public function get parentGrid () : LiquidGrid;/**
+* global X
+*/
+public function get globalX () : Number;/**
+* global Y
+*/
+public function get globalY () : Number;public function LiquidCell (crt:LiquidRowType, rrt:LiquidRowType, pg:LiquidGrid = null);/**
+* set a grid
+*/
+public function setGrid (value:LiquidGrid) : void;/**
+* update pos
+*/
+public function updateRect () : void;/**
+* change parent grid
+*/
+public function changeParentGrid (lg:LiquidGrid) : void;/**
+* get parentGrid x
+*/
+private function getParentGridX (value:Number, pg:LiquidGrid) : Number;/**
+* get parentGrid y
+*/
+private function getParentGridY (value:Number, pg:LiquidGrid) : Number;/**
+* move col handler
+*/
+private function moveColHandler (e:LiquidCellEvent) : void;/**
+* move row handler
+*/
+private function moveRowHandler (e:LiquidCellEvent) : void;/**
+* resize col
+*/
+private function resizeColHandler (e:LiquidCellEvent) : void;/**
+* resize row
+*/
+private function resizeRowHandler (e:LiquidCellEvent) : void;}}
+#file-cache D:\work\projects\liquid\opensource\src\com\liquid\grid\LiquidGrid.as
+package com.liquid.grid{import flash.display.Graphics;import flash.events.EventDispatcher;import com.liquid.events.LiquidCellEvent;import com.liquid.grid.*;/**
+* @private
+*/
+public class LiquidGrid extends EventDispatcher{protected var rows : LiquidRow;protected var cols : LiquidRow;protected var __width : Number;protected var __height : Number;protected var __x : Number;protected var __y : Number;protected var __parentGrid : LiquidGrid;protected var cells : Array;protected var listenableCells : Array;/**
+* set width
+*/
+public function set width (value:Number) : Void;/**
+* set height
+*/
+public function set height (value:Number) : Void;/**
+* set x
+*/
+public function set x (value:Number) : Void;/**
+* set y
+*/
+public function set y (value:Number) : Void;/**
+* get x
+*/
+public function get x () : Number;/**
+* get x
+*/
+public function get y () : Number;/**
+* get width
+*/
+public function get width () : Number;/**
+* get height
+*/
+public function get height () : Number;/**
+* get min width
+*/
+public function get minWidth () : Number;/**
+* get min height
+*/
+public function get minHeight () : Number;/**
+* set the parent grid
+*/
+public function set parentGrid (value:LiquidGrid) : Void;/**
+* get the parent grid
+*/
+public function get parentGrid () : LiquidGrid;public function LiquidGrid (pcols:LiquidRow, prows:LiquidRow);/**
+* clone
+*/
+public function clone () : LiquidGrid;/**
+* get a cell
+*/
+public function getCell (x:int, y:int) : LiquidCell;/**
+* get a col by no
+*/
+public function getColAt (value:int) : LiquidRowType;/**
+* get a row by no
+*/
+public function getRowAt (value:int) : LiquidRowType;/**
+* toString
+*/
+public function toString () : String;/**
+* get cols
+*/
+public function getCols () : LiquidRow;/**
+* get rows
+*/
+public function getRows () : LiquidRow;/**
+* get cells
+*/
+public function getCells () : Array;/**
+* debug drawing
+*/
+public function debugDraw (g:Graphics, addx:Number = 0, addy:Number = 0) : void;/**
+* add listenable cell
+*/
+public function addListenableCell (value:LiquidCell) : void;/**
+* set size
+*/
+public function setSize (pw:Number, ph:Number) : void;/**
+* build cells
+*/
+private function buildCells () : void;/**
+* cols resize handler
+*/
+private function colsResizeHandler (e:LiquidCellEvent) : void;/**
+* rows resize handler
+*/
+private function rowsResizeHandler (e:LiquidCellEvent) : void;/**
+* update the listenalbe cells
+*/
+private function updateListenableCells () : void;/**
+* scale 9 grid
+*/
+public static function scale9Grid (hleft:Number, hright:Number, vtop:Number, vbottom:Number, dwidth:Number, dheight:Number) : LiquidGrid;}}
+#file-cache D:\work\projects\liquid\opensource\src\com\liquid\grid\LiquidRow.as
+package com.liquid.grid{import flash.events.EventDispatcher;import com.liquid.events.LiquidCellEvent;import com.liquid.grid.LiquidRowType;/**
+* @private
+*/
+public class LiquidRow extends EventDispatcher{private var __cells : Array;private var fixedCells : Array;private var ratioCells : Array;private var __size : Number;private var __fixedSize : Number;private var __ratioSize : Number;private var __ratioScale : Number;private var __minSize : Number;public var forced : Boolean;/**
+* set the size
+*/
+public function set size (value:Number) : Void;/**
+* get the size
+*/
+public function get size () : Number;/**
+* get the cells
+*/
+public function get cells () : Array;/**
+* get fixed size
+*/
+public function get fixedSize () : Number;/**
+* get ratio size
+*/
+public function get ratioSize () : Number;/**
+* get min fixed size
+*/
+public function get ratioScale () : Number;/**
+* get length
+*/
+public function get length () : int;/**
+* get minSize
+*/
+public function get minSize () : Number;public function LiquidRow (lrt:LiquidRowType = null, ...rest);/**
+* clone
+*/
+public function clone () : LiquidRow;/**
+* set rows
+*/
+public function setRows (rw:Array) : void;/**
+* toString
+*/
+public function toString () : String;/**
+* get the ratioCells
+*/
+public function getRatioCells () : Array;/**
+* update fixed size
+*/
+private function updateFixedCells () : void;/**
+* update cells pos
+*/
+private function updatePos () : void;/**
+* ratio changed handler
+*/
+private function ratioChangeHandler (e:LiquidCellEvent) : void;/**
+* fixed changed handler
+*/
+private function fixedChangeHandler (e:LiquidCellEvent) : void;/**
+* update the size
+*/
+private function updateRatioCells () : void;/**
+* clamp a value
+*/
+private function clamp (value:Number, minValue:Number, maxValue:Number) : Number;}}
+#file-cache D:\work\projects\liquid\opensource\src\com\liquid\grid\LiquidRowType.as
+package com.liquid.grid{import flash.events.EventDispatcher;import com.liquid.events.LiquidCellEvent;import com.liquid.grid.*;/**
+* @private
+*/
+public class LiquidRowType extends EventDispatcher{public static const SIZE_FIXED : int;public static const SIZE_RATIO : int;private var __sizeMode : int;private var __ratio : Number;private var __size : Number;private var __minSize : Number;private var __maxSize : Number;private var __pos : Number;private var __row : LiquidRow;/**
+* set the row
+*/
+public function set row (value:LiquidRow) : Void;/**
+* get the size
+*/
+public function get size () : Number;/**
+* get the ratio
+*/
+public function get ratio () : Number;/**
+* get the size mode
+*/
+public function get sizeMode () : int;/**
+* set ratio
+*/
+public function set ratio (value:Number) : Void;/**
+* get the min size
+*/
+public function get minSize () : Number;/**
+* get the max size
+*/
+public function get maxSize () : Number;/**
+* get pos
+*/
+public function get pos () : Number;/**
+* set pos
+*/
+public function set pos (value:Number) : Void;public function LiquidRowType (s:Number, sm:int = SIZE_FIXED, ms:Number = 0, xs:Number = Number.POSITIVE_INFINITY);/**
+* clone
+*/
+public function clone () : LiquidRowType;/**
+* toString
+*/
+public function toString () : String;/**
+* update size
+*/
+public function updateSize () : void;/**
+* Modifier la taille
+*/
+public function setSize (value:Number) : void;/**
+* get prefered size
+*/
+public function getPreferedSize () : Number;/**
+* change the ratio
+*/
+public function changeRatio (value:Number) : void;}}
+#file-cache D:\work\projects\liquid\opensource\src\com\liquid\listClasses\LiquidListCellRenderer.as
+package com.liquid.listClasses{import com.liquid.controls.LiquidButton;import com.liquid.display.LiquidIcon;import com.liquid.skin.SkinAsset;import com.liquid.events.LiquidEvent;import fl.controls.listClasses.ICellRenderer;import fl.controls.listClasses.ListData;import fl.controls.ButtonLabelPlacement;import flash.events.MouseEvent;import flash.display.DisplayObject;/**
+*  @private
+*/
+public class LiquidListCellRenderer extends LiquidButton implements ICellRenderer{private var _listData : ListData;private var _data : Object;/**
+* listData
+*/
+public function set listData (newListData:ListData) : Void;/**
+* get listData
+*/
+public function get listData () : ListData;/**
+* set data
+*/
+public function set data (newData:Object) : Void;/**
+* get data
+*/
+public function get data () : Object;internal function LiquidListCellRenderer ();/**
+* toggle selected
+*/
+protected function toggleSelected (event:MouseEvent) : void;/**
+* draw layout
+*/
+protected function drawLayout () : void;/**
+* icon loaded		 * @private
+*/
+protected function iconLoadedHandler (e:LiquidEvent) : void;}}
+#file-cache D:\work\projects\liquid\opensource\src\com\liquid\listClasses\LiquidListData.as
+package com.liquid.listClasses{import fl.controls.listClasses.ListData;/**
+*  @private
+*/
+public class LiquidListData extends ListData{internal function LiquidListData (label:String, icon:Object, owner:UIComponent, index:uint, row:uint, col:uint = 0);}}
+#file-cache D:\work\projects\liquid\opensource\src\com\liquid\skin\SkinAsset.as
+package com.liquid.skin{import flash.display.BitmapData;import flash.geom.Rectangle;import flash.geom.Point;import flash.net.URLRequest;import flash.system.LoaderContext;import flash.utils.Dictionary;import flash.utils.getQualifiedClassName;import flash.system.ApplicationDomain;import com.liquid.draw.LiquidBitmap;import com.liquid.grid.LiquidGrid;import com.liquid.grid.LiquidCell;import com.liquid.skin.SkinLoader;/**
+* @private
+*/
+public class SkinAsset{private static var cache : Dictionary;private static var bmps : Object;private static var loaders : Object;public var grid : LiquidGrid;public var liquidBitmap : LiquidBitmap;public var colors : Array;internal function SkinAsset (pBmp:BitmapData);/**
+* 	load skin
+*/
+public static function loadSkin (url:String, context:LoaderContext) : SkinLoader;/**
+* get bitmap data
+*/
+public static function getBitmapData (name:String) : BitmapData;/**
+*	get grid
+*/
+private static function getGrid (pBmp:BitmapData) : LiquidGrid;/**
+*	get liquid bitmap
+*/
+private static function getLiquidBitmap (pBmp:BitmapData, pGrid:LiquidGrid) : LiquidBitmap;/**
+* get colors
+*/
+private static function getColors (pBmp:BitmapData, pGrid:LiquidGrid) : Array;}}
+#file-cache D:\work\projects\liquid\opensource\src\com\liquid\skin\SkinLoader.as
+package com.liquid.skin{import com.liquid.events.LiquidEvent;import com.liquid.errors.LiquidError;import flash.display.BitmapData;import flash.display.Loader;import flash.display.Bitmap;import flash.events.Event;import flash.events.IOErrorEvent;import flash.net.URLRequest;import flash.system.LoaderContext;/**
+* @private
+*/
+public class SkinLoader extends Loader{public static const STATE_INIT : int;public static const STATE_LOADING : int;public static const STATE_LOADED : int;public static const STATE_ERROR : int;private var _state : int;private var _bmp : BitmapData;private var _request : URLRequest;internal function SkinLoader ();/**
+* load
+*/
+public function load (request:URLRequest, context:LoaderContext = null) : void;/**
+* get state
+*/
+public function getState () : int;/**
+* 	get bitmap
+*/
+public function getBitmap () : BitmapData;/**
+* 	complete handler
+*/
+private function completeHandler (e:Event) : void;/**
+* error handler
+*/
+private function errorHandler (e:IOErrorEvent) : void;}}

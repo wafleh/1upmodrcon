@@ -1,0 +1,183 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<META http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<link rel="stylesheet" href="../../../style.css" type="text/css" media="screen">
+<link rel="stylesheet" href="../../../print.css" type="text/css" media="print">
+<meta content="LiquidManager,com.liquid.core.LiquidManager,setSharedSkin,loadSharedSkin" name="keywords">
+<title>com.liquid.core.LiquidManager</title>
+</head>
+<body>
+<script type="text/javascript" language="javascript" src="../../../asdoc.js"></script><script type="text/javascript" language="javascript" src="../../../cookies.js"></script><script type="text/javascript" language="javascript">
+<!--
+				asdocTitle = 'LiquidManager - Liquid Components Documentation';
+				var baseRef = '../../../';
+				window.onload = configPage;
+			--></script>
+<table style="display:none" id="titleTable" cellspacing="0" cellpadding="0" class="titleTable">
+<tr>
+<td align="left" class="titleTableTitle">Liquid Components</td><td align="right" class="titleTableTopNav"><a onclick="loadClassListFrame('../../../all-classes.html')" href="../../../package-summary.html">All&nbsp;Packages</a>&nbsp;|&nbsp;<a onclick="loadClassListFrame('../../../all-classes.html')" href="../../../class-summary.html">All&nbsp;Classes</a>&nbsp;|&nbsp;<a onclick="loadClassListFrame('../../../index-list.html')" href="../../../all-index-A.html">Index</a>&nbsp;|&nbsp;<a href="../../../index.html?com/liquid/core/LiquidManager.html&amp;com/liquid/core/class-list.html" id="framesLink1">Frames</a><a onclick="parent.location=document.location" href="" style="display:none" id="noFramesLink1">No&nbsp;Frames</a></td><td rowspan="3" align="right" class="titleTableLogo"><img alt="Adobe Logo" title="Adobe Logo" class="logoImage" src="../../../images/logo.jpg"></td>
+</tr>
+<tr class="titleTableRow2">
+<td align="left" id="subTitle" class="titleTableSubTitle">Class&nbsp;LiquidManager</td><td align="right" id="subNav" class="titleTableSubNav"><a href="#methodSummary">Methods</a></td>
+</tr>
+<tr class="titleTableRow3">
+<td colspan="2">&nbsp;</td>
+</tr>
+</table>
+<script type="text/javascript" language="javascript">
+<!--
+if (!isEclipse() || window.name != ECLIPSE_FRAME_NAME) {titleBar_setSubTitle("Class LiquidManager"); titleBar_setSubNav(false,false,false,false,false,false,true,false,false,false,false,false,false,false);}
+--></script>
+<div class="MainContent">
+<table cellspacing="0" cellpadding="0" class="classHeaderTable">
+<tr>
+<td class="classHeaderTableLabel">Package</td><td><a onclick="javascript:loadClassListFrame('class-list.html')" href="package-detail.html">com.liquid.core</a></td>
+</tr>
+<tr>
+<td class="classHeaderTableLabel">Class</td><td class="classSignature">public class LiquidManager</td>
+</tr>
+</table>
+<p></p>
+ 
+ <p></p>
+<br>
+<hr>
+</div>
+<a name="methodSummary"></a>
+<div class="summarySection">
+<div class="summaryTableTitle">Public Methods</div>
+<table id="summaryTableMethod" class="summaryTable " cellpadding="3" cellspacing="0">
+<tr>
+<th>&nbsp;</th><th colspan="2">Method</th><th class="summaryTableOwnerCol">Defined&nbsp;by</th>
+</tr>
+<tr class="">
+<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol">
+<div class="summarySignature">
+<a class="signatureLink" href="#loadSharedSkin()">loadSharedSkin</a>(id:String, url:String, context:LoaderContext = null):void</div>
+<div class="summaryTableDescription">[static]
+   Load an external bitmap skin file and shared it for the Liquid Components.</div>
+</td><td class="summaryTableOwnerCol">LiquidManager</td>
+</tr>
+<tr class="">
+<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol">
+<div class="summarySignature">
+<a class="signatureLink" href="#setSharedSkin()">setSharedSkin</a>(id:String, bmp:BitmapData):void</div>
+<div class="summaryTableDescription">[static]
+   Set a shared BitmapData skin for Liquid Components.</div>
+</td><td class="summaryTableOwnerCol">LiquidManager</td>
+</tr>
+</table>
+</div>
+<script type="text/javascript" language="javascript">
+<!--
+showHideInherited();
+--></script>
+<div class="MainContent">
+<a name="methodDetail"></a>
+<div class="detailSectionHeader">Method detail</div>
+<a name="loadSharedSkin()"></a>
+<table cellspacing="0" cellpadding="0" class="detailHeader">
+<tr>
+<td class="detailHeaderName">loadSharedSkin</td><td class="detailHeaderParens">()</td><td class="detailHeaderType">method</td>
+</tr>
+</table>
+<div class="detailBody">
+<code>public static function loadSharedSkin(id:String, url:String, context:LoaderContext = null):void</code><p>
+   Load an external bitmap skin file and shared it for the Liquid Components.
+   
+   Note : By default, LiquidManager attach the default BitmapData class in the library : Liquid_focusRect
+   
+   </p><span class="label">Parameters</span>
+<table border="0" cellspacing="0" cellpadding="0">
+<tr>
+<td width="20px"></td><td><code><span class="label">id</span>:String</code> &mdash; String indentifier, this property take the folowing value :
+   <p><table class=innertable>
+   <tr><th>id</th><th>Description</th></tr>
+   <tr><td>focusRect</td><td>Focus rectangle of all components</td></tr>
+   </table></p>
+   </td>
+</tr>
+<tr>
+<td class="paramSpacer">&nbsp;</td>
+</tr>
+<tr>
+<td width="20px"></td><td><code><span class="label">url</span>:String</code> &mdash;  URL of the bitmap file
+   </td>
+</tr>
+<tr>
+<td class="paramSpacer">&nbsp;</td>
+</tr>
+<tr>
+<td width="20px"></td><td><code><span class="label">context</span>:LoaderContext</code> (default = <code>null</code>)<code></code> &mdash;  A LoaderContext object, which has properties that define the following :
+  
+  <ul>
+  
+  <li>Whether or not Flash Player should check for the existence of a policy file 
+  upon loading the object</li>
+
+  
+  <li>The ApplicationDomain for the loaded object</li>
+  
+  <li>The SecurityDomain for the loaded object</li>
+  
+  </ul>
+  
+  <p>For complete details, see the description of the properties in the 
+  <a target='_blank' href="http://livedocs.adobe.com/flash/9.0/ActionScriptLangRefV3/flash/system/LoaderContext.html">LoaderContext</a> class.</p>
+   </td>
+</tr>
+</table>
+<br>
+<span class="label">Example</span>
+<br> <div class='listing'><pre>LiquidManager.loadSharedSkin("focusRect","./skin/mySkin.png");</pre></div> 
+   
+   <p></p>
+</div>
+<a name="setSharedSkin()"></a>
+<table cellspacing="0" cellpadding="0" class="detailHeader">
+<tr>
+<td class="detailHeaderName">setSharedSkin</td><td class="detailHeaderParens">()</td><td class="detailHeaderType">method</td><td class="detailHeaderRule">&nbsp;</td>
+</tr>
+</table>
+<div class="detailBody">
+<code>public static function setSharedSkin(id:String, bmp:BitmapData):void</code><p>
+   Set a shared BitmapData skin for Liquid Components.
+   
+   Note : By default, LiquidManager attach the default BitmapData class in the library : Liquid_focusRect
+   
+   </p><span class="label">Parameters</span>
+<table border="0" cellspacing="0" cellpadding="0">
+<tr>
+<td width="20px"></td><td><code><span class="label">id</span>:String</code> &mdash; String indentifier, this property take the folowing value :
+   <p><table class=innertable>
+   <tr><th>id</th><th>Description</th></tr>
+   <tr><td>focusRect</td><td>Focus rectangle of all components</td></tr>
+   </table></p>
+   </td>
+</tr>
+<tr>
+<td class="paramSpacer">&nbsp;</td>
+</tr>
+<tr>
+<td width="20px"></td><td><code><span class="label">bmp</span>:BitmapData</code> &mdash; BitmapData instance
+   </td>
+</tr>
+</table>
+<br>
+<span class="label">Example</span>
+<br> <div class='listing'><pre>LiquidManager.setSkin("focusRect",myBitmapId(0,0));</pre></div> 
+   
+   <p></p>
+</div>
+<br>
+<br>
+<hr>
+<br>
+<p></p>
+<center class="copyright"> 
+</center>
+</div>
+</body>
+</html>
+<!-- -->
