@@ -62,7 +62,7 @@ package com.verticalcue.misc
 		private var _windowFilters:Array;
 		private var _linuxEffects:Boolean = true;
 		private var _updater:Updater = new Updater();
-		private var _version:String = "1.0.0";
+		private var _version:String = "1.0.1";
 
 		public function Main():void 
 		{			
@@ -510,6 +510,7 @@ package com.verticalcue.misc
 				_sList.addItem( { server: srvObj.name, players: srvObj.clients.length + "/" + srvObj.maxClients } );
 				if (_srvWindow) {
 					if (srvObj.name == _srvWindow.getChildByName("serverName").text) {
+						_srvWindow.getChildByName("serverMap").text = "Map: " + srvObj.map;
 						_clientList.columns = ["a", "b", "c"];
 						_clientList.removeAll();
 						for each (var client:Client in srvObj.clients) {
