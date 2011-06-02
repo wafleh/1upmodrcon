@@ -232,11 +232,6 @@ public class ServerSetupWizard extends JFrame implements ActionListener {
             serverPassword.setBackground(GradientPanel.WARNING_COLOR_START);
             flag = false;
         }
-        // Ensure IP is really an IP or Host
-        if (!ModRconUtil.isIPAddress(serverIP.getText())) {
-            serverIP.setBackground(GradientPanel.WARNING_COLOR_START);
-            flag = false;
-        }
         // Ensure Port is really a number
         try {
             String port = serverPort.getText();
@@ -251,7 +246,7 @@ public class ServerSetupWizard extends JFrame implements ActionListener {
     }
 
     private JComboBox getMethodCombo() {
-        String[] values = new String[] { "Referee", "Moderator", "RCON" };
+        String[] values = new String[] { "Moderator", "RCON" };
         this.serverMethod = new JComboBox(values);
         this.serverMethod.setSelectedItem("Moderator");
         return this.serverMethod;
