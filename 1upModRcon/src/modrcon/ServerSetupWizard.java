@@ -78,7 +78,6 @@ public class ServerSetupWizard extends JFrame implements ActionListener {
         introText.setFont(new Font("Tahoma", Font.BOLD, 11));
         introText.setOpaque(false);
         introText.setText("<html>Please take a moment to setup your first server connection.<br>If you need help just hover your mouse over one of the<br>information icons and a hint will appear for that item.<br>All fields are required!</html>");
-        //introText.setText("<html><p>Please take a moment to setup your first server connection. If you need help just hover your mouse over one of the information icons and a hint will appear for that item. All fields are required!</p></html>");
         panel.add(Box.createHorizontalStrut(5));
         panel.add(introText);
         panel.add(Box.createHorizontalStrut(5));

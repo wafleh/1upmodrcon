@@ -14,7 +14,12 @@ public class PropertyManager {
     /** The current version of 1up ModRcon. */
     public static final String MODRCON_VERSION = "Beta 0.8";
 
-    /** The path to the settings folder. */
+    /**
+     * The path to the settings folder.
+     * 
+     * Windows 7: C:\Users\YourUserName\.1upmodrcon
+     * Linux/Mac: ~/.1upmodrcon/
+     */
     public static final String settingsPath = System.getProperty("user.home")+"/.1upmodrcon/";
 
     /** The Properties File */
@@ -91,6 +96,27 @@ public class PropertyManager {
         }
     }
 
+    public boolean getRememberConsoleHistory() {
+        if (propFile.getProperty("rememberhistory") == null) {
+            return false;
+        }
+        else if (propFile.getProperty("rememberhistory").equals("true")) {
+            return true;
+        }
+        else {
+            return false;
+        }
+    }
+
+    public void setRememberConsoleHistory(boolean status) {
+        if (status) {
+            propFile.setProperty("rememberhistory", "true");
+        }
+        else {
+            propFile.setProperty("rememberhistory", "false");
+        }
+    }
+
     public void setStatusOnConnect(boolean status) {
         if (status) {
             propFile.setProperty("statusonconnect", "true");
@@ -133,7 +159,7 @@ public class PropertyManager {
     private boolean writeDefaultPropertiesFile(File file) {
         Writer writer = null;
         try {
-            String text = "#Property File for 1up ModRcon\n#Fri Aug 27 23:18:57 CDT 2010\nversion=1.0\ngamepath=\nconsolebgcolor=\\#0\nconsolefgcolor=\\#FFFFFF\nreceivetimeout=100\nstatusonconnect=false\nvotewarning=true\n";
+            String text = "#Property File for 1up ModRcon\n#Fri Aug 27 23:18:57 CDT 2010\nversion=1.0\ngamepath=\nconsolebgcolor=\\#0\nconsolefgcolor=\\#FFFFFF\nreceivetimeout=100\nstatusonconnect=false\nvotewarning=true\nrememberhistory=false";
             writer = new BufferedWriter(new FileWriter(file));
             writer.write(text);
             return true;

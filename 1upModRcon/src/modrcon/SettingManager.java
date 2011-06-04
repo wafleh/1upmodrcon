@@ -16,6 +16,7 @@ public class SettingManager extends JDialog implements ActionListener, MouseList
     private FileChooserPanel gamePathPanel;
     private JSpinner timeoutSpinner;
     private JCheckBox sendStatusCheck;
+    private JCheckBox rememberConsoleHistory;
 
     private JLabel bgColorLabel;
     private JLabel fgColorLabel;
@@ -64,6 +65,7 @@ public class SettingManager extends JDialog implements ActionListener, MouseList
         JLabel lblTimeOut = new JLabel("Receive Timeout:", JLabel.TRAILING);
         JLabel lblLAF = new JLabel("Look and Feel:", JLabel.TRAILING);
         JLabel lblSendStatus = new JLabel("Send status command on connect");
+        JLabel lblRememberHistory = new JLabel("Remember Console History");
         JLabel lblBGColor = new JLabel("Console BG Color");
         JLabel lblFGColor = new JLabel("Console Font Color");
         
@@ -90,10 +92,20 @@ public class SettingManager extends JDialog implements ActionListener, MouseList
             10, 6  //xPad, yPad
         );
 
-        JPanel checkPanel = new JPanel(new FlowLayout(FlowLayout.CENTER));
+        JPanel checkPanel = new JPanel();
+        checkPanel.setLayout(new BoxLayout(checkPanel, BoxLayout.Y_AXIS));
+        JPanel check1 = new JPanel(new FlowLayout(FlowLayout.LEFT));
+        JPanel check2 = new JPanel(new FlowLayout(FlowLayout.LEFT));
         this.sendStatusCheck = new JCheckBox();
-        checkPanel.add(sendStatusCheck);
-        checkPanel.add(lblSendStatus);
+        this.rememberConsoleHistory = new JCheckBox();
+        check1.add(new JLabel("                              "));
+        check1.add(sendStatusCheck);
+        check1.add(lblSendStatus);
+        check2.add(new JLabel("                              "));
+        check2.add(rememberConsoleHistory);
+        check2.add(lblRememberHistory);
+        checkPanel.add(check1);
+        checkPanel.add(check2);
 
         JPanel colorPanel = new JPanel(new FlowLayout(FlowLayout.CENTER));
         this.bgColorLabel = new JLabel();
@@ -137,6 +149,7 @@ public class SettingManager extends JDialog implements ActionListener, MouseList
         this.gamePathPanel.setGamePath(pm.getGamePath());
         this.timeoutSpinner.setValue(pm.getReceiveTimeoutNumber());
         this.sendStatusCheck.setSelected(pm.getStatusOnConnect());
+        this.rememberConsoleHistory.setSelected(pm.getRememberConsoleHistory());
         this.bgColorLabel.setBackground(Color.decode(pm.getConsoleBGColor()));
         this.fgColorLabel.setBackground(Color.decode(pm.getConsoleFGColor()));
     }
@@ -148,6 +161,7 @@ public class SettingManager extends JDialog implements ActionListener, MouseList
             pm.setGamePath(this.gamePathPanel.getGamePath());
             pm.setReceiveTimeout(this.timeoutSpinner.getValue().toString());
             pm.setStatusOnConnect(this.sendStatusCheck.isSelected());
+            pm.setRememberConsoleHistory(this.rememberConsoleHistory.isSelected());
             // Console Colors
             String bg = "#" + Integer.toHexString(bgColorLabel.getBackground().getRGB() & 0x00ffffff).toUpperCase();
             String fg = "#" + Integer.toHexString(fgColorLabel.getBackground().getRGB() & 0x00ffffff).toUpperCase();
