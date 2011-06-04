@@ -51,6 +51,10 @@ public class MenuAction extends AbstractAction {
             this.parent.getConsolePanel().clearConsole();
         }
 
+        else if (selection.equals("Load History")) {
+            this.parent.getConsolePanel().loadConsoleHistory();
+        }
+
         else if (selection.equals("Find")) {
             this.parent.getConsolePanel().findText();
         }
@@ -138,6 +142,13 @@ public class MenuAction extends AbstractAction {
                 this.parent.getConsolePanel().appendToConsole(q.getResponse());
             }
             catch (Exception e) {}
+        }
+
+        else if (selection.equals("Force Name")) {
+            JTable source = this.parent.getLivePlayerInfoPanel().getLivePlayerInfoTable();
+            String name = (String)source.getModel().getValueAt(source.getSelectedRow(), 2);
+            name = ModRconUtil.trimAndStripColors(name);
+            
         }
 
         else if (selection.equals("Slap User")) {

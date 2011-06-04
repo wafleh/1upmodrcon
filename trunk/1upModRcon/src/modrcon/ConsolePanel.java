@@ -22,15 +22,18 @@ public class ConsolePanel extends JPanel implements MouseListener {
     /** Holds the buttons below the console. */
     private JPanel buttonPanel = new JPanel();
 
-    //private JTextArea taConsole;
     private ConsoleTextPane taConsole;
     private JScrollPane jsp;
+
+    /** A reference to the PropertyManager. */
+    private PropertyManager pm;
 
     private JLabel iconCopy;
     private JLabel iconClear;
     private JLabel iconFind;
     private JLabel iconSave;
 
+    /** The console's right click menu. */
     private JPopupMenu popup;
 
     public ConsolePanel(MainWindow owner) {
@@ -39,11 +42,10 @@ public class ConsolePanel extends JPanel implements MouseListener {
 
         this.setLayout(new BorderLayout());
         this.setBorder(BorderFactory.createTitledBorder("Console"));
-        
-        //taConsole = new JTextArea();
+
         taConsole = new ConsoleTextPane();
         taConsole.setFont(new Font("Monospaced", Font.PLAIN, 12));
-        PropertyManager pm = new PropertyManager();
+        pm = new PropertyManager();
         taConsole.setBackground(Color.decode(pm.getConsoleBGColor()));
         taConsole.setForeground(Color.decode(pm.getConsoleFGColor()));
         taConsole.setEditable(false);
@@ -86,6 +88,7 @@ public class ConsolePanel extends JPanel implements MouseListener {
         JMenuItem saveSelected = new JMenuItem(new MenuAction("Save Selected to File", this.parent));
         JMenuItem saveConsole = new JMenuItem(new MenuAction("Save Console As...", this.parent));
         JMenuItem clearConsole = new JMenuItem(new MenuAction("Clear Console", this.parent));
+        JMenuItem loadHistory = new JMenuItem(new MenuAction("Load History", this.parent));
         JMenuItem serverInfo = new JMenuItem(new MenuAction("Server Info", this.parent));
         JMenuItem sendCP = new JMenuItem(new MenuAction("Send Connectionless Packet", this.parent));
         p.add(selectAll);
@@ -93,11 +96,20 @@ public class ConsolePanel extends JPanel implements MouseListener {
         p.add(saveSelected);
         p.add(saveConsole);
         p.add(clearConsole);
+        p.add(loadHistory);
         p.addSeparator();
         p.add(serverInfo);
         p.addSeparator();
         p.add(sendCP);
         return p;
+    }
+
+    public void logHistory(String output) {
+        if (pm.getRememberConsoleHistory()) {
+            HistoryDatabase hdb = new HistoryDatabase();
+            hdb.addHistory(output);
+            hdb.saveDatabase();
+        }
     }
 
     public void selectAllText() {
@@ -133,19 +145,32 @@ public class ConsolePanel extends JPanel implements MouseListener {
         this.taConsole.setText("");
     }
 
+    public void loadConsoleHistory() {
+        this.clearConsole();
+        HistoryDatabase hdb = new HistoryDatabase();
+        this.taConsole.append(hdb.getConsoleHistory(), "default");
+    }
+
     public void appendToConsole(String text) {
+        this.logHistory(text);
         this.taConsole.append(text, "default");
     }
 
     public void appendCommand(String command) {
+        java.util.Date now = new java.util.Date();
+        java.text.DateFormat dateFormat = new java.text.SimpleDateFormat("M/d/yyyy hh:mm:ss aa");
+        String dateString = dateFormat.format(now);
+        this.logHistory("Command: "+command+" - "+dateString+"\n");
         this.taConsole.appendCommand(command);
     }
 
     public void appendToConsole(String text, String styleName) {
+        this.logHistory(text);
         this.taConsole.append(text, styleName);
     }
 
     public void appendWithColor(String playerName) {
+        this.logHistory(playerName);
         this.taConsole.appendWithColors(playerName);
     }
     

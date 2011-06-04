@@ -129,6 +129,17 @@ public class LivePlayerInfoPanel extends JPanel {
         p.add(moveToRed);
         p.add(moveToBlue);
         p.add(moveToSpec);
+
+        // slay, crash, togglemute, forcename, spoof, tempban, location, etc.
+        JMenu subMenu = new JMenu("1up Commands");
+        JMenuItem forceName = new JMenuItem(new MenuAction("Force Name", this.parent));
+        JMenuItem crash = new JMenuItem(new MenuAction("Crash", this.parent));
+        JMenuItem slay = new JMenuItem(new MenuAction("Slay", this.parent));
+        JMenuItem tempBan = new JMenuItem(new MenuAction("Temp Ban", this.parent));
+        
+        subMenu.add(forceName);
+        p.addSeparator();
+        p.add(subMenu);
         return p;
     }
 
