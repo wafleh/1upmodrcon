@@ -61,7 +61,6 @@ public class PropertyManager {
             propFile.setProperty("votewarning", "true");
             return true;
         }
-
         return Boolean.parseBoolean(temp);
     }
 
@@ -88,42 +87,19 @@ public class PropertyManager {
     }
 
     public boolean getStatusOnConnect() {
-        if (propFile.getProperty("statusonconnect").equals("true")) {
-            return true;
-        }
-        else {
-            return false;
-        }
+        return Boolean.valueOf(propFile.getProperty("statusonconnect"));
     }
 
     public boolean getRememberConsoleHistory() {
-        if (propFile.getProperty("rememberhistory") == null) {
-            return false;
-        }
-        else if (propFile.getProperty("rememberhistory").equals("true")) {
-            return true;
-        }
-        else {
-            return false;
-        }
+        return Boolean.valueOf(propFile.getProperty("rememberhistory"));
     }
 
     public void setRememberConsoleHistory(boolean status) {
-        if (status) {
-            propFile.setProperty("rememberhistory", "true");
-        }
-        else {
-            propFile.setProperty("rememberhistory", "false");
-        }
+        propFile.setProperty("rememberhistory", Boolean.toString(status));
     }
 
     public void setStatusOnConnect(boolean status) {
-        if (status) {
-            propFile.setProperty("statusonconnect", "true");
-        }
-        else {
-            propFile.setProperty("statusonconnect", "false");
-        }
+        propFile.setProperty("statusonconnect", Boolean.toString(status));
     }
 
     public String getLookAndFeel() {
