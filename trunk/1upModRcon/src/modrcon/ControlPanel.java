@@ -211,7 +211,7 @@ public class ControlPanel extends JPanel implements ActionListener, KeyListener 
 
         if (pressedButton == btnSend) {
             if (this.comboCommandBox.getSelectedItem() != null) {
-                String cmd = ((String)this.comboCommandBox.getSelectedItem()).trim();
+                String cmd = this.comboCommandBox.getSelectedItem().toString().trim();
                 if (cmd.equals("pr0n")) {
                     this.parent.getConsolePanel().clearConsole();
                     this.comboCommandBox.setSelectedItem(null);
