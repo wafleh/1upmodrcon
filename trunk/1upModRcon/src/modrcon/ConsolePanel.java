@@ -5,6 +5,8 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.MouseListener;
 import java.awt.datatransfer.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.io.*;
 
 /**
@@ -14,13 +16,13 @@ import java.io.*;
  *
  * @author Pyrite[1up]
  */
-public class ConsolePanel extends JPanel implements MouseListener {
+public class ConsolePanel extends JPanel implements ActionListener, MouseListener {
 
     /** A reference to the Main Window */
     private MainWindow parent;
 
     /** Holds the buttons below the console. */
-    private JPanel buttonPanel = new JPanel();
+    private JPanel buttonPanel;
 
     private ConsoleTextPane taConsole;
     private JScrollPane jsp;
@@ -32,9 +34,14 @@ public class ConsolePanel extends JPanel implements MouseListener {
     private JLabel iconClear;
     private JLabel iconFind;
     private JLabel iconSave;
+    private JLabel lblAutoQueryStatus;
+    private JCheckBox autoQueryCheck;
 
     /** The console's right click menu. */
     private JPopupMenu popup;
+
+    /** Timer to control Auto-Query Status checkbox. */
+    private final Timer autoQueryTimer;
 
     public ConsolePanel(MainWindow owner) {
         super();
@@ -55,6 +62,8 @@ public class ConsolePanel extends JPanel implements MouseListener {
         iconClear = new JLabel();
         iconFind = new JLabel();
         iconSave = new JLabel();
+        lblAutoQueryStatus = new JLabel("Auto-Query Status");
+        autoQueryCheck = new JCheckBox();
         iconCopy.setIcon(new ImageIcon(getClass().getResource("/modrcon/resources/copy.png")));
         iconClear.setIcon(new ImageIcon(getClass().getResource("/modrcon/resources/files_remove.png")));
         iconFind.setIcon(new ImageIcon(getClass().getResource("/modrcon/resources/find.png")));
@@ -68,14 +77,38 @@ public class ConsolePanel extends JPanel implements MouseListener {
         iconFind.addMouseListener(this);
         iconSave.addMouseListener(this);
 
+        // Auto-Query Status Timer and ActionListener
+        autoQueryTimer = new Timer(pm.getAutoQueryInterval() * 1000, this);
+        ActionListener autoQueryListener = new ActionListener() {
+            public void actionPerformed(ActionEvent actionEvent) {
+                AbstractButton abstractButton = (AbstractButton)actionEvent.getSource();
+                boolean selected = abstractButton.getModel().isSelected();
+                if (selected) {
+                    autoQueryTimer.setInitialDelay(1);
+                    autoQueryTimer.start();
+                }
+                else {
+                    autoQueryTimer.stop();
+                }
+            }
+        };
+        autoQueryCheck.addActionListener(autoQueryListener);
+
         popup = getConsolePopupMenu();
         this.taConsole.addMouseListener(this);
 
-        buttonPanel.setLayout(new FlowLayout(FlowLayout.LEFT));
+        buttonPanel = new JPanel();
+        buttonPanel.setLayout(new BoxLayout(buttonPanel, BoxLayout.X_AXIS));
         buttonPanel.add(iconCopy);
+        buttonPanel.add(Box.createHorizontalStrut(5));
         buttonPanel.add(iconClear);
+        buttonPanel.add(Box.createHorizontalStrut(5));
         buttonPanel.add(iconFind);
+        buttonPanel.add(Box.createHorizontalStrut(5));
         buttonPanel.add(iconSave);
+        buttonPanel.add(Box.createGlue());
+        buttonPanel.add(autoQueryCheck);
+        buttonPanel.add(lblAutoQueryStatus);
 
         this.add(jsp, BorderLayout.CENTER);
         this.add(buttonPanel, BorderLayout.SOUTH);
@@ -249,6 +282,13 @@ public class ConsolePanel extends JPanel implements MouseListener {
 
     public void mouseExited(MouseEvent e) {
         setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
+    }
+
+    public void actionPerformed(ActionEvent e) {
+        if (e.getSource() == this.autoQueryTimer) {
+            // Send Status Command to Console
+            this.parent.controlPanel.sendStatusCommand();
+        }
     }
 
 }
