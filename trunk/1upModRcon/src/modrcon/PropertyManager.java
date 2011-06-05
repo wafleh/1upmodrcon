@@ -69,6 +69,20 @@ public class PropertyManager extends Thread {
         propFile.setProperty("gamepath", path);
     }
 
+    public int getAutoQueryInterval() {
+        try {
+            int interval = Integer.parseInt(propFile.getProperty("autoqueryinterval"));
+            return interval;
+        }
+        catch (NumberFormatException e) {
+            return 60;
+        }
+    }
+
+    public void setAutoQueryInterval(String interval) {
+        propFile.setProperty("autoqueryinterval", interval);
+    }
+
     public String getReceiveTimeout() {
         return propFile.getProperty("receivetimeout");
     }

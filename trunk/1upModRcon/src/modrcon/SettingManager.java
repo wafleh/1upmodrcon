@@ -15,6 +15,7 @@ public class SettingManager extends JDialog implements ActionListener, MouseList
 
     private FileChooserPanel gamePathPanel;
     private JSpinner timeoutSpinner;
+    private JSpinner autoQuerySpinner;
     private JCheckBox sendStatusCheck;
     private JCheckBox rememberConsoleHistory;
 
@@ -64,14 +65,19 @@ public class SettingManager extends JDialog implements ActionListener, MouseList
         JLabel lblGamePath = new JLabel("Game Exe Path:", JLabel.TRAILING);
         JLabel lblTimeOut = new JLabel("Receive Timeout:", JLabel.TRAILING);
         JLabel lblLAF = new JLabel("Look and Feel:", JLabel.TRAILING);
-        JLabel lblSendStatus = new JLabel("Send status command on connect");
-        JLabel lblRememberHistory = new JLabel("Remember Console History");
+        JLabel lblSendStatus = new JLabel("Status on Connect:", JLabel.TRAILING);
+        JLabel lblRememberHistory = new JLabel("Log Console History:", JLabel.TRAILING);
+        JLabel lblAutoQueryStatus = new JLabel("Auto-Query Interval:", JLabel.TRAILING);
         JLabel lblBGColor = new JLabel("Console BG Color");
         JLabel lblFGColor = new JLabel("Console Font Color");
         
         this.gamePathPanel = new FileChooserPanel(this.parent, 25);
-        this.timeoutSpinner = new JSpinner();
-        this.timeoutSpinner.setValue(1500);
+        SpinnerModel rtmodel = new SpinnerNumberModel(100, 0, 500, 1);
+        this.timeoutSpinner = new JSpinner(rtmodel);
+        SpinnerModel model = new SpinnerNumberModel(60, 15, 3600, 15);
+        this.autoQuerySpinner = new JSpinner(model);
+        this.sendStatusCheck = new JCheckBox();
+        this.rememberConsoleHistory = new JCheckBox();
 
         JPanel springPanel = new JPanel(new SpringLayout());
         springPanel.add(lblGamePath);
@@ -80,32 +86,26 @@ public class SettingManager extends JDialog implements ActionListener, MouseList
         springPanel.add(lblTimeOut);
         lblTimeOut.setLabelFor(timeoutSpinner);
         springPanel.add(timeoutSpinner);
+        springPanel.add(lblAutoQueryStatus);
+        lblAutoQueryStatus.setLabelFor(autoQuerySpinner);
+        springPanel.add(autoQuerySpinner);
         JComboBox theme = this.getThemeCombo();
         springPanel.add(lblLAF);
         lblLAF.setLabelFor(theme);
         springPanel.add(theme);
+        springPanel.add(lblSendStatus);
+        lblSendStatus.setLabelFor(sendStatusCheck);
+        springPanel.add(sendStatusCheck);
+        springPanel.add(lblRememberHistory);
+        lblRememberHistory.setLabelFor(rememberConsoleHistory);
+        springPanel.add(rememberConsoleHistory);
 
         //Lay out the panel.
         SpringUtilities.makeCompactGrid(springPanel,
-             3, 2, //rows, cols
+             6, 2, //rows, cols
             10, 6, //initX, initY
-            10, 6  //xPad, yPad
+            10, 3  //xPad, yPad
         );
-
-        JPanel checkPanel = new JPanel();
-        checkPanel.setLayout(new BoxLayout(checkPanel, BoxLayout.Y_AXIS));
-        JPanel check1 = new JPanel(new FlowLayout(FlowLayout.LEFT));
-        JPanel check2 = new JPanel(new FlowLayout(FlowLayout.LEFT));
-        this.sendStatusCheck = new JCheckBox();
-        this.rememberConsoleHistory = new JCheckBox();
-        check1.add(new JLabel("                              "));
-        check1.add(sendStatusCheck);
-        check1.add(lblSendStatus);
-        check2.add(new JLabel("                              "));
-        check2.add(rememberConsoleHistory);
-        check2.add(lblRememberHistory);
-        checkPanel.add(check1);
-        checkPanel.add(check2);
 
         JPanel colorPanel = new JPanel(new FlowLayout(FlowLayout.CENTER));
         this.bgColorLabel = new JLabel();
@@ -126,7 +126,6 @@ public class SettingManager extends JDialog implements ActionListener, MouseList
         colorPanel.add(lblFGColor);
 
         sp.add(springPanel);
-        sp.add(checkPanel);
         sp.add(new JSeparator());
         sp.add(colorPanel);
         
@@ -152,6 +151,7 @@ public class SettingManager extends JDialog implements ActionListener, MouseList
         this.rememberConsoleHistory.setSelected(pm.getRememberConsoleHistory());
         this.bgColorLabel.setBackground(Color.decode(pm.getConsoleBGColor()));
         this.fgColorLabel.setBackground(Color.decode(pm.getConsoleFGColor()));
+        this.autoQuerySpinner.setValue(pm.getAutoQueryInterval());
     }
 
     public void actionPerformed(ActionEvent e) {
@@ -160,6 +160,7 @@ public class SettingManager extends JDialog implements ActionListener, MouseList
             PropertyManager pm = new PropertyManager();
             pm.setGamePath(this.gamePathPanel.getGamePath());
             pm.setReceiveTimeout(this.timeoutSpinner.getValue().toString());
+            pm.setAutoQueryInterval(this.autoQuerySpinner.getValue().toString());
             pm.setStatusOnConnect(this.sendStatusCheck.isSelected());
             pm.setRememberConsoleHistory(this.rememberConsoleHistory.isSelected());
             // Console Colors
@@ -184,13 +185,13 @@ public class SettingManager extends JDialog implements ActionListener, MouseList
     public void mouseClicked(MouseEvent e) {
         if (e.getSource() == bgColorLabel) {
             JColorChooser mycolor = new JColorChooser();
-            Color chosenColor = mycolor.showDialog(mycolor, "Select a Background Color for the Console", bgColorLabel.getBackground());
+            Color chosenColor = JColorChooser.showDialog(mycolor, "Select a Background Color for the Console", bgColorLabel.getBackground());
             if (chosenColor != null)
                 bgColorLabel.setBackground(chosenColor);
         }
         else if (e.getSource() == fgColorLabel) {
             JColorChooser mycolor = new JColorChooser();
-            Color chosenColor = mycolor.showDialog(mycolor, "Select a Font Color for the Console", fgColorLabel.getBackground());
+            Color chosenColor = JColorChooser.showDialog(mycolor, "Select a Font Color for the Console", fgColorLabel.getBackground());
             if (chosenColor != null)
                 fgColorLabel.setBackground(chosenColor);
         }
