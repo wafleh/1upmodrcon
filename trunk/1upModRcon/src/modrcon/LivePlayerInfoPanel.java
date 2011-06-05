@@ -353,7 +353,7 @@ public class LivePlayerInfoPanel extends JPanel {
     class PopupListener extends MouseAdapter {
         @Override
         public void mousePressed(MouseEvent e) {
-            showPopup(e);
+            mouseReleased(e);
         }
         @Override
         public void mouseReleased(MouseEvent e) {
