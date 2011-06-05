@@ -1,14 +1,9 @@
 #summary 1up ModRcon Software Release Procedure
+#labels Phase-Implementation
 
 = Introduction =
-
-Steps to take to create/upload a new release.
-
+Do the following steps to create and release a new version of 1up ModRcon.
 
 = Details =
-  # Set the Version in PropertyManager.java
-
-Add your content here.  Format your content with:
-  * Text in *bold* or _italic_
-  * Headings, paragraphs, and lists
-  * Automatic links to other wiki pages
+  # Set the MODRCON_VERSION in PropertyManager.
+  # tbd ...
