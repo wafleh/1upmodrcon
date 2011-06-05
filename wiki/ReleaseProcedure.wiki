@@ -1,0 +1,14 @@
+#summary 1up ModRcon Software Release Procedure
+
+= Introduction =
+
+Steps to take to create/upload a new release.
+
+
+= Details =
+  # Set the Version in PropertyManager.java
+
+Add your content here.  Format your content with:
+  * Text in *bold* or _italic_
+  * Headings, paragraphs, and lists
+  * Automatic links to other wiki pages
