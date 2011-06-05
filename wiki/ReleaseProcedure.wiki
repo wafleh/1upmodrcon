@@ -6,4 +6,5 @@ Do the following steps to create and release a new version of 1up ModRcon.
 
 = Details =
   # Set the MODRCON_VERSION in the Property Manager.
-  # tbd ...
+  # Ensure any new methods in the Property Manager take into account people that may not have those new items in the properties file.
+  # TBD...
