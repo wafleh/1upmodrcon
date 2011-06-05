@@ -78,12 +78,14 @@ public class ConsolePanel extends JPanel implements ActionListener, MouseListene
         iconSave.addMouseListener(this);
 
         // Auto-Query Status Timer and ActionListener
-        autoQueryTimer = new Timer(pm.getAutoQueryInterval() * 1000, this);
+        autoQueryTimer = new Timer(1000, this);
         ActionListener autoQueryListener = new ActionListener() {
             public void actionPerformed(ActionEvent actionEvent) {
                 AbstractButton abstractButton = (AbstractButton)actionEvent.getSource();
                 boolean selected = abstractButton.getModel().isSelected();
                 if (selected) {
+                    pm = new PropertyManager();
+                    autoQueryTimer.setDelay(pm.getAutoQueryInterval() * 1000);
                     autoQueryTimer.setInitialDelay(1);
                     autoQueryTimer.start();
                 }
