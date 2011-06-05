@@ -18,7 +18,10 @@ public class MainWindow extends JFrame implements ActionListener, ItemListener {
     private VersionPanel versionPanel;
     private ServerInfoPanel serverInfoPanel;
     private ConsolePanel consolePanel;
-    private ControlPanel controlPanel;
+
+    /** This member is protected so that ConsolePanel can call its methods. */
+    protected ControlPanel controlPanel;
+    
     private LivePlayerInfoPanel livePlayerInfoPanel;
     private JComboBox comboServerList;
 

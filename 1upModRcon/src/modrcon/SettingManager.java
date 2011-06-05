@@ -74,8 +74,8 @@ public class SettingManager extends JDialog implements ActionListener, MouseList
         this.gamePathPanel = new FileChooserPanel(this.parent, 25);
         SpinnerModel rtmodel = new SpinnerNumberModel(100, 0, 500, 1);
         this.timeoutSpinner = new JSpinner(rtmodel);
-        SpinnerModel model = new SpinnerNumberModel(60, 15, 3600, 15);
-        this.autoQuerySpinner = new JSpinner(model);
+        SpinnerModel aqmodel = new SpinnerNumberModel(60, 1, 3600, 1);
+        this.autoQuerySpinner = new JSpinner(aqmodel);
         this.sendStatusCheck = new JCheckBox();
         this.rememberConsoleHistory = new JCheckBox();
 
