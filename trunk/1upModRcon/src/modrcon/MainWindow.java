@@ -22,6 +22,12 @@ public class MainWindow extends JFrame implements ActionListener, ItemListener {
     private LivePlayerInfoPanel livePlayerInfoPanel;
     private JComboBox comboServerList;
 
+    private final int windowMinWidth  = 950;
+    private final int windowMinHeight = 700;
+
+    /** Reference to PropertyManager. */
+    private PropertyManager pm;
+
     /** Timer to control how often LivePlayerInfo Panel Updates. */
     private final Timer timer;
 
@@ -33,12 +39,29 @@ public class MainWindow extends JFrame implements ActionListener, ItemListener {
         this.setIconImage(topLeftIcon.getImage());
         this.setJMenuBar(this.getModRconMenuBar());
         this.setDefaultCloseOperation(EXIT_ON_CLOSE);
-        this.setSize(950,700);
+
+        pm = new PropertyManager();
+        if (pm.getWindowDimension() != null) {
+            Dimension d = pm.getWindowDimension();
+            this.setSize((int)d.getWidth(), (int)d.getHeight());
+        } else {
+            this.setSize(windowMinWidth, windowMinHeight);
+        }
         this.setResizable(true);
 
         // Setup the Content Pane
         Container cp = this.getContentPane();
         cp.setLayout(new BorderLayout());
+
+        // Capture Window Resize and Save
+        this.addComponentListener(new ComponentAdapter() {
+            @Override public void componentResized(ComponentEvent e) {
+                Component c = (Component)e.getSource();
+                Dimension d = c.getSize();
+                pm.setWindowDimension(d);
+                pm.savePropertyFile();
+            }
+        });
 
         this.logoPanel = new LogoPanel();
         // Width doesn't matter, BorderLayout overrides, this is used to force the panel to be a little taller
@@ -98,7 +121,9 @@ public class MainWindow extends JFrame implements ActionListener, ItemListener {
 
         // Bring the Window into Focus
         this.setVisible(true);
-        this.setMinimumSize(new Dimension((int)this.getWidth(), (int)this.getHeight()));
+
+        // Disallow resizing smaller than minimum window size.
+        this.setMinimumSize(new Dimension(windowMinWidth, windowMinHeight));
        
         // Update LivePlayerInfo at set Intervals
         timer = new Timer(2500, this);
@@ -310,8 +335,7 @@ public class MainWindow extends JFrame implements ActionListener, ItemListener {
             this.livePlayerInfoPanel.fireItUp();
             this.refreshServerInfo();
             this.refreshServerType();
-            PropertyManager pm = new PropertyManager();
-            if (pm.getStatusOnConnect()) {
+            if (this.pm.getStatusOnConnect()) {
                 this.controlPanel.sendStatusCommand();
             }
         }
@@ -325,7 +349,5 @@ public class MainWindow extends JFrame implements ActionListener, ItemListener {
             this.livePlayerInfoPanel.fireItUp();
         }
     }
-
-
 
 }
