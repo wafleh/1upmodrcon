@@ -144,23 +144,23 @@ public class AboutWindow extends JDialog implements ActionListener {
         autPanel.add(Box.createHorizontalStrut(10));
         autPanel.add(new JLabel("<html><b>Authors:</b></html>"));
         autPanel.add(Box.createHorizontalStrut(8));
-        autPanel.add(new JLabel("Tesla[1up], Pyrite[1up], izuriel"));
+        autPanel.add(new JLabel("Pyrite[1up], izuriel[1up], Tesla[1up]"));
 
         JPanel betPanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
         betPanel.add(Box.createHorizontalStrut(10));;
         betPanel.add(new JLabel("<html><b>Beta Testers:</b><html>"));
         betPanel.add(Box.createHorizontalStrut(8));
-        betPanel.add(new JLabel("RonaldLee[1up], Dougy, Tits_McGee[1up]"));
+        betPanel.add(new JLabel("RonaldLee[1up], Tits_McGee[1up]"));
 
         Font f = new Font("Tahoma", Font.PLAIN, 10);
-        JLabel c1Label = new JLabel("The 1up Mushroom is Copyright \u00A9 2010 Nintendo Corp of America.");
+        JLabel c1Label = new JLabel("The 1up Mushroom is Copyright \u00A9 2011 Nintendo Corp of America.");
         Dimension c1Dim = c1Label.getPreferredSize();
         c1Label.setFont(f);
         JPanel copy1 = new JPanel();
         copy1.setMaximumSize(c1Dim);
         copy1.add(c1Label);
 
-        JLabel c2Label = new JLabel("1up ModRcon is Copyright \u00A9 2010 Tesla[1up]. All Rights Reserved.");
+        JLabel c2Label = new JLabel("1up ModRcon is Copyright \u00A9 2011 Tesla[1up]. All Rights Reserved.");
         Dimension c2Dim = c2Label.getPreferredSize();
         c2Label.setFont(f);
         JPanel copy2 = new JPanel();

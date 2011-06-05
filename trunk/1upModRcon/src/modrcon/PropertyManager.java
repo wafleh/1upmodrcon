@@ -1,5 +1,6 @@
 package modrcon;
 
+import java.awt.Dimension;
 import java.util.*;
 import javax.swing.*;
 import java.io.*;
@@ -9,10 +10,10 @@ import java.io.*;
  *
  * @author Pyrite[1up]
  */
-public class PropertyManager {
+public class PropertyManager extends Thread {
 
     /** The current version of 1up ModRcon. */
-    public static final String MODRCON_VERSION = "Beta 0.8";
+    public static final String MODRCON_VERSION = "Beta 0.9";
 
     /**
      * The path to the settings folder.
@@ -96,6 +97,25 @@ public class PropertyManager {
 
     public void setRememberConsoleHistory(boolean status) {
         propFile.setProperty("rememberhistory", Boolean.toString(status));
+    }
+
+    public Dimension getWindowDimension() {
+        String dtext = propFile.getProperty("windowdimension");
+        if (dtext != null) {
+            String parts[] = dtext.split(",");
+            parts[0] = parts[0].replaceAll("[\\D]", "");
+            parts[1] = parts[1].replaceAll("[\\D]", "");
+            int w = Integer.parseInt(parts[0]);
+            int h = Integer.parseInt(parts[1]);
+            return new Dimension(w, h);
+        }
+        else {
+            return null;
+        }
+    }
+
+    public void setWindowDimension(Dimension d) {
+        propFile.setProperty("windowdimension", d.toString());
     }
 
     public void setStatusOnConnect(boolean status) {

@@ -45,7 +45,7 @@ public enum MP3 {
         }
         catch (Exception e) {
             System.out.println("Problem playing file " + filename);
-            System.out.println(e);
+            System.out.println(e.getMessage());
         }
 
         // run in new thread to play in background
