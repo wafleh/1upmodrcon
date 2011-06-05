@@ -140,12 +140,14 @@ public class ModRconUtil {
             URL u = new URL("http://1upclan.info/servers.xml");
             BufferedReader theHTML = new BufferedReader(new InputStreamReader(u.openStream()));
             while ((thisLine = theHTML.readLine()) != null) {
-                if (thisLine.matches("\\t\\t\\t<title>.*</title>")) {
-                    String name = thisLine.substring(thisLine.indexOf(">")+1, thisLine.indexOf("</title>"));
-                    String ip = theHTML.readLine();
-                    ip = ip.substring(ip.indexOf(">")+1, ip.indexOf("</description>"));
-                    Server s = new Server(name, ip, "27960", "mod", "");
-                    servers.add(s);
+                if (thisLine.matches(".*<title>.*</title>.*")) {
+                    if (!thisLine.trim().contains("Server List")) {
+                        String name = thisLine.substring(thisLine.indexOf(">")+1, thisLine.indexOf("</title>"));
+                        String ip = theHTML.readLine();
+                        ip = ip.substring(ip.indexOf(">")+1, ip.indexOf("</description>"));
+                        Server s = new Server(name, ip, "27960", "mod", "");
+                        servers.add(s);
+                    }
                 }
             }
         }
