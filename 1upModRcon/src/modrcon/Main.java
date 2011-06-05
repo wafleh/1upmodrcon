@@ -44,7 +44,7 @@ public class Main {
             System.out.println(e.getMessage());
         }     
 
-        // First see if servers.xml exists, if not, create it, and run ServerSetupWizard.
+        // First see if servers.db exists, if not, create it, and run ServerSetupWizard.
         File f = new File(PropertyManager.settingsPath+"servers.db");
         if (f.exists()) {
             //Schedule a job for the event-dispatching thread:
