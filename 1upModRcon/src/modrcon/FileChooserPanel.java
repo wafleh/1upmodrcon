@@ -53,6 +53,12 @@ public class FileChooserPanel extends JPanel implements MouseListener {
         int choice = jfc.showDialog(this.parent, "Select");
         if (choice == JFileChooser.APPROVE_OPTION) {
             String path = jfc.getSelectedFile().getAbsolutePath();
+            
+            // Catch and modify the path to start URT on Mac
+            if (ModRconUtil.isMac()) {
+                path += (!path.endsWith(".app") ? ".app" : "" ) + "/Contents/MacOS/ioUrbanTerror.ub";
+            }
+
             this.gamePathText.setText(path);
         }
     }
