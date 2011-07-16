@@ -17,6 +17,7 @@
   <!-- Other classes to be compiled into your SWF -->
   <classpaths>
     <class path="src" />
+    <class path="assets\liquid_components_v110_src\src" />
   </classpaths>
   <!-- Build options -->
   <build>
@@ -51,12 +52,11 @@
   </includeLibraries>
   <!-- SWC Libraries -->
   <libraryPaths>
-    <element path="lib\V3List.swc" />
     <element path="lib\V3DataGrid.swc" />
     <element path="lib\V3SettingsList.swc" />
     <element path="lib\LiquidComboBox.swc" />
-    <element path="lib\LiquidTextInput.swc" />
     <element path="lib\LiquidButton.swc" />
+    <element path="lib\V3List.swc" />
   </libraryPaths>
   <!-- External Libraries -->
   <externalLibraryPaths>

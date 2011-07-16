@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8" ?> 
+﻿<?xml version="1.0" encoding="utf-8"?>
 <!--<application xmlns="http://ns.adobe.com/air/application/2.0">
 	
 	<id>com.verticalcue.misc.1upServerMonitor</id> 
@@ -26,36 +26,32 @@
 		<image48x48>icons/mushroom48.png</image48x48>
 		<image72x72>icons/mushroom72.png</image72x72>
 	</icon>-->
-	<!-- 
+<!-- 
 	More options:
 	http://livedocs.adobe.com/flex/3/html/File_formats_1.html#1043413
 	-->
 <!--</application>-->
-<application xmlns="http://ns.adobe.com/air/application/2.5"> 
-    <id>com.verticalcue.misc.1upServerMonitor</id> 
-    <versionNumber>1.0.1</versionNumber> 
-    <filename>1up Server Monitor</filename> 
-    <name>1up Server Monitor</name> 
-     <description> 
-        <text xml:lang="en">Server Monitor for the 1up Clan</text> 
-    </description> 
-    <copyright>Copyright (c) 2010</copyright> 
-	<supportedProfiles>extendedDesktop desktop</supportedProfiles>
-    <initialWindow> 
-        <title>1up Server Monitor</title> 
-        <content> 
-            1upServerMonitor.swf
-        </content>
-		<systemChrome>none</systemChrome> 
-		<transparent>true</transparent> 
-		<visible>true</visible> 
-		<minimizable>true</minimizable> 
-		<maximizable>false</maximizable> 
-		<resizable>true</resizable>
-    </initialWindow>  
-    <icon> 
-        <image32x32>icons/mushroom32.png</image32x32>
-		<image48x48>icons/mushroom48.png</image48x48>
-		<image72x72>icons/mushroom72.png</image72x72> 
-    </icon> 
+<application xmlns="http://ns.adobe.com/air/application/2.6">
+  <id>com.verticalcue.misc.1upServerMonitor</id>
+  <filename>1up Server Monitor</filename>
+  <name>1up Server Monitor</name>
+  <description>Server Monitor for the 1up Clan</description>
+  <versionNumber>1.1</versionNumber> 
+  <copyright>Copyright (c) 2010</copyright>
+  <supportedProfiles>desktop extendedDesktop</supportedProfiles>
+  <initialWindow>
+    <title>1up Server Monitor</title>
+    <content>1upServerMonitor.swf</content>
+    <systemChrome>none</systemChrome>
+    <transparent>true</transparent>
+    <visible>true</visible>
+    <minimizable>true</minimizable>
+    <maximizable>false</maximizable>
+    <resizable>true</resizable>
+  </initialWindow>
+  <icon>
+    <image32x32>icons/mushroom32.png</image32x32>
+    <image48x48>icons/mushroom48.png</image48x48>
+    <image72x72>icons/mushroom72.png</image72x72>
+  </icon>
 </application>

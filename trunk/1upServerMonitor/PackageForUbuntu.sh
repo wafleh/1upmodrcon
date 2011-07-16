@@ -1,12 +1,12 @@
 #!/bin/bash
-FLEXSDKBIN="/home/john/FlexSDK/bin"
-AIRSDKBIN="/home/john/AirSDK/bin"
+FLEXSDKBIN="/home/john/Development/SDKs/FlexSDK/bin"
+AIRSDKBIN="/home/john/Development/SDKs/AdobeAIRSDK/bin"
 CERTIFICATE="1upServerMonitor.pfx"
 SIGNING_OPTIONS="-storetype pkcs12 -keystore $CERTIFICATE -tsa none"
 AIR_FILE="air/1upServerMonitor.air"
 APP_XML="application.xml"
 FILE_OR_DIR="-C bin ."
-PROJPATH="/home/john/Development/1upmodrcon/1upServerMonitor"
+PROJPATH="/home/john/Development/Projects/1upServerMonitor"
 
 # Compile
 if [ "$1" == "compile" ]
