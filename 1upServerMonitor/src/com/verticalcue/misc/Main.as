@@ -4,6 +4,7 @@ package com.verticalcue.misc
 	import com.liquid.controls.LiquidComboBox;
 	import com.liquid.controls.LiquidList;
 	import com.liquid.controls.LiquidTextInput;
+	import com.liquid.events.LiquidEvent;
 	import com.verticalcue.fonts.df3.Impact;
 	import com.verticalcue.fonts.df3.Verdana;
 	import fl.controls.DataGrid;
@@ -110,7 +111,7 @@ package com.verticalcue.misc
 			if (!_linuxEffects)
 				_window.bounds = new Rectangle(0, 0, 206, 294);
 			else
-				_window.bounds = new Rectangle(0, 0, 238, 345);
+				_window.bounds = new Rectangle(0, 0, 238, 375);
 
 			
 			var settingsButton:Sprite = Sprite(_bg.getChildByName("settingsButton"));
@@ -136,7 +137,7 @@ package com.verticalcue.misc
 			_sList.x = -70;
 			_sList.y = -50;
 			_sList.width = 206.0;
-			_sList.height = 220.0;
+			_sList.height = 260.0;
 			_sList.setRendererStyle( "embedFonts", true );
 			_sList.setRendererStyle("textFormat", tf);
 			_sList.setStyle("cellRenderer", AntiAliasCellRenderer);
@@ -222,7 +223,7 @@ package com.verticalcue.misc
 					refreshCbx.selectedIndex = i;
 					
 			var linuxEffects:LiquidComboBox = new LiquidComboBox();
-			linuxEffects.y = 155;
+			linuxEffects.y = 160;
 			linuxEffects.x = 95;
 			linuxEffects.width = 70;
 			linuxEffects.loadSkin("back", "./skin/subWindowComboBox_back.png");
@@ -246,8 +247,9 @@ package com.verticalcue.misc
 			
 			var browseButton:LiquidButton = new LiquidButton();
 			browseButton.label = "Browse";
-			browseButton.y = 120;
-			browseButton.width = 60;
+			browseButton.y = 125;
+			browseButton.width = 65;
+			browseButton.height = 22;
 			browseButton.x = _settingsWindow.width / 2 - browseButton.width / 2;
 			browseButton.loadSkin("back", "./skin/subWindowButton_back.png");
 			browseButton.addEventListener(MouseEvent.MOUSE_UP, settingsBrowseButtonClicked);
@@ -255,8 +257,8 @@ package com.verticalcue.misc
 			if (Capabilities.os.indexOf("Linux") != -1)
 				_settingsWindow.addChild(linuxEffects);
 			
-			_settingsWindow.addChild(browseButton);
 			_settingsWindow.addChild(terrorPathInput);
+			_settingsWindow.addChild(browseButton);
 			_settingsWindow.addChild(refreshCbx);
 			
 			//_settingsWindow.getChildByName("debug").text = Capabilities.os;
@@ -388,7 +390,7 @@ package com.verticalcue.misc
 				_clientList = new DataGrid();
 				_clientList.y = 55;
 				_clientList.width = 195;
-				_clientList.height = 160;
+				_clientList.height = 200;
 				_clientList.setRendererStyle( "embedFonts", true );
 				_clientList.setRendererStyle("textFormat", tf);
 				_clientList.setStyle("cellRenderer", AntiAliasCellRenderer);

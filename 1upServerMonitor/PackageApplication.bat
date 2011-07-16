@@ -5,7 +5,7 @@
 :: http://livedocs.adobe.com/flex/3/html/help.html?content=CommandLineTools_5.html#1035959
 
 :: Path to Flex SDK binaries
-set PATH=%PATH%;C:\Development\Flash\SDKs\flex_sdk_4.5.0.17689\bin;C:\Development\Flash\SDKs\AdobeAIRSDK\bin
+set PATH=%PATH%;C:\Program Files\FlashDevelop\Tools\flexsdk\bin
 
 :: Signature (see 'CreateCertificate.bat')
 set CERTIFICATE="1upServerMonitor.pfx"
