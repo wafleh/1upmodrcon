@@ -192,6 +192,11 @@ public class MainWindow extends JFrame implements ActionListener, ItemListener {
         jmiSave.setIcon(new ImageIcon(getClass().getResource("/modrcon/resources/save.png")));
         jmiSave.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_S, InputEvent.CTRL_DOWN_MASK));
 
+        JMenuItem jmiImport = new JMenuItem(new MenuAction("Import Settings", this));
+        jmiImport.setIcon(new ImageIcon(getClass().getResource("/modrcon/resources/import.png")));
+        JMenuItem jmiExport = new JMenuItem(new MenuAction("Export Settings", this));
+        jmiExport.setIcon(new ImageIcon(getClass().getResource("/modrcon/resources/export.png")));
+
         JMenuItem jmiExit = new JMenuItem(new MenuAction("Exit", this));
         jmiExit.setIcon(new ImageIcon(getClass().getResource("/modrcon/resources/del.png")));
 
@@ -245,6 +250,9 @@ public class MainWindow extends JFrame implements ActionListener, ItemListener {
         // Add Menu Items to Menus
 
         fileMenu.add(jmiSave);
+        fileMenu.addSeparator();
+        fileMenu.add(jmiImport);
+        fileMenu.add(jmiExport);
         fileMenu.addSeparator();
         fileMenu.add(jmiExit);
         editMenu.add(jmiCopy);

@@ -13,7 +13,7 @@ import java.io.*;
 public class PropertyManager extends Thread {
 
     /** The current version of 1up ModRcon. */
-    public static final String MODRCON_VERSION = "Beta 0.9";
+    public static final String MODRCON_VERSION = "0.9.1";
 
     /**
      * The path to the settings folder.

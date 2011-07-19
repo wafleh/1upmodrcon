@@ -15,7 +15,8 @@ import javazoom.jl.player.Player;
 public enum MP3 {
     DUKE_BABE("babealicious.mp3"),
     DUKE_BALLS("ballsofsteel.mp3"),
-    DUKE_SLAP("thatsgottahurt.mp3");
+    DUKE_SLAP("thatsgottahurt.mp3"),
+    URT_COINS("coins.mp3");
 
     private String filename;
     private Player player;

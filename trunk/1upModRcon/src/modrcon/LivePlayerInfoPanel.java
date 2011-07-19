@@ -113,30 +113,33 @@ public class LivePlayerInfoPanel extends JPanel {
         kickUser.setIcon(new ImageIcon(getClass().getResource("/modrcon/resources/user_remove.png")));
         JMenuItem muteUser = new JMenuItem(new MenuAction("Mute User", this.parent));
         muteUser.setIcon(new ImageIcon(getClass().getResource("/modrcon/resources/user_off.png")));
-        JMenuItem toggleMuteUser = new JMenuItem(new MenuAction("ToggleMute User", this.parent));
-        toggleMuteUser.setIcon(new ImageIcon(getClass().getResource("/modrcon/resources/user_off.png")));
         JMenuItem moveToRed = new JMenuItem(new MenuAction("Move To Red Team", this.parent));
         moveToRed.setIcon(new ImageIcon(getClass().getResource("/modrcon/resources/banner_red.png")));
         JMenuItem moveToBlue = new JMenuItem(new MenuAction("Move To Blue Team", this.parent));
         moveToBlue.setIcon(new ImageIcon(getClass().getResource("/modrcon/resources/banner_blue.png")));
         JMenuItem moveToSpec = new JMenuItem(new MenuAction("Move To Spectators", this.parent));
         moveToSpec.setIcon(new ImageIcon(getClass().getResource("/modrcon/resources/banner_gray.png")));
+        JMenuItem moveToFree = new JMenuItem(new MenuAction("Move To Free", this.parent));
+        moveToFree.setIcon(new ImageIcon(getClass().getResource("/modrcon/resources/banner_gray.png")));
         p.add(dumpUser);
         p.add(slapUser);
         p.add(kickUser);
         p.add(muteUser);
-        p.add(toggleMuteUser);
         p.add(moveToRed);
         p.add(moveToBlue);
         p.add(moveToSpec);
+        p.add(moveToFree);
 
         // slay, crash, togglemute, forcename, spoof, tempban, location, etc.
         JMenu subMenu = new JMenu("1up Commands");
+        JMenuItem toggleMuteUser = new JMenuItem(new MenuAction("ToggleMute User", this.parent));
+        toggleMuteUser.setIcon(new ImageIcon(getClass().getResource("/modrcon/resources/user_off.png")));
         JMenuItem forceName = new JMenuItem(new MenuAction("Force Name", this.parent));
         JMenuItem crash = new JMenuItem(new MenuAction("Crash", this.parent));
         JMenuItem slay = new JMenuItem(new MenuAction("Slay", this.parent));
         JMenuItem tempBan = new JMenuItem(new MenuAction("Temp Ban", this.parent));
-        
+
+        subMenu.add(toggleMuteUser);
         subMenu.add(forceName);
         p.addSeparator();
         p.add(subMenu);

@@ -36,6 +36,16 @@ public class MenuAction extends AbstractAction {
             this.parent.getConsolePanel().saveConsole();
         }
 
+        else if (selection.equals("Import Settings")) {
+            ImportExportManager iem = new ImportExportManager(this.parent);
+            iem.importSettings();
+        }
+
+        else if (selection.equals("Export Settings")) {
+            ImportExportManager iem = new ImportExportManager(this.parent);
+            iem.exportSettings();
+        }
+
         else if (selection.equals("Save Selected to File")) {
             this.parent.getConsolePanel().saveSelected();
         }
@@ -89,19 +99,14 @@ public class MenuAction extends AbstractAction {
         }
 
         else if (selection.equals("Exit")) {
-            //parent.savePropertyFile();
             System.exit(0);
         }
-
-        /*
-        else if (selection.equals("1up ModRcon Help")) {
-            try {
-                BrowserLauncher.openURL("http://1upclan.info/1uprcon/help/");
-            }
-            catch (Exception exception) {}
-        }
-        */
         
+        else if (selection.equals("1up ModRcon Help")) {
+            MP3.URT_COINS.play();
+            JOptionPane.showMessageDialog(parent, "Coinbird says, he wants some coins!", selection.toString(), JOptionPane.INFORMATION_MESSAGE);
+        }
+       
         else if (selection.equals("About")) {
             new AboutWindow(this.parent);
         }
