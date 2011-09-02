@@ -36,8 +36,8 @@
   <filename>1up Server Monitor</filename>
   <name>1up Server Monitor</name>
   <description>Server Monitor for the 1up Clan</description>
-  <versionNumber>1.1</versionNumber> 
-  <copyright>Copyright (c) 2010</copyright>
+  <versionNumber>1.2.5</versionNumber> 
+  <copyright>Copyright (c) 2010-2011</copyright>
   <supportedProfiles>desktop extendedDesktop</supportedProfiles>
   <initialWindow>
     <title>1up Server Monitor</title>
