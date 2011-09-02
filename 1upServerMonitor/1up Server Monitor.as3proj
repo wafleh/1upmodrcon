@@ -57,6 +57,7 @@
     <element path="lib\LiquidComboBox.swc" />
     <element path="lib\LiquidButton.swc" />
     <element path="lib\V3List.swc" />
+    <element path="lib\SystemUtils.swc" />
   </libraryPaths>
   <!-- External Libraries -->
   <externalLibraryPaths>

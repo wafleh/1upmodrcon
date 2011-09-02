@@ -15,6 +15,7 @@ package com.verticalcue.misc
 	import flash.desktop.SystemTrayIcon;
 	import flash.display.*;
 	import flash.events.Event;
+	import flash.events.IOErrorEvent;
 	import flash.events.MouseEvent;
 	import fl.controls.List;
 	import flash.events.NativeWindowDisplayStateEvent;
@@ -24,10 +25,16 @@ package com.verticalcue.misc
 	import flash.geom.Point;
 	import flash.geom.Rectangle;
 	import flash.net.FileFilter;
+	import flash.net.URLLoader;
+	import flash.net.URLLoaderDataFormat;
+	import flash.net.URLRequest;
+	import flash.net.URLRequestMethod;
+	import flash.net.URLVariables;
 	import flash.system.Capabilities;
 	import flash.system.System;
 	import flash.text.TextFormat;
 	import com.verticalcue.misc.bowser.*;
+	import flash.utils.ByteArray;
 	import flash.utils.Timer;
 	import fl.events.ListEvent;
 	import flash.xml.XMLDocument;
@@ -63,7 +70,7 @@ package com.verticalcue.misc
 		private var _windowFilters:Array;
 		private var _linuxEffects:Boolean = true;
 		private var _updater:Updater = new Updater();
-		private var _version:String = "1.0.1";
+		private var _version:String = "1.1.2";
 
 		public function Main():void 
 		{			
@@ -415,7 +422,7 @@ package com.verticalcue.misc
 		
 		private function joinServerButtonClicked(e:MouseEvent):void 
 		{
-			if (_setPath != "") {
+			if (_setPath != "" && Utils.checkDir(_setPath)) {
 				launchUrbanTerror(_selectedServer);
 			} else {
 				_window.stage.removeChild(_srvWindow);
@@ -424,6 +431,7 @@ package com.verticalcue.misc
 				createSettingsWindow();
 			}
 		}
+		
 		
 		private function mouseClickBackArrow(e:MouseEvent):void 
 		{
