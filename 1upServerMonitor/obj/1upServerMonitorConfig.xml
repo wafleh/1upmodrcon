@@ -16,25 +16,25 @@
     </define>
     <define append="true">
       <name>CONFIG::timeStamp</name>
-      <value>'9/1/2011'</value>
+      <value>'9/4/2011'</value>
     </define>
     <verbose-stacktraces>true</verbose-stacktraces>
     <source-path append="true">
-      <path-element>E:\Projects\1upServerMonitor\src</path-element>
-      <path-element>E:\Projects\1upServerMonitor\assets\liquid_components_v110_src\src</path-element>
+      <path-element>F:\Projects\1upServerMonitor\src</path-element>
+      <path-element>F:\Projects\1upServerMonitor\assets\liquid_components_v110_src\src</path-element>
       <path-element>C:\Program Files\FlashDevelop\Library\AS3\classes</path-element>
     </source-path>
     <library-path append="true">
-      <path-element>E:\Projects\1upServerMonitor\lib\V3DataGrid.swc</path-element>
-      <path-element>E:\Projects\1upServerMonitor\lib\V3SettingsList.swc</path-element>
-      <path-element>E:\Projects\1upServerMonitor\lib\LiquidComboBox.swc</path-element>
-      <path-element>E:\Projects\1upServerMonitor\lib\LiquidButton.swc</path-element>
-      <path-element>E:\Projects\1upServerMonitor\lib\V3List.swc</path-element>
-      <path-element>E:\Projects\1upServerMonitor\lib\SystemUtils.swc</path-element>
+      <path-element>F:\Projects\1upServerMonitor\lib\V3DataGrid.swc</path-element>
+      <path-element>F:\Projects\1upServerMonitor\lib\V3SettingsList.swc</path-element>
+      <path-element>F:\Projects\1upServerMonitor\lib\LiquidComboBox.swc</path-element>
+      <path-element>F:\Projects\1upServerMonitor\lib\LiquidButton.swc</path-element>
+      <path-element>F:\Projects\1upServerMonitor\lib\V3List.swc</path-element>
+      <path-element>F:\Projects\1upServerMonitor\lib\SystemUtils.swc</path-element>
     </library-path>
   </compiler>
   <file-specs>
-    <path-element>E:\Projects\1upServerMonitor\src\com\verticalcue\misc\Main.as</path-element>
+    <path-element>F:\Projects\1upServerMonitor\src\com\verticalcue\misc\Main.as</path-element>
   </file-specs>
   <default-background-color>#FFFFFF</default-background-color>
   <default-frame-rate>30</default-frame-rate>
