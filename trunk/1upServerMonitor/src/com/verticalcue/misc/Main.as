@@ -70,7 +70,7 @@ package com.verticalcue.misc
 		private var _windowFilters:Array;
 		private var _linuxEffects:Boolean = true;
 		private var _updater:Updater = new Updater();
-		private var _version:String = "1.1.2";
+		private var _version:String = "1.2.8";
 
 		public function Main():void 
 		{			
